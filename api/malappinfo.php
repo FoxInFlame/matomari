@@ -9,7 +9,7 @@ $status = "all";
 
 // Check for username
 if(!isset($_GET["u"]) || empty($_GET["u"])){
-  echo "Username not specified!";
+  echo "<myanimelist/>";
   exit();
 } else {
   $username = $_GET["u"];
