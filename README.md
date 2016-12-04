@@ -2,6 +2,8 @@
 
 A couple of MAL related scrapers and stuff like that.
 
+Please, always remember that scrapers are often not 100% stable for production, because when the layout of MAL changes, it won't work anymore. This can be used for small or personal projects.
+
 ---
 
 You can use matomari live from the base URL of ```http://www.foxinflame.tk/dev/matomari/api```
