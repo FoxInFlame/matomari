@@ -28,6 +28,6 @@ You can use matomari live from the base URL of ```http://www.foxinflame.tk/dev/m
     
 - ```animeInfo.php``` Grabs detailed anime information from id.
   - The parameters available are:
-    - ```id``` - Self-explanatory
+    - ```id``` - Self-explanatory.
   - Used in:
     - [QuickMyAnimeList](https://myanimelist.net/forum/?topicid=1552137)
