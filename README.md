@@ -1,7 +1,8 @@
 # matomari
 
-A couple of MAL related things.
+A couple of MAL related scrapers and stuff like that.
 
+---
 
 You can use matomari live from the base URL of ```http://www.foxinflame.tk/dev/matomari/api```
 
