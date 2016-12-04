@@ -51,12 +51,6 @@ $rank = substr($html->find("div#contentWrapper div#content div.anime-detail-head
 $popularity_rank = substr($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.popularity strong", 0)->plaintext, 1);
 $image_url = $html->find("div#contentWrapper div#content table div a img.ac", 0)->src;
 $mal_link = trim($html->find("div#contentWrapper div#content table div.js-scrollfix-bottom-rel div#horiznav_nav ul li a", 0)->href, " ");
-$episodes_link = strpos(trim($html->find("div#contentWrapper div#content table div.js-scrollfix-bottom-rel div#horiznav_nav ul li a", 2)->plaintext, " "), "Episodes");
-if($episodes_link !== false) {
-  $episodes_detail_url = "\"http://www.foxinflame.tk/anime/api/animeEpisodes/" . $id . "\"";
-} else {
-  $episodes_detail_url = "null";
-}
 $information = $html->find("div#contentWrapper div#content div.js-scrollfix-bottom div");
 foreach($information as $value) {
   if(strpos($value->plaintext, "Type:") !== false) {
@@ -179,7 +173,6 @@ echo "{";
   echo "\"url\": \"".$mal_link."\",";
   echo "\"type\": \"" . $type . "\",";
   echo "\"episodes\": " . $episodes . ",";
-  echo "\"episodes_details_url\": " . $episodes_detail_url . ",";
   echo "\"duration\": " . $minutes . ",";
   echo "\"total_duration\": " . $total_duration . ",";
   echo "\"members_score\": " . $members_score . ",";
