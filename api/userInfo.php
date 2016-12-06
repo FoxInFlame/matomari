@@ -101,7 +101,7 @@ foreach($rss as $value) {
     $rss_blogfeed = htmlspecialchars_decode($value->href);
   }
 }
-$about = str_replace("\"", "'", trim($html_rightside->find("div.user-profile-about div.profile-about-user table tr td div.word-break", 0)->innertext, " "));
+$about = htmlspecialchars_decode(str_replace("\"", "'", trim($html_rightside->find("div.user-profile-about div.profile-about-user table tr td div.word-break", 0)->innertext, " ")));
 
 $favourites_anime_arr = array();
 $favourites_manga_arr = array();
