@@ -1,4 +1,8 @@
 <?php
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
+error_reporting(E_ALL);
+
 header("access-control-allow-origin: *");
 header("Content-Type: application/json");
 require("../SimpleHtmlDOM.php");
@@ -42,17 +46,48 @@ if(empty($count->innertext)) {
     echo json_encode(array(
       "error" => "Topic has an page that doesn't exist."
     ));
-    exit(404);
+    die();
   }
   $forum_last = $lastPage->find("#content", 0)->children();
   $last_last = $lastPage->find("#content", 0)->find(".forum_border_around", -1);
   $postCount = $last_last->find(".postnum", 0)->innertext;
 }
 
+$posts = [];
+$page = "1";
+if(isset($_GET["page"])) {
+  if(is_numeric($_GET["page"]) && $_GET["page"] <= $pageCount) {
+    $page = $_GET["page"];
+  }
+}
+$htmlpage = @file_get_html("https://myanimelist.net/forum/?topicid=" . $parts[0] . "&show=" . (($page - 1)*50));
+if(!$htmlpage) {
+  array_push($posts, array(
+    "error" => "Topic with specified id was not found."
+  ));
+} else {
+  $forum_posts = $htmlpage->find("#content", 0)->find(".forum_border_around");
+  foreach($forum_posts as $post) {
+    $date = $post->find(".forum_category", 0)->find("div div", 1)->innertext;
+    $author = $post->find(".forum-topic-message-wrapper", 0)->find(".forum_topic_message .forum_boardrow2 div div a strong", 0)->innertext;
+    $post_content = $post->find(".forum-topic-message-wrapper", 0)->find(".forum_topic_message .forum_boardrow1 div div", 0);
+    array_push($posts, array(
+      "author" => $author,
+      "time" => $date,
+      "content" => $post_content->innertext
+    ));
+  }
+}
+
+
+
+
+
 $output = array(
   "id" => $parts[0],
   "page_count" => $pageCount,
-  "post_count" => $postCount
+  "post_count" => $postCount,
+  "posts" => $posts
 );
 
 // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
