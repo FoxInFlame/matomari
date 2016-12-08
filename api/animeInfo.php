@@ -16,13 +16,19 @@ require("../SimpleHtmlDOM.php");
 // [+] ============================================== [+]
 
 $parts = isset($_GET['id']) ? explode('/',$_GET['id']) : array();
+if(empty($parts)) {
+  echo json_encode(array(
+    "error" => "The id parameter is not defined."
+  ));
+  die();
+}
 if(!is_numeric($parts[0])) {
   echo json_encode(array(
     "error" => "Specified anime id is not a number."
   ));
   die();
 }
-$html = file_get_html("https://myanimelist.net/anime/" . $parts[0]);
+$html = @file_get_html("https://myanimelist.net/anime/" . $parts[0]);
 if(!$html) {
   echo json_encode(array(
     "error" => "Anime with specified id was not found."

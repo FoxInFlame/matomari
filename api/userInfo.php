@@ -16,7 +16,13 @@ require("../SimpleHtmlDOM.php");
 // [+] ============================================== [+]
 
 $parts = isset($_GET['username']) ? explode('/',$_GET['username']) : array();
-$html = file_get_html("https://myanimelist.net/profile/" . $parts[0]);
+if(empty($parts)) {
+  echo json_encode(array(
+    "error" => "The username parameter is not defined."
+  ));
+  die();
+}
+$html = @file_get_html("https://myanimelist.net/profile/" . $parts[0]);
 if(!$html) {
   echo json_encode(array(
     "error" => "Username was not found or MAL is offline."

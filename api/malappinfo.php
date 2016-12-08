@@ -1,6 +1,7 @@
 <?php
 header("Content-Type: text/xml");
 header("access-control-allow-origin: *");
+header("Cache-Control: max-age=60*60"); // Cache for an hour
 
 // Global Variables (and their defaults).
 $username;
