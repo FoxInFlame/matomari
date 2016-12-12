@@ -81,15 +81,15 @@ foreach($otherInfo as $value) {
   }
   
   if(strpos($value->innertext, "anime.php") !== false) {
-    array_push($relation_anime_arr, substr(trim($value->find("a", 0)->href), 13));
+    array_push($relation_anime_arr, "string_".substr(trim($value->find("a", 0)->href), 13));
     continue;
   }
   if(strpos($value->innertext, "manga.php") !== false) {
-    array_push($relation_manga_arr, substr(trim($value->find("a", 0)->href), 13));
+    array_push($relation_manga_arr, "string_".substr(trim($value->find("a", 0)->href), 13));
     continue;
   }
   if(strpos($value->innertext, "character.php") !== false) {
-    array_push($relation_character_arr, substr(trim($value->find("a", 0)->href), 17));
+    array_push($relation_character_arr, "string_".substr(trim($value->find("a", 0)->href), 17));
     continue;
   }
 }
