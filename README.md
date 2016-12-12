@@ -32,6 +32,11 @@ You can use matomari live from the base URL of ```http://www.foxinflame.tk/dev/m
   - Used in:
     - [QuickMyAnimeList](https://myanimelist.net/forum/?topicid=1552137)
 
+- ```clubInfo.php``` Grabs detailed club information from id.
+  - The parameters available are:
+      - ```clubid``` - Self-explanatory. ***[Required]***
+  - Used in:
+      - *nothing so far*
 - ```forumTopic.php``` Grabs basic information and content from a forum topic from id. (Extremely Slow, so use with caution)
   - The parameters available are:
     - ```id``` - Topic id. ***[Required]***
