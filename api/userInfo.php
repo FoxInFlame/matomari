@@ -15,7 +15,7 @@ require("../SimpleHtmlDOM.php");
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-$parts = isset($_GET['username']) ? explode('/',$_GET['username']) : array();
+$parts = isset($_GET["username"]) ? explode("/",$_GET["username"]) : array();
 if(empty($parts)) {
   echo json_encode(array(
     "error" => "The username parameter is not defined."
@@ -41,12 +41,12 @@ $html_rightside = $html->find("div#contentWrapper div.container-right", 0);
 $html_leftside = $html->find("div#contentWrapper div.container-left", 0);
 $image_url = $html_leftside->find("div.user-profile div.user-image img", 0)->src;
 $id = explode(".", end(explode("/", $image_url)))[0];
-$userstatus = $html_leftside->find("div.user-profile ul.user-status li.clearfix");
+$userstats = $html_leftside->find("div.user-profile ul.user-status li.clearfix");
 $gender = null;
 $birthday = null;
 $location = null;
 $join_date = null;
-foreach($userstatus as $value) {
+foreach($userstats as $value) {
   if(strpos($value->plaintext, "Gender") !== false) {
     $gender = trim(substr($value->plaintext, 7), " ");
   } else if(strpos($value->plaintext, "Birthday") !== false) {
