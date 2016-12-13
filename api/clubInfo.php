@@ -95,7 +95,7 @@ foreach($otherInfo as $value) {
 }
 unset($value);
 
-$information = trim($html_leftside->find("div.clearfix", 0)->innertext,  " ");
+$information = htmlspecialchars_decode(html_entity_decode(trim($html_leftside->find("div.clearfix", 0)->innertext,  " ")));
 
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
@@ -114,9 +114,9 @@ $output = array(
   "creation_date" => $creation_date,
   "creator" => $officers_creator,
   "officers" => array(
-    "officers_normal" => $officers_normal_arr,
-    "officers_creator" => $officers_creator,
-    "officers_admins" => $officers_admins_arr
+    "normal" => $officers_normal_arr,
+    "creator" => $officers_creator,
+    "admins" => $officers_admins_arr
   ),
   "relationships" => array(
     "anime" => $relation_anime_arr,
