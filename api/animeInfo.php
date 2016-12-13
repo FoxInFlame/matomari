@@ -98,10 +98,10 @@ foreach($information as $value) {
     }
   }
   if(strpos($value->plaintext, "Members:") !== false) {
-    $members_count = trim(substr($value->plaintext, 12), " ");
+    $members_count = str_replace(",", "", trim(substr($value->plaintext, 12), " "));
   }
   if(strpos($value->plaintext, "Favorites:") !== false) {
-    $favourites_count = trim(substr($value->plaintext, 14), " ");
+    $favourites_count = str_replace(",", "", trim(substr($value->plaintext, 14), " "));
   }
   if(strpos($value->plaintext, "Genres:") !== false) {
     $genres_str = trim(substr($value->plaintext, 11), " ");
@@ -173,7 +173,7 @@ if($rank == "/A") {
 if($score == "N/A") {
   $score = null;
 }
-$synopsis = trim($html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0)->innertext, " ");
+$synopsis = htmlspecialchars_decode(html_entity_decode(trim($html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0)->innertext, " "), 0, "UTF-8"));
 
 
 
