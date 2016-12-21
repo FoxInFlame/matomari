@@ -18,13 +18,13 @@ You can use matomari live from the base URL of ```http://www.foxinflame.tk/dev/m
     - ```nsfw``` - Can be set to "only", "true", or "false". Only returns only NSFW results, true includes both normal and NSFW, and false returns only normal results. ***[Optional] Defaults to true.***
     - ```sort``` - Can be set to "new" or "hot". Basically self-explanatory. ***[Optional] Defaults to new.***
   - Used in:
-    - [wallpaperCycler](https://github.com/FoxInFlame/WallpaperCycler)
+    - [WallpaperCycler](https://github.com/FoxInFlame/WallpaperCycler)
 
 - ```userInfo.php``` Grabs detailed user information from a username.
   - The parameters available are:
     - ```username``` - Self-explanatory. ***[Required]***
   - Used in:
-    - *nothing so far*
+    - [AniChrome](https://github.com/FoxInFlame/AniChrome)
     
 - ```animeInfo.php``` Grabs detailed anime information from id.
   - The parameters available are:
