@@ -2,7 +2,7 @@
 
 A couple of MAL related scrapers and stuff like that.
 
-Please, always remember that scrapers are often not 100% stable for production, because when the layout of MAL changes, it won't work anymore. This can be used for small or personal projects.
+Please, always remember that scrapers are often not 100% stable for production, because when the layout of MAL changes, it won't work anymore. This can be used for small or private projects.
 
 ---
 
@@ -37,9 +37,17 @@ You can use matomari live from the base URL of ```http://www.foxinflame.tk/dev/m
       - ```clubid``` - Self-explanatory. ***[Required]***
   - Used in:
       - *nothing so far*
+      
 - ```forumTopic.php``` Grabs basic information and content from a forum topic from id. (Extremely Slow, so use with caution)
   - The parameters available are:
     - ```id``` - Topic id. ***[Required]***
     - ```page``` - ***[Optional] Anything over the actual page number will become 1.***
   - Used in:
     - *nothing so far*
+
+- ```userHistory.php``` Grabs the history of a user for the past 3 weeks. Note: It returns GMT on my server, but it probably changes if you run it on a server on the other side of the world. Fiddle around with the timezones if you are going to host it on your own.
+  - The parameters available are:
+    - ```type``` - Anime or Manga ***[Optional] Defaults to anime***
+    - ```username``` - Self-explanatory. ***[Required]***
+  - Used in:
+    - [My profile page!](http://www.foxinflame.tk)
