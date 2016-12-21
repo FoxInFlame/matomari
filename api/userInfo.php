@@ -161,6 +161,7 @@ $output = array(
   "id" => $id,
   "username" => $username,
   "url" => $mal_link,
+  "profile_image" => $image_url,
   "gender" => $gender,
   "birthday" => $birthday,
   "location" => $location,
