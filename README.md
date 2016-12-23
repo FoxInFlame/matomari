@@ -12,22 +12,32 @@ Each file contains information and parameters required at the top of the file.
 
 Available Methods
 
+General
+
 - ```general/malappinfo.php``` 
 - ```general/wallpaper.php``` 
   - Used in:
     - [WallpaperCycler](https://github.com/FoxInFlame/WallpaperCycler)
+    
+Anime
 
 - ```anime/info/ANIMEID.(json|xml)```
   - Used in:
     - [QuickMyAnimeList](https://myanimelist.net/forum/?topicid=1552137)
 
+Club
+
 - ```club/info/CLUBID.(json|xml)``` 
   - Used in:
     - *nothing so far*
 
+Forum
+
 - ```forum/topic/TOPICID.(json|xml)```
   - Used in:
     - *nothing so far*
+
+User
 
 - ```user/info/USERNAME.(json|xml)```
   - Used in:
