@@ -15,7 +15,15 @@ function generate_xml_from_array($array, $node_name) {
       $xml .= "<" . $key . ">" . "\n" . generate_xml_from_array($value, $node_name) . "</" . $key . ">" . "\n";
     }
   } else {
-    $xml = htmlspecialchars($array) . "\n";
+    if(is_bool($array) === true) {
+      if($array) {
+        $xml = "true" . "\n";
+      } else {
+        $xml = "false" . "\n";
+      }
+    } else {
+      $xml = htmlspecialchars($array) . "\n";
+    }
   }
   return $xml;
 }
