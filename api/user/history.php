@@ -21,10 +21,10 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-header("access-control-allow-origin: *");
-header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+// Content type is set later.
 header("Cache-Control: no-cache, must-revalidate");
-require("../SimpleHtmlDOM.php");
+require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
 
 // [+] ============================================== [+]

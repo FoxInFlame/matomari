@@ -20,10 +20,10 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-header("access-control-allow-origin: *");
-header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+// Content type is set later.
 header("Cache-Control: no-cache, must-revalidate");
-require("../SimpleHtmlDOM.php");
+require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
 
 // [+] ============================================== [+]
@@ -57,7 +57,8 @@ $mal_link = "https://myanimelist.net/profile/" . $username;
 $html_rightside = $html->find("div#contentWrapper div.container-right", 0);
 $html_leftside = $html->find("div#contentWrapper div.container-left", 0);
 $image_url = $html_leftside->find("div.user-profile div.user-image img", 0)->src;
-$id = explode(".", end(explode("/", $image_url)))[0];
+$end = explode("/", $image_url);
+$id = explode(".", end($end))[0];
 $userstats = $html_leftside->find("div.user-profile ul.user-status li.clearfix");
 $gender = null;
 $birthday = null;
