@@ -1,10 +1,28 @@
 <?php
-// ===============================================
-// -----------------------------------------------
-// HEADERS
-// -----------------------------------------------
-// ===============================================
+/*
+
+Shows anime wallpaper from /r/AnimeWallpaper.
+
+Method: GET
+Authentication: None Required.
+Response: Anime Wallpaper as PNG or JPEG.
+Parameters:
+  - nsfw: [Optional] Can be set to "only", "true", or "false". True to include NSFW pictures, false to exclude, only to return only NSFW. (Defaults to true)
+  - sort: [Optional] "new" or "hot".  (Defaults to new)
+
+Created by FoxInFlame.
+A Part of the matomari API.
+
+*/
+
+// [+] ============================================== [+]
+// [+] ---------------------------------------------- [+]
+// [+] -------------------HEADERS-------------------- [+]
+// [+] ---------------------------------------------- [+]
+// [+] ============================================== [+]
+
 header("access-control-allow-origin: *");
+header("Cache-Control: no-cache, must-revalidate");
 
 // -----------------------------------------------
 // IF SORT IS NOT DEFINED
@@ -48,6 +66,13 @@ foreach($xml->entry as $entry) {
     break;
   }
 }
+
+// [+] ============================================== [+]
+// [+] ---------------------------------------------- [+]
+// [+] --------------------OUTPUT-------------------- [+]
+// [+] ---------------------------------------------- [+]
+// [+] ============================================== [+]
+
 function loadImage($content) {
   $dom = new DOMDocument;
   $dom->loadHTML($content);

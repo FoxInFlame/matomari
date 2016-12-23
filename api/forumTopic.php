@@ -1,6 +1,30 @@
 <?php
+/*
+
+Shows basic content on a MAL forum thread.
+Still WIP.
+
+Method: GET
+Authentication: None Required.
+Response: Forum posts in JSON.
+Parameters:
+  - id: [Required] MAL Forum Thread ID.
+  - page: [Optional] Page number. If it doesn't exist, it becomes 1. (Defaults to 1)
+
+Created by FoxInFlame.
+A Part of the matomari API.
+
+*/
+
+// [+] ============================================== [+]
+// [+] ---------------------------------------------- [+]
+// [+] -------------------HEADERS-------------------- [+]
+// [+] ---------------------------------------------- [+]
+// [+] ============================================== [+]
+
 header("access-control-allow-origin: *");
 header("Content-Type: application/json");
+header("Cache-Control: no-cache, must-revalidate");
 require("../SimpleHtmlDOM.php");
 
 // -----------------------------------------------
@@ -76,8 +100,11 @@ if(!$htmlpage) {
 }
 
 
-
-
+// [+] ============================================== [+]
+// [+] ---------------------------------------------- [+]
+// [+] --------------------OUTPUT-------------------- [+]
+// [+] ---------------------------------------------- [+]
+// [+] ============================================== [+]
 
 $output = array(
   "id" => $parts[0],

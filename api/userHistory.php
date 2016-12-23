@@ -1,15 +1,29 @@
 <?php
+/*
+
+Shows the history for a MAL user for the past 3 weeks (27 days).
+
+Method: GET
+Authentication: None Required.
+Response: User history in JSON.
+Parameters:
+  - username: [Required] MAL Username.
+  - type: [Optional] Anime or manga (Defaults to anime)
+
+Created by FoxInFlame.
+A Part of the matomari API.
+
+*/
+
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 header("access-control-allow-origin: *");
-header('Content-Type: application/json');
+header("Content-Type: application/json");
+header("Cache-Control: no-cache, must-revalidate");
 require("../SimpleHtmlDOM.php");
 
 
@@ -127,9 +141,10 @@ function getAbsoluteTimeGMT($string) {
   }
 }
 
+
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
-// [+] ------------DISPLAYING THE VALUES------------- [+]
+// [+] --------------------OUTPUT-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 

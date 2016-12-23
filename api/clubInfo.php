@@ -1,11 +1,28 @@
 <?php
+/*
+
+Shows detailed information about a MAL club.
+
+Method: GET
+Authentication: None Required.
+Response: Club information in JSON.
+Parameters:
+  - clubid: [Required] MAL Club ID.
+
+Created by FoxInFlame.
+A Part of the matomari API.
+
+*/
+
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
+
 header("access-control-allow-origin: *");
-header('Content-Type: application/json');
+header("Content-Type: application/json");
+header("Cache-Control: no-cache, must-revalidate");
 require("../SimpleHtmlDOM.php");
 
 
@@ -99,7 +116,7 @@ $information = htmlspecialchars_decode(html_entity_decode(trim($html_leftside->f
 
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
-// [+] ------------DISPLAYING THE VALUES------------- [+]
+// [+] --------------------OUTPUT-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 

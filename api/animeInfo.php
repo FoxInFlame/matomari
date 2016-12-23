@@ -1,11 +1,28 @@
 <?php
+/*
+
+Shows detailed information about an anime.
+
+Method: GET
+Authentication: None Required.
+Response: Anime information in JSON.
+Parameters:
+  - id: [Required] Anime ID.
+
+Created by FoxInFlame.
+A Part of the matomari API.
+
+*/
+
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
-header("access-control-allow-origin: *");
-header('Content-Type: application/json');
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+header("Cache-Control: no-cache, must-revalidate");
 require("../SimpleHtmlDOM.php");
 
 
@@ -15,7 +32,7 @@ require("../SimpleHtmlDOM.php");
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-$parts = isset($_GET['id']) ? explode('/',$_GET['id']) : array();
+$parts = isset($_GET["id"]) ? explode("/",$_GET["id"]) : array();
 if(empty($parts)) {
   echo json_encode(array(
     "error" => "The id parameter is not defined."
@@ -176,11 +193,9 @@ if($score == "N/A") {
 $synopsis = htmlspecialchars_decode(html_entity_decode(trim($html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0)->innertext, " "), 0, "UTF-8"));
 
 
-
-
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
-// [+] ------------DISPLAYING THE VALUES------------- [+]
+// [+] --------------------OUTPUT-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 

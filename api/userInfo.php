@@ -1,11 +1,28 @@
 <?php
+/*
+
+Shows detailed information about a MAL user.
+
+Method: GET
+Authentication: None Required.
+Response: User information in JSON.
+Parameters:
+  - username: [Required] MAL Username.
+
+Created by FoxInFlame.
+A Part of the matomari API.
+
+*/
+
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
+
 header("access-control-allow-origin: *");
-header('Content-Type: application/json');
+header("Content-Type: application/json");
+header("Cache-Control: no-cache, must-revalidate");
 require("../SimpleHtmlDOM.php");
 
 
@@ -153,7 +170,7 @@ unset($value);
 
 // [+] ============================================== [+]
 // [+] ---------------------------------------------- [+]
-// [+] ------------DISPLAYING THE VALUES------------- [+]
+// [+] --------------------OUTPUT-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 

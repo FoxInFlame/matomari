@@ -1,10 +1,12 @@
 <?php
 /*
 
-GET method.
+Shows unread notifications for a specific MAL user.
 
-Requires HTTP Basic Authentication with MAL Credentials.
-Shows notifications in JSON format.
+Method: GET
+Authentication: HTTP Basic Auth with MAL Credentials.
+Response: Notifications in JSON.
+Parameters: None.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -18,7 +20,8 @@ A Part of the matomari API.
 // [+] ============================================== [+]
 
 header("access-control-allow-origin: *");
-header('Content-Type: application/json');
+header("Content-Type: application/json");
+header("Cache-Control: no-cache, must-revalidate");
 require("../SimpleHtmlDOM.php");
 
 
