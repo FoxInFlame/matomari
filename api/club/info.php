@@ -4,10 +4,9 @@
 Shows detailed information about a MAL club.
 
 Method: GET
+        /api/club/CLUBID.(json|xml)
 Authentication: None Required.
-Response: Club information in JSON.
-Parameters:
-  - clubid: [Required] MAL Club ID.
+Supported Filetypes: json, xml-
 
 Created by FoxInFlame.
 A Part of the matomari API.
