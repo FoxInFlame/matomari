@@ -5,11 +5,11 @@ Shows basic content on a MAL forum thread.
 Still WIP.
 
 Method: GET
+        /api/club/CLUBID.(json|xml)
 Authentication: None Required.
-Response: Forum posts in JSON.
+Supported Filetypes: json, xml-
 Parameters:
-  - id: [Required] MAL Forum Thread ID.
-  - page: [Optional] Page number. If it doesn't exist, it becomes 1. (Defaults to 1)
+  - page: [Optional] Page number. If the page doesn't exist, it becomes 1. (Defaults to 1)
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -23,14 +23,14 @@ A Part of the matomari API.
 // [+] ============================================== [+]
 
 header("Access-Control-Allow-Origin: *");
-// Content type is set later.
+header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
 // -----------------------------------------------
 // IF TOPIC ID IS NOT DEFINED
 // -----------------------------------------------
-$parts = isset($_GET["id"]) ? explode("/",$_GET["id"]) : array();
+$parts = isset($_GET["topicid"]) ? explode("/",$_GET["topicid"]) : array();
 if(empty($parts)) {
   echo json_encode(array(
     "error" => "The id parameter is not defined."
