@@ -4,10 +4,10 @@
 Shows the history for a MAL user for the past 3 weeks (27 days).
 
 Method: GET
+        /api/user/history/CLUBID.(json|xml)
 Authentication: None Required.
-Response: User history in JSON.
+Supported Filetypes: json, xml
 Parameters:
-  - username: [Required] MAL Username.
   - type: [Optional] Anime or manga (Defaults to anime)
 
 Created by FoxInFlame.
@@ -22,7 +22,7 @@ A Part of the matomari API.
 // [+] ============================================== [+]
 
 header("Access-Control-Allow-Origin: *");
-// Content type is set later.
+header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
@@ -42,7 +42,7 @@ if(empty($parts)) {
 }
 $type = "anime";
 if(isset($_GET["type"])) {
-  switch($_GET["type"]) {
+  switch(strtolower($_GET["type"])) {
     case "anime":
       $type = "anime";
       break;
