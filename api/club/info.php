@@ -4,9 +4,11 @@
 Shows detailed information about a MAL club.
 
 Method: GET
-        /api/club/CLUBID.(json|xml)
+        /api/club/info/CLUBID.(json|xml)
 Authentication: None Required.
-Supported Filetypes: json, xml-
+Supported Filetypes: json, xml.
+Parameters:
+  - None.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -20,7 +22,7 @@ A Part of the matomari API.
 // [+] ============================================== [+]
 
 header("Access-Control-Allow-Origin: *");
-// Content type is set later.
+header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
