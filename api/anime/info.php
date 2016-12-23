@@ -21,9 +21,9 @@ A Part of the matomari API.
 // [+] ============================================== [+]
 
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
+// Content type is set later.
 header("Cache-Control: no-cache, must-revalidate");
-require("../SimpleHtmlDOM.php");
+require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
 
 // [+] ============================================== [+]
