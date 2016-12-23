@@ -9,6 +9,7 @@ Please, always remember that scrapers are often not 100% stable for production, 
 You can use matomari live from the base URL of ```http://www.foxinflame.tk/dev/matomari/api```
 
 Each file contains information and parameters required at the top of the file. 
+
 Available Methods
 
 - ```malappinfo.php``` 
