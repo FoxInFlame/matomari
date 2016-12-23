@@ -4,10 +4,11 @@
 Shows detailed information about a MAL user.
 
 Method: GET
+        /api/user/info/USERNAME.(json|xml)
 Authentication: None Required.
-Response: User information in JSON.
+Supported Filetypes: json, xml
 Parameters:
-  - username: [Required] MAL Username.
+  - None.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -21,7 +22,7 @@ A Part of the matomari API.
 // [+] ============================================== [+]
 
 header("Access-Control-Allow-Origin: *");
-// Content type is set later.
+header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
