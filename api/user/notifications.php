@@ -4,9 +4,11 @@
 Shows unread notifications for a specific MAL user.
 
 Method: GET
+        /api/user/notifications/USERNAME.(json|xml)
 Authentication: HTTP Basic Auth with MAL Credentials.
-Response: Notifications in JSON.
-Parameters: None.
+Supported Filetypes: json, xml
+Parameters:
+  - None.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -20,7 +22,7 @@ A Part of the matomari API.
 // [+] ============================================== [+]
 
 header("Access-Control-Allow-Origin: *");
-// Content type is set later.
+header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
