@@ -4,10 +4,9 @@
 Shows detailed information about an anime.
 
 Method: GET
+        /api/anime/info/ANIMEID.(json|xml)
 Authentication: None Required.
-Response: Anime information in JSON.
-Parameters:
-  - id: [Required] Anime ID.
+Supported Filetypes: json, xml.
 
 Created by FoxInFlame.
 A Part of the matomari API.
