@@ -7,7 +7,7 @@ Still WIP.
 Method: GET
         /api/club/CLUBID.(json|xml)
 Authentication: None Required.
-Supported Filetypes: json, xml-
+Supported Filetypes: json, xml
 Parameters:
   - page: [Optional] Page number. If the page doesn't exist, it becomes 1. (Defaults to 1)
 
