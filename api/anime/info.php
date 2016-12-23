@@ -7,6 +7,8 @@ Method: GET
         /api/anime/info/ANIMEID.(json|xml)
 Authentication: None Required.
 Supported Filetypes: json, xml.
+Parameters:
+  - None.
 
 Created by FoxInFlame.
 A Part of the matomari API.
