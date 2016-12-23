@@ -1,5 +1,6 @@
 <?php
-header("access-control-allow-origin: *");
+// Headers are sent from individual files, so no need to declare them here.
+
 $request = $_GET["url"];
 $request_parts = explode("/", $request);
 
