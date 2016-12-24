@@ -24,6 +24,9 @@ Anime
 - ```anime/info/ANIMEID.(json|xml)```
   - Used in:
     - [QuickMyAnimeList](https://myanimelist.net/forum/?topicid=1552137)
+- ```anime/search/QUERY.(json|xml)```
+  - Used in:
+    - *nothing so far*
 
 Club
 
