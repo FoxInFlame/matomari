@@ -12,15 +12,22 @@ switch($request_parts[0]) {
   case "anime": // anime/
     dieIfNotSet($request_parts[1]);
     dieIfNotSet($request_parts[2]);
-    $_GET["id"] = $request_parts[2];
     switch($request_parts[1]) {
       case "info": // anime/info/
+        $_GET["id"] = $request_parts[2];
         showOutput("anime/info.php", $_GET["type"]);
+        break;
+      case "search": // anime/search/
+        $_GET["q"] = $request_parts[2];
+        if(isset($request_parts[3]) || !empty($request_parts[3])) {
+          $_GET["filter"] = $request_parts[3];
+        }
+        showOutput("anime/search.php", $_GET["type"]);
         break;
       case "episodes": // anime/episodes/
         break;
       default:
-        die("Invalid Request");
+        die("Invalid Request.");
         break;
     }
     break;
@@ -39,7 +46,7 @@ switch($request_parts[0]) {
         showOutput("user/history.php", $_GET["type"]);
         break;
       default:
-        die("Invalid Request");
+        die("Invalid Request.");
         break;
     }
     break;
@@ -79,8 +86,8 @@ switch($request_parts[0]) {
 }
 
 function dieIfNotSet($part) {
-  if(empty($part) || !isset($part)) {
-    die("Invalid Request");
+  if(!isset($part)) {
+    die("Invalid Request.");
     break;
   }
 }
