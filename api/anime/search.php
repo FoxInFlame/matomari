@@ -8,6 +8,7 @@ Method: GET
 Authentication: None Required.
 Supported Filetypes: json, xml.
 Parameters:
+  - page: [Optional] Page number. If page doesn't exist, becomes 1. (Defaults to 1)
   - filter: [Optional] Filters, seperated by comma.
     - Examples:
       /search/Pokemon.json?filter=inc-genre:action,score=9 // Includes genre "Action" with score of 9 with query  of Pokemon as JSON
@@ -477,12 +478,26 @@ call_user_func(function() {
     $filter_param = "";
   }
   
-  $html = @file_get_html("https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g"); // c[] parameter for showing all columns
+  $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : "1";
+  $show = ($page - 1) * 50;
+  $page_param = "&show=" . $show;
+    
+  $html = @file_get_html("https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g" . $page_param); // c[] parameter for showing all columns
   if(!$html) {
-    echo json_encode(array(
-      "error" => "MAL is offline, or their code changed."
-    ));
-    die();
+    if($page != 1) {
+      $html = @file_get_html("https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g&show=0"); // c[] parameter for showing all columns
+      if(!$html) {
+        echo json_encode(array(
+          "error" => "MAL is offline, or their code changed."
+        ));
+        die();
+      }
+    } else {
+      echo json_encode(array(
+        "error" => "MAL is offline, or their code changed."
+      ));
+      die();
+    }
   }
   
   $tr = $html->find("#contentWrapper #content div.list table tbody tr");
@@ -519,6 +534,17 @@ call_user_func(function() {
     $membercount = trim($membercounttd->innertext);
     $rating = trim($ratingtd->innertext);
     
+    foreach(explode("-", $startdate) as $index => $number) {
+      if($index == 0) {
+        
+      }
+      if($index == 1) {
+        
+      }
+      if($index == 2) {
+        
+      }
+    }
     array_push($results_arr, array(
       "id" => $id,
       "image" => $image,
@@ -535,20 +561,21 @@ call_user_func(function() {
     ));
   }
   
-  $output = array(
-    "parameter" => "q=" . urlencode($parts[0]) . $filter_param,
-    "results" => $results_arr
-  );
   
-  
-    // [+] ============================================== [+]
+  // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
   // [+] --------------------OUTPUT-------------------- [+]
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
+  $output = array(
+    "parameter" => "q=" . urlencode($parts[0]) . $filter_param,
+    "results" => $results_arr
+  );
+  
   // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
+  
 });
 ?>
