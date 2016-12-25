@@ -50,7 +50,7 @@ call_user_func(function() {
     $filters = explode(",", $filter);
     foreach($filters as $filter) {
       $filterparts = explode(":", $filter);
-      if(trim($filterparts[0]) == "" || trim($filterparts[1]) == "" || count($filterparts) != 2) {
+      if(!isset($filterparts[0]) || !isset($filterparts[1]) || trim($filterparts[0]) == "" || trim($filterparts[1]) == "" || count($filterparts) != 2) {
         continue; // Parameter is not valid.
       }
       switch(strtolower($filterparts[0])) {
