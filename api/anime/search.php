@@ -1,7 +1,7 @@
 <?php
 /*
 
-Shows detailed information about an anime. Maximum 50 results. Pagination to come later.
+Shows anime search results for a query. Maximum 50 results. Filtering supported.
 
 Method: GET
         /api/anime/search/QUERY.(json|xml)
