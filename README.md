@@ -8,6 +8,8 @@ Please, always remember that these scrapers are often not 100% stable for produc
 
 You can use matomari live from the base URL of ```http://matomari.tk/api```
 
+View example kind of thing : [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/f9a68f114b10fc4f6ee0)
+
 Each file contains information and parameters required at the top of the file.
 
 Available Methods
@@ -25,20 +27,14 @@ Anime
   - Used in:
     - [QuickMyAnimeList](https://myanimelist.net/forum/?topicid=1552137)
 - ```anime/search/QUERY.(json|xml)```
-  - Used in:
-    - *nothing so far*
 
 Club
 
 - ```club/info/CLUBID.(json|xml)``` 
-  - Used in:
-    - *nothing so far*
 
 Forum
 
 - ```forum/topic/TOPICID.(json|xml)```
-  - Used in:
-    - *nothing so far*
 
 User
 
@@ -49,5 +45,5 @@ User
   - Used in:
     - [My profile page!](http://www.foxinflame.tk)
 - ```user/notifications/USERNAME.(json|xml)```
-  - Used in:
-    - *nothing so far*
+- ```user/messages/USERNAME.(json|xml)```
+- ```user/message/send/.(json|xml)```
