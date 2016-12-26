@@ -39,14 +39,14 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "The clubid parameter is not defined."
     ));
-    die();
+    return;
   }
   $html = @file_get_html("https://myanimelist.net/clubs.php?cid=" . $parts[0]);
   if(!$html) {
     echo json_encode(array(
       "error" => "Club was not found or MAL is offline."
     ));
-    die();
+    return;
   }
 
 
