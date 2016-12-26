@@ -42,7 +42,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "Authorisation Required."
     ));
-    die();
+    return;
   } else {
     $MALsession = getSession($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
   }
