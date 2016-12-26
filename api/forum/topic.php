@@ -37,20 +37,20 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "The id parameter is not defined."
     ));
-    die();
+    return;
   }
   if(!is_numeric($parts[0])) {
     echo json_encode(array(
       "error" => "Specified topic id is not a number."
     ));
-    die();
+    return;
   }
   $html = @file_get_html("https://myanimelist.net/forum/?topicid=" . $parts[0]);
   if(!$html) {
     echo json_encode(array(
       "error" => "Topic with specified id was not found."
     ));
-    die();
+    return;
   }
     
   $forum = $html->find("#content", 0)->children();
@@ -68,7 +68,7 @@ call_user_func(function() {
       echo json_encode(array(
         "error" => "Topic has an page that doesn't exist."
       ));
-      die();
+      return;
     }
     $forum_last = $lastPage->find("#content", 0)->children();
     $last_last = $lastPage->find("#content", 0)->find(".forum_border_around", -1);
