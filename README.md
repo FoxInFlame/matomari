@@ -2,11 +2,13 @@
 
 A couple of MAL related scrapers and stuff like that, put together in a RESTful API.
 
-Please, always remember that these scrapers are often not 100% stable for production, because when the layout of MAL changes, it won't work anymore. This can be used for small or private projects.
+Please, always remember that these scrapers are often not 100% stable for production, because when the layout of MAL changes, it won't work anymore. 
+
+**Not ready for use in production yet.**
 
 ---
 
-You can use matomari live from the base URL of ```http://matomari.tk/api```
+You can test matomari live from the base URL of ```http://matomari.tk/api/0.3```
 
 View example kind of thing : [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/f9a68f114b10fc4f6ee0)
 
