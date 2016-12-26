@@ -490,13 +490,13 @@ call_user_func(function() {
         echo json_encode(array(
           "error" => "MAL is offline, or their code changed."
         ));
-        die();
+        return;
       }
     } else {
       echo json_encode(array(
         "error" => "MAL is offline, or their code changed."
       ));
-      die();
+      return;
     }
   }
   
@@ -506,7 +506,7 @@ call_user_func(function() {
       "parameter" => "q=" . urlencode($parts[0]) . $filter_param,
       "results" => array()
     ));
-    die();
+    return;
   }
   array_shift($tr);
   $results_arr = array();
@@ -524,7 +524,7 @@ call_user_func(function() {
     $id = trim(substr(trim($pictd->find("div.picSurround a", 0)->id), 5));
     $image = trim($pictd->find("div.picSurround a img", 0)->srcset);
     $url = trim($infotd->find("a.hoverinfo_trigger", 0)->href);
-    $title = trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext);
+    $title = "string_" . trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext);
     $synopsis = trim(str_replace("read more.", "", $infotd->find("div.pt4", 0)->plaintext));
     $type = trim($typetd->innertext);
     $episodes = trim($episodestd->innertext);
@@ -533,18 +533,66 @@ call_user_func(function() {
     $enddate = trim($enddatetd->innertext);
     $membercount = trim($membercounttd->innertext);
     $rating = trim($ratingtd->innertext);
-    
-    foreach(explode("-", $startdate) as $index => $number) {
+    if($type == "-") {
+      $type = null;
+    }
+    if($episodes == "-") {
+      $episodes = null;
+    }
+    if($score == "N/A") {
+      $score = null;
+    }
+    $membercount = str_replace(",", "", $membercount);
+    if($rating == "-") {
+      $rating = null;
+    }
+    foreach(explode("-", $startdate) as $index => $number) { // Reformat start date
       if($index == 0) {
-        
+        $month = $number;
+        if(empty($month)) {
+          $month = "??";
+        }
       }
       if($index == 1) {
-        
+        $day = $number;
+        if(empty($day)) {
+          $day = "??";
+        }
       }
       if($index == 2) {
-        
+        $year = $number;
+        if($year == "??") {
+          $year = "????";
+        } else {
+          $year = date_create_from_format("y", $year)->format("Y");
+        }
       }
     }
+    $startdate = $year . "-" . $month . "-" . $day;
+    foreach(explode("-", $enddate) as $index => $number) { // Reformat end date
+      if($index == 0) {
+        $month = $number;
+        if(empty($month)) {
+          $month = "??";
+        }
+      }
+      if($index == 1) {
+        $day = $number;
+        if(empty($day)) {
+          $day = "??";
+        }
+      }
+      if($index == 2) {
+        $year = $number;
+        if($year == "??") {
+          $year = "????";
+        } else {
+          $year = date_create_from_format("y", $year)->format("Y");
+        }
+      }
+    }
+    $enddate = $year . "-" . $month . "-" . $day;
+    
     array_push($results_arr, array(
       "id" => $id,
       "image" => $image,
