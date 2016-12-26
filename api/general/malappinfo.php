@@ -34,7 +34,7 @@ $status = "all";
 // Check for username
 if(!isset($_GET["u"]) || empty($_GET["u"])){
   echo "<myanimelist/>";
-  exit();
+  die();
 } else {
   $username = $_GET["u"];
 }
