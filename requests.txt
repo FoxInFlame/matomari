@@ -139,8 +139,6 @@ GET forum/board/:id - Get latest topics in a forum board (with sort / pagination
 
 POST forum/board/:id - Post a topic in a forum board.
 
-GET forum/new - Get latest topics in all the boards.
-
 GET forum/watched - Get watched topics.
 
 GET forum/ignored - Get ignored topics.
