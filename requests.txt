@@ -5,6 +5,8 @@ GET anime/top - List of top anime (with pagination / types) detail parameter sho
 
 GET anime/search/:query - Search anime. (with pagination / filters) detail parameter shows more details individually.
 
+GET anime/recommendations - Latest anime recommendations (with pagination)
+
 GET anime/info/:id - Get detailed information about specific anime
 
 POST anime/info/:id - Update information about specific anime.
@@ -40,6 +42,8 @@ GET anime/moreinfo/:id - Returns more info about specific anime. Empty if not fo
 GET users/search/:query - Search for users (with filters / pagination)
 
 GET users/recent - Get recently online users and current online count.
+
+GET users/recommendations - Get users who posted most recommendations.
 
 GET user/info/:username - Get information about specific user.
 
