@@ -1,9 +1,9 @@
 NOTE! This is only a to do list and 99% of these are not implemented.
 
 
-GET anime/top - List of top anime (with pagination / types) detail parameter shows more details individually.
+[DONE] GET anime/top - List of top anime (with pagination / types) detail parameter shows more details individually.
 
-GET anime/search/:query - Search anime. (with pagination / filters) detail parameter shows more details individually.
+[DONE] GET anime/search/:query - Search anime. (with pagination / filters) detail parameter shows more details individually.
 
 GET anime/recommendations - Latest anime recommendations (with pagination)
 
