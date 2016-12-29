@@ -111,14 +111,37 @@ call_user_func(function() {
     $ranking_rank = $anime->find("td.rank span", 0)->innertext;
     $id = substr($anime->find("td.title .hoverinfo_trigger", 0)->id, 5);
     if($showDetailed) {
-      ob_start();
-      $_GET['id'] = $id;
-      include(dirname(__FILE__) . "/anime.info.ID.php");
-      $response_json = ob_get_clean();
-      $response_array = json_decode($response_json, true);
+      $info = file_get_html("https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $id);
+      $parts = explode("\n", trim($info->plaintext));
+      $titleAndYear = trim($info->find("a.hovertitle", 0)->innertext);
+      $title = trim(substr($titleAndYear, 0, -7));
+      $release_year = substr(substr($titleAndYear, -5), 0, -1);
+      $synopsis_snippet = substr(trim($info->find("div", 0)->plaintext), 0, -9);
+      $reverse = array_reverse($parts);
+      $members = str_replace(",", "", trim(substr($reverse[0], 12)));
+      $popularity = substr(trim($reverse[1]), 14);
+      $score = trim(substr(explode("(scored by ", trim($reverse[3]))[0], 6));
+      $score_count = str_replace(",", "", trim(substr(explode("(scored by ", trim($reverse[3]))[1], 0, 7)));
+      $episodes = substr(trim($reverse[4]), 10);
+      $type = substr(trim($reverse[5]), 7);
+      $status = substr(trim($reverse[6]), 9);
+      $genres = explode(", ", trim(explode("Genres: ", $reverse[7])[1]));
+      
       $response_array = array(
-        "ranking_rank" => $ranking_rank
-      ) + $response_array;
+        "ranking_rank" => $ranking_rank,
+        "id" => $id,
+        "title" => $title,
+        "type" => $type,
+        "episodes" => $episodes,
+        "score" => $score,
+        "score_count" => $score_count,
+        "member_count" => $members,
+        "popularity" => $popularity,
+        "genres" => $genres,
+        "status" => $status,
+        "release_year" => $release_year,
+        "synopsis_snippet" => $synopsis_snippet
+      );
       array_push($anime_arr, $response_array);
       continue;
     }
@@ -146,7 +169,9 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  $output = $anime_arr;
+  $output = array(
+    "top" => $anime_arr
+  );
   
   // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
