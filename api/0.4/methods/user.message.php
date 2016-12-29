@@ -4,9 +4,8 @@
 Send a message to a specific MAL user.
 
 Method: POST
-        /api/user/message/send/.(json|xml)
+        /user/message
 Authentication: HTTP Basic Auth with MAL Credentials.
-Supported Filetypes: json, xml
 Parameters:
   - None.
 Data:
@@ -31,7 +30,7 @@ error_reporting(E_ALL);
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
 call_user_func(function() {
 

@@ -4,9 +4,8 @@
 Shows the history for a MAL user for the past 3 weeks (27 days).
 
 Method: GET
-        /api/user/history/USERNAME.(json|xml)
+        /user/history/:username
 Authentication: None Required.
-Supported Filetypes: json, xml
 Parameters:
   - type: [Optional] Anime or manga (Defaults to anime)
 
@@ -24,7 +23,7 @@ A Part of the matomari API.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
 call_user_func(function() {
 

@@ -4,9 +4,8 @@
 Shows detailed information about a MAL user.
 
 Method: GET
-        /api/user/info/USERNAME.(json|xml)
+        /user/info/:username
 Authentication: None Required.
-Supported Filetypes: json, xml
 Parameters:
   - None.
 
@@ -24,7 +23,7 @@ A Part of the matomari API.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
 call_user_func(function() {
   

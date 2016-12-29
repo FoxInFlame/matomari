@@ -4,9 +4,8 @@
 Shows anime search results for a query. Maximum 50 results. Filtering supported.
 
 Method: GET
-        /api/anime/search/QUERY.(json|xml)
+        /anime/search/:query
 Authentication: None Required.
-Supported Filetypes: json, xml.
 Can someone please find out what the o parameter does in the MAL anime search?
 Parameters:
   - page: [Optional] Page number. If page doesn't exist, becomes 1. (Defaults to 1)
@@ -30,7 +29,7 @@ A Part of the matomari API.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
 call_user_func(function() {
   

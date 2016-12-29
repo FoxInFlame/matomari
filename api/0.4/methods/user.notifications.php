@@ -4,9 +4,8 @@
 Shows unread notifications for a specific MAL user.
 
 Method: GET
-        /api/user/notifications/USERNAME.(json|xml)
+        /user/notifications
 Authentication: HTTP Basic Auth with MAL Credentials.
-Supported Filetypes: json, xml
 Parameters:
   - None.
 
@@ -21,10 +20,15 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
+ini_set("display_errors", true);
+ini_set("display_startup_errors", true);
+error_reporting(E_ALL);
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-require(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require(dirname(__FILE__) . "/../class/class.notification.php");
 
 call_user_func(function() {
 
@@ -85,7 +89,16 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  echo $window_MAL_notification;
+  $notifications = json_decode($window_MAL_notification)->items;
+  $notifications_arr = array();
+  foreach($notifications as $value) {
+    $notification = new Notification();
+    $notification->loadJSON($value);
+    array_push($notifications_arr, $notification->saveJSON());
+  }
+  
+   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
+  echo json_encode($notifications_arr, JSON_NUMERIC_CHECK);
   
 });
 ?>

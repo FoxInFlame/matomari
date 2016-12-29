@@ -77,24 +77,32 @@ call_user_func(function() {
   $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : "1";
   $show = ($page - 1) * 50;
   $page_param = $sort_param == "" ? "?limit=" . $show : "&limit=" . $show;
-    
-  $html = @file_get_html("https://myanimelist.net/topanime.php" . $sort_param . $page_param);
-  if(!$html) {
+  
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/topanime.php" . $sort_param . $page_param);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $response_string = curl_exec($ch);
+  if(!$response_string) {
     if($page != 1) {
-      $html = @file_get_html("https://myanimelist.net/topanime.php" . $sort_param);
-      if(!$html) {
+      curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/topanime.php" . $sort_param);
+      $response_string = curl_exec($ch);
+      curl_close($ch);
+      if(!$response_string) {
         echo json_encode(array(
           "error" => "MAL is offline, or their code changed."
         ));
         return;
       }
     } else {
+      curl_close($ch);
       echo json_encode(array(
         "error" => "MAL is offline, or their code changed."
       ));
       return;
     }
   }
+  curl_close($ch);
+  $html = str_get_html($response_string);
   
   $top_ranking_table = $html->find(".top-ranking-table", 0);
   $ranking_items = $top_ranking_table->find("tr.ranking-list");
@@ -122,7 +130,7 @@ call_user_func(function() {
     $members_count = str_replace(",", "", substr(trim($information_parts[2]), 0, -8));
     $score = $anime->find("td.score span.text", 0)->innertext;
     array_push($anime_arr, array(
-      "ranking_rank" => $rating_rank,
+      "ranking_rank" => $ranking_rank,
       "id" => $id,
       "title" => $title,
       "type" => $type,
@@ -143,5 +151,6 @@ call_user_func(function() {
   // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
+  
 });
 ?>
