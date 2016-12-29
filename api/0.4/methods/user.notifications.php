@@ -7,7 +7,7 @@ Method: GET
         /user/notifications
 Authentication: HTTP Basic Auth with MAL Credentials.
 Parameters:
-  - None.
+  - filter: [Optional] All the filters available on MAL notifications (user_mention, payment, forum_quote, etc) (Defaults to no filter)
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -58,8 +58,46 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
 
+  $filter = isset($_GET['filter']) && !empty($_GET['filter']) ? $_GET['filter'] : "";
+  $filter_param = "/all/new";
+  switch($filter) {
+    case "friend_requests":
+      $filter_param = "/friend_request";
+      break;
+    case "profile_comment":
+      $filter_param = "/profile_comment";
+      break;
+    case "blog_comment":
+      $filter_param = "/blog_comment";
+      break;
+    case "forum_quote":
+      $filter_param = "/forum_quote";
+      break;
+    case "user_mention":
+      $filter_param = "/user_mention";
+      break;
+    case "watched_topic_message":
+      $filter_param = "/watched_topic_message";
+      break;
+    case "club_mass_message":
+      $filter_param = "/club_mass_message";
+      break;
+    case "related_anime":
+      $filter_param = "/related_anime";
+      break;
+    case "airing_anime":
+      $filter_param = "/on_air";
+      break;
+    case "payment":
+      $filter_param = "/payment";
+      break;
+    default:
+      $filter_param = "/all/new";
+      break;
+  }
+  
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/notification/all/new");
+  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/notification" . $filter_param);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_HEADER, true);
   curl_setopt($ch, CURLOPT_COOKIE, $MALsession['cookie_string']);
@@ -90,15 +128,26 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   $notifications = json_decode($window_MAL_notification)->items;
+  $notifications_history = json_decode($window_MAL_notification)->historyItems ? json_decode($window_MAL_notification)->historyItems : array();
   $notifications_arr = array();
+  $notifications_history_arr = array();
   foreach($notifications as $value) {
     $notification = new Notification();
     $notification->loadJSON($value);
     array_push($notifications_arr, $notification->saveJSON());
   }
+  foreach($notifications_history as $value) {
+    $notification = new Notification();
+    $notification->loadJSON($value);
+    array_push($notifications_history_arr, $notification->saveJSON());
+  }
   
+  $output = array(
+    "new" => $notifications_arr,
+    "read" => $notifications_history_arr
+  );
    // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
-  echo json_encode($notifications_arr, JSON_NUMERIC_CHECK);
+  echo json_encode($output, JSON_NUMERIC_CHECK);
   
 });
 ?>
