@@ -48,4 +48,3 @@ User
     - [My profile page!](http://www.foxinflame.tk)
 - ```user/notifications/USERNAME.(json|xml)```
 - ```user/messages/USERNAME.(json|xml)```
-- ```user/message/send/.(json|xml)```
