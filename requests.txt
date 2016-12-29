@@ -5,9 +5,9 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [DONE] GET anime/search/:query - Search anime. (with pagination / filters) detail parameter shows more details individually.
 
-GET anime/recommendations - Latest anime recommendations (with pagination)
+[DONE] GET anime/recommendations - Latest anime recommendations (with pagination)
 
-GET anime/info/:id - Get detailed information about specific anime
+[DONE] GET anime/info/:id - Get detailed information about specific anime
 
 POST anime/info/:id - Update information about specific anime.
 
@@ -210,3 +210,11 @@ GET character/pictures/:id - Get pictures for a specific character.
 POST character/pictures/:id - Post a base64 picture for a specific person.
 
 GET character/clubs/:id - Get clubs related to a specific character.
+
+-----------------------
+
+GET general/quickSearch/:query - QuickSearch (with filter)
+
+GET general/wallpaper - Get anime wallpaper (with sort and filter)
+
+GET general/malappinfo.php - Original malappinfo.php
