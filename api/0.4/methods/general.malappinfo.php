@@ -6,10 +6,10 @@ Access-Control-Allow-Origin header.
 
 Method: GET
 Authentication: None Required.
-Response: User history in JSON.
 Parameters:
-  - username: [Required] MAL Username.
+  - u: [Required] MAL Username.
   - type: [Optional] Anime or manga (Defaults to anime)
+  - status: [Optional] No idea what this does.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -34,7 +34,8 @@ $status = "all";
 // Check for username
 if(!isset($_GET["u"]) || empty($_GET["u"])){
   echo "<myanimelist/>";
-  die();
+  http_response_code(400);
+  return;
 } else {
   $username = $_GET["u"];
 }
@@ -64,4 +65,5 @@ $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, "https://myanimelist.net/malappinfo.php?u=".$username."&type=".$type."&status=".$status); // Set the URL
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // Return the content
 echo curl_exec($curl); // Execute the request, and show the response
+http_response_code(200);
 ?>

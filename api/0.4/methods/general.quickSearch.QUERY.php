@@ -37,7 +37,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "Parameter q is not supplied."
     ));
-    http_response_code(401);
+    http_response_code(400);
     return;
   }
   $filter = isset($_GET['filter']) && !empty($_GET['filter']) ? $_GET['filter'] : "all";
@@ -93,7 +93,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => $json->errors[0]->message
     ));
-    http_response_code(401);
+    http_response_code(400);
     return;
   }
   foreach($json->categories as $category) {
@@ -129,5 +129,7 @@ call_user_func(function() {
   // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo json_encode($output, JSON_NUMERIC_CHECK);
+  http_response_code(200);
+    
 });
 ?>

@@ -11,9 +11,9 @@ Parameters:
   - page: [Optional] Page number. If page doesn't exist, becomes 1. (Defaults to 1)
   - filter: [Optional] Filters, seperated by comma.
     - Examples:
-      /search/Pokemon.json?filter=inc-genre:action,score=9 // Includes genre "Action" with score of 9 with query  of Pokemon as JSON
-      /search/Naruto.xml?filter=type:tv,rating:pg // TV with rating of PG-13, with query of Pokemon as XML
-      /search/.json?filter=inc-genre:action // All anime with action genre as JSON
+      /search/Pokemon?filter=inc-genre:action,score=9 // Includes genre "Action" with score of 9 with query  of Pokemon as JSON
+      /search/Naruto?filter=type:tv,rating:pg // TV with rating of PG-13, with query of Pokemon as XML
+      /search/?filter=inc-genre:action // All anime with action genre as JSON
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -44,6 +44,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "Query must be at least 3 letters long."
     ));
+    http_response_code(400);
     return;
   }
   $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
@@ -501,12 +502,14 @@ call_user_func(function() {
         echo json_encode(array(
           "error" => "MAL is offline, or their code changed."
         ));
+        http_response_code(404);
         return;
       }
     } else {
       echo json_encode(array(
         "error" => "MAL is offline, or their code changed."
       ));
+      http_response_code(404);
       return;
     }
   }
@@ -517,6 +520,7 @@ call_user_func(function() {
       "parameter" => "q=" . urlencode($parts[0]) . $filter_param,
       "results" => array()
     ));
+    http_response_code(200);
     return;
   }
   array_shift($tr);
@@ -635,6 +639,7 @@ call_user_func(function() {
   // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
+  http_response_code(200);
   
 });
 ?>

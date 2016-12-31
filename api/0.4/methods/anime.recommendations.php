@@ -51,6 +51,7 @@ call_user_func(function() {
         echo json_encode(array(
           "error" => "MAL is offline, or their code changed."
         ));
+        http_response_code(404);
         return;
       }
     } else {
@@ -58,6 +59,7 @@ call_user_func(function() {
       echo json_encode(array(
         "error" => "MAL is offline, or their code changed."
       ));
+      http_response_code(404);
       return;
     }
   }
@@ -119,6 +121,7 @@ call_user_func(function() {
   // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
+  http_response_code(200);
   
 });
 

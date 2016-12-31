@@ -37,10 +37,10 @@ call_user_func(function() {
   
   if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
-    header("HTTP/1.0 401 Unauthorized");
     echo json_encode(array(
       "error" => "Authorisation Required."
     ));
+    http_response_code(401);
     return;
   } else {
     $MALsession = getSession($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
@@ -121,6 +121,7 @@ call_user_func(function() {
   // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
+  http_response_code(200);
   
 });
 

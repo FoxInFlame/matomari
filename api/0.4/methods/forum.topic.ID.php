@@ -5,9 +5,8 @@ Shows basic content on a MAL forum thread.
 Still WIP.
 
 Method: GET
-        /api/club/CLUBID.(json|xml)
+        /forum/topic/:id
 Authentication: None Required.
-Supported Filetypes: json, xml
 Parameters:
   - page: [Optional] Page number. If the page doesn't exist, it becomes 1. (Defaults to 1)
 
@@ -37,12 +36,14 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "The id parameter is not defined."
     ));
+    http_response_code(400);
     return;
   }
   if(!is_numeric($parts[0])) {
     echo json_encode(array(
       "error" => "Specified topic id is not a number."
     ));
+    http_response_code(400);
     return;
   }
   $html = @file_get_html("https://myanimelist.net/forum/?topicid=" . $parts[0]);
@@ -50,6 +51,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "Topic with specified id was not found."
     ));
+    http_response_code(404);
     return;
   }
     
@@ -66,8 +68,9 @@ call_user_func(function() {
     $lastPage = @file_get_html("https://myanimelist.net/forum/?topicid=" . $parts[0] . "&show=" . ($pageCount - 1)*50);
     if(!$lastPage) {
       echo json_encode(array(
-        "error" => "Topic has an page that doesn't exist."
+        "error" => "Topic has a page that doesn't exist."
       ));
+    http_response_code(502);
       return;
     }
     $forum_last = $lastPage->find("#content", 0)->children();
@@ -87,6 +90,7 @@ call_user_func(function() {
     array_push($posts, array(
       "error" => "Topic with specified id was not found."
     ));
+    http_response_code(404);
   } else {
     $forum_posts = $htmlpage->find("#content", 0)->find(".forum_border_around");
     foreach($forum_posts as $post) {
@@ -117,6 +121,7 @@ call_user_func(function() {
   
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo json_encode($output, JSON_NUMERIC_CHECK);
+  http_response_code(200);
   
 });
 ?>

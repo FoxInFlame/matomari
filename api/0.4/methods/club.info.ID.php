@@ -38,6 +38,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "The clubid parameter is not defined."
     ));
+    http_response_code(400);
     return;
   }
   $html = @file_get_html("https://myanimelist.net/clubs.php?cid=" . $parts[0]);
@@ -45,6 +46,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "Club was not found or MAL is offline."
     ));
+    http_response_code(404);
     return;
   }
 
@@ -146,6 +148,7 @@ call_user_func(function() {
   // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
+  http_response_code(200);
   
 });
 ?>

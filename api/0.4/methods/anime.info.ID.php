@@ -39,12 +39,14 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "The id parameter is not defined."
     ));
+    http_response_code(400);
     return;
   }
   if(!is_numeric($parts[0])) {
     echo json_encode(array(
       "error" => "Specified anime id is not a number."
     ));
+    http_response_code(400);
     return;
   }
   $html = @file_get_html("https://myanimelist.net/anime/" . $parts[0]);
@@ -52,6 +54,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "Anime with specified id was not found."
     ));
+    http_response_code(404);
     return;
   }
   
@@ -201,5 +204,7 @@ call_user_func(function() {
   
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo json_encode($output, JSON_NUMERIC_CHECK);
+  http_response_code(200);
+    
 });
 ?>

@@ -46,6 +46,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "The id parameter is not defined."
     ));
+    http_response_code(400);
     return;
   }
   

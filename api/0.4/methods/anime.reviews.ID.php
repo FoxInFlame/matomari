@@ -20,10 +20,6 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-ini_set("display_errors", true);
-ini_set("display_startup_errors", true);
-error_reporting(E_ALL);
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
@@ -44,12 +40,14 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "The id parameter is not defined."
     ));
+    http_response_code(400);
     return;
   }
   if(!is_numeric($id)) {
     echo json_encode(array(
       "error" => "Specified anime id is not a number."
     ));
+    http_response_code(400);
     return;
   }
   $html = @file_get_html("https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/reviews?p=" . $page);
@@ -57,6 +55,7 @@ call_user_func(function() {
     echo json_encode(array(
       "error" => "Anime with specified id was not found."
     ));
+    http_response_code(404);
     return;
   }
   
@@ -136,6 +135,8 @@ call_user_func(function() {
   
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo json_encode($output, JSON_NUMERIC_CHECK);
+  http_response_code(200);
+  
 });
 
 function getAbsoluteTimeGMT($string) {

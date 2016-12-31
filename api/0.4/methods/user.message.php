@@ -52,10 +52,10 @@ call_user_func(function() {
   
   if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
-    http_response_code(401);
     echo json_encode(array(
       "error" => "Authorisation Required."
     ));
+    http_response_code(401);
     return;
   } else {
     $MALsession = getSession($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
