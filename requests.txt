@@ -9,9 +9,9 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [DONE] GET anime/info/:id - Get detailed information about specific anime
 
-POST anime/info/:id - Update information about specific anime.
+[DONE] POST anime/info/:id - Update information about specific anime.
 
-GET anime/reviews/:id - Get reviews on specific anime (with sort parameter)
+[DONE] GET anime/reviews/:id - Get reviews on specific anime (with sort parameter)
 
 GET anime/recommendations/:id - Get recommendations from specific anime. detail parameter shows more details individually.
 
