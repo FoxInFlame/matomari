@@ -125,6 +125,8 @@ call_user_func(function() {
   $output = array(
     "results" => $categories_arr
   );
+  
+  // Remove string_ after parse
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo json_encode($output, JSON_NUMERIC_CHECK);
 });

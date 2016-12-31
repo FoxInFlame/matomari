@@ -60,7 +60,7 @@ call_user_func(function() {
 
   $filter = isset($_GET['filter']) && !empty($_GET['filter']) ? $_GET['filter'] : "";
   $filter_param = "/all/new";
-  switch($filter) {
+  switch(strtolower($filter)) {
     case "friend_requests":
       $filter_param = "/friend_request";
       break;
