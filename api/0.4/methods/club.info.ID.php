@@ -33,7 +33,7 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  $parts = isset($_GET['clubid']) ? explode("/",$_GET['clubid ']) : array();
+  $parts = isset($_GET['clubid']) ? explode("/",$_GET['clubid']) : array();
   if(empty($parts)) {
     echo json_encode(array(
       "error" => "The clubid parameter is not defined."

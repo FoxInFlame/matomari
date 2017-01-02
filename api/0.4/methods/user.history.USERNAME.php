@@ -156,7 +156,12 @@ function getAbsoluteTimeGMT($string) {
     return $date;
   } else {
     // "M j, g:i A" is the date type MAL shows
-    $date = date_create_from_format("M j, g:i A", $string, new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
+    $date = date_create_from_format("M j, g:i A", $string, new DateTimeZone("Etc/GMT+8"));
+    if(!$date) {
+      // Different year.
+      $date = date_create_from_format("M j, Y g:i A", $string, new DateTimeZone("Etc/GMT+8"));
+    }
+    $date->setTimeZone(new DateTimeZone("Etc/GMT"));
     return $date;
   }
 }
