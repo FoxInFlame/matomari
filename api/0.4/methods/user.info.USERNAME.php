@@ -104,13 +104,22 @@ call_user_func(function() {
     }
   }
   unset($value);
-  $alsoat = $html_leftside->find("div.user-profile div.user-profile-sns", 0)->find("a");
   $alsoat_arr = array();
-  foreach($alsoat as $value) {
-    array_push($alsoat_arr, $value->href);
+  if(strpos($html_leftside->find(".user-profile .user-profile-sns a", 0)->innertext, "Recent Anime") !== false) {
+    // User hasn't set any Also At links.
+    $alsoat_arr = array();
+  } else {
+    $alsoat = $html_leftside->find(".user-profile .user-profile-sns", 0)->find("a");
+    foreach($alsoat as $value) {
+      array_push($alsoat_arr, $value->href);
+    }
   }
   unset($value);
-  $rss = $html_leftside->find("div.user-profile div.user-profile-sns", 1)->find("a");
+  if(empty($alsoat_arr)) {
+    $rss = $html_leftside->find(".user-profile .user-profile-sns", 0)->find("a");
+  } else {
+    $rss = $html_leftside->find(".user-profile .user-profile-sns", 1)->find("a");
+  }
   $rss_recentanime = null;
   $rss_recentanime_byepisode = null;
   $rss_recentmanga = null;
@@ -130,7 +139,7 @@ call_user_func(function() {
     }
   }
   unset($value);
-  $about = htmlspecialchars_decode(str_replace("\"", "'", trim($html_rightside->find("div.user-profile-about div.profile-about-user table tr td div.word-break", 0)->innertext, " ")));
+  $about = $html_rightside->find(".user-profile-about .profile-about-user table tr td .word-break", 0) ? htmlspecialchars_decode(str_replace("\"", "'", trim($html_rightside->find(".user-profile-about .profile-about-user table tr td .word-break", 0)->innertext, " "))) : "";
 
   $favourites_anime_arr = array();
   $favourites_manga_arr = array();
@@ -182,7 +191,7 @@ call_user_func(function() {
     "id" => $id,
     "username" => $username,
     "url" => $mal_link,
-    "profile_image" => $image_url,
+    "image_url" => $image_url,
     "gender" => $gender,
     "birthday" => $birthday,
     "location" => $location,
