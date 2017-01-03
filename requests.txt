@@ -45,11 +45,11 @@ GET users/recent - Get recently online users and current online count.
 
 GET users/recommendations - Get users who posted most recommendations.
 
-GET user/info/:username - Get information about specific user.
+[DONE] GET user/info/:username - Get information about specific user.
 
 POST user/info/:username - Change information about specific user.
 
-GET user/stats/:username - Get stats for a specific user.
+[DONE] GET user/stats/:username - Get stats for a specific user.
 
 GET user/reviews/:username - Get reviews written by a specific user.
 
@@ -79,19 +79,19 @@ GET user/list/history/anime/:id - Get specific update history on anime.
 
 GET user/list/history/manga/:id - Get specific update history on manga.
 
-GET user/history/:username - Get update history (with filter).
+[DONE] GET user/history/:username - Get update history (with filter).
 
-GET user/notifications - Get all notifications (with pagination / filter)
+[DONE] GET user/notifications - Get all notifications (with pagination / filter)
 
 POST user/notifications - Set all notifications as read (with filter)
 
-GET user/messages - Get all messages (with pagination)
+[DONE] GET user/messages - Get all messages (with pagination)
 
 GET user/message/:id - Get specific message.
 
 DELETE user/message/:id - Delete specific message.
 
-POST user/message - Send a message.
+[DONE] POST user/message - Send a message.
 
 GET user/message/thread/:id - Get specific message thread.
 
@@ -119,7 +119,7 @@ GET clubs/recent - Recently posted clubs
 
 GET clubs/me - Clubs a specific user is part in.
 
-GET club/info/:id - Get information about a specific club.
+[DONE] GET club/info/:id - Get information about a specific club.
 
 GET club/comments/:id - Get comments about on a specific club.
 
@@ -142,6 +142,10 @@ GET forum/search/:query - Search for a forum tpoic (with pagination / filter)
 GET forum/board/:id - Get latest topics in a forum board (with sort / pagination)
 
 POST forum/board/:id - Post a topic in a forum board.
+
+GET forum/topic/:id - Get replies in a forum thread (with pagination)
+
+POST forum/topic/:id - Post a reply in a forum thread
 
 GET forum/watched - Get watched topics.
 
@@ -213,8 +217,8 @@ GET character/clubs/:id - Get clubs related to a specific character.
 
 -----------------------
 
-GET general/quickSearch/:query - QuickSearch (with filter)
+[DONE] GET general/quickSearch/:query - QuickSearch (with filter)
 
-GET general/wallpaper - Get anime wallpaper (with sort and filter)
+[DONE] GET general/wallpaper - Get anime wallpaper (with sort and filter)
 
-GET general/malappinfo.php - Original malappinfo.php
+[DONE] GET general/malappinfo.php - Original malappinfo.php
