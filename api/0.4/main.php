@@ -9,8 +9,6 @@ $request_parts = explode("/", $request);
 print_r($request_parts);
 print_r($_GET);
 
-require("json_to_xml.php");
-
 dieIfNotSet($request_parts[0]);
 
 switch($request_parts[0]) {
@@ -21,13 +19,11 @@ switch($request_parts[0]) {
         break;
       case "search": // anime/search/:query
         break;
-      case "recommendations": // anime/recommendations
+      case "recommendations": // anime/recommendations || anime/recommendations/:id
         break;
       case "info": // anime/info/:id
         break;
       case "reviews": // anime/reviews/:id
-        break;
-      case "recommendations": // anime/recommendations/:id
         break;
       case "stats": // anime/stats/:id
         break;
@@ -166,6 +162,8 @@ switch($request_parts[0]) {
         break;
       case "board": // forum/board/:id
         break;
+      case "topic": // forum/topic/:id
+        break;
       case "watched": // forum/watched
         break;
       case "ignored": // forum/ignored
@@ -250,8 +248,20 @@ switch($request_parts[0]) {
         break;
     }
     break;
-  
-  
+  case "general":
+    dieIfNotSet($request_parts[1]);
+    switch($request_parts[1]) {
+      case "quickSearch": // general/quickSearch/:query
+        break;
+      case "wallpaper": // general/wallpaper
+        break;
+      case "malappinfo": // general/malappinfo
+    }
+  default:
+    die("Invalid Request.");
+    break;
+    
+  /*
   case "anime":
     dieIfNotSet($request_parts[2]);
     switch($request_parts[1]) {
@@ -341,6 +351,7 @@ switch($request_parts[0]) {
   default:
     die("Invalid Request.");
     break;
+  */
 }
 
 function dieIfNotSet($part) {
@@ -354,18 +365,7 @@ function showOutput($request_file, $request_filetype) {
   ob_start();
   include($request_file);
   $response_json = ob_get_clean();
-  switch(trim(strtolower($request_filetype))) {
-    case "json":
-      header("Content-Type: application/json");
-      echo $response_json;
-      break;
-    case "xml":
-      header("Content-Type: application/xml");
-      echo json_to_xml($response_json);
-      break;
-    default:
-      die("Invalid File Type.");
-      break;
-  }
+  header("Content-Type: application/json");
+  echo $response_json;
 }
 ?>
