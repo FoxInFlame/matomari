@@ -1,7 +1,7 @@
 <?php
 /*
 
-Get latest anime recommendations.
+Shows latest anime recommendations.
 
 Method: GET
         /anime/recommendations
