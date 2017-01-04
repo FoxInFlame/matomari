@@ -89,7 +89,7 @@ call_user_func(function() {
       curl_close($ch);
       if(!$response_string) {
         echo json_encode(array(
-          "error" => "MAL is offline, or their code changed."
+          "message" => "MAL is offline, or their code changed."
         ));
         http_response_code(404);
         return;
@@ -97,7 +97,7 @@ call_user_func(function() {
     } else {
       curl_close($ch);
       echo json_encode(array(
-        "error" => "MAL is offline, or their code changed."
+        "message" => "MAL is offline, or their code changed."
       ));
       http_response_code(404);
       return;

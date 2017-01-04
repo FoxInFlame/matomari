@@ -35,7 +35,7 @@ call_user_func(function() {
 
   if(!isset($_GET['q']) || empty($_GET['q'])) {
     echo json_encode(array(
-      "error" => "Parameter q is not supplied."
+      "message" => "Parameter q is not supplied."
     ));
     http_response_code(400);
     return;
@@ -81,7 +81,7 @@ call_user_func(function() {
   $response = curl_exec($ch);
   if(curl_getinfo($ch, CURLINFO_HTTP_CODE) == 404) {
     echo json_encode(array(
-      "error" => "MAL is offline or their code changed."
+      "message" => "MAL is offline or their code changed."
     ));
     http_response_code(404);
     return;
@@ -91,7 +91,7 @@ call_user_func(function() {
   $categories_arr = array();
   if(isset($json->errors)) {
     echo json_encode(array(
-      "error" => $json->errors[0]->message
+      "message" => $json->errors[0]->message
     ));
     http_response_code(400);
     return;

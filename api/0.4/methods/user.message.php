@@ -36,7 +36,7 @@ call_user_func(function() {
 
   if($_SERVER['REQUEST_METHOD'] !== "POST") {
     echo json_encode(array(
-      "error" => "This method must be sent by a POST request."
+      "message" => "This request must be sent by a POST request."
     ));
     http_response_code(400);
     return;
@@ -53,7 +53,7 @@ call_user_func(function() {
   if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
     echo json_encode(array(
-      "error" => "Authorisation Required."
+      "message" => "Authorisation Required."
     ));
     http_response_code(401);
     return;
@@ -73,7 +73,7 @@ call_user_func(function() {
   $json = json_decode($input, true); // true parameter makes it return array and not stdClass
   if(json_last_error() != JSON_ERROR_NONE) {
     echo json_encode(array(
-      "error" => "Not valid JSON object."
+      "message" => "Not valid JSON object."
     ));
     http_response_code(400);
     return;
@@ -81,7 +81,7 @@ call_user_func(function() {
   
   if(!isset($json['to']) || empty($json['to']) || !isset($json['subject']) || empty($json['subject']) || !isset($json['message']) || empty($json['message'])) {
     echo json_encode(array(
-      "error" => "One or more values missing in JSON."
+      "message" => "One or more values missing in JSON."
     ));
     http_response_code(400);
     return;
@@ -111,7 +111,7 @@ call_user_func(function() {
   
   if($contentWrapper->find(".private-message-content .badresult", 0)) {
     echo json_encode(array(
-      "error" => $contentWrapper->find(".private-message-content .badresult", 0)->innertext
+      "message" => $contentWrapper->find(".private-message-content .badresult", 0)->innertext
     ));
     http_response_code(400);
     return;
@@ -124,7 +124,7 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   echo json_encode(array(
-    "success" => "Message sent to " . urlencode($json['to']) . " successfully."
+    "message" => "Message sent to " . urlencode($json['to']) . " successfully."
   ));
   http_response_code(201);
 

@@ -38,7 +38,7 @@ call_user_func(function() {
   if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
     echo json_encode(array(
-      "error" => "Authorisation Required."
+      "message" => "Authorisation Required."
     ));
     http_response_code(401);
     return;
@@ -84,8 +84,9 @@ call_user_func(function() {
       // Read
       $read = true;
     }
-    $id = substr($message->id, 8);
-    $readid = substr($message->find(".mym_subject a", 0)->href, 12);
+    $id = substr($message->find(".mym_subject a", 0)->href, 12);
+    $action_id = substr($message->id, 8);
+    $thread_id = explode("&", explode("threadid=", $message->find(".mym_option .mym_actions a", 0)->href)[1])[0];
     $sender = $message->find(".mym_user a", 0)->innertext;
     $sender_url = "https://myanimelist.net" . $message->find(".mym_user a", 0)->href;
     $text = $message->find(".mym_subject a", 0)->plaintext;
@@ -95,7 +96,8 @@ call_user_func(function() {
     $absolute_date = getAbsoluteTimeGMT($relative_date)->format("c");
     array_push($messages_arr, array(
       "id" => $id,
-      "readid" => $readid,
+      "action_id" => $action_id,
+      "thread_id" => $thread_id,
       "read" => $read,
       "sender" => array(
         "username" => $sender,

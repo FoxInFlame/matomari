@@ -36,7 +36,7 @@ call_user_func(function() {
   $parts = isset($_GET['clubid']) ? explode("/",$_GET['clubid']) : array();
   if(empty($parts)) {
     echo json_encode(array(
-      "error" => "The clubid parameter is not defined."
+      "message" => "The clubid parameter is not defined."
     ));
     http_response_code(400);
     return;
@@ -44,7 +44,7 @@ call_user_func(function() {
   $html = @file_get_html("https://myanimelist.net/clubs.php?cid=" . $parts[0]);
   if(!$html) {
     echo json_encode(array(
-      "error" => "Club was not found or MAL is offline."
+      "message" => "Club was not found or MAL is offline."
     ));
     http_response_code(404);
     return;

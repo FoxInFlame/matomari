@@ -38,14 +38,14 @@ call_user_func(function() {
   $id = isset($_GET['id']) ? $_GET['id'] : "";
   if(empty($id)) {
     echo json_encode(array(
-      "error" => "The id parameter is not defined."
+      "message" => "The id parameter is not defined."
     ));
     http_response_code(400);
     return;
   }
   if(!is_numeric($id)) {
     echo json_encode(array(
-      "error" => "Specified anime id is not a number."
+      "message" => "Specified anime id is not a number."
     ));
     http_response_code(400);
     return;
@@ -53,7 +53,7 @@ call_user_func(function() {
   $html = @file_get_html("https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/reviews?p=" . $page);
   if(!$html) {
     echo json_encode(array(
-      "error" => "Anime with specified id was not found."
+      "message" => "Anime with specified id was not found."
     ));
     http_response_code(404);
     return;

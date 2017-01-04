@@ -35,7 +35,7 @@ call_user_func(function() {
   
   if($_SERVER['REQUEST_METHOD'] !== "POST") {
     echo json_encode(array(
-      "error" => "This method must be sent by a POST request."
+      "message" => "This method must be sent by a POST request."
     ));
     http_response_code(400);
     return;
@@ -44,7 +44,7 @@ call_user_func(function() {
   $parts = isset($_GET['id']) ? explode("/",$_GET['id']) : array();
   if(empty($parts)) {
     echo json_encode(array(
-      "error" => "The id parameter is not defined."
+      "message" => "The id parameter is not defined."
     ));
     http_response_code(400);
     return;
@@ -62,7 +62,7 @@ call_user_func(function() {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
     http_response_code(401);
     echo json_encode(array(
-      "error" => "Authorisation Required."
+      "message" => "Authorisation Required."
     ));
     return;
   } else {
@@ -81,7 +81,7 @@ call_user_func(function() {
   $json = json_decode($input, true); // true parameter makes it return array and not stdClass
   if(json_last_error() != JSON_ERROR_NONE) {
     echo json_encode(array(
-      "error" => "Not valid JSON object."
+      "message" => "Not valid JSON object."
     ));
     http_response_code(400);
     return;
@@ -89,7 +89,7 @@ call_user_func(function() {
   
   if(!isset($json['type']) || empty($json['type']) || !isset($json['value']) || empty($json['value'])) {
     echo json_encode(array(
-      "error" => "One or more values missing in JSON."
+      "message" => "One or more values missing in JSON."
     ));
     http_response_code(400);
     return;
@@ -101,7 +101,7 @@ call_user_func(function() {
       // synopsis: "Monkey D Luffy etc whatever happened to go on a voyage on the sea...blah blah."
       if(!isset($json['value']['synopsis'])) {
         echo json_encode(array(
-          "error" => "One or more values missing in JSON."
+          "message" => "One or more values missing in JSON."
         ));
         http_response_code(400);
         return;
@@ -112,7 +112,7 @@ call_user_func(function() {
       // background: "Won the Oscar awards for the best coded API"
       if(!isset($json['value']['background'])) {
         echo json_encode(array(
-          "error" => "One or more values missing in JSON."
+          "message" => "One or more values missing in JSON."
         ));
         http_response_code(400);
         return;
@@ -125,7 +125,7 @@ call_user_func(function() {
       // japanese_title: "東雲"
       if(!isset($json['value']['synonyms']) || !isset($json['value']['english_title']) || !isset($json['value']['japanese_title'])) {
         echo json_encode(array(
-          "error" => "One or more values missing in JSON."
+          "message" => "One or more values missing in JSON."
         ));
         http_response_code(400);
         return;
@@ -138,7 +138,7 @@ call_user_func(function() {
       // image: "data:image/png;base64,asdasdiqlakI112)ASDKJ!"#kajsd9kJADSHKJHADS"
       if(!isset($json['value']['image'])) {
         echo json_encode(array(
-          "error" => "One or more values missing in JSON."
+          "message" => "One or more values missing in JSON."
         ));
         http_response_code(400);
         return;
@@ -150,7 +150,7 @@ call_user_func(function() {
       // end_date: "20170115"
       if(!isset($json['value']['start_date']) || !isset($json['value']['start_date']) || !isset($json['value']['start_date']) || !isset($json['value']['start_date'])) {
         echo json_encode(array(
-          "error" => "One or more values missing in JSON."
+          "message" => "One or more values missing in JSON."
         ));
         http_response_code(400);
         return;
@@ -175,7 +175,7 @@ call_user_func(function() {
     case "rating":
       if(!isset($json['value']['rating'])) {
         echo json_encode(array(
-          "error" => "One or more values missing in JSON."
+          "message" => "One or more values missing in JSON."
         ));
         http_response_code(400);
         return;
@@ -208,7 +208,7 @@ call_user_func(function() {
     case "source":
       if(!isset($json['value']['source'])) {
         echo json_encode(array(
-          "error" => "One or more values missing in JSON."
+          "message" => "One or more values missing in JSON."
         ));
         http_response_code(400);
         return;
@@ -290,7 +290,7 @@ call_user_func(function() {
   
   if($contentWrapper->find(".badresult", 0)) {
     echo json_encode(array(
-      "error" => $contentWrapper->find(".badresult", 0)->innertext
+      "message" => $contentWrapper->find(".badresult", 0)->innertext
     ));
     http_response_code(400);
     return;
@@ -304,7 +304,7 @@ call_user_func(function() {
   
   header("Location: https://myanimelist.net/anime/" . substr($contentWrapper->find(".goodresult a", 0)->href, 13));
   echo json_encode(array(
-    "success" => "Changes sent to moderators for review successfully.",
+    "message" => "Changes sent to moderators for review successfully.",
   ));
   http_response_code(201);
   

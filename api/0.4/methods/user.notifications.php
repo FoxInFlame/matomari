@@ -39,7 +39,7 @@ call_user_func(function() {
   if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
     echo json_encode(array(
-      "error" => "Authorisation Required."
+      "message" => "Authorisation Required."
     ));
     http_response_code(401);
     return;

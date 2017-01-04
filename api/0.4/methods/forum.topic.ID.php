@@ -34,14 +34,14 @@ call_user_func(function() {
   $parts = isset($_GET['topicid']) ? explode("/",$_GET['topicid']) : array();
   if(empty($parts)) {
     echo json_encode(array(
-      "error" => "The id parameter is not defined."
+      "message" => "The id parameter is not defined."
     ));
     http_response_code(400);
     return;
   }
   if(!is_numeric($parts[0])) {
     echo json_encode(array(
-      "error" => "Specified topic id is not a number."
+      "message" => "Specified topic id is not a number."
     ));
     http_response_code(400);
     return;
@@ -49,7 +49,7 @@ call_user_func(function() {
   $html = @file_get_html("https://myanimelist.net/forum/?topicid=" . $parts[0]);
   if(!$html) {
     echo json_encode(array(
-      "error" => "Topic with specified id was not found."
+      "message" => "Topic with specified id was not found."
     ));
     http_response_code(404);
     return;
@@ -68,7 +68,7 @@ call_user_func(function() {
     $lastPage = @file_get_html("https://myanimelist.net/forum/?topicid=" . $parts[0] . "&show=" . ($pageCount - 1)*50);
     if(!$lastPage) {
       echo json_encode(array(
-        "error" => "Topic has a page that doesn't exist."
+        "message" => "Topic has a page that doesn't exist."
       ));
     http_response_code(502);
       return;
@@ -88,7 +88,7 @@ call_user_func(function() {
   $htmlpage = @file_get_html("https://myanimelist.net/forum/?topicid=" . $parts[0] . "&show=" . (($page - 1)*50));
   if(!$htmlpage) {
     array_push($posts, array(
-      "error" => "Topic with specified id was not found."
+      "message" => "Topic with specified id was not found."
     ));
     http_response_code(404);
   } else {

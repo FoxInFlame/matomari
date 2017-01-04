@@ -42,7 +42,7 @@ call_user_func(function() {
   $parts = isset($_GET['q']) ? explode("/",$_GET['q']) : array();
   if(strlen($parts[0]) < 3) {
     echo json_encode(array(
-      "error" => "Query must be at least 3 letters long."
+      "message" => "Query must be at least 3 letters long."
     ));
     http_response_code(400);
     return;
@@ -500,14 +500,14 @@ call_user_func(function() {
       $html = @file_get_html("https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g&show=0"); // c[] parameter for showing all columns
       if(!$html) {
         echo json_encode(array(
-          "error" => "MAL is offline, or their code changed."
+          "message" => "MAL is offline, or their code changed."
         ));
         http_response_code(404);
         return;
       }
     } else {
       echo json_encode(array(
-        "error" => "MAL is offline, or their code changed."
+        "message" => "MAL is offline, or their code changed."
       ));
       http_response_code(404);
       return;

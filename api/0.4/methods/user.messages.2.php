@@ -33,7 +33,7 @@ call_user_func(function() {
 
   if($_SERVER['REQUEST_METHOD'] !== "POST") {
     echo json_encode(array(
-      "error" => "This request must be sent by a POST request."
+      "message" => "This request must be sent by a POST request."
     ));
     http_response_code(400);
     return;
@@ -50,7 +50,7 @@ call_user_func(function() {
   if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
     echo json_encode(array(
-      "error" => "Authorisation Required."
+      "message" => "Authorisation Required."
     ));
     http_response_code(401);
     return;
@@ -70,7 +70,7 @@ call_user_func(function() {
   $json = json_decode($input, true); // true parameter makes it return array and not stdClass
   if(json_last_error() != JSON_ERROR_NONE) {
     echo json_encode(array(
-      "error" => "Not valid JSON object."
+      "message" => "Not valid JSON object."
     ));
     http_response_code(400);
     return;
@@ -78,7 +78,7 @@ call_user_func(function() {
   
   if(!isset($json['id']) || empty($json['id']) || !isset($json['action']) || empty($json['action'])) {
     echo json_encode(array(
-      "error" => "One or more values missing in JSON."
+      "message" => "One or more values missing in JSON."
     ));
     http_response_code(400);
     return;
@@ -86,7 +86,7 @@ call_user_func(function() {
   
   if(!in_array(strtolower($json['action']), array("read", "unread", "delete"), true)) {
     echo json_encode(array(
-      "error" => "Invalid action."
+      "message" => "Invalid action."
     ));
     http_response_code(400);
     return;
@@ -97,7 +97,7 @@ call_user_func(function() {
   foreach($action_ids as $action_id) {
     if(!is_numeric(trim($action_id))) {
       echo json_encode(array(
-        "error" => "One or more ids are not numerical."
+        "message" => "One or more ids are not numerical."
       ));
       http_response_code(400);
       return;
@@ -130,7 +130,7 @@ call_user_func(function() {
   $curlerror = curl_error($ch); // Seperate in two lines because:
   if(!empty($curlerror)) { // http://stackoverflow.com/questions/17139264/cant-use-function-return-value-in-write-context
     echo json_encode(array(
-      "error" => "Could not connect to MAL successfully."
+      "message" => "Could not connect to MAL successfully."
     ));
     http_response_code(500);
     return;
@@ -146,7 +146,7 @@ call_user_func(function() {
     $json['action'] = $json['action'] . "d";
   }
   echo json_encode(array(
-    "success" => "Marked " . count($action_ids_arr) . " message(s) as " . $json['action'] . "."
+    "message" => "Marked " . count($action_ids_arr) . " message(s) as " . $json['action'] . "."
   ));
   http_response_code(200); // Use 200 instead of 201, because it's not 'creating' anything.
 
