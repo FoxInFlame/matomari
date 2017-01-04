@@ -87,6 +87,8 @@ POST user/notifications - Set all notifications as read (with filter)
 
 [DONE] GET user/messages - Get all messages (with pagination)
 
+[DONE] POST user/messages - Set specific messages as read or unread
+
 GET user/message/:id - Get specific message.
 
 DELETE user/message/:id - Delete specific message.
