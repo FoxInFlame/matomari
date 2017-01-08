@@ -139,7 +139,7 @@ call_user_func(function() {
     $title = $value->find(".data a", 0)->innertext;
     $id = explode("/", $url)[4];
     $time = getAbsoluteTimeGMT($value->find(".data .clearfix span", 0)->innertext)->format("c");
-    $status = strtolower(trim(explode("<span", $value->find(".data .fn-grey2", 1)->innertext)[0]));
+    $status = strtolower(trim(explode("<span", explode("&middot;", $value->find(".data .fn-grey2", 1)->innertext)[0])[0]));
     $episode = $value->find(".data .fn-grey2", 1)->find(".text", 0) ? $value->find(".data .fn-grey2", 1)->find(".text", 0)->innertext : null;
     if(strpos($value->find(".data .fn-grey2", 1)->innertext, "</span>") !== false) {
       $totalepisodes = trim(substr(trim(explode("Scored", trim(explode("</span>", $value->find(".data .fn-grey2", 1)->innertext)[1]))[0]), 1, -9));
@@ -226,7 +226,7 @@ call_user_func(function() {
     $title = $value->find(".data a", 0)->innertext;
     $id = explode("/", $url)[4];
     $time = getAbsoluteTimeGMT($value->find(".data .clearfix span", 0)->innertext)->format("c");
-    $status = strtolower(trim(explode("<span", $value->find(".data .fn-grey2", 1)->innertext)[0]));
+    $status = strtolower(trim(explode("<span", explode("-", explode("&middot;", $value->find(".data .fn-grey2", 1)->innertext)[0])[0])[0]));
     $chapter = $value->find(".data .fn-grey2", 1)->find(".text", 0) ? $value->find(".data .fn-grey2", 1)->find(".text", 0)->innertext : null;
     if(strpos($value->find(".data .fn-grey2", 1)->innertext, "</span>") !== false) {
       $totalchapters = trim(substr(trim(explode("Scored", trim(explode("</span>", $value->find(".data .fn-grey2", 1)->innertext)[1]))[0]), 1, -9));
