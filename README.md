@@ -16,9 +16,9 @@ It needs to consist of:
 
 ---
 
-You can test matomari Version 0.4 live from the base URL of ```http://www.matomari.tk/api/0.4```
+You can test matomari Version 0.4 live from the base URL of ```https://www.matomari.tk/api/0.4```
 
-View example kind of thing : [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/f9a68f114b10fc4f6ee0)
+Docs will be added soon.
 
 Each file contains information and parameters required at the top of the file.
 
