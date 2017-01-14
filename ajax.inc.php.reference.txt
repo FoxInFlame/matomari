@@ -237,7 +237,50 @@ NUBMER:
     )
   }
 
+More (since we have code here I'm putting code too - C#) @Drutol
+Should be self documenting
+Multiple numbers (13,14,38,39,42,43,47,48):
+  POST
+  Sets/Unsets item of an ID as favourite
+  data to send: csrf_token + id
+  response: unknown
+public static async Task ModifyFavourite(int id, FavouriteType type, bool add)
+        {
+            string idFieldName;
+            string actionId;
+            switch (type)
+            {
+                case FavouriteType.Anime:
+                    idFieldName = "aid";
+                    actionId = add ? "13" : "14";
+                    break;
+                case FavouriteType.Manga:
+                    idFieldName = "mid";
+                    actionId = add ? "38" : "39";
+                    break;
+                case FavouriteType.Character:
+                    idFieldName = "cid";
+                    actionId = add ? "42" : "43";
+                    break;
+                case FavouriteType.Person:
+                    idFieldName = "vaid";
+                    actionId = add ? "47" : "48";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
 
+                var client = await MalHttpContextProvider.GetHttpContextAsync(); //gets authenticated client with cookies and stuff, if I remember correctly both cookies and csrf_token is needed
+
+                var charCont = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>(idFieldName, id.ToString()),
+                    new KeyValuePair<string, string>("csrf_token", client.Token)
+                };
+                var contentchar = new FormUrlEncodedContent(charCont);
+                await client.PostAsync($"/includes/ajax.inc.php?s=1&t={actionId}", contentchar);
+            
+       }
 
 Additional:
 
