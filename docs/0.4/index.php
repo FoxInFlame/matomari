@@ -149,6 +149,7 @@ if(isset($_GET['file'])) {
           <div class="ui segment">
             <?php
             if(file_exists($showFile)) {
+              echo "<h1 class=\"ui header\">" . $showFile_method . "</h1>";
               include($showFile);
             } else {
               echo "No documentation has been created on this page.";
