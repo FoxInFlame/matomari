@@ -7,9 +7,8 @@ Method: GET
         /anime/top
 Authentication: None Required.
 Parameters:
-  - sort: [Optional] Set to change the ranking method. "all", "airing", "tv", "ovas", "popularity", etc. (defaults to all)
+  - sort: [Optional] Set to change the ranking method. "all", "airing", "tv", "ova", "bypopularity", etc. (defaults to all)
   - page: [Optional] Page number. If page doesn't exist, becomes 1. (defaults to 1)
-  - detail: [Optional] Set the parameter to anything to show more details about each anime. Request will take about 2 minutes in total, so use this only if super-necessary.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -39,7 +38,6 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  $showDetailed = isset($_GET['detail']);
   $sort = isset($_GET['sort']) ? $_GET['sort'] : "all";
   switch(strtolower($sort)) {
     case "all":
