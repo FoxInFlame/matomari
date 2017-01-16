@@ -1,0 +1,154 @@
+anime/search/:query is a method to get anime search results of a query on MAL.<br>
+<table class="ui celled green table">
+  <thead>
+    <tr>
+      <th colspan="2">GET anime/search/:query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Method</td>
+      <td class="twelve wide">GET</td>
+    </tr>
+    <tr>
+      <td>Authentication</td>
+      <td>None Required</td>
+    </tr>
+    <tr>
+      <td>Parameters</td>
+      <td>
+        <table class="ui celled table">
+          <thead>
+            <tr>
+              <th class="four wide">Name</th>
+              <th class="four wide">Possible Values</th>
+              <th class="eight wide">Description</th>
+            </tr>
+          </thead>
+          <tbody class="top aligned">
+            <tr>
+              <td><span class="inline-code">:query</span></td>
+              <td>Search query. It must be at least 3 letters long.</td>
+              <td>Show anime that's related to the specified query.</td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">page</span> [Optional]</td>
+              <td><i>Any natural number.</i><br>(default: "1")</td>
+              <td>Page number for the top anime. If the page doesn't exist, it will become 1.</td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">filter</span> [Optional]</td>
+              <td>Filters, separated by a comma<br>(default: none)</td>
+              <td>Filters will limit the amount of anime and show only what you need.</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>Status Codes</td>
+      <td>
+        <b>200</b> (OK)<br>
+        <b>400</b> (Query must be at least 3 letters long)<br>
+        <b>404</b> (MyAnimeList is offline or their code changed)<br>
+        <br>
+        See the message section in the error response for more details about an error.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="ui info message">
+  <div class="header">Help Needed</div>
+  I couldn't figure out what the <span class="inline-code">o</span> parameter does on the <a href="https://myanimelist.net/anime.php">MAL Search page</a>. I would greatly appreciate it if someone could find out that, so that I can include that if it's neccessary.
+</div>
+<h3 class="ui header">Filters</h3>
+Filters allow you to limit the amount of anime that will be returned. They should be in the query parameter, and each filter should be separated by a comma.<br>
+The available filters are:
+<table class="ui table">
+  <thead>
+    <tr>
+      <th class="four wide">Filter</th>
+      <th class="four wide">Possible Values</th>
+      <th class="eight wide">Description</th>
+    </tr>
+  </thead>
+  <tbody class="top aligned">
+    <tr>
+      <td><span class="inline-code">type</span></td>
+      <td>TV, OVA, Movie, Special, ONA, Music</td>
+      <td>Fairly obvious. Limits your search result to the specific type. The last specified one is used when it is declared multiple times.</td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">score</span></td>
+      <td>1 - 10</td>
+      <td>Limtis your search result to anime with a community score starting with the specific number. It can be declared multiple times.</td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">status</span></td>
+      <td>finishedairing, currentlyairing, notyetaired</td>
+      <td>Limits your search result to anime with the specific status. They're pretty much self-explanatory. The last specified one is used when it is declared multiple times.</td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">producer</span></td>
+      <td><i>TBC</i></td>
+      <td><div class="ui info message">
+        Too much to handle right now, since I would have to list and sort all the hundreds of producers on MyAnimeList.
+      </div></td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">rating</span></td>
+      <td>G, PG, PG13, R, R+, RX</td>
+      <td>Obvious here as well. Remember to encode the plus sign if you're going to filter with R+ (+ becomes %2B). The last specified one is used when it is declared multiple times.</td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">startdate</span></td>
+      <td><i>YYYYMMDD format number. Use hyphens to leave a part blank.</i></td>
+      <td>Limits your search result to anime with specific starting date, month, year, or a combination. It can be declared multiple times.</td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">enddate</span></td>
+      <td><i>YYYYMMDD format number. Use hyphens to leave a part blank.</i></td>
+      <td>Limits your search result to anime with specific ending date, month, year, or a combination. It can be declared multiple times.</td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">startswithletter</span></td>
+      <td><i>Anything in the English alphabet, excluding numbers and special characters.</i></td>
+      <td>Limits your search result to anime that has a title starting with a specific letter. The last specified one is used when it is declared multiple times.</td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">inc-genre</span></td>
+      <td><i>Any genre on MAL.</i></td>
+      <td>Limits your search result to anime with a specific genre. It can be declared multiple times.</td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">exc-genre</span></td>
+      <td><i>Any genre on MAL</i></td>
+      <td>Limits your search result to anime without the specific genre. It can be declared multiple times.</td>
+    </tr>
+  </tbody>
+</table>
+<h2 class="ui header">Response</h2>
+<pre style="background: #f0f0f0;">
+  <code class="code json">
+    {
+      <span class="property">"parameter"</span>: <span class="type-string">"q=love&amp;type=3"</span> <span class="type-comment">// The query string that was detected and sent to MAL. Invalid filters don't show up here.</span>
+      <span class="property">"results"</span>: [ <span class="type-comment">// Array of anime, up to 50 items per page</span>
+        {
+          <span class="property">"id"</span>: <span class="type-int">1006</span>,
+          <span class="property">"image"</span>: <span class="type-int">"https://myanimelist.cdn-dena.com/r/50x70/images/anime/11/21054.jpg?s=3b71031c6f49b5353a68331faca00250 1x, https://myanimelist.cdn-dena.com/r/100x140/images/anime/11/21054.jpg?s=13fdf747ad79eeea3d931b447d97f944 2x"</span>, <span class="type-comment">// Not completely done yet.</span>
+          <span class="property">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/1006/Tenchi_Muyou_in_Love"</span>,
+          <span class="property">"title"</span>: <span class="type-string">"Tenchi Muyou! in Love"</span>,
+          <span class="property">"synopsis_snippet"</span>: <span class="type-string">"The demonic space criminal Kain has escaped from prison and destroyed the Galaxy Police headquarters. To ensure that the Jurai will not stop him, Kain travels back to 1970 to eliminate Tenchi&#039;s mother..."</span>,
+          <span class="property">"type"</span>: <span class="type-string">"Movie"</span>,
+          <span class="property">"episodes"</span>: <span class="type-int">1</span>,
+          <span class="property">"score"</span>: <span class="type-int">7.52</span>,
+          <span class="property">"startdate"</span>: <span class="type-string">"1996-04-20"</span>,
+          <span class="property">"enddate"</span>: <span class="type-string">"1996-04-20"</span>,
+          <span class="property">"members_count"</span>: <span class="type-int">14468</span>,
+          <span class="property">"rating"</span>: <span class="type-string">"PG-13"</span>
+        },
+        ...
+      ]
+    }
+  </code>
+</pre>
