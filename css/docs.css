@@ -27,3 +27,24 @@ a:active, a:visited:active {
   background: #F0F0F0;
   font-family: monospace;
 }
+
+.json .property {
+  color: black;
+  /*font-weight: bold;*/
+}
+
+.json .type-string {
+  color: green;
+}
+
+.json .type-null {
+  color: gray;
+}
+
+.json .type-int {
+  color: blue;
+}
+
+.json .type-comment {
+  color: #bc8f8f;
+}
