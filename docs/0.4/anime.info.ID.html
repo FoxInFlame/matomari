@@ -2,17 +2,13 @@ anime/info/:id is a method that allows you to view the detailed information abou
 <table class="ui celled green table">
   <thead>
     <tr>
-      <th colspan="2">GET /anime/info/:id</th>
-    </tr>
-    <tr>
-      <th class="four wide">Name</th>
-      <th class="twelve wide">Value</th>
+      <th colspan="2">GET anime/info/:id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Method</td>
-      <td>GET</td>
+      <td class="four wide">Method</td>
+      <td class="twelve wide">GET</td>
     </tr>
     <tr>
       <td>Authentication</td>
@@ -24,15 +20,15 @@ anime/info/:id is a method that allows you to view the detailed information abou
         <table class="ui celled table">
           <thead>
             <tr>
-              <th class="four wide">Type</th>
               <th class="four wide">Name</th>
+              <th class="four wide">Possible Values</th>
               <th class="eight wide">Description</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="top aligned">
             <tr>
-              <td>integer</td>
               <td><span class="inline-code">:id</span></td>
+              <td><i>Any natural number between 1 and 30000 that's in the MAL database.</i></td>
               <td>The database ID of the anime. This is the ID that is displayed in the URL when you visit the anime page.</td>
             </tr>
           </tbody>
@@ -43,20 +39,59 @@ anime/info/:id is a method that allows you to view the detailed information abou
       <td>Status Codes</td>
       <td>
         <b>200</b> (OK)<br>
-        <b>400</b> (Invalid parameter)<br>
-        <b>404</b> (Anime with specified ID doesn't exist)<br>
+        <b>400</b> (Invalid anime ID)<br>
+        <b>404</b> (Anime with specified ID doesn't exist, MyAnimeList is offline, or their code changed)<br>
         <br>
-        See the message section in the error response for more details.
+        See the message section in the error response for more details about an error.
       </td>
     </tr>
   </tbody>
 </table>
 <h2 class="ui header">Response</h2>
-<pre>
+<pre style="background: #F0F0F0;">
   <code class="code json">
     {
-      "id": 21,
-      "title": "One Piece"
+      <span class="property">"id"</span>: <span class="type-int">21</span>, <span class="type-comment">// Integer of the anime id returned</span>
+      <span class="property">"title"</span>: <span class="type-string">"One Piece"</span>, <span class="type-comment">// String of the title on MAL</span>
+      <span class="property">"other_titles"</span>: { <span class="type-comment">// Object of other titles</span>
+        <span class="property">"english"</span>: <span class="type-string">"One Piece"</span>,
+        <span class="property">"japanese"</span>: <span class="type-string">"ONE PIECE"</span>,
+        <span class="property">"synonym"</span>: <span class="type-null">null</span>
+      },
+      <span class="property">"rank"</span>: <span class="type-int">74</span>, <span class="type-comment">// Integer of the overall rank</span>
+      <span class="property">"popularity"</span>: <span class="type-int">31</span>, <span class="type-comment">// Integer of the popularity rank</span>
+      <span class="property">"image_url"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/6/73245.jpg"</span>, <span class="type-comment">// String with the cover image URL</span>
+      <span class="property">"source"</span>: <span class="type-string">"Manga"</span>, <span class="type-comment">// String with the source</span>
+      <span class="property">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/21/One_Piece"</span>, <span class="type-comment">// String with the MyAnimeList URL</span>
+      <span class="property">"type"</span>: <span class="type-string">"TV"</span>, <span class="type-comment">// String with the anime type</span>
+      <span class="property">"episodes"</span>: <span class="type-null">null</span>, <span class="type-comment">// Integer of the number of episodes. Null if unknown.</span>
+      <span class="property">"duration"</span>: <span class="type-int">24</span>, <span class="type-comment">// Integer of the usual episode length</span>
+      <span class="property">"total_duration"</span>: <span class="type-int">0</span>, <span class="type-comment">// Total duration (episodes x duration). Just here for no reason, not accurate (some shows have long first episodes)</span>
+      <span class="property">"score"</span>: <span class="type-int">8.58</span>, <span class="type-comment">// Decimal integer of the community score</span>
+      <span class="property">"score_count"</span>: <span class="type-int">318056</span>, <span class="type-comment">// Integer of the number of people who scored</span>
+      <span class="property">"members_count"</span>: <span class="type-int">518679</span>, <span class="type-comment">// Integer of the number of members</span>
+      <span class="property">"favourites_count"</span>: <span class="type-int">56364</span>, <span class="type-comment">// Integer of the number of people with it in their favourites (FavoUrite, UK Spelling)</span>
+      <span class="property">"genres"</span>: [ <span class="type-comment">// Array of Genres</span>
+        <span class="type-string">"Action"</span>,
+        <span class="type-string">"Adventure"</span>,
+        <span class="type-string">"Comedy"</span>,
+        <span class="type-string">"Drama"</span>,
+        <span class="type-string">"Fantasy"</span>,
+        <span class="type-string">"Shounen"</span>,
+        <span class="type-string">"Super Power"</span>
+      ],
+      <span class="property">"producers"</span>: [ <span class="type-comment">// Array of Producers</span>
+        <span class="type-string">"Fuji TV"</span>,
+        <span class="type-string">"TAP"</span>
+      ],
+      <span class="property">"studios"</span>: [ <span class="type-comment">// Array of Studios</span>
+        <span class="type-string">"Toei Animation"</span>
+      ],
+      <span class="property">"licensors"</span>: [ <span class="type-comment">// Array of Licensors</span>
+        <span class="type-string">"FUNimation Entertainment"</span>,
+        <span class="type-string">"4Kids Entertainment"</span>
+      ],
+      <span class="property">"synopsis"</span>: <span class="type-string">"Gol D. Roger was known as the \"Pirate King,\" the strongest and the most</span>...(truncated)...</span class="type-string">"</span> <span class="type-comment">// String with HTML Formatted full synopsis</span>
     }
   </code>
 </pre>
