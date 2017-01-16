@@ -1,6 +1,5 @@
 <?php
 $time_start = microtime(true);
-$_GET['file'] = substr($_GET['file'], 4); // Remove 0.4/
 $showFile = "index.html"; // Default page - 0.4/index.html
 $showFile_method = "";
 $filenames = array( // Available methods
