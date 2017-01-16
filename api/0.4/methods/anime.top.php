@@ -7,7 +7,7 @@ Method: GET
         /anime/top
 Authentication: None Required.
 Parameters:
-  - sort: [Optional] Set to change the ranking method. "all", "airing", "tv", "ova", "bypopularity", etc. (defaults to all)
+  - sort: [Optional] Set to change the ranking method. "all", "airing", "tv", "ova", "popularity", etc. (defaults to all)
   - page: [Optional] Page number. If page doesn't exist, becomes 1. (defaults to 1)
 
 Created by FoxInFlame.
@@ -62,7 +62,7 @@ call_user_func(function() {
       $sort_param = "?type=special";
       break;
     case "popularity":
-      $sort_param = "?type=bypopularity";
+      $sort_param = "?type=popularity";
       break;
     case "favorites":
       $sort_param = "?type=favorite";
