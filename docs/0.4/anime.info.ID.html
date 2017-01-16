@@ -1,5 +1,14 @@
-anime.info.ID is a method that allows you to view the detailed information about a specific anime using the anime ID.<br>
-<table class="ui celled table">
+anime/info/:id is a method that allows you to view the detailed information about a specific anime using the anime ID.<br>
+<table class="ui celled green table">
+  <thead>
+    <tr>
+      <th colspan="2">GET /anime/info/:id</th>
+    </tr>
+    <tr>
+      <th class="four wide">Name</th>
+      <th class="twelve wide">Value</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
       <td>Method</td>
@@ -9,5 +18,45 @@ anime.info.ID is a method that allows you to view the detailed information about
       <td>Authentication</td>
       <td>None Required</td>
     </tr>
+    <tr>
+      <td>Parameters</td>
+      <td>
+        <table class="ui celled table">
+          <thead>
+            <tr>
+              <th class="four wide">Type</th>
+              <th class="four wide">Name</th>
+              <th class="eight wide">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>integer</td>
+              <td><span class="inline-code">:id</span></td>
+              <td>The database ID of the anime. This is the ID that is displayed in the URL when you visit the anime page.</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>Status Codes</td>
+      <td>
+        <b>200</b> (OK)<br>
+        <b>400</b> (Invalid parameter)<br>
+        <b>404</b> (Anime with specified ID doesn't exist)<br>
+        <br>
+        See the message section in the error response for more details.
+      </td>
+    </tr>
   </tbody>
 </table>
+<h2 class="ui header">Response</h2>
+<pre>
+  <code class="code json">
+    {
+      "id": 21,
+      "title": "One Piece"
+    }
+  </code>
+</pre>
