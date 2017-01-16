@@ -57,12 +57,12 @@ anime/top is a method to get the top anime on MyAnimeList.<br>
   </tbody>
 </table>
 <h2 class="ui header">Response</h2>
-<pre style="background: #F0F0F0;">
+With no detail parameter or set to false.
+<pre style="background: #f0f0f0;">
   <code class="code json">
     {
-      <span class="property">"items"</span>: [<span class="type-comment">// Array of anime, 50 items per page</span>
+      <span class="property">"items"</span>: [ <span class="type-comment">// Array of anime, 50 items per page</span>
         {
-          <span class="type-comment">// With no detail parameter or set to false</span>
           <span class="property">"ranking_rank"</span>: <span class="type-int">1</span>,
           <span class="property">"id"</span>: <span class="type-int">32281</span>,
           <span class="property">"title"</span>: <span class="type-string">"Kimi no Na Wa."</span>,
@@ -71,7 +71,26 @@ anime/top is a method to get the top anime on MyAnimeList.<br>
           <span class="property">"score"</span>: <span class="type-int">9.35</span>,
           <span class="property">"members_count"</span>: <span class="type-int">240252</span>
         },
-        { <span class="type-comment">// With details parameter set to <b>true</b></span>
+        {
+          <span class="property">"ranking_rank"</span>: <span class="type-int">2</span>,
+          <span class="property">"id"</span>: <span class="type-int">5114</span>,
+          <span class="property">"title"</span>: <span class="type-string">"Fullmetal Alchemist: Brotherhood"</span>,
+          <span class="property">"type"</span>: <span class="type-string">"TV"</span>,
+          <span class="property">"episodes"</span>: <span class="type-int">64</span>,
+          <span class="property">"score"</span>: <span class="type-int">9.26</span>,
+          <span class="property">"members_count"</span>: <span class="type-int">819164</span>
+        },
+        ...
+      ]
+    }
+  </code>
+</pre>
+With detail parameter set to true.
+<pre style="background: #f0f0f0">
+  <code class="code json">
+    {
+      <span class="property">"items"</span>: [ <span class="type-comment">// Array of anime, 50 items per page</span>
+        {
           <span class="property">"ranking_rank"</span>: <span class="type-int">1</span>,
           <span class="property">"id"</span>: <span class="type-int">32281</span>,
           <span class="property">"title"</span>: <span class="type-string">"Kimi no Na Wa."</span>,
@@ -82,10 +101,37 @@ anime/top is a method to get the top anime on MyAnimeList.<br>
           <span class="property">"members_count"</span>: <span class="type-int">240252</span>,
           <span class="property">"popularity"</span>: <span class="type-int">164</span>
           <span class="proeprty">"genres"</span>: [
+            <span class="type-string">"Drama"</span>,
+            <span class="type-string">"Romance"</span>,
+            <span class="type-string">"School"</span>,
+            <span class="type-string">"Supernatural"</span>
           ],
           <span class="property">"status"</span>: <span class="type-string">"Finished Airing"</span>,
           <span class="property">"release_year"</span>: <span class="type-int">2016</span>,
           <span class="property">"synopsis_snippet"</span>: <span class="type-string">Mitsuha Miyamizu, a high school girl, yearns to live the life of a boy in the bustling city of Tokyo&mdash;a dream that stands in stark contrast to her present life in the countryside. Meanwhile in th...</span>
+        },
+        {
+          <span class="property">"ranking_rank"</span>: <span class="type-int">2</span>,
+          <span class="property">"id"</span>: <span class="type-int">5114</span>,
+          <span class="property">"title"</span>: <span class="type-string">"Fullmetal Alchemist: Brotherhood"</span>,
+          <span class="property">"type"</span>: <span class="type-string">"TV"</span>,
+          <span class="property">"episodes"</span>: <span class="type-int">64</span>,
+          <span class="property">"score"</span>: <span class="type-int">9.26</span>,
+          <span class="property">"score_count"</span>: <span class="type-int">508074</span>,
+          <span class="property">"members_count"</span>: <span class="type-int">819164</span>,
+          <span class="property">"popularity"</span>: <span class="type-int">4</span>
+          <span class="proeprty">"genres"</span>: [
+            <span class="type-string">"Action"</span>,
+            <span class="type-string">"Adventure"</span>,
+            <span class="type-string">"Drama"</span>,
+            <span class="type-string">"Fantasy"</span>,
+            <span class="type-string">"Magic"</span>,
+            <span class="type-string">"Military"</span>,
+            <span class="type-string">"Shounen"</span>
+          ],
+          <span class="property">"status"</span>: <span class="type-string">"Finished Airing"</span>,
+          <span class="property">"release_year"</span>: <span class="type-int">2009</span>,
+          <span class="property">"synopsis_snippet"</span>: <span class="type-string">&quot;In order for something to be obtained, something of equal value must be lost.&quot; Alchemy is bound by this Law of Equivalent Exchange&mdash;something the young brothers Edward and Alphonse ...</span>
         },
         ...
       ]
