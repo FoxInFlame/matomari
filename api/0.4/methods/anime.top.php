@@ -9,6 +9,7 @@ Authentication: None Required.
 Parameters:
   - sort: [Optional] Set to change the ranking method. "all", "airing", "tv", "ova", "bypopularity", etc. (defaults to all)
   - page: [Optional] Page number. If page doesn't exist, becomes 1. (defaults to 1)
+  - details: [Optional] Show details. Will become slightly slower. (defaults to false)
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -38,6 +39,7 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
+  $showDetailed = isset($_GET['details']) && strtolower($_GET['details']) == "true" ? true : false;
   $sort = isset($_GET['sort']) ? $_GET['sort'] : "all";
   switch(strtolower($sort)) {
     case "all":
