@@ -5,3 +5,25 @@
 .ui.menu .item img.logo {
   margin-right: 1.5rem;
 }
+
+a, a:link, a:visited {
+  color: #2e51a2;
+}
+
+a:hover, a:focus, a:link:hover, a:link:focus, a:visited:hover, a:visited:focus {
+  color: #5773b4;
+}
+
+a:active, a:visited:active {
+  background: #eaedf5;
+  background: rgba(46, 81, 162, 0.1);
+}
+
+.inline-code {
+  white-space: pre;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  overflow-x: auto;
+  background: #F0F0F0;
+  font-family: monospace;
+}
