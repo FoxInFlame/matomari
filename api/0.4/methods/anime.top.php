@@ -9,7 +9,7 @@ Authentication: None Required.
 Parameters:
   - sort: [Optional] Set to change the ranking method. "all", "airing", "tv", "ova", "bypopularity", etc. (defaults to all)
   - page: [Optional] Page number. If page doesn't exist, becomes 1. (defaults to 1)
-  - details: [Optional] Show details. Will become slightly slower. (defaults to false)
+  - details: [Optional] Show details. Will become really slow. (defaults to false)
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -118,17 +118,17 @@ call_user_func(function() {
       $titleAndYear = trim($info->find("a.hovertitle", 0)->innertext);
       $title = trim(substr($titleAndYear, 0, -7));
       $release_year = substr(substr($titleAndYear, -5), 0, -1);
-      $synopsis_snippet = substr(trim($info->find("div", 0)->plaintext), 0, -9);
+      $synopsis_snippet = trim(str_replace("read more", "", $info->find("div", 0)->plaintext));
       $reverse = array_reverse($parts);
       $members = str_replace(",", "", trim(substr($reverse[0], 12)));
       $popularity = substr(trim($reverse[1]), 14);
       $score = trim(substr(explode("(scored by ", trim($reverse[3]))[0], 6));
-      $score_count = str_replace(",", "", trim(substr(explode("(scored by ", trim($reverse[3]))[1], 0, 7)));
+      $score_count = str_replace(",", "", trim(substr(explode("(scored by ", trim($reverse[3]))[1], 0, -7)));
       $episodes = substr(trim($reverse[4]), 10);
       $type = substr(trim($reverse[5]), 7);
       $status = substr(trim($reverse[6]), 9);
       $genres = explode(", ", trim(explode("Genres: ", $reverse[7])[1]));
-      
+      if($episodes == " Unknown") $episodes = null;
       $response_array = array(
         "ranking_rank" => $ranking_rank,
         "id" => $id,
@@ -137,7 +137,7 @@ call_user_func(function() {
         "episodes" => $episodes,
         "score" => $score,
         "score_count" => $score_count,
-        "member_count" => $members,
+        "members_count" => $members,
         "popularity" => $popularity,
         "genres" => $genres,
         "status" => $status,
@@ -172,7 +172,7 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   $output = array(
-    "top" => $anime_arr
+    "items" => $anime_arr
   );
   
   // Remove string_ after parse
