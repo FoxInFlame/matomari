@@ -40,7 +40,7 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   $parts = isset($_GET['q']) ? explode("/",$_GET['q']) : array();
-  if(strlen($parts[0]) < 3) {
+  if(strlen($parts[0]) < 3 && isset($_GET['q'])) {
     echo json_encode(array(
       "message" => "Query must be at least 3 letters long."
     ));
@@ -170,48 +170,40 @@ call_user_func(function() {
             $filter_param .= "&sm=0&sd=0&sy=0";
             break;
           }
+          $sy = $sm = $sd = "0";
           if(is_numeric(substr($filterparts[1], 0, 4))) {
-            $filter_param .= "&sy=" . substr($filterparts[1], 0, 4);
-          } else {
-            $filter_param .= "&sy=0";
+            $sy = (int)substr($filterparts[1], 0, 4);
           }
           if(is_numeric(substr($filterparts[1], 4, 2))) {
-            $filter_param .= "&sm=" . substr($filterparts[1], 4, 2);
-          } else {
-            $filter_param .= "&sm=0";
+            $sm = (int)substr($filterparts[1], 4, 2);
           }
           if(is_numeric(substr($filterparts[1], 6, 2))) {
-            $filter_param .= "&sd=" . substr($filterparts[1], 6, 2);
-          } else {
-            $filter_param .= "&sd=0";
+            $sd = (int)substr($filterparts[1], 6, 2);
           }
+          $filter_param .= "&sy=" . $sy . "&sm=" . $sm . "&sd=" . $sd;
           break;
         case "enddate":
           if(strlen($filterparts[1]) != 8) {
             $filter_param .= "&em=0&ed=0&ey=0";
             break;
           }
+          $ey = $em = $ed = "0";
           if(is_numeric(substr($filterparts[1], 0, 4))) {
-            $filter_param .= "&ey=" . substr($filterparts[1], 0, 4);
-          } else {
-            $filter_param .= "&ey=0";
+            $ey = (int)substr($filterparts[1], 0, 4);
           }
           if(is_numeric(substr($filterparts[1], 4, 2))) {
-            $filter_param .= "&em=" . substr($filterparts[1], 4, 2);
-          } else {
-            $filter_param .= "&em=0";
+            $em = (int)substr($filterparts[1], 4, 2);
           }
           if(is_numeric(substr($filterparts[1], 6, 2))) {
-            $filter_param .= "&ed=" . substr($filterparts[1], 6, 2);
-          } else {
-            $filter_param .= "&ed=0";
+            $ed = (int)substr($filterparts[1], 6, 2);
           }
+          $filter_param .= "&ey=" . $ey . "&em=" . $em . "&ed=" . $ed;
           break;
         case "startswithletter":
           if(strlen($filterparts[1]) != 1) {
             break;
           }
-          if(!preg_match("/^[a-zA-Z]$/", $param)) {
+          if(!preg_match("/^[a-zA-Z]$/", $filterparts[1])) {
             break;
           }
           $filter_param .= "&letter=" . $filterparts[1];
@@ -579,7 +571,13 @@ call_user_func(function() {
         if($year == "??") {
           $year = "????";
         } else {
-          $year = date_create_from_format("y", $year)->format("Y");
+          if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
+            // Over 1940
+            $year = "19" . $year;
+          } else {
+            // Under 2040
+            $year = "20" . $year;
+          }
         }
       }
     }
@@ -613,13 +611,13 @@ call_user_func(function() {
       "image" => $image,
       "url" => $url,
       "title" => $title,
-      "synopsis" => $synopsis,
+      "synopsis_snippet" => $synopsis,
       "type" => $type,
       "episodes" => $episodes,
       "score" => $score,
       "startdate" => $startdate,
       "enddate" => $enddate,
-      "member_count" => $membercount,
+      "members_count" => $membercount,
       "rating" => $rating
     ));
   }
