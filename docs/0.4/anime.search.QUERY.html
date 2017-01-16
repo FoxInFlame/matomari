@@ -27,8 +27,8 @@ anime/search/:query is a method to get anime search results of a query on MAL.<b
           </thead>
           <tbody class="top aligned">
             <tr>
-              <td><span class="inline-code">:query</span></td>
-              <td>Search query. It must be at least 3 letters long.</td>
+              <td><span class="inline-code">:query</span> [Optional]</td>
+              <td>Search query. It must be at least 3 letters long if specified. If unspecified, a filter parameter needs to be specified instead.</td>
               <td>Show anime that's related to the specified query.</td>
             </tr>
             <tr>
@@ -67,9 +67,9 @@ The available filters are:
 <table class="ui table">
   <thead>
     <tr>
-      <th class="four wide">Filter</th>
-      <th class="four wide">Possible Values</th>
-      <th class="eight wide">Description</th>
+      <th class="collapsing">Filter</th>
+      <th>Possible Values</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody class="top aligned">
@@ -126,6 +126,16 @@ The available filters are:
       <td>Limits your search result to anime without the specific genre. It can be declared multiple times.</td>
     </tr>
   </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th>
+        <b>Example Filters:</b><br>
+        /search/Pokemon?filter=inc-genre:action,score:9 <i>All anime with the query of Pokemon with a score of 9 and has the Action genre</i><br>
+        /search/Naruto?filter=type:tv,rating:pg <i>All anime with the query of Naruto with a rating of PG and TV</i><br>
+        /search/?filter=inc-genre:action <i>All anime with the Action genre</i>
+      </th>
+    </tr>
+  </tfoot>
 </table>
 <h2 class="ui header">Response</h2>
 <pre style="background: #f0f0f0;">
