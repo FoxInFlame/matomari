@@ -146,7 +146,7 @@ call_user_func(function() {
     $json['action'] = $json['action'] . "d";
   }
   echo json_encode(array(
-    "message" => "Marked " . count($action_ids_arr) . " message(s) as " . $json['action'] . "."
+    "message" => "Successfully marked " . count($action_ids_arr) . " message(s) as " . $json['action'] . "."
   ));
   http_response_code(200); // Use 200 instead of 201, because it's not 'creating' anything.
 

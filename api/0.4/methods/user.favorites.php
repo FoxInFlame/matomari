@@ -12,13 +12,13 @@ Parameters:
   
 Method: GET
         /user/favorites
-Authentication: Basic with MAL Credentials.
+Authentication: HTTP Basic Auth with MAL Credentials.
 Parameters::
   - None.
   
 Method: POST/DELETE
         /user/favorites
-Authentication: Basic with MAL Credentials.
+Authentication: HTTP Basic Auth with MAL Credentials.
 Data: {
   type: Anime, Manga, Character or People,
   id: ID.
