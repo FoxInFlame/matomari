@@ -91,7 +91,7 @@ GET user/list/history/manga/:id - Get specific update history on manga.
 
 [DONE] GET user/notifications - Get all notifications (with pagination / filter)
 
-POST user/notifications - Set all notifications as read (with filter)
+[DONE] POST user/notification/:id - Set specific notification as read, or accept friend request.
 
 [DONE] GET user/messages - Get all messages (with pagination)
 

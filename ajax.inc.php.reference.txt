@@ -293,3 +293,13 @@ Additional:
   GET
   HTML formatted Search results for anime with QUERY, used in /addtolist.php
   Minimum 2 letters
+
+/includes/ajax-no-auth.inc.php?t=6
+  POST // Not GET!
+  Get the HTML formatted "more" content in someone's list
+  Data: {
+    color: 1 // No idea, leave it as 1
+    id: // anime or manga id
+    type: // anime or manga
+    memId: // member ID
+  }
