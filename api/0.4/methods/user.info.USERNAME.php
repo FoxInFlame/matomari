@@ -141,45 +141,6 @@ call_user_func(function() {
   unset($value);
   $about = $html_rightside->find(".user-profile-about .profile-about-user table tr td .word-break", 0) ? htmlspecialchars_decode(str_replace("\"", "'", trim($html_rightside->find(".user-profile-about .profile-about-user table tr td .word-break", 0)->innertext, " "))) : "";
 
-  $favourites_anime_arr = array();
-  $favourites_manga_arr = array();
-  $favourites_characters_arr = array();
-  $favourites_people_arr = array();
-  $favourites = $html_rightside->find("div.user-favorites", 0)->children();
-  foreach($favourites as $value) {
-    if($value->find("h5", 0)->innertext == "Anime") {
-      $favourites_anime = $value->find("ul.anime", 0);
-      if(!empty($favourites_anime)) {
-        foreach($favourites_anime->find("li") as $value) {
-          // Add string_ to make sure PHP doesn't parse this as an integer
-          array_push($favourites_anime_arr, "string_".trim(explode("/", $value->find("div", 1)->find("a", 0)->href)[4]));
-        }
-      }
-    } else if($value->find("h5", 0)->innertext == "Manga") {
-      $favourites_manga = $value->find("ul.manga", 0);
-      if(!empty($favourites_manga)) {
-        foreach($favourites_manga->find("li") as $value) {
-          array_push($favourites_manga_arr, "string_".trim(explode("/", $value->find("div", 1)->find("a", 0)->href)[4]));
-        }
-      }
-    } else if($value->find("h5", 0)->innertext == "Characters") {
-      $favourites_characters = $value->find("ul.characters", 0);
-      if(!empty($favourites_characters)) {
-        foreach($favourites_characters->find("li") as $value) {
-          array_push($favourites_characters_arr, "string_".trim(explode("/", $value->find("div", 1)->find("a", 0)->href)[4]));
-        }
-      }
-    } else if($value->find("h5", 0)->innertext == "People") {
-      $favourites_people = $value->find("ul.people", 0);
-      if(!empty($favourites_people)) {
-        foreach($favourites_people->find("li") as $value) {
-          array_push($favourites_people_arr, "string_".trim(explode("/", $value->find("div", 1)->find("a", 0)->href)[4]));
-        }
-      }
-    }
-  }
-  unset($value);
-
 
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
@@ -219,12 +180,6 @@ call_user_func(function() {
       "blogfeed" => $rss_blogfeed
     ),
     "summary" => $about,
-    "favourites" => array(
-      "anime" => $favourites_anime_arr,
-      "manga" => $favourites_manga_arr,
-      "characters" => $favourites_characters_arr,
-      "people" => $favourites_people_arr
-    )
   );
   
   // Remove string_ after parse
