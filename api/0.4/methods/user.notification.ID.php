@@ -1,11 +1,15 @@
 <?php
 /*
 
-Mark notifications as read for a specific MAL user.
+Do an action to a notification for a specific MAL user.
 
 Method: POST
         /user/notification/:id
 Authentication: HTTP Basic Auth with MAL Credentials.
+Data: {
+  id: Comma separated notification ids
+  action: "read" to mark as read, "accept_friend" to accept a friend request, "deny_friend" to deny a friend request
+}
 Parameters:
   - None.
 
@@ -76,7 +80,7 @@ call_user_func(function() {
     return;
   }
   
-  if(!isset($json['id']) || empty($json['id'])) {
+  if(!isset($json['id']) || empty($json['id']) || !isset($json['action']) || empty($json['action'])) {
     echo json_encode(array(
       "message" => "One or more values missing in JSON."
     ));
@@ -97,30 +101,43 @@ call_user_func(function() {
     array_push($ids_arr, trim($id));
   }
   
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/notification/api/check-items-as-read.json");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_COOKIE, $MALsession['cookie_string']);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    "Content-Type: application/json"
-  ));
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
-    "csrf_token" => $MALsession['csrf_token'],
-    "notification_ids" => $ids_arr
-  )));
-  $response = curl_exec($ch);
-
-  if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200) {
-    $output = json_encode(array(
-      "message" => "Successfully marked " . count($ids_arr) . "notification(s) as read."
+  switch(strtolower($json['action'])) {
+    case "read":
+      action($ids_arr, "https://myanimelist.net/notification/api/check-items-as-read.json", "Successfully marked [number] notification(s) as read.", "Could not mark [number] notification(s) as read.");
+      break;
+    case "accept_friend":
+      action($ids_arr, "https://myanimelist.net/notification/api/accept-friend-request.json", "Successfully marked [number] notification(s) as read.", "Could not mark [number] notification(s) as read.");
+      break;
+    case "deny_friend":
+      action($ids_arr, "https://myanimelist.net/notification/api/deny-friend-request.json", "Successfully marked [number] notification(s) as read.", "Could not mark [number] notification(s) as read.");
+      break;
+  }
+  function action($ids, $url, $successMessage, $failMessage) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/notification/api/check-items-as-read.json");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_COOKIE, $MALsession['cookie_string']);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      "Content-Type: application/json"
     ));
-  } else {
-    echo json_encode(array(
-      "message" => "Could not mark " . count($ids_arr) . "notification(s) as read."
-    ));
-    http_response_code(502);
-    return;
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
+      "csrf_token" => $MALsession['csrf_token'],
+      "notification_ids" => $ids
+    )));
+    $response = curl_exec($ch);
+  
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200) {
+      $output = json_encode(array(
+        "message" => str_replace("[number]", count($ids_arr), $successMessage)
+      ));
+    } else {
+      echo json_encode(array(
+        "message" => str_replace("[number]", count($ids_arr), $failMessage)
+      ));
+      http_response_code(502);
+      return;
+    }
   }
   
   // [+] ============================================== [+]
