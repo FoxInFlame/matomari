@@ -51,6 +51,14 @@ POST user/info/:username - Change information about specific user.
 
 [DONE] GET user/stats/:username - Get stats for a specific user.
 
+[DONE] GET user/favorites/:username - Get favorites for a specific user.
+
+[DONE] GET user/favorites - Get favorites for the authorised user.
+
+[DONE] POST user/favorites - Add a new favorite to the authorised user.
+
+[DONE] DELETE user/favorites - Remove a favorite from the authorised user.
+
 GET user/reviews/:username - Get reviews written by a specific user.
 
 GET user/recommendations/:username - Get recommendations written by a specific user.
