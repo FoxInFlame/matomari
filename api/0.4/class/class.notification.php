@@ -7,9 +7,9 @@ class Notification {
   private $type_display;
   private $time;
   private $time_display;
-  private $isRead;
+  private $read;
   private $relatedURL;
-  private $isDeleted;
+  private $deleted;
   
   private $anime;
   private $senderUsername;
@@ -19,7 +19,7 @@ class Notification {
   private $commentImageURL;
   private $text;
   private $date; // todo: find a notification with this key
-  private $isApproved;
+  private $approved;
   private $friendUsername;
   private $friendProfileURL;
   private $friendImageURL;
@@ -34,14 +34,14 @@ class Notification {
   public function loadJSON($obj) {
     $this->id = $obj->id;
     $this->time = date_create_from_format("U", $obj->createdAt, new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"))->format("c");
-    $this->isRead = $obj->isRead;
-    $this->isDeleted = $obj->isDeleted;
+    $this->read = $obj->isRead;
+    $this->deleted = $obj->isDeleted;
     $this->relatedURL = $obj->url;
     switch($obj->typeIdentifier) {
       case "user_mention_in_forum_message": // When a user @mentions you in a forum message.
         $this->type = "user_mention_forum";
         $this->type_display = "New mention on forum";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->senderProfileURL = $obj->senderProfileUrl;
@@ -53,7 +53,7 @@ class Notification {
       case "related_anime_add": // When a new anime that's related to your list is added to the MAL database.
         $this->type = "related_anime";
         $this->type_display = "New related anime";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->anime = array(
@@ -65,7 +65,7 @@ class Notification {
       case "friend_request": // When a user requests to be your friend.
         $this->type = "friend_request";
         $this->type_display = "New friend request";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->isApproved = $obj->isApproved;
@@ -76,7 +76,7 @@ class Notification {
       case "watched_topic_message": // When a new message is posted on a watched forum topic.
         $this->type = "watched_topic_message";
         $this->type_display = "New watched topic message";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->posterProfileURL = $obj->postedUserProfileUrl;
@@ -88,7 +88,7 @@ class Notification {
       case "profile_comment": // When a user comments on your profile.
         $this->type = "profile_comment";
         $this->type_display = "New profile comment";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->commentProfileURL = $obj->commentUserProfileUrl;
@@ -99,7 +99,7 @@ class Notification {
       case "club_mass_message_in_forum": // When a user sends out a message to all club members.
         $this->type = "club_mass_message";
         $this->type_display = "New message to all club members";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->posterProfileURL = $obj->sharedUserProfileUrl;
@@ -114,7 +114,7 @@ class Notification {
       case "user_mention_in_club_comment": // When a user @mentions you in a club comment.
         $this->type = "user_mention_club";
         $this->type_display = "New mention in club comment";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->posterProfileURL = $obj->senderProfileUrl;
@@ -126,7 +126,7 @@ class Notification {
       case "on_air": // When an anime in your list starts airing.
         $this->type = "airing_anime";
         $this->type_display = "Anime has started airing";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->animes = $obj->animes;
@@ -137,7 +137,7 @@ class Notification {
       case "forum_quote": // When a user [quote]s you in a forum message.
         $this->type = "forum_quote";
         $this->type_display = "New quote on forum";
-        if($this->isDeleted) {
+        if($this->deleted) {
           return true;
         }
         $this->senderProfileUrl = $obj->quoteUserProfileUrl;
@@ -153,11 +153,11 @@ class Notification {
   }
   public function saveJSON() {
     $details = array();
-    if(!$this->isDeleted) {
+    if(!$this->deleted) {
       switch($this->type) {
         case "user_mention_forum": // When a user @mentions you in a forum message.
           $details = array(
-            "relatedURL" => $this->relatedURL, // link to forum message
+            "related_url" => $this->relatedURL, // link to forum message
             "poster" => array(
                "url" => $this->senderProfileURL,
                "username" => $this->senderUsername
@@ -171,7 +171,7 @@ class Notification {
           break;
         case "related_anime": // When a new anime that's related to your list is added to the MAL database.
           $details = array(
-            "relatedURL" => $this->relatedURL, // link to anime info
+            "related_url" => $this->relatedURL, // link to anime info
             "anime" => array(array(
               "url" => $this->relatedURL,
               "title" => $this->anime["title"],
@@ -182,7 +182,7 @@ class Notification {
           break;
         case "friend_request": // New friend request
           $details = array(
-            "relatedURL" => $this->relatedURL, // link to user info
+            "related_url" => $this->relatedURL, // link to user info
             "isApproved" => $this->isApproved,
             "friend" => array(
               "url" => $this->friendProfileURL,
@@ -193,7 +193,7 @@ class Notification {
           break;
         case "watched_topic_message": // When a new message is posted on a watched forum topic.
           $details = array(
-            "relatedURL" => $this->relatedURL, // link to forum message
+            "related_url" => $this->relatedURL, // link to forum message
             "poster" => array(
               "url" => $this->posterProfileURL,
               "username" => $this->posterUsername
@@ -207,7 +207,7 @@ class Notification {
           break;
         case "profile_comment": // When a user comments on your profile.
           $details = array(
-            "relatedURL" => $this->relatedURL, // link to com2com
+            "related_url" => $this->relatedURL, // link to com2com
             "sender" => array(
               "url" => $this->commentProfileURL,
               "username" => $this->commentUsername,
@@ -218,7 +218,7 @@ class Notification {
           break;
         case "club_mass_message": // When a user sends out a message to all club members.
           $details = array(
-            "relatedURL" => $this->relatedURL, // link to topic
+            "related_url" => $this->relatedURL, // link to topic
             "poster" => array(
               "url" => $this->posterProfileURL,
               "username" => $this->posterUsername
@@ -237,7 +237,7 @@ class Notification {
           break;
         case "user_mention_club": // When a user @mentions you in a club comment section.
           $details = array(
-            "relatedURL" => $this->relatedURL, // link to club info
+            "related_url" => $this->relatedURL, // link to club info
             "poster" => array(
               "url" => $this->posterProfileURL,
               "username" => $this->posterUsername
@@ -251,13 +251,13 @@ class Notification {
           break;
         case "airing_anime": // When an anime in your list starts airing.
           $details = array(
-            "relatedURL" => $this->relatedURL,
+            "related_url" => $this->relatedURL,
             "anime" => $this->animes
           );
           break;
         case "forum_quote": // When someone quotes you on a forum message using [quote][/quote]
           $details = array(
-            "relatedURL" => $this->relatedURL, // link to forum message
+            "related_url" => $this->relatedURL, // link to forum message
             "poster" => array(
               "url" => $this->senderProfileURL,
               "username" => $this->senderUsername
@@ -275,8 +275,8 @@ class Notification {
       "type" => $this->type,
       "type_display" => $this->type_display,
       "time" => $this->time,
-      "isRead" => $this->isRead,
-      "isDeleted" => $this->isDeleted,
+      "read" => $this->read,
+      "deleted" => $this->deleted,
       "details" => $details
     );
   }
