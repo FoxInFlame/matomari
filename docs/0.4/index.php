@@ -148,7 +148,7 @@ if(isset($_GET['file'])) {
           </div>
         </div>
         <div class="column sixteen wide mobile sixteen wide tablet twelve wide computer">
-          <div class="ui warning message">
+          <div class="ui warning icon message">
             <i class="warning sign icon"></i>
             <div class="content">
               <div class="header">Time to get secure!</div>
