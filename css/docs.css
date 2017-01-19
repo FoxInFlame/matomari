@@ -2,6 +2,10 @@
   margin-top: 7rem;
 }
 
+.main.ui.container > .message {
+  margin-bottom: 2rem;
+}
+
 .ui.menu .item img.logo {
   margin-right: 1.5rem;
 }
