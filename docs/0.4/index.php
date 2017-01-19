@@ -119,6 +119,13 @@ if(isset($_GET['file'])) {
       </div>
     </div>
     <div class="main ui container">
+      <div class="ui warning icon message">
+        <i class="warning sign icon"></i>
+        <div class="content">
+          <div class="header">Time to get secure!</div>
+          <p>matomari is dropping regular HTTP support for requests on Feburary the 23rd. Use HTTPS for everything, baby!</p>
+        </div>
+      </div>
       <?php
       if($showFile == "index.html") {
         include($showFile);
@@ -148,13 +155,6 @@ if(isset($_GET['file'])) {
           </div>
         </div>
         <div class="column sixteen wide mobile sixteen wide tablet twelve wide computer">
-          <div class="ui warning icon message">
-            <i class="warning sign icon"></i>
-            <div class="content">
-              <div class="header">Time to get secure!</div>
-              <p>matomari is dropping regular HTTP support for requests on Feburary the 23rd. Use HTTPS for everything, baby!</p>
-            </div>
-          </div>
           <div class="ui segment">
             <?php
             if(file_exists($showFile)) {
