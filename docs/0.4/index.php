@@ -32,12 +32,15 @@ $filenames = array( // Available methods
   "user/friends/:username",
   "user/comments/:username",
   "user/conversation/:username",
+  "user/favorites",
+  "user/favorites/:username",
   "user/list/anime/:id",
   "user/list/manga/:id",
   "user/list/history/anime/:id",
   "user/list/history/manga/:id",
   "user/history/:username",
   "user/notifications",
+  "user/notifications/:id",
   "user/messages",
   "user/messages/:id",
   "user/message",
@@ -145,6 +148,13 @@ if(isset($_GET['file'])) {
           </div>
         </div>
         <div class="column sixteen wide mobile sixteen wide tablet twelve wide computer">
+          <div class="ui warning message">
+            <i class="warning sign icon"></i>
+            <div class="content">
+              <div class="header">Time to get secure!</div>
+              <p>matomari is dropping regular HTTP support for requests on Feburary the 23rd. Use HTTPS for everything, baby!</p>
+            </div>
+          </div>
           <div class="ui segment">
             <?php
             if(file_exists($showFile)) {
