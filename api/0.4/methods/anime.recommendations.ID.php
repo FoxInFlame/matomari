@@ -24,7 +24,7 @@ ini_set("display_startup_errors", true);
 error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
-//header("Content-Type: application/json");
+header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
@@ -66,38 +66,43 @@ call_user_func(function() {
     return;
   }
   
-  $html = str_get_html($response_string);
+  $html = str_get_html($response_string . "<div");
   
+  if(!is_object($html)) {
+    echo json_encode(array(
+      "message" => "The code for MAL is not valid HTML markup."
+    ));
+    http_response_code(502);
+    return;
+  }
   //    [+] ============================================== [+]
   //    [+] --------------GETTING THE VALUES-------------- [+]
   //    [+] ============================================== [+]
-
-  $contentWrapper = $html->find("#contentWrapper", 0);
-  
-  //echo $html->outertext;
   
   $str = $html->find("#content table tbody tr", 0);
-  $recommendations = $contentWrapper->find("#content table tbody tr", 0)->children(1)->children(0)->children();
+  $recommendations = $html->find("div");
   
   $recommendations_arr = array();
   foreach($recommendations as $recommendation) {
     if(strpos($recommendation->class, "borderClass") === false) continue;
     $to = $recommendation->find("table td", 0);
+    if(!$to) continue;
+    if(!$to->find("a.hoverinfo_trigger", 0)) continue;
     $to_id = explode("/", $to->find(".picSurround a", 0)->href)[2];
     $to_picture = $to->find(".picSurround a img", 0)->{'data-srcset'};
     $to_picture_1x = explode(" 1x,", $to_picture)[0];
     $to_picture_2x = substr(explode(" 1x,", $to_picture)[1], 0, -3);
     $to_title = $recommendation->find("table td a strong", 0)->innertext;
     $reason = explode("\r\n", substr($recommendation->find("table td", 1)->children(2)->find("div", 0)->plaintext, 0, -6));
-    $reason = htmlspecialchars_decode(html_entity_decode(join("<br>", $reason), 0, "UTF-8"));
+    $reason = str_replace(" &nbspread more", "", htmlspecialchars_decode(html_entity_decode(join("<br>", $reason), 0, "UTF-8")));
     $author = trim($recommendation->find("table td", 1)->children(2)->children(1)->find("a", 1)->innertext);
-    $other = $recommendation->find("table td a strong", 1) ? $recommendation->find("table td a strong", 1)->innertext : "0";
+    $other = count($recommendation->find("table td a strong")) !== 1 ? $recommendation->find("table td a strong", 1)->innertext : "0";
     $other_arr = array();
     $other_elem = $recommendation->find("[id^=simaid]", 0);
     if($other_elem) {
       foreach($other_elem->find(".borderClass") as $otherrec) {
         array_push($other_arr, array(
-          "reason" => htmlspecialchars_decode(html_entity_decode(join("<br>", explode("\r\n", substr($otherrec->find(".spaceit_pad", 0)->plaintext, 0, -6))), 0, "UTF-8")),
+          "reason" => str_replace(" &nbspread more", "", htmlspecialchars_decode(html_entity_decode(join("<br>", explode("\r\n", substr($otherrec->find(".spaceit_pad", 0)->plaintext, 0, -6))), 0, "UTF-8"))),
           "author" => $otherrec->find(".spaceit_pad", 1)->find("a", 1)->innertext
         ));
       }

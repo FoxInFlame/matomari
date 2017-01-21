@@ -32,12 +32,15 @@ $filenames = array( // Available methods
   "user/friends/:username",
   "user/comments/:username",
   "user/conversation/:username",
+  "user/favorites",
+  "user/favorites/:username",
   "user/list/anime/:id",
   "user/list/manga/:id",
   "user/list/history/anime/:id",
   "user/list/history/manga/:id",
   "user/history/:username",
   "user/notifications",
+  "user/notifications/:id",
   "user/messages",
   "user/messages/:id",
   "user/message",
@@ -116,6 +119,13 @@ if(isset($_GET['file'])) {
       </div>
     </div>
     <div class="main ui container">
+      <div class="ui warning icon message">
+        <i class="warning sign icon"></i>
+        <div class="content">
+          <div class="header">Time to get secure!</div>
+          <p>matomari is dropping regular HTTP support for requests on Feburary the 23rd. Use HTTPS for everything, baby!</p>
+        </div>
+      </div>
       <?php
       if($showFile == "index.html") {
         include($showFile);
@@ -148,7 +158,7 @@ if(isset($_GET['file'])) {
           <div class="ui segment">
             <?php
             if(file_exists($showFile)) {
-              echo "<h1 class=\"ui header\">" . $showFile_method . "</h1>";
+              echo "<h1 class=\"ui header\">" . $showFile_method . " <a title=\"View Source for method\" href=\"https://github.com/FoxInFlame/matomari/tree/0.4/api/0.4/methods/" . substr($showFile, 0, -5) . ".php\"><i class=\"icon external\" style=\"float:right\"></i></a></h1>";
               include($showFile);
             } else {
               echo "No documentation has been created on this page.";
