@@ -13,7 +13,7 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [DONE] GET anime/reviews/:id - Get reviews on specific anime (with sort parameter)
 
-GET anime/recommendations/:id - Get recommendations from specific anime. detail parameter shows more details individually.
+[DONE] GET anime/recommendations/:id - Get recommendations from specific anime. detail parameter shows more details individually.
 
 GET anime/stats/:id - Get stats for specific anime. 
 
