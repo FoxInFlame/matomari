@@ -66,8 +66,15 @@ call_user_func(function() {
     return;
   }
   
-  $html = str_get_html($response_string);
+  $html = str_get_html($response_string . "<div");
   
+  if(!is_object($html)) {
+    echo json_encode(array(
+      "message" => "The code for MAL is not valid HTML markup."
+    ));
+    http_response_code(502);
+    return;
+  }
   //    [+] ============================================== [+]
   //    [+] --------------GETTING THE VALUES-------------- [+]
   //    [+] ============================================== [+]
@@ -87,7 +94,7 @@ call_user_func(function() {
     $to_picture_2x = substr(explode(" 1x,", $to_picture)[1], 0, -3);
     $to_title = $recommendation->find("table td a strong", 0)->innertext;
     $reason = explode("\r\n", substr($recommendation->find("table td", 1)->children(2)->find("div", 0)->plaintext, 0, -6));
-    $reason = str_replace(" &npspread more", "", htmlspecialchars_decode(html_entity_decode(join("<br>", $reason), 0, "UTF-8")));
+    $reason = str_replace(" &nbspread more", "", htmlspecialchars_decode(html_entity_decode(join("<br>", $reason), 0, "UTF-8")));
     $author = trim($recommendation->find("table td", 1)->children(2)->children(1)->find("a", 1)->innertext);
     $other = count($recommendation->find("table td a strong")) !== 1 ? $recommendation->find("table td a strong", 1)->innertext : "0";
     $other_arr = array();
@@ -95,7 +102,7 @@ call_user_func(function() {
     if($other_elem) {
       foreach($other_elem->find(".borderClass") as $otherrec) {
         array_push($other_arr, array(
-          "reason" => htmlspecialchars_decode(html_entity_decode(join("<br>", explode("\r\n", substr($otherrec->find(".spaceit_pad", 0)->plaintext, 0, -6))), 0, "UTF-8")),
+          "reason" => str_replace(" &nbspread more", "", htmlspecialchars_decode(html_entity_decode(join("<br>", explode("\r\n", substr($otherrec->find(".spaceit_pad", 0)->plaintext, 0, -6))), 0, "UTF-8"))),
           "author" => $otherrec->find(".spaceit_pad", 1)->find("a", 1)->innertext
         ));
       }
