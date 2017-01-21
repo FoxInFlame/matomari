@@ -24,7 +24,7 @@ ini_set("display_startup_errors", true);
 error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
-//header("Content-Type: application/json");
+header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 
@@ -71,27 +71,25 @@ call_user_func(function() {
   //    [+] ============================================== [+]
   //    [+] --------------GETTING THE VALUES-------------- [+]
   //    [+] ============================================== [+]
-
-  $contentWrapper = $html->find("#contentWrapper", 0);
-  
-  //echo $html->outertext;
   
   $str = $html->find("#content table tbody tr", 0);
-  $recommendations = $contentWrapper->find("#content table tbody tr", 0)->children(1)->children(0)->children();
+  $recommendations = $html->find("div");
   
   $recommendations_arr = array();
   foreach($recommendations as $recommendation) {
     if(strpos($recommendation->class, "borderClass") === false) continue;
     $to = $recommendation->find("table td", 0);
+    if(!$to) continue;
+    if(!$to->find("a.hoverinfo_trigger", 0)) continue;
     $to_id = explode("/", $to->find(".picSurround a", 0)->href)[2];
     $to_picture = $to->find(".picSurround a img", 0)->{'data-srcset'};
     $to_picture_1x = explode(" 1x,", $to_picture)[0];
     $to_picture_2x = substr(explode(" 1x,", $to_picture)[1], 0, -3);
     $to_title = $recommendation->find("table td a strong", 0)->innertext;
     $reason = explode("\r\n", substr($recommendation->find("table td", 1)->children(2)->find("div", 0)->plaintext, 0, -6));
-    $reason = htmlspecialchars_decode(html_entity_decode(join("<br>", $reason), 0, "UTF-8"));
+    $reason = str_replace(" &npspread more", "", htmlspecialchars_decode(html_entity_decode(join("<br>", $reason), 0, "UTF-8")));
     $author = trim($recommendation->find("table td", 1)->children(2)->children(1)->find("a", 1)->innertext);
-    $other = $recommendation->find("table td a strong", 1) ? $recommendation->find("table td a strong", 1)->innertext : "0";
+    $other = count($recommendation->find("table td a strong")) !== 1 ? $recommendation->find("table td a strong", 1)->innertext : "0";
     $other_arr = array();
     $other_elem = $recommendation->find("[id^=simaid]", 0);
     if($other_elem) {
