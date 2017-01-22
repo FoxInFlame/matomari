@@ -57,7 +57,8 @@ anime/search/:query is a method to get anime search results of a query on MAL.<b
     </tr>
   </tbody>
 </table>
-<div class="ui info message">
+<div class="ui info icon message">
+  <i class="announcement icon"></i>
   <div class="header">Help Needed</div>
   I couldn't figure out what the <span class="inline-code">o</span> parameter does on the <a href="https://myanimelist.net/anime.php">MAL Search page</a>. I would greatly appreciate it if someone could find out that, so that I can include that if it's neccessary.
 </div>
@@ -138,6 +139,7 @@ The available filters are:
   </tfoot>
 </table>
 <h2 class="ui header">Response</h2>
+Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/search/love?filter=type:movie</span>
 <pre style="background: #f0f0f0;">
   <code class="code json">
     {
@@ -145,7 +147,8 @@ The available filters are:
       <span class="property">"results"</span>: [ <span class="type-comment">// Array of anime, up to 50 items per page</span>
         {
           <span class="property">"id"</span>: <span class="type-int">1006</span>,
-          <span class="property">"image"</span>: <span class="type-int">"https://myanimelist.cdn-dena.com/r/50x70/images/anime/11/21054.jpg?s=3b71031c6f49b5353a68331faca00250 1x, https://myanimelist.cdn-dena.com/r/100x140/images/anime/11/21054.jpg?s=13fdf747ad79eeea3d931b447d97f944 2x"</span>, <span class="type-comment">// Not completely done yet.</span>
+          <span class="property">"image_1x"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/r/50x70/images/anime/11/21054.jpg?s=3b71031c6f49b5353a68331faca00250"</span>,
+          <span class="property">"image_2x"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/r/100x140/images/anime/11/21054.jpg?s=13fdf747ad79eeea3d931b447d97f944 2x"</span>, <span class="type-comment">// Not completely done yet.</span>
           <span class="property">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/1006/Tenchi_Muyou_in_Love"</span>,
           <span class="property">"title"</span>: <span class="type-string">"Tenchi Muyou! in Love"</span>,
           <span class="property">"synopsis_snippet"</span>: <span class="type-string">"The demonic space criminal Kain has escaped from prison and destroyed the Galaxy Police headquarters. To ensure that the Jurai will not stop him, Kain travels back to 1970 to eliminate Tenchi&#039;s mother..."</span>,

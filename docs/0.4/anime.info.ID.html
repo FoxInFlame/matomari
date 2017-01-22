@@ -28,7 +28,7 @@ anime/info/:id is a method that allows you to view the detailed information abou
           <tbody class="top aligned">
             <tr>
               <td><span class="inline-code">:id</span></td>
-              <td><i>Any natural number between 1 and 30000 that's in the MAL database.</i></td>
+              <td><i>Any natural number that's in the MAL database.</i></td>
               <td>The database ID of the anime. This is the ID that is displayed in the URL when you visit the anime page.</td>
             </tr>
           </tbody>
@@ -48,6 +48,7 @@ anime/info/:id is a method that allows you to view the detailed information abou
   </tbody>
 </table>
 <h2 class="ui header">Response</h2>
+Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/21</span>
 <pre style="background: #F0F0F0;">
   <code class="code json">
     {
@@ -91,7 +92,7 @@ anime/info/:id is a method that allows you to view the detailed information abou
         <span class="type-string">"FUNimation Entertainment"</span>,
         <span class="type-string">"4Kids Entertainment"</span>
       ],
-      <span class="property">"synopsis"</span>: <span class="type-string">"Gol D. Roger was known as the \"Pirate King,\" the strongest and the most</span>...(truncated)...</span class="type-string">"</span> <span class="type-comment">// String with HTML Formatted full synopsis</span>
+      <span class="property">"synopsis"</span>: <span class="type-string">"Gol D. Roger was known as the \"Pirate King,\" the strongest and the most</span>...(truncated)...<span class="type-string">"</span> <span class="type-comment">// String with HTML Formatted full synopsis</span>
     }
   </code>
 </pre>
