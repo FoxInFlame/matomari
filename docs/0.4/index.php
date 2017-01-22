@@ -192,7 +192,7 @@ if(isset($_GET['file'])) {
     </div>
     <div class="main ui container">
       <div class="ui info icon message">
-        <i class="info sign icon"></i>
+        <i class="announcement sign icon"></i>
         <div class="content">
           <div class="header">Time to get secure</div>
           <p>matomari is dropping regular HTTP support for requests on Feburary the 23rd. Use HTTPS for everything, baby!</p>
