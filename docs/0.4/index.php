@@ -191,11 +191,18 @@ if(isset($_GET['file'])) {
       </div>
     </div>
     <div class="main ui container">
+      <div class="ui info icon message">
+        <i class="info sign icon"></i>
+        <div class="content">
+          <div class="header">Time to get secure</div>
+          <p>matomari is dropping regular HTTP support for requests on Feburary the 23rd. Use HTTPS for everything, baby!</p>
+        </div>
+      </div>
       <div class="ui warning icon message">
         <i class="warning sign icon"></i>
         <div class="content">
-          <div class="header">Time to get secure!</div>
-          <p>matomari is dropping regular HTTP support for requests on Feburary the 23rd. Use HTTPS for everything, baby!</p>
+          <div class="header">Attention!</div>
+          <p>Since the redirects have not been setup yet, the methods will not work unless you call the exact file name as in the source code.</p>
         </div>
       </div>
       <?php
