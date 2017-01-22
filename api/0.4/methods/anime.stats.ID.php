@@ -181,6 +181,7 @@ call_user_func(function() {
           "message" => "Some math going on.... Something about the total amount not being the same as the total on MAL."
         ));
         http_response_code(500);
+        return;
       }
       continue;
     }
@@ -204,8 +205,8 @@ call_user_func(function() {
     "score" => $score
   );
   
-  if(http_response_code() == 200) {
-    echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
-  }
+  // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
+  echo json_encode($output, JSON_NUMERIC_CHECK);
+  http_response_code(200);
   
 });
