@@ -67,6 +67,8 @@ GET user/clubs/:username - Get clubs a specific user is in.
 
 GET user/friends/:username - Get friends for a specific user.
 
+POST user/friends/:username - Becomes friends with a specific user.
+
 GET user/comments/:username - Get profile comments (with pagination)
 
 POST user/comments/:username - Send a comment to specific user.
@@ -91,7 +93,7 @@ GET user/list/history/manga/:id - Get specific update history on manga.
 
 [DONE] GET user/notifications - Get all notifications (with pagination / filter)
 
-[DONE] POST user/notification/:id - Set specific notification as read, or accept friend request.
+[DONE] POST user/notifications/:id - Set specific notification as read, or accept friend request.
 
 [DONE] GET user/messages - Get all messages (with pagination)
 
