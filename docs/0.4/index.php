@@ -1,4 +1,9 @@
 <?php
+ini_set("display_errors", true);
+ini_set("display_startup_errors", true);
+error_reporting(E_ALL);
+
+
 $time_start = microtime(true);
 $showFile = "index.html"; // Default page - 0.4/index.html
 $showFile_method = "";
@@ -20,20 +25,20 @@ $filenames = array( // Available methods
   "anime/clubs/:id",
   "anime/pictures/:id",
   "anime/moreinfo/:id",
+  
   "users",
   "users/search/:query",
   "users/recent",
   "users/recommendations",
   "user/info/:username",
   "user/stats/:username",
+  "user/favorites",
   "user/reviews/:username",
   "user/recommendations/:username",
   "user/clubs/:username",
   "user/friends/:username",
   "user/comments/:username",
   "user/conversation/:username",
-  "user/favorites",
-  "user/favorites/:username",
   "user/list/anime/:id",
   "user/list/manga/:id",
   "user/list/history/anime/:id",
@@ -44,7 +49,69 @@ $filenames = array( // Available methods
   "user/messages",
   "user/messages/:id",
   "user/message",
-  "user/message/thread/:id"
+  "user/message/thread/:id",
+  
+  "settings",
+  "settings/profile",
+  "settings/favorites",
+  "settings/forum",
+  "settings/image",
+  
+  "clubs",
+  "clubs/recent",
+  "clubs/me",
+  "club/info/:id",
+  "club/comments/:id",
+  "club/members/:id",
+  "club/forum/:id",
+  "club/forum/:id",
+  
+  "forum",
+  "forum/top",
+  "forum/recent",
+  "forum/search/:query",
+  "forum/board/:id",
+  "forum/topic/:id",
+  "forum/watched",
+  "forum/ignored",
+  
+  "blogs",
+  "blogs/recent",
+  "blog/posts/:username",
+  "blog/post",
+  "blog/post/:id",
+  "blog/comments/:id",
+  "blog/comments/:id",
+  
+  "news",
+  "news/top",
+  "news/team",
+  
+  "articles",
+  "articles/top",
+  "articles/columnists",
+  "articles/search/:query",
+  "article/:id",
+  
+  "people",
+  "people/top",
+  "people/search/:query",
+  "people/info/:id",
+  "people/news/:id",
+  "people/pictures/:id",
+  
+  "characters",
+  "characters/top",
+  "characters/search/:query",
+  "character/info/:id",
+  "character/particles/:id",
+  "character/pictures/:id",
+  "character/clubs/:id",
+  
+  "general",
+  "general/quickSearch/:query",
+  "general/wallpaper",
+  "general/malappinfo.php"
 );
 if(isset($_GET['file'])) {
   foreach($filenames as $filename) {
@@ -104,7 +171,12 @@ if(isset($_GET['file'])) {
                 <?php
                 $fixedMenuItems = array("General", "Anime", "Users", "Settings", "Clubs", "Forum", "Blogs", "News", "Articles", "People", "Characters");
                 foreach($fixedMenuItems as $item) {
-                  if(strpos($showFile, strtolower($item)) !== false) {
+                  if($item == "Users") {
+                    $item2 = "User";
+                  } else {
+                    $item2 = $item;
+                  }
+                  if(strpos($showFile, strtolower($item2)) !== false) {
                     echo "<a href=\"" . dirname($_SERVER["PHP_SELF"]) . "/../0.4/" . strtolower($item) . "\" class=\"item active\">" . $item . "</a>\n";
                   } else {
                     echo "<a href=\"" . dirname($_SERVER["PHP_SELF"]) . "/../0.4/" . strtolower($item) . "\" class=\"item\">" . $item . "</a>\n";
@@ -132,10 +204,12 @@ if(isset($_GET['file'])) {
       } else {
       ?>
       <div class="ui grid">
-        <div class="column sixteen wide mobile sixteen wide tablet four wide computer">
-          <div class="ui vertical menu secondary pointing">
+        <div class="column sixteen wide mobile sixteen wide tablet four wide computer" style="word-wrap:break-word">
+          <div class="ui fluid vertical menu secondary pointing">
             <?php
-            if(strpos($filename, "anime") !== false) {
+            function showSidebar($basename) {
+              global $filenames;
+              global $showFile_method;
               foreach($filenames as $filename) {
                 $tmp1 = str_replace("/", ".", $filename);
                 if(strpos($tmp1, ":") === false) {
@@ -143,13 +217,53 @@ if(isset($_GET['file'])) {
                 } else {
                   $tmp2 = explode(":", $tmp1)[0] . strtoupper(explode(":", $tmp1)[1]);
                 }
-                if(strpos($filename, "anime") === false) break; // Don't show if the method has nothing to do with this.
+                if(substr($filename, 0, strlen($basename)) !== $basename) continue; // Don't show if the method doesn't start with basename. Used this instead of strpos() because some methods have basenames in their method names (e.g. user/history/anime/:id).
                 if($showFile_method == $filename) {
                   echo "<a class=\"item active\">" . $showFile_method . "</a>\n";
                 } else {
                   echo "<a href=\"" . dirname($_SERVER["PHP_SELF"]) . "/../0.4/" . $tmp2 . "\" class=\"item\">" . $filename . "</a>\n";
                 }
               }
+            }
+            switch(strtolower(explode("/", $filename)[0])) {
+              case "anime":
+                showSidebar("anime");
+                break;
+              case "users":
+              case "user":
+                showSidebar("user");
+                break;
+              case "settings":
+                showSidebar("settings");
+                break;
+              case "clubs":
+              case "club":
+                showSidebar("club");
+                break;
+              case "forum":
+                showSidebar("forum");
+                break;
+              case "blogs":
+              case "blog":
+                showSidebar("blog");
+                break;
+              case "news":
+                showSidebar("news");
+                break;
+              case "articles":
+              case "article":
+                showSidebar("article");
+                break;
+              case "people":
+                showSidebar("people");
+                break;
+              case "characters":
+              case "character":
+                showSidebar("character");
+                break;
+              case "general":
+                showSidebar("general");
+                break;
             }
             ?>
           </div>
