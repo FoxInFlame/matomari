@@ -15,7 +15,7 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [DONE] GET anime/recommendations/:id - Get recommendations from specific anime. detail parameter shows more details individually.
 
-GET anime/stats/:id - Get stats for specific anime. 
+[DONE] GET anime/stats/:id - Get stats for specific anime. 
 
 GET anime/recent/:id - Recent updates for specific anime. (with pagination / filters)
 
