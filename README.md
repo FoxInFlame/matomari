@@ -11,7 +11,7 @@ Please, always remember that these scrapers are often not 100% stable for produc
 **I want a custom-made unique anime character just for matomari!**
 
 It needs to consist of:
-- 256x256 PNG or JPEG picture (with optional transparency).
+- A PNG or JPEG picture with the size of at least 256x256 (with optional transparency).
 - Optionally a banner or some sort to put on the GitHub README and on the documentation.
 
 ---
