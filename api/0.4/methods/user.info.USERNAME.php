@@ -59,9 +59,9 @@ call_user_func(function() {
   $mal_link = "https://myanimelist.net/profile/" . $username;
   $html_rightside = $html->find("div#contentWrapper div.container-right", 0);
   $html_leftside = $html->find("div#contentWrapper div.container-left", 0);
-  $image_url = $html_leftside->find("div.user-profile div.user-image img", 0)->src;
+  $image_url =  $html_leftside->find("div.user-profile div.user-image img", 0) ? $html_leftside->find("div.user-profile div.user-image img", 0)->src : null;
   $end = explode("/", $image_url);
-  $id = explode(".", end($end))[0];
+  $id = $image_url !== null ? explode(".", end($end))[0] : "";
   $userstats = $html_leftside->find("div.user-profile ul.user-status li.clearfix");
   $gender = null;
   $birthday = null;
