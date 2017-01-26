@@ -58,9 +58,9 @@ call_user_func(function() {
   $mal_link = "https://myanimelist.net/profile/" . $username;
   $html_rightside = $html->find("div#contentWrapper div.container-right", 0);
   $html_leftside = $html->find("div#contentWrapper div.container-left", 0);
-  $image_url = $html_leftside->find("div.user-profile div.user-image img", 0)->src;
+  $image_url =  $html_leftside->find("div.user-profile div.user-image img", 0) ? $html_leftside->find("div.user-profile div.user-image img", 0)->src : null;
   $end = explode("/", $image_url);
-  $id = explode(".", end($end))[0];
+  $id = $image_url !== null ? explode(".", end($end))[0] : "";
   $userstats = $html_leftside->find("div.user-profile ul.user-status li.clearfix");
   $gender = null;
   $birthday = null;
@@ -103,32 +103,40 @@ call_user_func(function() {
     }
   }
   unset($value);
-  $alsoat = $html_leftside->find("div.user-profile div.user-profile-sns", 0)->find("a");
+  $alsoat = $html_leftside->find("div.user-profile div.user-profile-sns", 1) ? $html_leftside->find("div.user-profile div.user-profile-sns", 0)->find("a") : array(); // Use first one is second one exists
   $alsoat_arr = array();
-  foreach($alsoat as $value) {
-    array_push($alsoat_arr, $value->href);
+  if(!empty($alsoat)) {
+    $alsoat_arr = array();
+    foreach($alsoat as $value) {
+      array_push($alsoat_arr, $value->href);
+    }
   }
   unset($value);
-  $rss = $html_leftside->find("div.user-profile div.user-profile-sns", 1)->find("a");
+  $rss = !$html_leftside->find("div.user-profile div.user-profile-sns", 1) ? $html_leftside->find("div.user-profile div.user-profile-sns", 0)->find("a") : ""; // Use first one if alsoat doesn't exist
   $rss_recentanime = null;
   $rss_recentanime_byepisode = null;
   $rss_recentmanga = null;
   $rss_recentmanga_byepisode = null;
   $rss_blogfeed = null;
-  foreach($rss as $value) {
-    if(strpos($value->plaintext, "Recent Anime by Episode") !== false) {
-      $rss_recentanime_byepisode = htmlspecialchars_decode($value->href);
-    } else if(strpos($value->plaintext, "Recent Anime") !== false) {
-      $rss_recentanime = htmlspecialchars_decode($value->href);
-    } else if(strpos($value->plaintext, "Recent Manga by Chapter") !== false) {
-      $rss_recentmanga_bychapter = htmlspecialchars_decode($value->href);
-    } else if(strpos($value->plaintext, "Recent Manga") !== false) {
-      $rss_recentmanga = htmlspecialchars_decode($value->href);
-    } else if(strpos($value->plaintext, "Blog Feed") !== false) {
-      $rss_blogfeed = htmlspecialchars_decode($value->href);
+  if(!empty($rss)) {
+    foreach($rss as $value) {
+      if(strpos($value->plaintext, "Recent Anime by Episode") !== false) {
+        $rss_recentanime_byepisode = htmlspecialchars_decode($value->href);
+      } else if(strpos($value->plaintext, "Recent Anime") !== false) {
+        $rss_recentanime = htmlspecialchars_decode($value->href);
+      } else if(strpos($value->plaintext, "Recent Manga by Chapter") !== false) {
+        $rss_recentmanga_bychapter = htmlspecialchars_decode($value->href);
+      } else if(strpos($value->plaintext, "Recent Manga") !== false) {
+        $rss_recentmanga = htmlspecialchars_decode($value->href);
+      } else if(strpos($value->plaintext, "Blog Feed") !== false) {
+        $rss_blogfeed = htmlspecialchars_decode($value->href);
+      }
     }
+    unset($value);
   }
-  unset($value);
+  if(empty($id)) {
+    $id = explode("id=", $rss_blogfeed)[1];
+  }
   $about = htmlspecialchars_decode(str_replace("\"", "'", trim($html_rightside->find("div.user-profile-about div.profile-about-user table tr td div.word-break", 0)->innertext, " ")));
 
   $favourites_anime_arr = array();
