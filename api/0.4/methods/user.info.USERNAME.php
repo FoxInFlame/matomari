@@ -139,6 +139,9 @@ call_user_func(function() {
     }
   }
   unset($value);
+  if(empty($id)) {
+    $id = explode("id=", $rss_blogfeed)[1];
+  }
   $about = $html_rightside->find(".user-profile-about .profile-about-user table tr td .word-break", 0) ? htmlspecialchars_decode(str_replace("\"", "'", trim($html_rightside->find(".user-profile-about .profile-about-user table tr td .word-break", 0)->innertext, " "))) : "";
 
 
