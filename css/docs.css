@@ -27,9 +27,13 @@ a:active, a:visited:active {
   white-space: pre;
   padding-left: 0.3em;
   padding-right: 0.3em;
-  overflow-x: auto;
+  /*overflow-x: auto;*/
   background: #F0F0F0;
   font-family: monospace;
+}
+
+.code {
+  white-space: pre-wrap;
 }
 
 .json .property {
