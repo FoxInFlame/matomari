@@ -20,7 +20,7 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-header("access-control-allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-Type: image/jpeg");
 
@@ -37,5 +37,5 @@ if(!$image) {
   return;
 }
 
-imagejpeg($image);
+imagejpeg($image, null, 50);
 ?>
