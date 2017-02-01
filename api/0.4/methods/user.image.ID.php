@@ -39,9 +39,9 @@ if(!$image) {
   return;
 }
 
-if(isset($_GET['quality']) && !empty($_GET['quality']) && !is_numeric($_GET['quality']) && ($_GET['quality'] > 0) && ($_GET['quality'] < 100)) {
+if(isset($_GET['quality']) && !empty($_GET['quality']) && is_numeric($_GET['quality']) && ($_GET['quality'] > 0) && ($_GET['quality'] < 100)) {
   imagejpeg($image, null, $_GET['quality']); // Optional quality between 1 and 100
 } else {
-  imagejpeg($image, null, 20); // Very low quality (1-100; default 75) so QuickMyAnimeList can handle it
+  imagejpeg($image, null, 5); // Very low quality (1-100; default 75) so QuickMyAnimeList can handle it
 }
 ?>
