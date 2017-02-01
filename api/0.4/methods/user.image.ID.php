@@ -4,10 +4,12 @@
 Shows the original images/userimages/:id.jpg (https://myanimelist.net/images/userimages/:id.jpg) with
 Access-Control-Allow-Origin header.
 
+This method is made for use in QuickMyAnimeList, and is therefore outputted in lower quality.
+
 Method: GET
 Authentication: None Required.
 Parameters:
-  - None
+  - quality [Optional] - 1-100
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -37,5 +39,9 @@ if(!$image) {
   return;
 }
 
-imagejpeg($image, null, 50);
+if(isset($_GET['quality']) && !empty($_GET['quality']) && !is_numeric($_GET['quality']) && $_GET['quality'] > 0 && $_GET['quality'] < 100) {
+  imagejpeg($image, null, $_GET['qualiyt']); // Optional quality between 1 and 100
+} else {
+  imagejpeg($image, null, 30); // Half quality (1-100; default 75) so QuickMyAnimeList can handle it
+}
 ?>
