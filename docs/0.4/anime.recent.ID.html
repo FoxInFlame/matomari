@@ -12,7 +12,7 @@ anime/stats/:id is a method that allows you to view the stats about a specific a
     </tr>
     <tr>
       <td>Authentication</td>
-      <td>None Required</td>
+      <td>Optional</td>
     </tr>
     <tr>
       <td>Parameters</td>
@@ -33,8 +33,8 @@ anime/stats/:id is a method that allows you to view the stats about a specific a
             </tr>
             <tr>
               <td><span class="inline-code">filter</span></td>
-              <td><i>Friends, All</i></td>
-              <td><i>Authentication is required for checking, but for boys, that shouldn't be neccessary.</i></td>
+              <td>friends, all</td>
+              <td>Authentication is required for checking friend's recent updates, but for checking the public udpates, authentication isn't be neccessary.</td>
             </tr>
           </tbody>
         </table>
@@ -53,6 +53,13 @@ anime/stats/:id is a method that allows you to view the stats about a specific a
     </tr>
   </tbody>
 </table>
+<div class="ui info icon message">
+  <i class="announcement icon"></i>
+  <div class="content">
+    <div class="header">Help Needed</div>
+    <p>I don't know if I should just give up on MAL style numbering (status: 1,2,3,4,6, etc). It does seem a little useless because you can check from status_text. Tell me if you have a reason why one of them should not be included.</p>
+  </div>
+</div>
 <h2 class="ui header">Response</h2>
 Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/recent/21</span> without Authentication
 <pre style="background: #F0F0F0;">
