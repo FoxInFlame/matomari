@@ -1,0 +1,76 @@
+anime/recommendations is a method that allows you to get the most recent anime recommendations on MAL.<br>
+<table class="ui celled green table">
+  <thead>
+    <tr>
+      <th colspan="2">GET anime/recommendations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Method</td>
+      <td class="twelve wide">GET</td>
+    </tr>
+    <tr>
+      <td>Authentication</td>
+      <td>None Required</td>
+    </tr>
+    <tr>
+      <td>Parameters</td>
+      <td>
+        <table class="ui celled table">
+          <thead>
+            <tr>
+              <th class="four wide">Name</th>
+              <th class="four wide">Possible Values</th>
+              <th class="eight wide">Description</th>
+            </tr>
+          </thead>
+          <tbody class="top aligned">
+            <tr>
+              <td><span class="inline-code">page</span> [Optional]</td>
+              <td><i>Any natural number.</i><br>(default: "1")</td>
+              <td>Page number for the top anime. If the page doesn't exist, it will become 1.</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>Status Codes</td>
+      <td>
+        <b>200</b> (OK)<br>
+        <b>404</b> (MyAnimeList is offline, or their code changed)<br>
+        <br>
+        See the message section in the error response for more details about an error.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2 class="ui header">Response</h2>
+Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/recommendations</span>
+<pre style="background: #F0F0F0;">
+  <code class="code json">
+    {
+      <span class="property">items</span>: [
+        {
+          <span class="property">from</span>: {
+            <span class="property">id</span>: <span class="type-int">9919</span>, <span class="type-comment">// Integer of the ID of the anime being recommended from</span>
+            <span class="property">title</span>: <span class="type-string">"Ao no Exorcist"</span>, <span class="type-comment">// String of the title of the anime being recommended from</span>
+            <span class="property">image_1x</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/10/75195t.jpg"</span>, <span class="type-comment">// String of the image source with 1x size</span>
+            <span class="property">image_2x</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/r/100x140/images/anime/10/75195.jpg?s=19e24994b37f21ec56c847e0b4ae4506"</span> <span class="type-comment">// String of the image source with 2x size</span>
+          },
+          <span class="property">to</span>: {
+            <span class="property">id</span>: <span class="type-int">20507</span>, <span class="type-comment">// Integer of the ID of the anime being recommended to</span>
+            <span class="property">title</span>: <span class="type-string">"Noragami"</span>, <span class="type-comment">// String of the title of the anime being recommended to</span>
+            <span class="property">image_1x</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/9/77809t.jpg"</span>, <span class="type-comment">// String of the image source with 1x size</span>
+            <span class="property">image_2x</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/r/100x140/images/anime/9/77809.jpg?s=1042bea2615c74f20422d3b4c09097b5"</span> <span class="type-comment">// String of the image source with 2x size</span>
+          },
+          <span class="property">reason</span>: <span class="type-string">"Both anime hold pretty similar plots and similar combat style battles. The worlds protagonists live in are full of demons that go around freely and they fight them off."</span>, <span class="type-comment">// String with HTML Formatted reason for recommendation</span>
+          <span class="property">author</span>: <span class="type-string">"Megroth"</span>, <span class="type-comment">// String with author of the recommendation</span>
+          <span class="property">time</span>: <span class="type-string">"2017-01-26T20:42:05+00:00"</span> <span class="type-comment">// String with ISO 8601 date</span>
+        },
+        ...
+      ]
+    }
+  </code>
+</pre>

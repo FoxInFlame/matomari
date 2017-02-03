@@ -83,7 +83,7 @@ function getSession($username, $password) {
     echo json_encode(array(
       "error" => "Wrong Credentials."
     ));
-    die();
+    return false;
   }
 }
 ?>

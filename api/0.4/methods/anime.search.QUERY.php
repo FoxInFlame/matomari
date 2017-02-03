@@ -41,11 +41,16 @@ call_user_func(function() {
   
   $parts = isset($_GET['q']) ? explode("/",$_GET['q']) : array();
   if(strlen($parts[0]) < 3 && isset($_GET['q'])) {
-    echo json_encode(array(
-      "message" => "Query must be at least 3 letters long."
-    ));
-    http_response_code(400);
-    return;
+    if(!isset($_GET['filter']) || empty($_GET['filter'])) {
+      echo json_encode(array(
+        "message" => "Query must be at least 3 letters long."
+      ));
+      http_response_code(400);
+      return;
+    }
+  }
+  if((!isset($_GET['filter']) || empty($_GET['filter'])) && (!isset($_GET['q']) || strlen($parts[0]) <! 3)) {
+    
   }
   $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
   $filters = explode(",", $filter);
@@ -529,7 +534,9 @@ call_user_func(function() {
     $ratingtd = $value->find("td", 8);
     
     $id = trim(substr(trim($pictd->find("div.picSurround a", 0)->id), 5));
-    $image = trim($pictd->find("div.picSurround a img", 0)->srcset);
+    $image = trim($pictd->find("div.picSurround a img", 0)->srcset); // I don't know why it's src-set on some pages while it's srcset on the search page...
+    $image_1x = explode(" 1x,", $image)[0];
+    $image_2x = substr(explode(" 1x,", $image)[1], 0, -3);
     $url = trim($infotd->find("a.hoverinfo_trigger", 0)->href);
     $title = "string_" . trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext);
     $synopsis = trim(str_replace("read more.", "", $infotd->find("div.pt4", 0)->plaintext));
@@ -608,7 +615,8 @@ call_user_func(function() {
     
     array_push($results_arr, array(
       "id" => $id,
-      "image" => $image,
+      "image_1x" => $image_1x,
+      "image_2x" => $image_2x,
       "url" => $url,
       "title" => $title,
       "synopsis_snippet" => $synopsis,

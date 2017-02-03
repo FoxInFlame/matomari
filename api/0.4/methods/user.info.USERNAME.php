@@ -59,9 +59,9 @@ call_user_func(function() {
   $mal_link = "https://myanimelist.net/profile/" . $username;
   $html_rightside = $html->find("div#contentWrapper div.container-right", 0);
   $html_leftside = $html->find("div#contentWrapper div.container-left", 0);
-  $image_url = $html_leftside->find("div.user-profile div.user-image img", 0)->src;
+  $image_url =  $html_leftside->find("div.user-profile div.user-image img", 0) ? $html_leftside->find("div.user-profile div.user-image img", 0)->src : null;
   $end = explode("/", $image_url);
-  $id = explode(".", end($end))[0];
+  $id = $image_url !== null ? explode(".", end($end))[0] : "";
   $userstats = $html_leftside->find("div.user-profile ul.user-status li.clearfix");
   $gender = null;
   $birthday = null;
@@ -139,6 +139,9 @@ call_user_func(function() {
     }
   }
   unset($value);
+  if(empty($id)) {
+    $id = explode("id=", $rss_blogfeed)[1];
+  }
   $about = $html_rightside->find(".user-profile-about .profile-about-user table tr td .word-break", 0) ? htmlspecialchars_decode(str_replace("\"", "'", trim($html_rightside->find(".user-profile-about .profile-about-user table tr td .word-break", 0)->innertext, " "))) : "";
 
 
