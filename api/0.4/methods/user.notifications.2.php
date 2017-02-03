@@ -4,7 +4,7 @@
 Do an action to a notification for a specific MAL user.
 
 Method: POST
-        /user/notification/:id
+        /user/notifications
 Authentication: HTTP Basic Auth with MAL Credentials.
 Data: {
   id: Comma separated notification ids
@@ -43,15 +43,15 @@ call_user_func(function() {
     http_response_code(405);
     return;
   }
-  
+
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
   // [+] --------------------LOGIN--------------------- [+]
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
-  
+
   require(dirname(__FILE__) . "/../authenticate_base.php");
-  
+
   if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
     echo json_encode(array(
@@ -69,7 +69,7 @@ call_user_func(function() {
   // [+] --------------GET NOTIFICATIONS--------------- [+]
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
-  
+
   $input = file_get_contents("php://input");
   $json = json_decode($input, true); // true parameter makes it return array and not stdClass
   if(json_last_error() != JSON_ERROR_NONE) {
@@ -79,7 +79,7 @@ call_user_func(function() {
     http_response_code(400);
     return;
   }
-  
+
   if(!isset($json['id']) || empty($json['id']) || !isset($json['action']) || empty($json['action'])) {
     echo json_encode(array(
       "message" => "One or more values missing in JSON."
@@ -87,7 +87,7 @@ call_user_func(function() {
     http_response_code(400);
     return;
   }
-  
+
   $ids = explode(",", $json['id']);
   $ids_arr = array();
   foreach($ids as $id) {
@@ -100,7 +100,7 @@ call_user_func(function() {
     }
     array_push($ids_arr, trim($id));
   }
-  
+
   switch(strtolower($json['action'])) {
     case "read":
       action($ids_arr, "https://myanimelist.net/notification/api/check-items-as-read.json", "Successfully marked [number] notification(s) as read.", "Could not mark [number] notification(s) as read.");
@@ -126,7 +126,7 @@ call_user_func(function() {
       "notification_ids" => $ids
     )));
     $response = curl_exec($ch);
-  
+
     if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200) {
       $output = json_encode(array(
         "message" => str_replace("[number]", count($ids_arr), $successMessage)
@@ -139,14 +139,14 @@ call_user_func(function() {
       return;
     }
   }
-  
+
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
   // [+] --------------------OUTPUT-------------------- [+]
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
-  
+
   echo $output;
   http_response_code(200);
-  
+
 });

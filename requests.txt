@@ -15,7 +15,7 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [DONE] GET anime/recommendations/:id - Get recommendations from specific anime. detail parameter shows more details individually.
 
-[DONE] GET anime/stats/:id - Get stats for specific anime. 
+[DONE] GET anime/stats/:id - Get stats for specific anime.
 
 GET anime/recent/:id - Recent updates for specific anime. (with pagination / filters)
 
@@ -93,7 +93,7 @@ GET user/list/history/manga/:id - Get specific update history on manga.
 
 [DONE] GET user/notifications - Get all notifications (with pagination / filter)
 
-[DONE] POST user/notifications/:id - Set specific notification as read, or accept friend request.
+[DONE] POST user/notifications - Set specific notification as read, or accept friend request.
 
 [DONE] GET user/messages - Get all messages (with pagination)
 
