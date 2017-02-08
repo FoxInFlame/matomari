@@ -80,7 +80,7 @@ call_user_func(function() {
     echo json_encode(array(
       "message" => "The code for MAL is not valid HTML markup."
     ));
-    http_response_code(502);
+    http_response_code(500);
     return;
   }
   

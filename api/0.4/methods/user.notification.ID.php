@@ -1,17 +1,17 @@
 <?php
 /*
 
-Set messages as read or unread for a specific MAL user.
-Note: This script can not verify if a message exists or not.
+Do an action to a notification for a specific MAL user.
 
 Method: POST
-        /user/messages
+        /user/notification/:id
 Authentication: HTTP Basic Auth with MAL Credentials.
+Data: {
+  id: Comma separated notification ids
+  action: "read" to mark as read, "accept_friend" to accept a friend request, "deny_friend" to deny a friend request
+}
 Parameters:
   - None.
-Data:
-  - id: Message 'action_id's, seperated by comma if multiple
-  - action: Action to be done to the messages, delete, unread or read
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -24,10 +24,15 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
+ini_set("display_errors", true);
+ini_set("display_startup_errors", true);
+error_reporting(E_ALL);
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../class/class.notification.php");
 
 call_user_func(function() {
 
@@ -35,7 +40,7 @@ call_user_func(function() {
     echo json_encode(array(
       "message" => "This request must be sent by a POST request."
     ));
-    http_response_code(400);
+    http_response_code(405);
     return;
   }
   
@@ -61,12 +66,11 @@ call_user_func(function() {
 
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
-  // [+] --------------VALIDATE REQUEST---------------- [+]
+  // [+] --------------GET NOTIFICATIONS--------------- [+]
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
-
+  
   $input = file_get_contents("php://input");
-
   $json = json_decode($input, true); // true parameter makes it return array and not stdClass
   if(json_last_error() != JSON_ERROR_NONE) {
     echo json_encode(array(
@@ -84,56 +88,56 @@ call_user_func(function() {
     return;
   }
   
-  if(!in_array(strtolower($json['action']), array("read", "unread", "delete"), true)) {
-    echo json_encode(array(
-      "message" => "Invalid action."
-    ));
-    http_response_code(400);
-    return;
-  }
-  
-  $action_ids = explode(",", $json['id']);
-  $action_ids_arr = array();
-  foreach($action_ids as $action_id) {
-    if(!is_numeric(trim($action_id))) {
+  $ids = explode(",", $json['id']);
+  $ids_arr = array();
+  foreach($ids as $id) {
+    if(!is_numeric(trim($id))) {
       echo json_encode(array(
         "message" => "One or more ids are not numerical."
       ));
       http_response_code(400);
       return;
     }
-    array_push($action_ids_arr, "0-" . trim($action_id));
+    array_push($ids_arr, trim($id));
   }
   
-  
-  // [+] ============================================== [+]
-  // [+] ---------------------------------------------- [+]
-  // [+] ----------------SEND REQUEST------------------ [+]
-  // [+] ---------------------------------------------- [+]
-  // [+] ============================================== [+]
-  
-  $post_fields = array(
-    'csrf_token' => $MALsession['csrf_token'],
-    'checkSelector' => $json['action'],
-    'msg' => $action_ids_arr
-  );
-
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/mymessages.php");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_HEADER, true);
-  curl_setopt($ch, CURLOPT_COOKIE, $MALsession['cookie_string']);
-  curl_setopt($ch, CURLOPT_POST, 1);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_fields));
-  $response = curl_exec($ch);
-  
-  $curlerror = curl_error($ch); // Seperate in two lines because:
-  if(!empty($curlerror)) { // http://stackoverflow.com/questions/17139264/cant-use-function-return-value-in-write-context
-    echo json_encode(array(
-      "message" => "Could not connect to MAL successfully."
+  switch(strtolower($json['action'])) {
+    case "read":
+      action($ids_arr, "https://myanimelist.net/notification/api/check-items-as-read.json", "Successfully marked [number] notification(s) as read.", "Could not mark [number] notification(s) as read.");
+      break;
+    case "accept_friend":
+      action($ids_arr, "https://myanimelist.net/notification/api/accept-friend-request.json", "Successfully marked [number] notification(s) as read.", "Could not mark [number] notification(s) as read.");
+      break;
+    case "deny_friend":
+      action($ids_arr, "https://myanimelist.net/notification/api/deny-friend-request.json", "Successfully marked [number] notification(s) as read.", "Could not mark [number] notification(s) as read.");
+      break;
+  }
+  function action($ids, $url, $successMessage, $failMessage) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/notification/api/check-items-as-read.json");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_COOKIE, $MALsession['cookie_string']);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      "Content-Type: application/json"
     ));
-    http_response_code(500);
-    return;
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
+      "csrf_token" => $MALsession['csrf_token'],
+      "notification_ids" => $ids
+    )));
+    $response = curl_exec($ch);
+  
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200) {
+      $output = json_encode(array(
+        "message" => str_replace("[number]", count($ids_arr), $successMessage)
+      ));
+    } else {
+      echo json_encode(array(
+        "message" => str_replace("[number]", count($ids_arr), $failMessage)
+      ));
+      http_response_code(502);
+      return;
+    }
   }
   
   // [+] ============================================== [+]
@@ -142,13 +146,7 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  if($json['action'] == "delete") {
-    $json['action'] = $json['action'] . "d";
-  }
-  echo json_encode(array(
-    "message" => "Successfully marked " . count($action_ids_arr) . " message(s) as " . $json['action'] . "."
-  ));
-  http_response_code(200); // Use 200 instead of 201, because it's not 'creating' anything.
-
+  echo $output;
+  http_response_code(200);
+  
 });
-?>

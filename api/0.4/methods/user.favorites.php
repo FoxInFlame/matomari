@@ -13,7 +13,7 @@ Parameters:
 Method: GET
         /user/favorites
 Authentication: HTTP Basic Auth with MAL Credentials.
-Parameters::
+Parameters:
   - None.
   
 Method: POST/DELETE
@@ -133,7 +133,7 @@ call_user_func(function() {
     );
   } else if($mode == "1") { // GET /user/favorites
   
-    require(dirname(__FILE__) . "/../authenticate_base.php");
+    require_once(dirname(__FILE__) . "/../authenticate_base.php");
     if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
       header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
       echo json_encode(array(

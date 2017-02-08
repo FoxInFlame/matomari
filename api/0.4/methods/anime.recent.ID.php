@@ -5,9 +5,9 @@ Shows recent updates for an anime.
 
 Method: GET
         /anime/recent/:id
-Authentication: None Required.
+Authentication: Optional HTTP Basic Auth with MAL Credentials.
 Parameters:
-  - None.
+  - filter: Only usable when you are logged in; Set to friends or all.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -19,15 +19,11 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
-ini_set("display_errors", true);
-ini_set("display_startup_errors", true);
-error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../authenticate_base.php");
 
 call_user_func(function() {
   
@@ -53,23 +49,23 @@ call_user_func(function() {
     return;
   }
   
-  $recent_params = "";
-  if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
-    // No auth provided.
-  } else {
+  require_once(dirname(__FILE__) . "/../authenticate_base.php");
+  
+  $recent_params = ""; // No filter (Shows all, if not logged in; if logged in, use &m=all#members)
+  if(isset($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && !empty($_SERVER['PHP_AUTH_PW'])) {
     // Auth is provided.
     $MALSession = getSession($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
     if(isset($_GET['filter']) && !empty($_GET['filter'])) {
       // Filter is defined.
       switch(strtolower($_GET['filter'])) {
         case "all":
-          $recent_params = "&m=all#members";
+          $recent_params = "&m=all#members"; // Show all.
           break;
         case "friends":
-          $recent_params = "#members";
+          $recent_params = "#members"; // Show only friends
           break;
         default:
-          $recent_params = "#members";
+          $recent_params = "&m=all#members"; // Show all
           break;
       }
     }
@@ -78,6 +74,7 @@ call_user_func(function() {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/stats" . $recent_params);
   if($recent_params == "#members" || $recent_params == "&m=all#members") {
+    // Filter is set, thus user is authenticated
     curl_setopt($ch, CURLOPT_COOKIE, $MALSession['cookie_string']);
   }
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

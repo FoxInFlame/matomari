@@ -23,9 +23,6 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
-ini_set("display_errors", true);
-ini_set("display_startup_errors", true);
-error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -38,7 +35,7 @@ call_user_func(function() {
     echo json_encode(array(
       "message" => "This request must be sent by a POST request."
     ));
-    http_response_code(400);
+    http_response_code(405);
     return;
   }
   
@@ -48,7 +45,7 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  require(dirname(__FILE__) . "/../authenticate_base.php");
+  require_once(dirname(__FILE__) . "/../authenticate_base.php");
   
   if(!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header("WWW-Authenticate: Basic realm=\"myanimelist.net\"");
