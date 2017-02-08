@@ -1,4 +1,4 @@
-anime/stats/:id is a method that allows you to view the stats about a specific anime using the anime ID.<br>
+anime/recent/:id is a method that allows you to view the stats about a specific anime using the anime ID.<br>
 <table class="ui celled green table">
   <thead>
     <tr>
@@ -34,7 +34,7 @@ anime/stats/:id is a method that allows you to view the stats about a specific a
             <tr>
               <td><span class="inline-code">filter</span></td>
               <td>friends, all</td>
-              <td>Authentication is required for checking friend's recent updates, but for checking the public udpates, authentication isn't be neccessary.</td>
+              <td>It will default to all (public updates), regardless of authentication, however, you can only set it to friends (your friend's updates) if you are authenticated.</td>
             </tr>
           </tbody>
         </table>
@@ -44,9 +44,9 @@ anime/stats/:id is a method that allows you to view the stats about a specific a
       <td>Status Codes</td>
       <td>
         <b>200</b> (OK)<br>
-        <b>400</b> (Invalid anime ID)<br>
-        <b>404</b> (Anime with specified ID doesn't exist, MyAnimeList is offline, or their code changed)<br>
-        <b>500</b> (MyAnimeList is returning bad markup, or something is not working as the way we want it to work)<br>
+        <b>400</b> (Invalid anime ID format)<br>
+        <b>404</b> (Anime with specified ID doesn't exist, MyAnimeList is offline)<br>
+        <b>500</b> (MyAnimeList is returning bad markup)<br>
         <br>
         See the message section in the error response for more details about an error.
       </td>
