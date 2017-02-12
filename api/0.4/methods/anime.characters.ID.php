@@ -100,14 +100,14 @@ call_user_func(function() {
     $character_name = $character->find("td", 1)->find("a", 0)->innertext; // name, not sorted with comma (as it is on MAL)
     $character_id = explode("/", $character->find("td", 1)->find("a", 0)->href)[2];
     $character_role = $character->find("td", 1)->find(".spaceit_pad small", 0) ? strtolower($character->find("td", 1)->find(".spaceit_pad small", 0)->innertext) : null; // lowercase or null
-    $character_image = strpos($character->find("td", 0)->find("img", 0)->{'data-src'}, "characters") === false ? $character->find("td", 0)->find("img", 0)->{'data-src'} : null;
+    $character_image = strpos($character->find("td", 0)->find("img", 0)->{'data-src'}, "characters") !== false ? $character->find("td", 0)->find("img", 0)->{'data-src'} : null;
     $character_actors = array();
     $character_actors_elem = $character->find("td", 2)->find("table tbody tr");
     foreach($character_actors_elem as $actor) {
       $actor_name = $actor->find("td", 0)->find("a", 0)->innertext; // name, not sorted with comma (as it is on MAL)
       $actor_id = explode("/", $actor->find("td", 0)->find("a", 0)->href)[2]; // id to search for
       $actor_language = strtolower($actor->find("td", 0)->find("small", 0)->innertext); // lowercase language (using it as key)
-      $actor_image = strpos($actor->find("td", 1)->find("img", 0)->{'data-src'}, "voiceactors") === false ? $actor->find("td", 1)->find("img", 0)->{'data-src'} : null;
+      $actor_image = strpos($actor->find("td", 1)->find("img", 0)->{'data-src'}, "voiceactors") !== false ? $actor->find("td", 1)->find("img", 0)->{'data-src'} : null;
       if(isset($character_actors[$actor_language])) { // key exists with array, add on
         $character_actors[$actor_language][] = array(
           "name" => $actor_name,
@@ -125,6 +125,7 @@ call_user_func(function() {
     array_push($characters_arr, array(
       "name" => $character_name,
       "id" => $character_id,
+      "image" => $character_image,
       "role" => $character_role,
       "voice_actors" => $character_actors
     ));

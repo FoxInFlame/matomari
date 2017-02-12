@@ -103,7 +103,7 @@ call_user_func(function() {
       $staff_name = $staff->find("td", 1)->find("a", 0)->innertext; // name, not sorted with comma (as it is on MAL)
       $staff_id = explode("/", $staff->find("td", 1)->find("a", 0)->href)[2]; // Assuming everyone has an id
       $staff_roles = $staff->find("td", 1)->find("small", 0) ? explode(", ", $staff->find("td", 1)->find("small", 0)->innertext) : array(); // array with roles or empty if no roles (doesn't have a role)
-      $staff_image = strpos($staff->find("td", 1)->find("img", 0)->{'data-src'}, "voiceactors") === false ? $staff->find("td", 1)->find("img", 0)->{'data-src'} : null; // Apparently staff is considered as VAs on MAL
+      $staff_image = strpos($staff->find("td", 1)->find("img", 0)->{'data-src'}, "voiceactors") !== false ? $staff->find("td", 1)->find("img", 0)->{'data-src'} : null; // Apparently staff is considered as VAs on MAL
       array_push($staffs_arr, array(
         "name" => $staff_name,
         "id" => $staff_id,
