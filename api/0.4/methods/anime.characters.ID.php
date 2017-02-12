@@ -94,39 +94,37 @@ call_user_func(function() {
   
   $characters = $html->find("#content tbody tr", 0)->children(1)->find(".js-scrollfix-bottom-rel", 0)->children();
   foreach($characters as $character) {
-    if(strpos($character->name, "staff") !== false) break; // Stop before staffs
+    if(strpos($character->name, "staff") !== false) break; // Stop before staffs (there is an empty element with the name staff right before staff section)
     if($character->tag !== "table") continue; // Only loop tables
     $character_arr = array(); // Not to be confused with plural array. This contains information about one character.
     $character_name = $character->find("td", 1)->find("a", 0)->innertext; // name, not sorted with comma (as it is on MAL)
+    $character_id = explode("/", $character->find("td", 1)->find("a", 0)->href)[2];
     $character_role = $character->find("td", 1)->find(".spaceit_pad small", 0) ? strtolower($character->find("td", 1)->find(".spaceit_pad small", 0)->innertext) : null; // lowercase or null
+    $character_image = strpos($character->find("td", 0)->find("img", 0)->{'data-src'}, "characters") === false ? $character->find("td", 0)->find("img", 0)->{'data-src'} : null;
     $character_actors = array();
     $character_actors_elem = $character->find("td", 2)->find("table tbody tr");
     foreach($character_actors_elem as $actor) {
       $actor_name = $actor->find("td", 0)->find("a", 0)->innertext; // name, not sorted with comma (as it is on MAL)
       $actor_id = explode("/", $actor->find("td", 0)->find("a", 0)->href)[2]; // id to search for
       $actor_language = strtolower($actor->find("td", 0)->find("small", 0)->innertext); // lowercase language (using it as key)
-      $actor_picture = $actor->find("td", 1)->find("img", 0)->{'data-src'};
-      if(strpos($actor_picture, "voiceactors") === false) {
-        // No Image: https://myanimelist.cdn-dena.com/images/questionmark_23.gif
-        // Image example: https://myanimelist.cdn-dena.com/r/46x64/images/voiceactors/3/10613.jpg?s=835147e33307b4e2a7203f3341ccd9d1
-        $actor_picture = null;
-      }
+      $actor_image = strpos($actor->find("td", 1)->find("img", 0)->{'data-src'}, "voiceactors") === false ? $actor->find("td", 1)->find("img", 0)->{'data-src'} : null;
       if(isset($character_actors[$actor_language])) { // key exists with array, add on
         $character_actors[$actor_language][] = array(
           "name" => $actor_name,
           "id" => $actor_id,
-          "image" => $actor_picture
+          "image" => $actor_image
         );
       } else { // key doesn't exist, create array there
         $character_actors[$actor_language] = array(array(
           "name" => $actor_name,
           "id" => $actor_id,
-          "image" => $actor_picture
+          "image" => $actor_image
         ));
       }
     }
     array_push($characters_arr, array(
       "name" => $character_name,
+      "id" => $character_id,
       "role" => $character_role,
       "voice_actors" => $character_actors
     ));
