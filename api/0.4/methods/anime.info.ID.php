@@ -67,16 +67,16 @@ call_user_func(function() {
   $anime->set("id", $parts[0]);
   $anime->set("title", $html->find("div#contentWrapper div h1.h1 span", 0)->plaintext, 0, -1);
   $alternativeTitles = $html->find("div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad");
-  $alternativeTitles_eng = null;
-  $alternativeTitles_jap = null;
-  $alternativeTitles_syn = null;
+  $alternativeTitles_eng = array(); // Changed from string because there can be multiple
+  $alternativeTitles_jap = array();
+  $alternativeTitles_syn = array();
   foreach($alternativeTitles as $value) {
     if(strpos($value->plaintext, "English:") !== false) {
-      $alternativeTitles_eng = trim(substr($value->plaintext, 15), " ");
+      $alternativeTitles_eng = explode(", ", trim(substr($value->plaintext, 15), " "));
     } else if(strpos($value->plaintext, "Japanese:") !== false) {
-      $alternativeTitles_jap = trim(substr($value->plaintext, 16), " ");
+      $alternativeTitles_jap = explode(", ", trim(substr($value->plaintext, 16), " "));
     } else if(strpos($value->plaintext, "Synonyms:") !== false) {
-      $alternativeTitles_syn = trim(substr($value->plaintext, 16), " ");
+      $alternativeTitles_syn = explode(", ", trim(substr($value->plaintext, 16), " "));
     }
   }
   unset($value);
@@ -114,7 +114,7 @@ call_user_func(function() {
         }
       }
       $anime->set("duration", $minutes);
-      $anime->get("duration") !== null ? $anime->set("totalDuration", intval($anime->get("duration")) * intval($anime->get("episodes"))) : $anime->set("totalDuration", null);
+      $anime->get("duration") !== null && $anime->get("episodes") !== null ? $anime->set("totalDuration", intval($anime->get("duration")) * intval($anime->get("episodes"))) : $anime->set("totalDuration", null); // Set total duration only if duration and episodes are defined
     }
     if(strpos($value->plaintext, "Score:") !== false) {
       if(strpos($value->plaintext, "users") !== false) {
