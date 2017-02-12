@@ -19,9 +19,9 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [DONE] GET anime/recent/:id - Recent updates for specific anime. (with pagination / filters)
 
-GET anime/characters/:id - Characters and voice actors in specific anime.
+[DONE] GET anime/characters/:id - Characters and voice actors in specific anime.
 
-GET anime/staff/:id - Staff in specific anime.
+[DONE] GET anime/staff/:id - Staff in specific anime.
 
 GET anime/news/:id - News related to specific anime.
 
