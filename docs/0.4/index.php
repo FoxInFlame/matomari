@@ -111,7 +111,9 @@ $filenames = array( // Available methods
   "general",
   "general/quickSearch/:query",
   "general/wallpaper",
-  "general/malappinfo.php"
+  "general/malappinfo.php",
+  
+  "responsecodes"
 );
 if(isset($_GET['file'])) {
   foreach($filenames as $filename) {
@@ -185,7 +187,7 @@ if(isset($_GET['file'])) {
                 ?>
               </div>
             </div>
-            <a href="<?=dirname($_SERVER["PHP_SELF"])?>/../0.4/responses" class="item">Responses</a>
+            <a href="<?=dirname($_SERVER["PHP_SELF"])?>/../0.4/responsecodes" class="item">Responses</a>
           </div>
         </div>
       </div>
@@ -206,7 +208,7 @@ if(isset($_GET['file'])) {
         </div>
       </div>
       <?php
-      if($showFile == "index.html") {
+      if($showFile == "index.html" || $showFile == "responsecodes.html") {
         include($showFile);
       } else {
       ?>
@@ -299,6 +301,7 @@ if(isset($_GET['file'])) {
   </body>
 </html>
 <?php
+echo "<!--File loaded: " . $showFile . "-->\n";
 $time_end = microtime(true);
 echo "<!--Dynamic documentation page generated in " . ($time_end - $time_start) . " seconds.-->";
 ?>
