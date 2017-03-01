@@ -128,8 +128,8 @@ call_user_func(function() {
         $review_enjoyment_rating = $tr->find("td", 1)->innertext;
       }
     }
-    $review_text_1 = array_slice(explode("\r\n", $review->find(".textReadability", 0)->plaintext), 7);
-    $review_text = htmlspecialchars_decode(html_entity_decode(substr(trim(join("<br>", $review_text_1)), 0, -11), 0, "UTF-8"));
+    $review_text_1 = explode("\r\n", str_replace($review->find(".textReadability #score" . $review_id, 0)->plaintext, "", $review->find(".textReadability", 0)->plaintext));
+    $review_text = htmlspecialchars_decode(html_entity_decode(substr(preg_replace('!\s+!', " ", trim(join("<br>", $review_text_1))), 0, -18), 0, "UTF-8"));
     array_push($reviews_arr, array(
       "id" => $review_id,
       "author" => array(
