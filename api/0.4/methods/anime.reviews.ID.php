@@ -85,7 +85,7 @@ call_user_func(function() {
     if($review->find(".spaceit table td", 1) && $review->find(".spaceit table td", 1)->find("a", 0)) {
       // $review_author_username = trim($review->find(".borderLight td", 1)->find("a", 0)->innertext);
       $review_author_username = trim($review->find(".spaceit table td", 1)->find("a", 0)->innertext);
-      $review_author_url = "https://myanimelist.net" . trim($review->find(".spaceit table td", 1)->find("a", 0)->href);
+      $review_author_url = trim($review->find(".spaceit table td", 1)->find("a", 0)->href);
     } else {
       return changeInCode();
     }
