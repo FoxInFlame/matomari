@@ -24,6 +24,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../absoluteGMT.php");
 
 call_user_func(function() {
   
@@ -67,16 +68,44 @@ call_user_func(function() {
   
   $reviews = $contentWrapper->find("#content tr", 0)->children()[1]->find("div.borderDark");
   
+  function changeInCode() {
+    echo json_encode(array(
+      "message" => "MAL has changed their code. Please notify FoxInFlame about this."
+    ));
+    http_response_code(500);
+    return;
+  }
   $reviews_arr = array();
   foreach($reviews as $review) {
-    $review_id = substr($review->find(".textReadability div", 0)->id, 5);
-    $review_author_username = trim($review->find(".borderLight td", 1)->find("a", 0)->innertext);
-    $review_author_url = "https://myanimelist.net" . trim($review->find(".borderLight td", 1)->find("a", 0)->href);
-    $review_author_image_url = $review->find(".borderLight td img", 0)->{'data-src'};
-    $review_helpful_count = $review->find(".borderLight td", 1)->find(".lightLink strong span", 0)->innertext;
-    $review_time = getAbsoluteTimeGMT(trim($review->find(".borderLight td", 2)->find("div", 0)->innertext))->format("c");
-    $review_episodes_seen = explode(" of ", $review->find(".borderLight td", 2)->find("div", 1)->innertext)[0];
-    $review_overall_rating = substr($review->find(".borderLight td", 2)->find("div", 2)->plaintext, -2);
+    if($review->find(".textReadability div", 0)) {
+      $review_id = substr($review->find(".textReadability div", 0)->id, 5);
+    } else {
+      return changeInCode();
+    }
+    if($review->find(".spaceit table td", 1) && $review->find(".spaceit table td", 1)->find("a", 0)) {
+      // $review_author_username = trim($review->find(".borderLight td", 1)->find("a", 0)->innertext);
+      $review_author_username = trim($review->find(".spaceit table td", 1)->find("a", 0)->innertext);
+      $review_author_url = "https://myanimelist.net" . trim($review->find(".spaceit table td", 1)->find("a", 0)->href);
+    } else {
+      return changeInCode();
+    }
+    if($review->find(".spaceit table td img", 0)) {
+      $review_author_image_url = $review->find(".spaceit table td img", 0)->{'data-src'};
+    } else {
+      return changeInCode();
+    }
+    if($review->find(".spaceit table td", 1) && $review->find(".lightLink strong span", 0)) {
+      $review_helpful_count = $review->find(".spaceit table td", 1)->find(".lightLink strong span", 0)->innertext;
+    } else {
+      return changeInCode();
+    }
+    if($review->find(".spaceit .mb8", 0) && $review->find(".spaceit .mb8 .lightLink", 0)) {
+      $review_time = getAbsoluteTimeGMT(trim(explode("<div", $review->find(".spaceit .mb8", 0)->innertext)[0]), "M j, Y")->format("c");
+      $review_episodes_seen = explode(" of ", $review->find(".spaceit .mb8 .lightLink", 0)->innertext)[0];
+      $review_overall_rating = substr($review->find(".spaceit .mb8 div", 1)->plaintext, -2);
+    } else {
+      return changeInCode();
+    }
     $review_ratings = $review->find(".textReadability div table", 0);
     $review_overall_rating = null;
     $review_story_rating = null;
@@ -138,52 +167,4 @@ call_user_func(function() {
   http_response_code(200);
   
 });
-
-function getAbsoluteTimeGMT($string) {
-  $string = trim($string); // Super important! :)
-  if(strpos($string, "ago") !== false) {
-    /*Note: These are returning approximate values */
-    $date = new DateTime(null);
-    $date->setTimeZone(new DateTimeZone("Etc/GMT"));
-    if(strpos($string, "hour") !== false) {
-      if(strpos($string, "hours") !== false) {
-        $hours = substr($string, 0, -10);
-        $date->modify("-" . $hours . " hours");
-      } else {
-        $hour = substr($string, 0, -9);
-        $date->modify("-" . $hour . " hour");
-      }
-    }
-    if(strpos($string, "minute") !== false) {
-      if(strpos($string, "minutes") !== false) {
-        $minutes = substr($string, 0, -12);
-        $date->modify("-" . $minutes . " minutes");
-      } else {
-        $minute = substr($string, 0, -11);
-        $date->modify("-" . $minute . " minute");
-      }
-    }
-    if(strpos($string, "second") !== false) {
-      if(strpos($string, "seconds") !== false) {
-        $seconds = substr($string, 0, -12);
-        $date->modify("-" . $seconds . " seconds");
-      } else {
-        $second = substr($string, 0, -11);
-        $date->modify("-" . $second . " second");
-      }
-    }
-    return $date;
-  } else if(strpos($string, "Today") !== false) {
-    $date = date_create_from_format("g:i A", substr($string, 7), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
-    return $date;
-  } else if(strpos($string, "Yesterday") !== false) {
-    $date = date_create_from_format("g:i A", substr($string, 11), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
-    $date->modify("-1 day");
-    return $date;
-  } else {
-    // "M j, g:i A" is the date type MAL shows
-    $date = date_create_from_format("M j, Y", $string, new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
-    return $date;
-  }
-}
 ?>
