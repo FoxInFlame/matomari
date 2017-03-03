@@ -104,13 +104,23 @@ call_user_func(function() {
       if(strpos($value->plaintext, "hr.") !== false) {
         preg_match("/\d+(?= hr.)/", $value->plaintext, $matches);
         $hour = trim($matches[0], " ");
-        $minutes = intval($hour) * 60;
+        $hour_minutes = intval($hour) * 60;
       }
       if(strpos($value->plaintext, "min.") !== false) {
         preg_match("/\d+(?= min.)/", $value->plaintext, $matches);
         $minutes = trim($matches[0], " ");
-        if(isset($hour)) {
-          $minutes = intval($minutes) + (intval($hour) * 60);
+        if(isset($hour_minutes)) {
+          $minutes = intval($minutes) + intval($hour_minutes);
+        }
+      }
+      if(strpos($value->plaintext, "sec.") !== false) { // Example id: 33902
+        preg_match("/\d+(?= sec.)/", $value->plaintext, $matches);
+        $seconds = trim($matches[0], " ");
+        $seconds_minutes = $seconds / 60;
+        if(isset($minutes)) {
+          $minutes = intval($minutes) + intval($seconds_minutes);
+        } else {
+          $minutes = $seconds_minutes;
         }
       }
       $anime->set("duration", $minutes);
