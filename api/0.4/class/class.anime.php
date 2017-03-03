@@ -44,100 +44,100 @@ class Anime {
   public function set($data, $value) {
     switch($data) {
       case "id":
-        $this->id = $value;
+        $this->id = trim(value);
         break;
       case "title":
-        $this->title = $value;
+        $this->title = trim($value);
         break;
       case "otherTitles":
-        $this->other_titles = $value;
+        $this->other_titles = trim($value);
         break;
       case "rank":
-        $this->rank = $value;
+        $this->rank = trim($value);
         break;
       case "popularity":
-        $this->popularity = $value;
+        $this->popularity = trim($value);
         break;
       case "imageURL":
-        $this->image_url = $value;
+        $this->image_url = trim($value);
         break;
       case "source":
-        $this->source = $value;
+        $this->source = trim($value);
         break;
       case "MALURL":
-        $this->mal_url = $value;
+        $this->mal_url = trim($value);
         break;
       case "type":
-        $this->type = $value;
+        $this->type = trim($value);
         break;
       case "episodes":
-        $this->episodes = $value;
+        $this->episodes = trim($value);
         break;
       case "duration":
-        $this->duration = $value;
+        $this->duration = trim($value);
         break;
       case "totalDuration":
-        $this->total_duration = $value;
+        $this->total_duration = trim($value);
         break;
       case "score":
-        $this->score = $value;
+        $this->score = trim($value);
         break;
       case "scoreCount":
-        $this->score_count = $value;
+        $this->score_count = trim($value);
         break;
       case "membersCount":
-        $this->members_count = $value;
+        $this->members_count = trim($value);
         break;
       case "favoritesCount":
-        $this->favorites_count = $value;
+        $this->favorites_count = trim($value);
         break;
       case "genres":
-        $this->genres = $value;
+        $this->genres = trim($value);
         break;
       case "producers":
-        $this->producers = $value;
+        $this->producers = trim($value);
         break;
       case "studios":
-        $this->studios = $value;
+        $this->studios = trim($value);
         break;
       case "licensors":
-        $this->licensors = $value;
+        $this->licensors = trim($value);
         break;
       case "synopsis":
-        $this->synopsis = $value;
+        $this->synopsis = trim($value);
         break;
       case "user_status":
-        $this->userStatus = $value;
+        $this->userStatus = trim($value);
         break;
       case "user_rewatching":
-        $this->userRewatching = $value;
+        $this->userRewatching = trim($value);
         break;
       case "user_episodes":
-        $this->userEpisodes = $value;
+        $this->userEpisodes = trim($value);
         break;
       case "startDate":
-        $this->userStartDate = $value;
+        $this->userStartDate = trim($value);
         break;
       case "endDate":
-        $this->userEndDate = $value;
+        $this->userEndDate = trim($value);
         break;
       case "tags":
-        $this->userTags = $value;
+        $this->userTags = trim($value);
         break;
       case "userPriority":
-        $this->userPriority = $value;
+        $this->userPriority = trim($value);
         break;
       case "userStorage":
-        $this->userStorage = $value;
+        $this->userStorage = trim($value);
         break;
       case "userRewatchCount":
-        $this->userRewatchCount = $value;
+        $this->userRewatchCount = trim($value);
         break;
       case "userRewatchValue":
-        $this->userRewatchValue = $value;
+        $this->userRewatchValue = trim($value);
         break;
       case "userComments":
-        $this->userComments = $value;
+        $this->userComments = trim($value);
         break;
     }
   }
@@ -178,6 +178,10 @@ class Anime {
         return $this->duration;
         break;
       case "totalDuration":
+        if(!$this->total_duration) {
+          if(!$this->episodes || !$this->duration) return;
+          return $this->episodes * $this->duration;
+        }
         return $this->total_duration;
         break;
       case "score":
