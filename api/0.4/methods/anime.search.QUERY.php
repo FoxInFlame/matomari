@@ -537,7 +537,7 @@ call_user_func(function() {
     $image = trim($pictd->find("div.picSurround a img", 0)->srcset);
     if(!$image) $image = trim($pictd->find("div.picSurround a img", 0)->{'data-srcset'});
     $image_1x = explode(" 1x,", $image)[0];
-    $image_2x = substr(explode(" 1x,", $image)[1], 0, -3);
+    $image_2x = substr(trim(explode(" 1x,", $image)[1]), 0, -3); // Trim incase there is a space after "1x," and substr "2x" away
     $url = trim($infotd->find("a.hoverinfo_trigger", 0)->href);
     $title = "string_" . trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext);
     $synopsis = trim(str_replace("read more.", "", $infotd->find("div.pt4", 0)->plaintext));
