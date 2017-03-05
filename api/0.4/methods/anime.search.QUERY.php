@@ -534,7 +534,8 @@ call_user_func(function() {
     $ratingtd = $value->find("td", 8);
     
     $id = trim(substr(trim($pictd->find("div.picSurround a", 0)->id), 5));
-    $image = trim($pictd->find("div.picSurround a img", 0)->{data-srcset}); // I don't know why it's src-set on some pages while it's srcset on the search page...
+    $image = trim($pictd->find("div.picSurround a img", 0)->srcset);
+    if(!$image) $image = trim($pictd->find("div.picSurround a img", 0)->{'data-srcset'});
     $image_1x = explode(" 1x,", $image)[0];
     $image_2x = substr(explode(" 1x,", $image)[1], 0, -3);
     $url = trim($infotd->find("a.hoverinfo_trigger", 0)->href);
