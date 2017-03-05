@@ -538,6 +538,7 @@ call_user_func(function() {
     if(!$image) $image = trim($pictd->find("div.picSurround a img", 0)->{'data-srcset'});
     $image_1x = explode(" 1x,", $image)[0];
     $image_2x = substr(trim(explode(" 1x,", $image)[1]), 0, -3); // Trim incase there is a space after "1x," and substr "2x" away
+    $image_full = "https://myanimelist.cdn-dena.com/images/anime/" . explode("/", $image_1x)[7] . "/" . explode(".", explode("/", $image_1x)[8])[0] . ".jpg";
     $url = trim($infotd->find("a.hoverinfo_trigger", 0)->href);
     $title = "string_" . trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext);
     $synopsis = trim(str_replace("read more.", "", $infotd->find("div.pt4", 0)->plaintext));
@@ -616,6 +617,7 @@ call_user_func(function() {
     
     array_push($results_arr, array(
       "id" => $id,
+      "image" => $image_full,
       "image_1x" => $image_1x,
       "image_2x" => $image_2x,
       "url" => $url,
