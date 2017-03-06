@@ -44,13 +44,13 @@ class Anime {
   public function set($data, $value) {
     switch($data) {
       case "id":
-        $this->id = trim(value);
+        $this->id = trim($value);
         break;
       case "title":
         $this->title = trim($value);
         break;
       case "otherTitles":
-        $this->other_titles = trim($value);
+        $this->other_titles = $value;  // Don't trim arrays!
         break;
       case "rank":
         $this->rank = trim($value);
@@ -92,16 +92,16 @@ class Anime {
         $this->favorites_count = trim($value);
         break;
       case "genres":
-        $this->genres = trim($value);
+        $this->genres = $value;
         break;
       case "producers":
-        $this->producers = trim($value);
+        $this->producers = $value;
         break;
       case "studios":
-        $this->studios = trim($value);
+        $this->studios = $value;
         break;
       case "licensors":
-        $this->licensors = trim($value);
+        $this->licensors = $value;
         break;
       case "synopsis":
         $this->synopsis = trim($value);
