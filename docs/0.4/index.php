@@ -136,7 +136,21 @@ if(isset($_GET['file'])) {
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Anime Methods - matomari API Docs</title>
+    <?php
+    if($showFile == "index.html") {
+    ?>
+    <title>Version 0.4 - matomari API Docs</title>
+    <?php
+    } else if($showFile == "responsecodes.html") {
+    ?>
+    <title>Response Codes - 0.4 | matomari API Docs</title>
+    <?php
+    } else {
+    ?>
+    <title><?=$showFile_method?> - 0.4 | matomari API Docs</title>
+    <?php
+    }
+    ?>
     <link href="../../semantic/semantic.min.css" rel="stylesheet">
     <link href="../../css/docs.css" rel="stylesheet">
   </head>

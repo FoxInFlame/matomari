@@ -55,9 +55,13 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/
       <span class="property">"id"</span>: <span class="type-int">21</span>, <span class="type-comment">// Integer of the anime id returned</span>
       <span class="property">"title"</span>: <span class="type-string">"One Piece"</span>, <span class="type-comment">// String of the title on MAL</span>
       <span class="property">"other_titles"</span>: { <span class="type-comment">// Object of other titles</span>
-        <span class="property">"english"</span>: <span class="type-string">"One Piece"</span>,
-        <span class="property">"japanese"</span>: <span class="type-string">"ONE PIECE"</span>,
-        <span class="property">"synonym"</span>: <span class="type-null">null</span>
+        <span class="property">"english"</span>: [
+          <span class="type-string">"One Piece"</span>
+        ],
+        <span class="property">"japanese"</span>: [
+          <span class="type-string">"ONE PIECE"</span>
+        ],
+        <span class="property">"synonym"</span>: []
       },
       <span class="property">"rank"</span>: <span class="type-int">74</span>, <span class="type-comment">// Integer of the overall rank</span>
       <span class="property">"popularity"</span>: <span class="type-int">31</span>, <span class="type-comment">// Integer of the popularity rank</span>
@@ -67,7 +71,7 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/
       <span class="property">"type"</span>: <span class="type-string">"TV"</span>, <span class="type-comment">// String with the anime type</span>
       <span class="property">"episodes"</span>: <span class="type-null">null</span>, <span class="type-comment">// Integer of the number of episodes. Null if unknown.</span>
       <span class="property">"duration"</span>: <span class="type-int">24</span>, <span class="type-comment">// Integer of the usual episode length</span>
-      <span class="property">"total_duration"</span>: <span class="type-int">0</span>, <span class="type-comment">// Total duration (episodes x duration). Just here for no reason, not accurate (some shows have long first episodes)</span>
+      <span class="property">"total_duration"</span>: <span class="type-null">null</span>, <span class="type-comment">// Total duration (episodes x duration). Just here for no reason, not accurate (some shows have long first episodes)</span>
       <span class="property">"score"</span>: <span class="type-int">8.58</span>, <span class="type-comment">// Decimal integer of the community score</span>
       <span class="property">"score_count"</span>: <span class="type-int">318056</span>, <span class="type-comment">// Integer of the number of people who scored</span>
       <span class="property">"members_count"</span>: <span class="type-int">518679</span>, <span class="type-comment">// Integer of the number of members</span>
