@@ -87,7 +87,7 @@ call_user_func(function() {
   ));
   $html->find("div#contentWrapper div#content div.anime-detail-header-stats span.ranked strong", 0)->plaintext == "N/A" ? $anime->set("rank", null) : $anime->set("rank", substr($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.ranked strong", 0)->plaintext, 1));
   $anime->set("popularity", substr($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.popularity strong", 0)->plaintext, 1));
-  $anime->set("imageURL", $html->find("div#contentWrapper div#content table div a img.ac", 0)->src);
+  $anime->set("image", $html->find("div#contentWrapper div#content table div a img.ac", 0)->src);
   $anime->set("MALURL", trim($html->find("div#contentWrapper div#content table div.js-scrollfix-bottom-rel div#horiznav_nav ul li a", 0)->href));
   trim($html->find("div#contentWrapper div#content div.anime-detail-header-stats .score", 0)->plaintext) == "N/A" ? $anime->set("score", null) : $anime->set("score", trim($html->find("div#contentWrapper div#content div.anime-detail-header-stats .score", 0)->plaintext));
   $anime->set("synopsis", htmlspecialchars_decode(html_entity_decode(trim($html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0)->innertext, " "), 0, "UTF-8")));
@@ -95,10 +95,10 @@ call_user_func(function() {
   foreach($information as $value) {
     if(strpos($value->plaintext, "Type:") !== false) {
       // MAL has an ending tag without a starting tag bug so remove that
-      strpos($value->plaintext, "Unknown") !== false ? $anime->set("type", null) : $anime->set("type", str_replace("</a>", "", trim(substr($value->plaintext, 9), " ")));
+      strpos($value->plaintext, "Unknown") !== false ? $anime->set("type", null) : $anime->set("type", str_replace("</a>", "", substr($value->plaintext, 9)));
     }
     if(strpos($value->plaintext, "Episodes:") !== false) {
-      strpos($value->innertext, "Unknown") !== false ? $anime->set("episodes", null) : $anime->set("episodes", trim(substr($value->plaintext, 13), " "));
+      strpos($value->innertext, "Unknown") !== false ? $anime->set("episodes", null) : $anime->set("episodes", substr($value->plaintext, 13));
     }
     if(strpos($value->plaintext, "Duration:") !== false) {
       if(strpos($value->plaintext, "hr.") !== false) {
@@ -194,8 +194,10 @@ call_user_func(function() {
     "other_titles" => $anime->get("otherTitles"),
     "rank" => $anime->get("rank"),
     "popularity" => $anime->get("popularity"),
-    "image_url" => $anime->get("image")[0],
-    "image_min_url" => $anime->get("image")[1],
+    "image" => array(
+      "full" => $anime->get("image")[0],
+      "min" => $anime->get("image")[1]
+    ),
     "source" => $anime->get("source"),
     "url" => $anime->get("MALURL"),
     "type" => $anime->get("type"),

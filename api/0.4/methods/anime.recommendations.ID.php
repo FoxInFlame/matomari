@@ -19,6 +19,7 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
+
 ini_set("display_errors", true);
 ini_set("display_startup_errors", true);
 error_reporting(E_ALL);
@@ -27,6 +28,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../class/class.anime.php");
 
 call_user_func(function() {
   
@@ -56,15 +58,22 @@ call_user_func(function() {
   curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/userrecs");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   $response_string = curl_exec($ch);
-  curl_close($ch);
-  
   if(!$response_string) {
     echo json_encode(array(
-      "message" => "MAL is offline, or their code changed."
+      "message" => "MAL is offline."
     ));
     http_response_code(404);
     return;
   }
+  if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
+    echo json_encode(array(
+      "message" => "Anime with specified id could not be found."
+    ));
+    http_response_code(404);
+    return;
+  }
+  
+  curl_close($ch);
   
   $html = str_get_html($response_string);
   
@@ -91,11 +100,12 @@ call_user_func(function() {
     $to = $recommendation->find("table td", 0);
     if(!$to) continue;
     if(!$to->find("a.hoverinfo_trigger", 0)) continue;
-    $to_id = explode("/", $to->find(".picSurround a", 0)->href)[2];
-    $to_picture = $to->find(".picSurround a img", 0)->{'data-srcset'};
-    $to_picture_1x = explode(" 1x,", $to_picture)[0];
-    $to_picture_2x = substr(explode(" 1x,", $to_picture)[1], 0, -3);
-    $to_title = $recommendation->find("table td a strong", 0)->innertext;
+    
+    $to_anime = new Anime();
+    
+    $to_anime->set("id", explode("/", $to->find(".picSurround a", 0)->href)[2]);
+    $to_anime->set("image", $to->find(".picSurround a img", 0)->{'data-srcset'});
+    $to_anime->set("title", $recommendation->find("table td a strong", 0)->innertext);
     $reason = explode("\r\n", substr($recommendation->find("table td", 1)->children(2)->find("div", 0)->plaintext, 0, -6));
     $reason = str_replace(" &nbspread more", "", htmlspecialchars_decode(html_entity_decode(join("<br>", $reason), 0, "UTF-8")));
     $author = trim($recommendation->find("table td", 1)->children(2)->children(1)->find("a", 1)->innertext);
@@ -112,10 +122,12 @@ call_user_func(function() {
     }
     array_push($recommendations_arr, array(
       "to" => array(
-        "id" => $to_id,
-        "image_1x" => $to_picture_1x,
-        "image_2x" => $to_picture_2x,
-        "title" => $to_title
+        "id" => $to_anime->get("id"),
+        "image" => array(
+          "full" => $to_anime->get("image")[0],
+          "min" => $to_anime->get("image")[1]
+        ),
+        "title" => $to_anime->get("title")
       ),
       "reason" => $reason,
       "author" => $author,
