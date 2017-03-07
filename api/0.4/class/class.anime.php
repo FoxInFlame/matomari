@@ -44,52 +44,52 @@ class Anime {
   public function set($data, $value) {
     switch($data) {
       case "id":
-        $this->id = trim($value);
+        $this->id = $value ? trim($value) : $value;
         break;
       case "title":
-        $this->title = trim($value);
+        $this->title = $value ? trim($value) : $value;
         break;
       case "otherTitles":
         $this->other_titles = $value;  // Don't trim arrays!
         break;
       case "rank":
-        $this->rank = trim($value);
+        $this->rank = $value ? trim($value) : $value;
         break;
       case "popularity":
-        $this->popularity = trim($value);
+        $this->popularity = $value ? trim($value) : $value;
         break;
       case "imageURL":
-        $this->image_url = trim($value);
+        $this->image_url = $value ? trim($value) : $value;
         break;
       case "source":
-        $this->source = trim($value);
+        $this->source = $value ? trim($value) : $value;
         break;
       case "MALURL":
-        $this->mal_url = trim($value);
+        $this->mal_url = $value ? trim($value) : $value;
         break;
       case "type":
-        $this->type = trim($value);
+        $this->type = $value ? trim($value) : $value;
         break;
       case "episodes":
-        $this->episodes = trim($value);
+        $this->episodes = $value ? trim($value) : $value;
         break;
       case "duration":
-        $this->duration = trim($value);
+        $this->duration = $value ? trim($value) : $value;
         break;
       case "totalDuration":
-        $this->total_duration = trim($value);
+        $this->total_duration = $value ? trim($value) : $value;
         break;
       case "score":
-        $this->score = trim($value);
+        $this->score = $value ? trim($value) : $value;
         break;
       case "scoreCount":
-        $this->score_count = trim($value);
+        $this->score_count = $value ? trim($value) : $value;
         break;
       case "membersCount":
-        $this->members_count = trim($value);
+        $this->members_count = $value ? trim($value) : $value;
         break;
       case "favoritesCount":
-        $this->favorites_count = trim($value);
+        $this->favorites_count = $value ? trim($value) : $value;
         break;
       case "genres":
         $this->genres = $value;
@@ -104,40 +104,40 @@ class Anime {
         $this->licensors = $value;
         break;
       case "synopsis":
-        $this->synopsis = trim($value);
+        $this->synopsis = $value ? trim($value) : $value;
         break;
       case "user_status":
-        $this->userStatus = trim($value);
+        $this->userStatus = $value ? trim($value) : $value;
         break;
       case "user_rewatching":
-        $this->userRewatching = trim($value);
+        $this->userRewatching = $value ? trim($value) : $value;
         break;
       case "user_episodes":
-        $this->userEpisodes = trim($value);
+        $this->userEpisodes = $value ? trim($value) : $value;
         break;
       case "startDate":
-        $this->userStartDate = trim($value);
+        $this->userStartDate = $value ? trim($value) : $value;
         break;
       case "endDate":
-        $this->userEndDate = trim($value);
+        $this->userEndDate = $value ? trim($value) : $value;
         break;
       case "tags":
-        $this->userTags = trim($value);
+        $this->userTags = $value ? trim($value) : $value;
         break;
       case "userPriority":
-        $this->userPriority = trim($value);
+        $this->userPriority = $value ? trim($value) : $value;
         break;
       case "userStorage":
-        $this->userStorage = trim($value);
+        $this->userStorage = $value ? trim($value) : $value;
         break;
       case "userRewatchCount":
-        $this->userRewatchCount = trim($value);
+        $this->userRewatchCount = $value ? trim($value) : $value;
         break;
       case "userRewatchValue":
-        $this->userRewatchValue = trim($value);
+        $this->userRewatchValue = $value ? trim($value) : $value;
         break;
       case "userComments":
-        $this->userComments = trim($value);
+        $this->userComments = $value ? trim($value) : $value;
         break;
     }
   }
