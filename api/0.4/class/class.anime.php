@@ -58,7 +58,13 @@ class Anime {
       case "popularity":
         $this->popularity = $value ? trim($value) : $value;
         break;
-      case "imageURL":
+      case "image":
+        if(strpos($value, " 1x, ") !== false) { // Contains two with ?s=
+          $value = explode(" 1x,", $value)[0];
+        }
+        if(strpos($value, "/r/") !== false) { // URL is /r/ and contains ?s=
+          $value = str_replace("/r/50x70", "", explode("?s=", $value)[0]);
+        }
         $this->image_url = $value ? trim($value) : $value;
         break;
       case "source":
