@@ -30,6 +30,7 @@ a:active, a:visited:active {
   /*overflow-x: auto;*/
   background: #F0F0F0;
   font-family: monospace;
+  word-wrap: break-word;
 }
 
 .code {
