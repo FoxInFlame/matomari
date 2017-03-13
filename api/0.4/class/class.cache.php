@@ -16,12 +16,17 @@ class Data {
   
   public function getCache($url, $curl_options = array()) {
     $this->dir = dirname(__FILE__) . "/../cache/";
-    $this->expire = 240; // 4 hours
+    /*$this->expire = 1440; // 24 hours*/
+    $this->expire = 21900; // 1 year - Cache will be purged from another script every day anyway
     $this->extension = ".html";
     $this->ignore_pages = array(
       "/mymessages.php",
       "/notification"
     );
+    
+    if(isset($_GET['nocache']) && $_GET['nocache'] == "true") {
+      return false;
+    }
     
     $cache_file = $this->dir . md5($url) . $this->extension;
     
@@ -46,9 +51,9 @@ class Data {
     return false;
   }
   
-  public function saveCache($url, $data) {
+  public function saveCache($url, $data, $expire = 21900) {
     $this->dir = dirname(__FILE__) . "/../cache/";
-    $this->expire = 240; // 4 hours
+    $this->expire = $expire; // One Year
     $this->extension = ".html";
     $this->ignore_pages = array(
       "/mymessages.php",
@@ -79,5 +84,29 @@ class Data {
     return true;
   }
   
+  public function purgeCache($url = false) {
+    $this->dir = dirname(__FILE__) . "/../cache/";
+    $this->extension = ".html";
+    
+    if($url) {
+      $cache_file = $this->dir . md5($url) . $this->extension;
+      
+      $cache_file_realpath = realpath($cache_file);
+      if(is_writable($cache_file_realpath)) {
+        unlink($cache_file_realpath);
+        http_response_code(200);
+      } else {
+        http_response_code(500);
+      }
+    } else {
+      $files = glob(dirname(__FILE__) . "/../cache/*");
+      foreach($files as $file) {
+        if(is_file($file)) {
+          unlink($file);
+        }
+      }
+      http_response_code(200);
+    }
+  }
 }
 ?>
