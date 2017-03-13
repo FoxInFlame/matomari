@@ -3,6 +3,7 @@
 
 Shows anime search results for a query. Maximum 50 results. Filtering supported.
 
+This method is cached. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/search/:query
 Authentication: None Required.
@@ -30,6 +31,8 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../class/class.anime.php");
+require_once(dirname(__FILE__) . "/../class/class.cache.php");
 
 call_user_func(function() {
   
@@ -490,26 +493,52 @@ call_user_func(function() {
   $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : "1";
   $show = ($page - 1) * 50;
   $page_param = "&show=" . $show;
-    
-  $html = @file_get_html("https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g" . $page_param); // c[] parameter for showing all columns
-  if(!$html) {
-    if($page != 1) {
-      $html = @file_get_html("https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g&show=0"); // c[] parameter for showing all columns
-      if(!$html) {
+  
+  $url = "https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g" . $page_param; // c[] parameter for showing all columns
+  $data = new Data();
+  
+  if($data->getCache($url)) {
+    $html = str_get_html($data->data);
+  } else {
+    $ch = curl_init();
+    curl_setopt(CURLOPT_URL, $url);
+    curl_setopt(CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    if(!$response) {
+      if($page != 1) {
+        $url = "https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g";
+        curl_setopt($ch, CURLOPT_URL, $url);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        if(!$response) {
+          echo json_encode(array(
+            "message" => "MAL is offline."
+          ));
+          http_response_code(404);
+          return;
+        }
+      } else {
         echo json_encode(array(
-          "message" => "MAL is offline, or their code changed."
+          "message" => "MAL is offline."
         ));
         http_response_code(404);
         return;
       }
-    } else {
-      echo json_encode(array(
-        "message" => "MAL is offline, or their code changed."
-      ));
-      http_response_code(404);
-      return;
     }
+    curl_close($ch);
+    
+    $data->saveCache($url, $response);
+    $html = str_get_html($response);
   }
+  
+  if(!is_object($html)) {
+    echo json_encode(array(
+      "message" => "The code for MAL is not valid HTML markup.",
+    ));
+    http_response_code(500);
+    return;
+  }
+  
   
   $tr = $html->find("#contentWrapper #content div.list table tbody tr");
   if(count($tr) == 0) {
@@ -533,32 +562,20 @@ call_user_func(function() {
     $membercounttd = $value->find("td", 7);
     $ratingtd = $value->find("td", 8);
     
-    $id = trim(substr(trim($pictd->find("div.picSurround a", 0)->id), 5));
-    $image = trim($pictd->find("div.picSurround a img", 0)->srcset);
-    if(!$image) $image = trim($pictd->find("div.picSurround a img", 0)->{'data-srcset'});
-    $image_1x = explode(" 1x,", $image)[0];
-    $image_2x = substr(trim(explode(" 1x,", $image)[1]), 0, -3); // Trim incase there is a space after "1x," and substr "2x" away
-    $image_full = "https://myanimelist.cdn-dena.com/images/anime/" . explode("/", $image_1x)[7] . "/" . explode(".", explode("/", $image_1x)[8])[0] . ".jpg";
-    $url = trim($infotd->find("a.hoverinfo_trigger", 0)->href);
-    $title = "string_" . trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext);
-    $synopsis = trim(str_replace("read more.", "", $infotd->find("div.pt4", 0)->plaintext));
-    $type = trim($typetd->innertext);
-    $episodes = trim($episodestd->innertext);
-    $score = trim($scoretd->innertext);
+    $anime = new Anime();
+    
+    $anime->set("id", trim(substr(trim($pictd->find("div.picSurround a", 0)->id), 5)));
+    trim($pictd->find("div.picSurround a img", 0)->srcset) ? $anime->set("image", trim($pictd->find("div.picSurround a img", 0)->srcset)) : $anime->set("image", trim($pictd->find("div.picSurround a img", 0)->{'data-srcset'}));
+    $anime->set("mal_url", trim($infotd->find("a.hoverinfo_trigger", 0)->href));
+    $anime->set("title", "string_" . trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext));
+    $anime->set("synopsis", trim(str_replace("read more.", "", $infotd->find("div.pt4", 0)->plaintext)));
+    trim($typetd->innertext) != "-" ? $anime->set("type", trim($typetd->innertext)) : $anime->set("type", null);
+    trim($episodestd->innertext) != "-" ? $anime->set("episodes", trim($episodestd->innertext)) : $anime->set("episodes", null);
+    trim($scoretd->innertext) != "N/A" ? $anime->set("score", trim($scoretd->innertext)) : $anime->set("score", null);
     $startdate = trim($startdatetd->innertext);
     $enddate = trim($enddatetd->innertext);
-    $membercount = trim($membercounttd->innertext);
+    $anime->set("member_count", str_replace(",", "", trim($membercounttd->innertext)));
     $rating = trim($ratingtd->innertext);
-    if($type == "-") {
-      $type = null;
-    }
-    if($episodes == "-") {
-      $episodes = null;
-    }
-    if($score == "N/A") {
-      $score = null;
-    }
-    $membercount = str_replace(",", "", $membercount);
     if($rating == "-") {
       $rating = null;
     }
@@ -616,19 +633,20 @@ call_user_func(function() {
     $enddate = $year . "-" . $month . "-" . $day;
     
     array_push($results_arr, array(
-      "id" => $id,
-      "image" => $image_full,
-      "image_1x" => $image_1x,
-      "image_2x" => $image_2x,
-      "url" => $url,
-      "title" => $title,
-      "synopsis_snippet" => $synopsis,
-      "type" => $type,
-      "episodes" => $episodes,
-      "score" => $score,
+      "id" => $anime->get("id"),
+      "image" => array(
+        $anime->get("image")[0],
+        $anime->get("image")[1]
+      ),
+      "url" => $anime->get("mal_url"),
+      "title" => $anime->get("title"),
+      "synopsis_snippet" => $anime->get("synopsis"),
+      "type" => $anime->get("type"),
+      "episodes" => $anime->get("episodes"),
+      "score" => $anime->get("score"),
       "startdate" => $startdate,
       "enddate" => $enddate,
-      "members_count" => $membercount,
+      "members_count" => $anime->get("member_count"),
       "rating" => $rating
     ));
   }
