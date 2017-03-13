@@ -27,7 +27,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../class/cache.class.php");
+require_once(dirname(__FILE__) . "/../class/class.cache.php");
 
 call_user_func(function() {
   
