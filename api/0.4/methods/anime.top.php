@@ -27,6 +27,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../class/class.anime.php");
 require_once(dirname(__FILE__) . "/../class/class.cache.php");
 
 call_user_func(function() {
@@ -124,9 +125,11 @@ call_user_func(function() {
   $top_ranking_table = $html->find(".top-ranking-table", 0);
   $ranking_items = $top_ranking_table->find("tr.ranking-list");
   $anime_arr = array();
-  foreach($ranking_items as $anime) {
-    $ranking_rank = $anime->find("td.rank span", 0)->innertext;
-    $id = substr($anime->find("td.title .hoverinfo_trigger", 0)->id, 5);
+  foreach($ranking_items as $item) {
+    $anime = new Anime();
+    
+    $anime->set("rank", $item->find("td.rank span", 0)->innertext);
+    $anime->set("id", substr($item->find("td.title .hoverinfo_trigger", 0)->id, 5));
     if($showDetailed) {
       $detail_data = new Data(); // Initialise cache class, again
       $url = "https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $id;
@@ -148,52 +151,51 @@ call_user_func(function() {
 
       $parts = explode("\n", trim($info->plaintext));
       $titleAndYear = trim($info->find("a.hovertitle", 0)->innertext);
-      $title = trim(substr($titleAndYear, 0, -7));
-      $release_year = substr(substr($titleAndYear, -5), 0, -1);
-      $synopsis_snippet = trim(str_replace("read more", "", $info->find("div", 0)->plaintext));
+      $anime->set("title", trim(substr($titleAndYear, 0, -7)));
+      $anime->set("release_year", substr(substr($titleAndYear, -5), 0, -1));
+      $anime->set("synopsis_snippet", trim(str_replace("read more", "", $info->find("div", 0)->plaintext)));
       $reverse = array_reverse($parts);
-      $members = str_replace(",", "", trim(substr($reverse[0], 12)));
-      $popularity = substr(trim($reverse[1]), 14);
-      $score = trim(substr(explode("(scored by ", trim($reverse[3]))[0], 6));
-      $score_count = str_replace(",", "", trim(substr(explode("(scored by ", trim($reverse[3]))[1], 0, -7)));
-      $episodes = substr(trim($reverse[4]), 10);
-      $type = substr(trim($reverse[5]), 7);
-      $status = substr(trim($reverse[6]), 9);
-      $genres = explode(", ", trim(explode("Genres: ", $reverse[7])[1]));
-      if($episodes == " Unknown") $episodes = null;
+      $anime->set("members_count", str_replace(",", "", trim(substr($reverse[0], 12))));
+      $anime->set("popularity", substr(trim($reverse[1]), 14));
+      $anime->set("score", trim(substr(explode("(scored by ", trim($reverse[3]))[0], 6)));
+      $anime->set("score_count", str_replace(",", "", trim(substr(explode("(scored by ", trim($reverse[3]))[1], 0, -7))));
+      substr(trim($reverse[4]), 10) == " Unknown" ? $anime->set("episodes", null) : $anime->set("episodes", substr(trim($reverse[4]), 10));
+      $anime->set("type", substr(trim($reverse[5]), 7));
+      $anime->set("status", substr(trim($reverse[6]), 9));
+      $anime->set("genres", explode(", ", trim(explode("Genres: ", $reverse[7])[1])));
       $response_array = array(
-        "ranking_rank" => $ranking_rank,
-        "id" => $id,
-        "title" => $title,
-        "type" => $type,
-        "episodes" => $episodes,
-        "score" => $score,
-        "score_count" => $score_count,
-        "members_count" => $members,
-        "popularity" => $popularity,
-        "genres" => $genres,
-        "status" => $status,
-        "release_year" => $release_year,
-        "synopsis_snippet" => $synopsis_snippet
+        "rank" => $anime->get("rank"),
+        "id" => $anime->get("rank"),
+        "title" => $anime->get("title"),
+        "type" => $anime->get("type"),
+        "episodes" => $anime->get("episodes"),
+        "score" => $anime->get("score"),
+        "score_count" => $anime->get("score_count"),
+        "members_count" => $anime->get("members_count"),
+        "popularity" => $anime->get("popularity"),
+        "genres" => $anime->get("genres"),
+        "status" => $anime->get("status"),
+        "release_year" => $anime->get("release_year"),
+        "synopsis_snippet" => $anime->get("synopsis_snippet")
       );
       array_push($anime_arr, $response_array);
       continue;
     }
-    $title = $anime->find("td.title .detail div.di-ib a.hoverinfo_trigger", 0)->innertext;
+    $anime->set("title", $item->find("td.title .detail div.di-ib a.hoverinfo_trigger", 0)->innertext);
     $information = $anime->find("td.title .detail div.information", 0)->innertext;
     $information_parts = explode("<br>", $information);
-    $type = explode(" (", trim($information_parts[0]))[0];
-    $episodes = substr(explode(" (", trim($information_parts[0]))[1], 0, -5);
-    $members_count = str_replace(",", "", substr(trim($information_parts[2]), 0, -8));
-    $score = $anime->find("td.score span.text", 0)->innertext;
+    $anime->set("type", explode(" (", trim($information_parts[0]))[0]);
+    $anime->set("episodes", substr(explode(" (", trim($information_parts[0]))[1], 0, -5));
+    $anime->set("members_count", str_replace(",", "", substr(trim($information_parts[2]), 0, -8)));
+    $anime->set("score", $anime->find("td.score span.text", 0)->innertext);
     array_push($anime_arr, array(
-      "ranking_rank" => $ranking_rank,
-      "id" => $id,
-      "title" => $title,
-      "type" => $type,
-      "episodes" => $episodes,
-      "score" => $score,
-      "members_count" => $members_count
+      "rank" => $anime->get("rank"),
+      "id" => $anime->get("id"),
+      "title" => $anime->get("title"),
+      "type" => $anime->get("type"),
+      "episodes" => $anime->get("episodes"),
+      "score" => $anime->get("score"),
+      "members_count" => $anime->get("members_count")
     ));
   }
   

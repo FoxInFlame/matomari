@@ -3,6 +3,7 @@
 
 Shows detailed information about an anime.
 
+This method is cached. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/info/:id
 Authentication: None Required.
@@ -19,7 +20,6 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
-
 
 ini_set("display_errors", true);
 ini_set("display_startup_errors", true);
@@ -136,6 +136,9 @@ call_user_func(function() {
     if(strpos($value->plaintext, "Episodes:") !== false) {
       strpos($value->innertext, "Unknown") !== false ? $anime->set("episodes", null) : $anime->set("episodes", substr($value->plaintext, 13));
     }
+    if(strpos($value->plaintext, "Status:") !== false) {
+      strpos($value->innertext, "Unknown") !== false ? $anime->set("status", null) : $anime->set("status", substr($value->plaintext, 11));
+    }
     if(strpos($value->plaintext, "Duration:") !== false) {
       if(strpos($value->plaintext, "hr.") !== false) {
         preg_match("/\d+(?= hr.)/", $value->plaintext, $matches);
@@ -243,7 +246,7 @@ call_user_func(function() {
     "score" => $anime->get("score"),
     "score_count" => $anime->get("scoreCount"),
     "members_count" => $anime->get("membersCount"),
-    "favourites_count" => $anime->get("favoritesCount"),
+    "favorites_count" => $anime->get("favoritesCount"),
     "genres" => $anime->get("genres"),
     "producers" => $anime->get("producers"),
     "studios" => $anime->get("studios"),
