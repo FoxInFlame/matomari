@@ -7,6 +7,7 @@ Inspired by Atarashii API
 
 class Anime {
   
+  // Normal anime info
   private $id;
   private $title;
   private $other_titles = array();
@@ -17,6 +18,7 @@ class Anime {
   private $mal_url;
   private $type;
   private $episodes;
+  private $status;
   private $duration;
   private $total_duration;
   private $score;
@@ -29,6 +31,11 @@ class Anime {
   private $licensors = array();
   private $synopsis;
   
+  // t=64
+  private $release_year;
+  private $synopsis_snippet;
+  
+  // User info
   private $userStatus;
   private $userRewatching;
   private $userEpisodes;
@@ -79,6 +86,9 @@ class Anime {
       case "episodes":
         $this->episodes = $value ? trim($value) : $value;
         break;
+      case "status":
+        $this->status = $value ? trim($value) : $value;
+        break;
       case "duration":
         $this->duration = $value ? trim($value) : $value;
         break;
@@ -111,6 +121,12 @@ class Anime {
         break;
       case "synopsis":
         $this->synopsis = $value ? trim($value) : $value;
+        break;
+      case "release_year":
+        $this->release_year = $value ? trim($value) : $value;
+        break;
+      case "synopsis_snippet":
+        $this->synopsis_snippet = $value ? trim($value) : $value;
         break;
       case "user_status":
         $this->userStatus = $value ? trim($value) : $value;
@@ -183,6 +199,9 @@ class Anime {
       case "episodes":
         return $this->episodes;
         break;
+      case "status":
+        return $this->status;
+        break;
       case "duration":
         return $this->duration;
         break;
@@ -219,6 +238,12 @@ class Anime {
         break;
       case "synopsis":
         return $this->synopsis;
+        break;
+      case "release_year":
+        return $this->release_year;
+        break;
+      case "synopsis_snippet":
+        return($this->synopsis_snippet);
         break;
       case "userStatus":
         return $this->userStatus;
