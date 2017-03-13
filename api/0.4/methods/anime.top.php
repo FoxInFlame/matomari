@@ -195,7 +195,8 @@ call_user_func(function() {
       "type" => $anime->get("type"),
       "episodes" => $anime->get("episodes"),
       "score" => $anime->get("score"),
-      "members_count" => $anime->get("members_count")
+      "members_count" => $anime->get("members_count"),
+      "extra" => substr(trim($information_parts[2]), 0, -8)
     ));
   }
   

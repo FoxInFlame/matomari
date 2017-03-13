@@ -116,7 +116,7 @@ call_user_func(function() {
     }
   }
   unset($value);
-  $anime->set("otherTitles", array(
+  $anime->set("other_titles", array(
     "english" => $alternativeTitles_eng,
     "japanese" => $alternativeTitles_jap,
     "synonyms" => $alternativeTitles_syn
@@ -124,7 +124,7 @@ call_user_func(function() {
   $html->find("div#contentWrapper div#content div.anime-detail-header-stats span.ranked strong", 0)->plaintext == "N/A" ? $anime->set("rank", null) : $anime->set("rank", substr($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.ranked strong", 0)->plaintext, 1));
   $anime->set("popularity", substr($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.popularity strong", 0)->plaintext, 1));
   $anime->set("image", $html->find("div#contentWrapper div#content table div a img.ac", 0)->src);
-  $anime->set("MALURL", trim($html->find("div#contentWrapper div#content table div.js-scrollfix-bottom-rel div#horiznav_nav ul li a", 0)->href));
+  $anime->set("mal_url", trim($html->find("div#contentWrapper div#content table div.js-scrollfix-bottom-rel div#horiznav_nav ul li a", 0)->href));
   trim($html->find("div#contentWrapper div#content div.anime-detail-header-stats .score", 0)->plaintext) == "N/A" ? $anime->set("score", null) : $anime->set("score", trim($html->find("div#contentWrapper div#content div.anime-detail-header-stats .score", 0)->plaintext));
   $anime->set("synopsis", htmlspecialchars_decode(html_entity_decode(trim($html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0)->innertext, " "), 0, "UTF-8")));
   $information = $html->find("div#contentWrapper div#content div.js-scrollfix-bottom div");
@@ -163,21 +163,21 @@ call_user_func(function() {
         }
       }
       $anime->set("duration", $minutes);
-      $anime->get("duration") !== null && $anime->get("episodes") !== null ? $anime->set("totalDuration", intval($anime->get("duration")) * intval($anime->get("episodes"))) : $anime->set("totalDuration", null); // Set total duration only if duration and episodes are defined
+      $anime->get("duration") !== null && $anime->get("episodes") !== null ? $anime->set("total_duration", intval($anime->get("duration")) * intval($anime->get("episodes"))) : $anime->set("total_duration", null); // Set total duration only if duration and episodes are defined
     }
     if(strpos($value->plaintext, "Score:") !== false) {
       if(strpos($value->plaintext, "users") !== false) {
         preg_match("/\d(,?\d?)+(?=  users)/", $value->plaintext, $matches);
-        $anime->set("scoreCount", str_replace(",", "", $matches[0]));
+        $anime->set("score_count", str_replace(",", "", $matches[0]));
       } else {
-        $anime->set("scoreCount", null);
+        $anime->set("score_count", null);
       }
     }
     if(strpos($value->plaintext, "Members:") !== false) {
-      $anime->set("membersCount", str_replace(",", "", trim(substr($value->plaintext, 12), " ")));
+      $anime->set("members_count", str_replace(",", "", trim(substr($value->plaintext, 12), " ")));
     }
     if(strpos($value->plaintext, "Favorites:") !== false) {
-      $anime->set("favoritesCount", str_replace(",", "", trim(substr($value->plaintext, 14), " ")));
+      $anime->set("favorites_count", str_replace(",", "", trim(substr($value->plaintext, 14), " ")));
     }
     if(strpos($value->plaintext, "Genres:") !== false) {
       if(strpos($value->innertext, "No genres have been added yet.") !== false) {
@@ -230,7 +230,7 @@ call_user_func(function() {
   $output = array(
     "id" => $anime->get("id"),
     "title" => $anime->get("title"),
-    "other_titles" => $anime->get("otherTitles"),
+    "other_titles" => $anime->get("other_titles"),
     "rank" => $anime->get("rank"),
     "popularity" => $anime->get("popularity"),
     "image" => array(
@@ -238,15 +238,15 @@ call_user_func(function() {
       "min" => $anime->get("image")[1]
     ),
     "source" => $anime->get("source"),
-    "url" => $anime->get("MALURL"),
+    "url" => $anime->get("mal_url"),
     "type" => $anime->get("type"),
     "episodes" => $anime->get("episodes"),
     "duration" => $anime->get("duration"),
-    "total_duration" => $anime->get("totalDuration"),
+    "total_duration" => $anime->get("total_duration"),
     "score" => $anime->get("score"),
-    "score_count" => $anime->get("scoreCount"),
-    "members_count" => $anime->get("membersCount"),
-    "favorites_count" => $anime->get("favoritesCount"),
+    "score_count" => $anime->get("score_count"),
+    "members_count" => $anime->get("members_count"),
+    "favorites_count" => $anime->get("favorites_count"),
     "genres" => $anime->get("genres"),
     "producers" => $anime->get("producers"),
     "studios" => $anime->get("studios"),
