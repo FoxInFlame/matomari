@@ -132,7 +132,7 @@ call_user_func(function() {
     $anime->set("id", substr($item->find("td.title .hoverinfo_trigger", 0)->id, 5));
     if($showDetailed) {
       $detail_data = new Data(); // Initialise cache class, again
-      $url = "https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $id;
+      $url = "https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $anime->get("id");
       
       if($detail_data->getCache($url)) {
         $info = str_get_html($detail_data->data);
@@ -182,12 +182,12 @@ call_user_func(function() {
       continue;
     }
     $anime->set("title", $item->find("td.title .detail div.di-ib a.hoverinfo_trigger", 0)->innertext);
-    $information = $anime->find("td.title .detail div.information", 0)->innertext;
+    $information = $item->find("td.title .detail div.information", 0)->innertext;
     $information_parts = explode("<br>", $information);
     $anime->set("type", explode(" (", trim($information_parts[0]))[0]);
     $anime->set("episodes", substr(explode(" (", trim($information_parts[0]))[1], 0, -5));
     $anime->set("members_count", str_replace(",", "", substr(trim($information_parts[2]), 0, -8)));
-    $anime->set("score", $anime->find("td.score span.text", 0)->innertext);
+    $anime->set("score", $item->find("td.score span.text", 0)->innertext);
     array_push($anime_arr, array(
       "rank" => $anime->get("rank"),
       "id" => $anime->get("id"),
