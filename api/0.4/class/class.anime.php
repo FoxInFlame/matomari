@@ -36,17 +36,17 @@ class Anime {
   private $synopsis_snippet;
   
   // User info
-  private $userStatus;
-  private $userRewatching;
-  private $userEpisodes;
-  private $userStartDate;
-  private $userEndDate;
-  private $userTags = array();
-  private $userPriority;
-  private $userStorage;
-  private $userRewatchCount;
-  private $userRewatchValue;
-  private $userComments;
+  private $user_status;
+  private $user_rewatching;
+  private $user_episodes;
+  private $user_start_date;
+  private $user_end_date;
+  private $user_tags = array();
+  private $user_priority;
+  private $user_storage;
+  private $user_rewatch_count;
+  private $user_rewatch_value;
+  private $user_comments;
   
   public function set($data, $value) {
     switch($data) {
@@ -56,7 +56,7 @@ class Anime {
       case "title":
         $this->title = $value ? trim($value) : $value;
         break;
-      case "otherTitles":
+      case "other_titles":
         $this->other_titles = $value;  // Don't trim arrays!
         break;
       case "rank":
@@ -77,7 +77,7 @@ class Anime {
       case "source":
         $this->source = $value ? trim($value) : $value;
         break;
-      case "MALURL":
+      case "mal_url":
         $this->mal_url = $value ? trim($value) : $value;
         break;
       case "type":
@@ -92,19 +92,19 @@ class Anime {
       case "duration":
         $this->duration = $value ? trim($value) : $value;
         break;
-      case "totalDuration":
+      case "total_duration":
         $this->total_duration = $value ? trim($value) : $value;
         break;
       case "score":
         $this->score = $value ? trim($value) : $value;
         break;
-      case "scoreCount":
+      case "score_count":
         $this->score_count = $value ? trim($value) : $value;
         break;
-      case "membersCount":
+      case "members_count":
         $this->members_count = $value ? trim($value) : $value;
         break;
-      case "favoritesCount":
+      case "favorites_count":
         $this->favorites_count = $value ? trim($value) : $value;
         break;
       case "genres":
@@ -129,37 +129,37 @@ class Anime {
         $this->synopsis_snippet = $value ? trim($value) : $value;
         break;
       case "user_status":
-        $this->userStatus = $value ? trim($value) : $value;
+        $this->user_status = $value ? trim($value) : $value;
         break;
       case "user_rewatching":
-        $this->userRewatching = $value ? trim($value) : $value;
+        $this->user_rewatching = $value ? trim($value) : $value;
         break;
       case "user_episodes":
-        $this->userEpisodes = $value ? trim($value) : $value;
+        $this->user_episodes = $value ? trim($value) : $value;
         break;
-      case "startDate":
-        $this->userStartDate = $value ? trim($value) : $value;
+      case "user_start_date":
+        $this->user_start_date = $value ? trim($value) : $value;
         break;
-      case "endDate":
-        $this->userEndDate = $value ? trim($value) : $value;
+      case "user_end_date":
+        $this->user_end_date = $value ? trim($value) : $value;
         break;
-      case "tags":
-        $this->userTags = $value ? trim($value) : $value;
+      case "user_tags":
+        $this->user_tags = $value ? trim($value) : $value;
         break;
-      case "userPriority":
-        $this->userPriority = $value ? trim($value) : $value;
+      case "user_priority":
+        $this->user_priority = $value ? trim($value) : $value;
         break;
-      case "userStorage":
-        $this->userStorage = $value ? trim($value) : $value;
+      case "user_storage":
+        $this->user_storage = $value ? trim($value) : $value;
         break;
-      case "userRewatchCount":
-        $this->userRewatchCount = $value ? trim($value) : $value;
+      case "user_rewatch_count":
+        $this->user_rewatch_count = $value ? trim($value) : $value;
         break;
-      case "userRewatchValue":
-        $this->userRewatchValue = $value ? trim($value) : $value;
+      case "user_rewatch_value":
+        $this->user_rewatch_value = $value ? trim($value) : $value;
         break;
-      case "userComments":
-        $this->userComments = $value ? trim($value) : $value;
+      case "user_comments":
+        $this->user_comments = $value ? trim($value) : $value;
         break;
     }
   }
@@ -190,7 +190,7 @@ class Anime {
       case "source":
         return $this->source;
         break;
-      case "MALURL":
+      case "mal_url":
         return $this->mal_url;
         break;
       case "type":
@@ -205,7 +205,7 @@ class Anime {
       case "duration":
         return $this->duration;
         break;
-      case "totalDuration":
+      case "total_duration":
         if(!$this->total_duration) {
           if(!$this->episodes || !$this->duration) return;
           return $this->episodes * $this->duration;
@@ -215,13 +215,13 @@ class Anime {
       case "score":
         return $this->score;
         break;
-      case "scoreCount":
+      case "score_count":
         return $this->score_count;
         break;
-      case "membersCount":
+      case "members_count":
         return $this->members_count;
         break;
-      case "favoritesCount":
+      case "favorites_count":
         return $this->favorites_count;
         break;
       case "genres":
@@ -245,38 +245,38 @@ class Anime {
       case "synopsis_snippet":
         return($this->synopsis_snippet);
         break;
-      case "userStatus":
-        return $this->userStatus;
+      case "user_status":
+        return $this->user_status;
         break;
-      case "userRewatching":
-        return $this->userRewatching;
+      case "user_rewatching":
+        return $this->user_rewatching;
         break;
-      case "userEpisodes":
-        return $this->userEpisodes;
+      case "user_episodes":
+        return $this->user_episodes;
         break;
-      case "userStartDate":
-        return $this->userStartDate;
+      case "user_start_date":
+        return $this->user_start_date;
         break;
-      case "userEndDate":
-        return $this->userEndDate;
+      case "user_end_date":
+        return $this->user_end_date;
         break;
-      case "userTags":
-        return $this->userTags;
+      case "user_tags":
+        return $this->user_tags;
         break;
-      case "userPriority":
-        return $this->userPriority;
+      case "user_priority":
+        return $this->user_priority;
         break;
-      case "userStorage":
-        return $this->userStorage;
+      case "user_storage":
+        return $this->user_storage;
         break;
-      case "userRewatchCount":
-        return $this->userRewatchCount;
+      case "user_rewatch_count":
+        return $this->user_rewatch_count;
         break;
-      case "userRewatchValue":
-        return $this->userRewatchValue;
+      case "user_rewatch_value":
+        return $this->user_rewatch_value;
         break;
-      case "userComments":
-        return $this->userComments;
+      case "user_comments":
+        return $this->user_comments;
         break;
     }
   }
