@@ -3,6 +3,7 @@
 
 Get top ranked anime.
 
+This method is cached. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/top
 Authentication: None Required.
@@ -21,10 +22,6 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
-
-ini_set("display_errors", true);
-ini_set("display_startup_errors", true);
-error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -78,33 +75,50 @@ call_user_func(function() {
   $show = ($page - 1) * 50;
   $page_param = $sort_param == "" ? "?limit=" . $show : "&limit=" . $show;
   
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/topanime.php" . $sort_param . $page_param);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $response_string = curl_exec($ch);
-  if(!$response_string) {
-    if($page != 1) {
-      curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/topanime.php" . $sort_param);
-      $response_string = curl_exec($ch);
-      curl_close($ch);
-      if(!$response_string) {
+  $url = "https://myanimelist.net/topanime.php" . $sort_param . $page_param;
+  $data = new Data(); // Initialise cache class
+  
+  if($data->getCache($url)) {
+    $html = str_get_html($data->data);
+  } else {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/topanime.php" . $sort_param . $page_param);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    if(!$response) {
+      if($page != 1) { // If page isn't one, try one
+        curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/topanime.php" . $sort_param);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        if(!$response) {
+          echo json_encode(array(
+            "message" => "MAL is offline."
+          ));
+          http_response_code(404);
+          return;
+        }
+      } else {
+        curl_close($ch);
         echo json_encode(array(
-          "message" => "MAL is offline, or their code changed."
+          "message" => "MAL is offline."
         ));
         http_response_code(404);
         return;
       }
-    } else {
-      curl_close($ch);
-      echo json_encode(array(
-        "message" => "MAL is offline, or their code changed."
-      ));
-      http_response_code(404);
-      return;
     }
+    curl_close($ch);
+    
+    $data->saveCache($url, $response);
+    $html = str_get_html($response);
   }
-  curl_close($ch);
-  $html = str_get_html($response_string);
+  
+  if(!is_object($html)) {
+    echo json_encode(array(
+      "message" => "The code for MAL is not valid HTML markup.",
+    ));
+    http_response_code(500);
+    return;
+  }
   
   $top_ranking_table = $html->find(".top-ranking-table", 0);
   $ranking_items = $top_ranking_table->find("tr.ranking-list");
@@ -113,7 +127,24 @@ call_user_func(function() {
     $ranking_rank = $anime->find("td.rank span", 0)->innertext;
     $id = substr($anime->find("td.title .hoverinfo_trigger", 0)->id, 5);
     if($showDetailed) {
-      $info = file_get_html("https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $id);
+      $detail_data = new Data(); // Initialise cache class, again
+      $url = "https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $id;
+      
+      if($detail_data->getCache($url)) {
+        $info = str_get_html($detail_data->data);
+      } else {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        if(!$response) {
+          continue;
+        }
+        curl_close($ch);
+        $data->saveCache($url, $response);
+        $info = str_get_html($response);
+      }
+
       $parts = explode("\n", trim($info->plaintext));
       $titleAndYear = trim($info->find("a.hovertitle", 0)->innertext);
       $title = trim(substr($titleAndYear, 0, -7));
