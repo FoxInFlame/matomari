@@ -172,7 +172,7 @@ class Anime {
       case "title":
         return $this->title;
         break;
-      case "otherTitles":
+      case "other_titles":
         return $this->other_titles;
         break;
       case "rank":
