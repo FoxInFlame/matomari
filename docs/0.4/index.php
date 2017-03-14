@@ -159,7 +159,6 @@ if(isset($_GET['file'])) {
       <div class="ui container">
         <div class="item">
           <img class="logo" src="../../favicon.ico">
-          matomari API
         </div>
         <a class="item" href="https://github.com/FoxInFlame/matomari">GitHub</a>
         <div class="ui dropdown item">

@@ -1,4 +1,10 @@
 anime/info/:id is a method that allows you to view the detailed information about a specific anime using the anime ID.<br>
+<div class="ui icon message">
+  <i class="file outline icon"></i>
+  <div class="content">
+    <p>Responses to this method are <a href="cache.html">cached</a>.</p>
+  </div>
+</div>
 <table class="ui celled green table">
   <thead>
     <tr>
@@ -65,7 +71,9 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/
       },
       <span class="property">"rank"</span>: <span class="type-int">74</span>, <span class="type-comment">// Integer of the overall rank</span>
       <span class="property">"popularity"</span>: <span class="type-int">31</span>, <span class="type-comment">// Integer of the popularity rank</span>
-      <span class="property">"image_url"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/6/73245.jpg"</span>, <span class="type-comment">// String with the cover image URL</span>
+      <span class="property">"image"</span>: {
+        <span class="property">"full"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/6/73245.jpg"</span>, <span class="type-comment">// String with the full size image URL</span>
+        <span class="property">"min"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/6/73245t.jpg"</span> <span class="type-comment">// String with the min size image URL</span>
       <span class="property">"source"</span>: <span class="type-string">"Manga"</span>, <span class="type-comment">// String with the source</span>
       <span class="property">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/21/One_Piece"</span>, <span class="type-comment">// String with the MyAnimeList URL</span>
       <span class="property">"type"</span>: <span class="type-string">"TV"</span>, <span class="type-comment">// String with the anime type</span>
@@ -75,7 +83,7 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/
       <span class="property">"score"</span>: <span class="type-int">8.58</span>, <span class="type-comment">// Decimal integer of the community score</span>
       <span class="property">"score_count"</span>: <span class="type-int">318056</span>, <span class="type-comment">// Integer of the number of people who scored</span>
       <span class="property">"members_count"</span>: <span class="type-int">518679</span>, <span class="type-comment">// Integer of the number of members</span>
-      <span class="property">"favourites_count"</span>: <span class="type-int">56364</span>, <span class="type-comment">// Integer of the number of people with it in their favourites (FavoUrite, UK Spelling)</span>
+      <span class="property">"favorites_count"</span>: <span class="type-int">56364</span>, <span class="type-comment">// Integer of the number of people with it in their favorites</span>
       <span class="property">"genres"</span>: [ <span class="type-comment">// Array of Genres</span>
         <span class="type-string">"Action"</span>,
         <span class="type-string">"Adventure"</span>,
