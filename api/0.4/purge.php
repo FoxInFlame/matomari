@@ -12,7 +12,7 @@ A Part of the matomari API.
 
 */
 
-if (PHP_SAPI !== "cli") { // If not run by CronJob
+if($_SERVER["REMOTE_ADDR"] != "88.99.90.240") {
   http_response_code(404);
   return;
 }
