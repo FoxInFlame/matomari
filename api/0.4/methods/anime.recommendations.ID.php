@@ -83,6 +83,7 @@ call_user_func(function() {
 
     $data->saveCache($url, $response);
     $html = str_get_html($response);
+  }
   
   if(!is_object($html)) {
     echo json_encode(array(
