@@ -10,26 +10,34 @@ class Anime {
   // Normal anime info
   private $id;
   private $title;
-  private $other_titles = array();
-  private $rank;
-  private $popularity;
-  private $image_url;
-  private $source;
   private $mal_url;
+  private $image_url;
+  private $other_titles = array();
   private $type;
   private $episodes;
   private $status;
+  private $air_date;
+  private $season;
+  private $air_time;
+  private $producers = array();
+  private $licensors = array();
+  private $studios = array();
+  private $source;
+  private $genres = array();
   private $duration;
   private $total_duration;
+  private $rating;
   private $score;
   private $score_count;
+  private $rank;
+  private $popularity;
   private $members_count;
   private $favorites_count;
-  private $genres = array();
-  private $producers = array();
-  private $studios = array();
-  private $licensors = array();
+  private $external_links = array();
   private $synopsis;
+  private $background;
+  private $related = array();
+  private $theme_songs = array();
   
   // t=64
   private $release_year;
@@ -78,6 +86,9 @@ class Anime {
         $this->source = $value ? trim($value) : $value;
         break;
       case "mal_url":
+        if($value[0] == "/") {
+          $value = "https://myanimelist.net" . $value;
+        }
         $this->mal_url = $value ? trim($value) : $value;
         break;
       case "type":
