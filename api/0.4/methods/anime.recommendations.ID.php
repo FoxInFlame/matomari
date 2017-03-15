@@ -3,6 +3,7 @@
 
 Shows recommendations from an anime.
 
+This method is cached for an hour. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/recommendations/:id
 Authentication: None Required.
@@ -54,28 +55,34 @@ call_user_func(function() {
     return;
   }
 
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/userrecs");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $response_string = curl_exec($ch);
-  if(!$response_string) {
-    echo json_encode(array(
-      "message" => "MAL is offline."
-    ));
-    http_response_code(404);
-    return;
-  }
-  if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
-    echo json_encode(array(
-      "message" => "Anime with specified id could not be found."
-    ));
-    http_response_code(404);
-    return;
-  }
+  $url = "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/userrecs";
+  $data = new Data(); // Initialise cache class
   
-  curl_close($ch);
-  
-  $html = str_get_html($response_string);
+  if($data->getCache($url)) {
+    $html = str_get_html($data->data);
+  } else {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    if(!$response) {
+      echo json_encode(array(
+        "message" => "MAL is offline."
+      ));
+      http_response_code(404);
+      return;
+    }
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
+      echo json_encode(array(
+        "message" => "Anime with specified id could not be found."
+      ));
+      http_response_code(404);
+      return;
+    }
+    curl_close($ch);
+
+    $data->saveCache($url, $response);
+    $html = str_get_html($response);
   
   if(!is_object($html)) {
     echo json_encode(array(
@@ -106,6 +113,7 @@ call_user_func(function() {
     $to_anime->set("id", explode("/", $to->find(".picSurround a", 0)->href)[2]);
     $to_anime->set("image", $to->find(".picSurround a img", 0)->{'data-srcset'});
     $to_anime->set("title", $recommendation->find("table td a strong", 0)->innertext);
+    $to_anime->set("mal_url", $recommendation->find("table td a", 0)->href);
     $reason = explode("\r\n", substr($recommendation->find("table td", 1)->children(2)->find("div", 0)->plaintext, 0, -6));
     $reason = str_replace(" &nbspread more", "", htmlspecialchars_decode(html_entity_decode(join("<br>", $reason), 0, "UTF-8")));
     $author = trim($recommendation->find("table td", 1)->children(2)->children(1)->find("a", 1)->innertext);
@@ -127,7 +135,8 @@ call_user_func(function() {
           "full" => $to_anime->get("image")[0],
           "min" => $to_anime->get("image")[1]
         ),
-        "title" => $to_anime->get("title")
+        "title" => $to_anime->get("title"),
+        "url" => $to_anime->get("mal_url")
       ),
       "reason" => $reason,
       "author" => $author,

@@ -3,7 +3,7 @@
 
 Get top ranked anime.
 
-This method is cached. Set the nocache parameter to true to use a fresh version (slower).
+This method is cached for a day. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/top
 Authentication: None Required.

@@ -3,7 +3,7 @@
 
 Shows anime search results for a query. Maximum 50 results. Filtering supported.
 
-This method is cached. Set the nocache parameter to true to use a fresh version (slower).
+This method is cached for a day. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/search/:query
 Authentication: None Required.
@@ -26,6 +26,10 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
+
+ini_set("display_errors", true);
+ini_set("display_startup_errors", true);
+error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -51,9 +55,6 @@ call_user_func(function() {
       http_response_code(400);
       return;
     }
-  }
-  if((!isset($_GET['filter']) || empty($_GET['filter'])) && (!isset($_GET['q']) || strlen($parts[0]) <! 3)) {
-    
   }
   $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
   $filters = explode(",", $filter);
@@ -501,8 +502,8 @@ call_user_func(function() {
     $html = str_get_html($data->data);
   } else {
     $ch = curl_init();
-    curl_setopt(CURLOPT_URL, $url);
-    curl_setopt(CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
     if(!$response) {
       if($page != 1) {
@@ -574,7 +575,7 @@ call_user_func(function() {
     trim($scoretd->innertext) != "N/A" ? $anime->set("score", trim($scoretd->innertext)) : $anime->set("score", null);
     $startdate = trim($startdatetd->innertext);
     $enddate = trim($enddatetd->innertext);
-    $anime->set("member_count", str_replace(",", "", trim($membercounttd->innertext)));
+    $anime->set("members_count", str_replace(",", "", trim($membercounttd->innertext)));
     $rating = trim($ratingtd->innertext);
     if($rating == "-") {
       $rating = null;
@@ -646,7 +647,7 @@ call_user_func(function() {
       "score" => $anime->get("score"),
       "startdate" => $startdate,
       "enddate" => $enddate,
-      "members_count" => $anime->get("member_count"),
+      "members_count" => $anime->get("members_count"),
       "rating" => $rating
     ));
   }

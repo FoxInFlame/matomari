@@ -3,7 +3,7 @@
 
 Shows detailed information about an anime.
 
-This method is cached. Set the nocache parameter to true to use a fresh version (slower).
+This method is cached for a day. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/info/:id
 Authentication: None Required.
@@ -164,6 +164,9 @@ call_user_func(function() {
       }
       $anime->set("duration", $minutes);
       $anime->get("duration") !== null && $anime->get("episodes") !== null ? $anime->set("total_duration", intval($anime->get("duration")) * intval($anime->get("episodes"))) : $anime->set("total_duration", null); // Set total duration only if duration and episodes are defined
+    }
+    if(strpos($value->plaintext, "Rating:") !== false) {
+      strpos($value->innertext, "Unknown") !== false ? $anime->set("rating", null) : $anime->set("rating", substr($value->plaintext, "11"));
     }
     if(strpos($value->plaintext, "Score:") !== false) {
       if(strpos($value->plaintext, "users") !== false) {
