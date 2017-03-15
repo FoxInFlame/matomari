@@ -8,7 +8,7 @@ Method: GET
         /anime/recommendations/:id/:id
 Authentication: None Required.
 Parameters:
-  - None.
+  - id2: Second id to show recommendation with.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -20,10 +20,6 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
-
-ini_set("display_errors", true);
-ini_set("display_startup_errors", true);
-error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -113,8 +109,12 @@ call_user_func(function() {
   $recommendations_arr = array();
   
   foreach($recommendations as $recommendation) {
-    $reason = explode("<span style=\"display:none\"", $recommendation->find(".spaceit_pad", 0)->innertext)[0] . $recommendation->find(".spaceit_pad span", 0)->innertext;
-    $author = $recommendation->find(".spaceit_pad", 1)->find("a", 0)->innertext;
+    if($recommendation->find(".spaceit_pad", 0)->find("span", 0)) {
+      $reason = explode("<span", $recommendation->find(".spaceit_pad", 0)->innertext)[0] . $recommendation->find(".spaceit_pad", 0)->find("span", 0)->innertext;
+    } else {
+      $reason = explode("<span", $recommendation->find(".spaceit_pad", 0)->innertext)[0];
+    }
+    $author = $recommendation->find(".spaceit_pad", 1)->find("a", 1)->innertext;
     array_push($recommendations_arr, array(
       "reason" => $reason,
       "author" => $author
