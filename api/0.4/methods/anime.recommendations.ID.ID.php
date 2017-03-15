@@ -110,11 +110,12 @@ call_user_func(function() {
   // [+] ============================================== [+]
 
   $recommendations = $html->find("#content .borderDark .borderClass");
-  $anime_arr = array();
+  $recommendations_arr = array();
+  
   foreach($recommendations as $recommendation) {
     $reason = explode("<span style=\"display:none\"", $recommendation->find(".spaceit_pad", 0)->innertext)[0] . $recommendation->find(".spaceit_pad span", 0)->innertext;
     $author = $recommendation->find(".spaceit_pad", 1)->find("a", 0)->innertext;
-    array_push($anime_arr, array(
+    array_push($recommendations_arr, array(
       "reason" => $reason,
       "author" => $author
     ));
