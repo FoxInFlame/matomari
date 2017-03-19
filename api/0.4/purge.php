@@ -13,6 +13,7 @@ A Part of the matomari API.
 */
 
 if($_SERVER["REMOTE_ADDR"] != "88.99.90.240") {
+  echo $_SERVER["REMOTE_ADDR"] . " is not our list of allowed sources.";
   http_response_code(404);
   return;
 }
