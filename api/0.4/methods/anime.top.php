@@ -165,7 +165,7 @@ call_user_func(function() {
       $anime->set("genres", explode(", ", trim(explode("Genres: ", $reverse[7])[1])));
       $response_array = array(
         "rank" => $anime->get("rank"),
-        "id" => $anime->get("rank"),
+        "id" => $anime->get("id"),
         "title" => $anime->get("title"),
         "type" => $anime->get("type"),
         "episodes" => $anime->get("episodes"),
