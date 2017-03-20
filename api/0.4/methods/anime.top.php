@@ -131,6 +131,7 @@ call_user_func(function() {
     $anime->set("rank", $item->find("td.rank span", 0)->innertext);
     $anime->set("id", substr($item->find("td.title .hoverinfo_trigger", 0)->id, 5));
     $item->find("td.title a img", 0)->{'data-srcset'} ? $anime->set("image", $item->find("td.title a img", 0)->{'data-srcset'}) : $anime->set("image", $item->find("td.title a img", 0)->{'srcset'});
+    $anime->set("mal_url", $item->find("td.title .hoverinfo_trigger", 0)->href);
     if($showDetailed) {
       $detail_data = new Data(); // Initialise cache class, again
       $url = "https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $anime->get("id");
@@ -152,7 +153,6 @@ call_user_func(function() {
 
       $parts = explode("\n", trim($info->plaintext));
       $titleAndYear = trim($info->find("a.hovertitle", 0)->innertext);
-      $anime->set("title", trim(substr($titleAndYear, 0, -7)));
       $anime->set("release_year", substr(substr($titleAndYear, -5), 0, -1));
       $anime->set("synopsis_snippet", trim(str_replace("read more", "", $info->find("div", 0)->plaintext)));
       $reverse = array_reverse($parts);
@@ -172,6 +172,7 @@ call_user_func(function() {
           "full" => $anime->get("image")[0],
           "min" => $anime->get("image")[1]
         ),
+        "url" => $anime->get("mal_url"),
         "type" => $anime->get("type"),
         "episodes" => $anime->get("episodes"),
         "score" => $anime->get("score"),
@@ -201,6 +202,7 @@ call_user_func(function() {
         "full" => $anime->get("image")[0],
         "min" => $anime->get("image")[1]
       ),
+      "url" => $anime->get("mal_url"),
       "type" => $anime->get("type"),
       "episodes" => $anime->get("episodes"),
       "score" => $anime->get("score"),
