@@ -130,6 +130,7 @@ call_user_func(function() {
     
     $anime->set("rank", $item->find("td.rank span", 0)->innertext);
     $anime->set("id", substr($item->find("td.title .hoverinfo_trigger", 0)->id, 5));
+    $item->find("td.title a img")->{'data-srcset'} ? $anime->set("image", $item->find("td.title a img")->{'data-srcset'}) : $anime->set("image", $item->find("td.title a img")->{'srcset'});
     if($showDetailed) {
       $detail_data = new Data(); // Initialise cache class, again
       $url = "https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $anime->get("id");
@@ -167,6 +168,10 @@ call_user_func(function() {
         "rank" => $anime->get("rank"),
         "id" => $anime->get("id"),
         "title" => $anime->get("title"),
+        "image" => array(
+          "full" => $anime->get("image")[0],
+          "min" => $anime->get("image")[1]
+        ),
         "type" => $anime->get("type"),
         "episodes" => $anime->get("episodes"),
         "score" => $anime->get("score"),
@@ -192,6 +197,10 @@ call_user_func(function() {
       "rank" => $anime->get("rank"),
       "id" => $anime->get("id"),
       "title" => $anime->get("title"),
+      "image" => array(
+        "full" => $anime->get("image")[0],
+        "min" => $anime->get("image")[1]
+      ),
       "type" => $anime->get("type"),
       "episodes" => $anime->get("episodes"),
       "score" => $anime->get("score"),
