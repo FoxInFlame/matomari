@@ -3,6 +3,7 @@
 
 Shows stats of an anime.
 
+This method is cached for a day. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/stats/:id
 Authentication: None Required.
@@ -19,14 +20,11 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
-ini_set("display_errors", true);
-ini_set("display_startup_errors", true);
-error_reporting(E_ALL);
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../class/class.cache.php");
 
 call_user_func(function() {
   
@@ -52,29 +50,35 @@ call_user_func(function() {
     return;
   }
 
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/stats");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $response_string = curl_exec($ch);
-  if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
-    echo json_encode(array(
-      "message" => "Anime with specified id could not be found."
-    ));
-    http_response_code(404);
-    return;
+  $url = "https://myanimelist.net/anime/" . $parts[0];
+  $data = new Data();
+  
+  if($data->getCache($url)) {
+    $html = str_get_html($data->data);
+  } else {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/stats");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    if(!$response) {
+       echo json_encode(array(
+        "message" => "MAL is offline."
+      ));
+      http_response_code(404);
+      return;
+    }
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
+      echo json_encode(array(
+        "message" => "Anime with specified id could not be found."
+      ));
+      http_response_code(404);
+      return;
+    }
+    curl_close($ch);
+    
+    $data->saveCache($url, $response);
+    $html = str_get_html($response);
   }
-  
-  curl_close($ch);
-  
-  if(!$response_string) {
-    echo json_encode(array(
-      "message" => "MAL is offline."
-    ));
-    http_response_code(404);
-    return;
-  }
-  
-  $html = str_get_html($response_string);
   
   if(!is_object($html)) {
     echo json_encode(array(
