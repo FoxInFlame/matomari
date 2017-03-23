@@ -193,15 +193,11 @@ class Anime {
         return $this->popularity;
         break;
       case "image":
-        $array = array();
-        if(@get_headers(substr($this->image_url, 0, -4) . "t.jpg")[0] != "HTTP/1.1 404 Not Found") {
-          $array['small'] = substr($this->image_url, 0, -4) . "t.jpg";
-        }
-        $array['normal'] = $this->image_url;
-        if(@get_headers(substr($this->image_url, 0, -4) . "l.jpg")[0] != "HTTP/1.1 404 Not Found") {
-          $array['large'] = substr($this->image_url, 0, -4) . "l.jpg";
-        }
-        return $array;
+        return array(
+          "small" => substr($this->image_url, 0, -4) . "t.jpg",
+          "normal" => $this->image_url,
+          "large" => substr($this->image_url, 0, -4) . "l.jpg"
+        );
         break;
       case "source":
         return $this->source;
