@@ -194,12 +194,12 @@ class Anime {
         break;
       case "image":
         $array = array();
-        if(@get_headers(substr($this->image_url, 0, -4) . "t.jpg")[0] == "HTTP/1.1 404 Not Found") {
-          array_push($array, substr($this->image_url, 0, -4) . "t.jpg");
+        if(@get_headers(substr($this->image_url, 0, -4) . "t.jpg")[0] != "HTTP/1.1 404 Not Found") {
+          $array['small'] = substr($this->image_url, 0, -4) . "t.jpg";
         }
-        array_push($array, $this->image_url);
-        if(@get_headers(substr($this->image_url, 0, -4) . "l.jpg")[0] == "HTTP/1.1 404 Not Found") {
-          array_push($array, substr($this->image_url, 0, -4) . "l.jpg");
+        $array['normal'] = $this->image_url;
+        if(@get_headers(substr($this->image_url, 0, -4) . "l.jpg")[0] != "HTTP/1.1 404 Not Found") {
+          $array['large'] = substr($this->image_url, 0, -4) . "l.jpg";
         }
         return $array;
         break;
