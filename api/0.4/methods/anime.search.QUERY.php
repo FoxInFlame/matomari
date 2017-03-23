@@ -635,10 +635,7 @@ call_user_func(function() {
     
     array_push($results_arr, array(
       "id" => $anime->get("id"),
-      "image" => array(
-        $anime->get("image")[0],
-        $anime->get("image")[1]
-      ),
+      "image" => $anime->get("image"),
       "url" => $anime->get("mal_url"),
       "title" => $anime->get("title"),
       "synopsis_snippet" => $anime->get("synopsis"),
