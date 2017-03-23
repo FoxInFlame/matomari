@@ -7,6 +7,7 @@ Method: GET
         /api/anime/search/QUERY.(json|xml)
 Authentication: None Required.
 Supported Filetypes: json, xml.
+Can someone please find out what the o parameter does in the MAL anime search?
 Parameters:
   - page: [Optional] Page number. If page doesn't exist, becomes 1. (Defaults to 1)
   - filter: [Optional] Filters, seperated by comma.
@@ -26,10 +27,6 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-ini_set("display_errors", true);
-ini_set("display_startup_errors", true);
-error_reporting(E_ALL);
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
@@ -44,6 +41,12 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   $parts = isset($_GET['q']) ? explode("/",$_GET['q']) : array();
+  if(strlen($parts[0]) < 3) {
+    echo json_encode(array(
+      "error" => "Query must be at least 3 letters long."
+    ));
+    return;
+  }
   $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
   $filters = explode(",", $filter);
   $filter_param = "";
@@ -204,6 +207,15 @@ call_user_func(function() {
             $filter_param .= "&ed=0";
           }
           break;
+        case "startswithletter":
+          if(strlen($filterparts[1]) != 1) {
+            break;
+          }
+          if(!preg_match("/^[a-zA-Z]$/", $param)) {
+            break;
+          }
+          $filter_param .= "&letter=" . $filterparts[1];
+          break;
         case "inc-genre":
           if(strpos($filter_param, "&gx=0") === false) $filter_param .= "&gx=0";
           switch(strtolower($filterparts[1])) {
@@ -219,7 +231,7 @@ call_user_func(function() {
             case "comedy":
               $filter_param .= "&genre[]=4";
               break;
-            case "demantia":
+            case "dementia":
               $filter_param .= "&genre[]=5";
               break;
             case "demons":
@@ -522,7 +534,8 @@ call_user_func(function() {
     $ratingtd = $value->find("td", 8);
     
     $id = trim(substr(trim($pictd->find("div.picSurround a", 0)->id), 5));
-    $image = trim($pictd->find("div.picSurround a img", 0)->srcset);
+    $image = $pictd->find("div.picSurround a img", 0)->{'data-srcset'} ? trim($pictd->find("div.picSurround a img", 0)->{'data-srcset'}) : trim($pictd->find("div.picSurround a img", 0)->{'srcset'});
+    $image = explode(" 1x, ", $image)[0];
     $url = trim($infotd->find("a.hoverinfo_trigger", 0)->href);
     $title = "string_" . trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext);
     $synopsis = trim(str_replace("read more.", "", $infotd->find("div.pt4", 0)->plaintext));
