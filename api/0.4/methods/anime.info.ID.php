@@ -236,10 +236,7 @@ call_user_func(function() {
     "other_titles" => $anime->get("other_titles"),
     "rank" => $anime->get("rank"),
     "popularity" => $anime->get("popularity"),
-    "image" => array(
-      "full" => $anime->get("image")[0],
-      "min" => $anime->get("image")[1]
-    ),
+    "image" => $anime->get("image"),
     "source" => $anime->get("source"),
     "url" => $anime->get("mal_url"),
     "type" => $anime->get("type"),
