@@ -20,6 +20,7 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
@@ -50,14 +51,14 @@ call_user_func(function() {
     return;
   }
 
-  $url = "https://myanimelist.net/anime/" . $parts[0];
+  $url = "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/stats";
   $data = new Data();
   
   if($data->getCache($url)) {
     $html = str_get_html($data->data);
   } else {
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/stats");
+    curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
     if(!$response) {
