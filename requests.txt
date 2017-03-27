@@ -79,13 +79,17 @@ GET user/conversation/:username - Get the comment to comment conversation betwee
 
 POST user/conversation/:username - Send a comment to a conversation.
 
-GET user/list/anime/:id - Get information about anime in list. 404 if not in list.
+GET user/list/anime/:id - Get information about anime in your list. 404 if not in list.
 
-POST user/list/anime/:id - Update or Add information about anime in list.
+POST user/list/anime/:id - Update or Add information about anime in your list.
 
 GET user/list/anime/:username - Get the anime list of a user.
 
 GET user/list/manga/:username - Get the manga list of a user.
+
+GET user/list/anime/:username/:id - Get the 'more' info of an anime in the list of a user.
+
+GET user/list/manga/:username/:id - Get the 'more' info of an manga in the list of a user.
 
 GET user/list/history/anime/:id - Get specific update history on anime.
 
