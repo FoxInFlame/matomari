@@ -1,10 +1,4 @@
 anime/info/:id is a method that allows you to view the detailed information about a specific anime using the anime ID.<br>
-<div class="ui icon message">
-  <i class="file outline icon"></i>
-  <div class="content">
-    <p>Responses to this method are <a href="cache.html">cached</a>.</p>
-  </div>
-</div>
 <table class="ui celled green table">
   <thead>
     <tr>
@@ -53,12 +47,18 @@ anime/info/:id is a method that allows you to view the detailed information abou
     </tr>
   </tbody>
 </table>
+<div class="ui icon message">
+  <i class="file outline icon"></i>
+  <div class="content">
+    <p>Responses to this method are <a href="cache.html">cached</a>.</p>
+  </div>
+</div>
 <h2 class="ui header">Response</h2>
 Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/21</span>
 <pre style="background: #F0F0F0;">
   <code class="code json">
     {
-      <span class="property">"id"</span>: <span class="type-int">21</span>, <span class="type-comment">// Integer of the anime id returned</span>
+      <span class="property" title="Integer of the anime id returned">"id"</span>: <span class="type-int">21</span>, <span class="type-comment">// Integer of the anime id returned</span>
       <span class="property">"title"</span>: <span class="type-string">"One Piece"</span>, <span class="type-comment">// String of the title on MAL</span>
       <span class="property">"other_titles"</span>: { <span class="type-comment">// Object of other titles</span>
         <span class="property">"english"</span>: [
