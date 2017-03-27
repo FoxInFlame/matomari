@@ -3,6 +3,6 @@ $(".ui.dropdown").dropdown();
 
 $(document).ready(function() {
   if($(".tooltip").length !== 0) {
-    $(".tooltip").popup();
+    $(".tooltip, span[class^=type-]").popup();
   }
 });
