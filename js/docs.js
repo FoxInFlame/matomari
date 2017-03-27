@@ -2,7 +2,7 @@ $("#freewha").remove();
 $(".ui.dropdown").dropdown();
 
 $(document).ready(function() {
-  if($(".property").length !== 0) {
-    $(".property").popup();
+  if($(".tooltip").length !== 0) {
+    $(".tooltip").popup();
   }
 });
