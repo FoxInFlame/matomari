@@ -193,11 +193,12 @@ class Anime {
         return $this->popularity;
         break;
       case "image":
-        return array(
+        return $this->image_url;
+        /*return array(
           "small" => substr($this->image_url, 0, -4) . "t.jpg",
           "normal" => $this->image_url,
           "large" => substr($this->image_url, 0, -4) . "l.jpg"
-        );
+        );*/
         break;
       case "source":
         return $this->source;
