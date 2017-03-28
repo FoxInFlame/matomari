@@ -55,6 +55,32 @@
       </tbody>
     </table>
   </div>
+  <div class="ui divider"></div>
+  <div id="query-at-least-3-letters">
+    <h3 class="ui red header">Query must be at least 3 letters long</h3>
+    <table class="ui fixed celled table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Displayed When</th>
+          <th>Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            The request you sent contains a query in the URL that is less than 3 characters. The search query must be 3 letters or longer, for MyAnimeList is unable to process it. Please use <a href="general.quickSearch.QUERY">general/quickSearch/:query</a> to search less than 3 letters.
+          </td>
+          <td>
+            When the check for the length of characters for the search query returns a value smaller than 3. It is before data is sent to MyAnimeList.
+          </td>
+          <td>
+            JSON with 'message' key containing this error.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div id="code-404" class="ui segment">
@@ -115,7 +141,7 @@
 <div id="code-500" class="ui segment">
   <h2 class="ui header">500</h2>
   <div id="bad-markup">
-    <h3 class="ui purple header">Bad Markup</h3>
+    <h3 class="ui purple header">The code for MAL is not valid HTML markup</h3>
     <table class="ui fixed celled table">
       <thead>
         <tr>
@@ -130,7 +156,7 @@
             You sent the right request and MyAnimeList responded well, however the HTML markup was not valid and the server was not able to process it.
           </td>
           <td>
-            When str_get_html() function with the response content returns false.
+            When str_get_html() function with the response content is not an object - it should be an object containing elements if it were a valid markup.
           </td>
           <td>
             JSON with the 'message' key containing this error.

@@ -48,15 +48,20 @@ anime/search/:query is a method to get anime search results of a query on MAL.<b
     <tr>
       <td>Status Codes</td>
       <td>
-        <b>200</b> (OK)<br>
-        <b>400</b> (Query must be at least 3 letters long)<br>
-        <b>404</b> (MyAnimeList is offline or their code changed)<br>
-        <br>
-        See the message section in the error response for more details about an error.
+        <b>200</b> (<a href="responsecodes#all-ok">OK</a>)<br>
+        <b>400</b> (<a href="responsecodes#query-at-least-3-letters">Query must be at least 3 letters long</a>)<br>
+        <b>404</b> (<a href="responsecodes#myanimelist-is-offline">MAL is offline</a>)<br>
+        <b>500</b> (<a href="responsecodes#bad-markup">The code for MAL is not valid HTML markup</a>)<br>
       </td>
     </tr>
   </tbody>
 </table>
+<div class="ui icon message">
+  <i class="file outline icon"></i>
+  <div class="content">
+    <p>Responses to this method are <a href="cache.html">cached</a>.</p>
+  </div>
+</div>
 <div class="ui info icon message">
   <i class="announcement icon"></i>
   <div class="content">
@@ -79,17 +84,17 @@ The available filters are:
     <tr>
       <td><span class="inline-code">type</span></td>
       <td>TV, OVA, Movie, Special, ONA, Music</td>
-      <td>Fairly obvious. Limits your search result to the specific type. The last specified one is used when it is declared multiple times.</td>
+      <td>Fairly obvious. Limits your search result to the specific type. The last specified one is used when it is declared multiple times in the same query.</td>
     </tr>
     <tr>
       <td><span class="inline-code">score</span></td>
       <td>1 - 10</td>
-      <td>Limtis your search result to anime with a community score starting with the specific number. It can be declared multiple times.</td>
+      <td>Limtis your search result to anime with a community score starting with the specific number. It can be declared multiple times in the same query.</td>
     </tr>
     <tr>
       <td><span class="inline-code">status</span></td>
       <td>finishedairing, currentlyairing, notyetaired</td>
-      <td>Limits your search result to anime with the specific status. They're pretty much self-explanatory. The last specified one is used when it is declared multiple times.</td>
+      <td>Limits your search result to anime with the specific status. They're pretty much self-explanatory. The last specified one is used when it is declared multiple times in the same query.</td>
     </tr>
     <tr>
       <td><span class="inline-code">producer</span></td>
@@ -100,33 +105,33 @@ The available filters are:
     </tr>
     <tr>
       <td><span class="inline-code">rating</span></td>
-      <td>G, PG, PG13, R, R+, RX</td>
-      <td>Obvious here as well. Remember to encode the plus sign if you're going to filter with R+ (+ becomes %2B). The last specified one is used when it is declared multiple times.</td>
+      <td>G, PG, PG-13, R, R+, RX</td>
+      <td>Obvious here as well. Remember to encode the plus sign if you're going to filter with R+ (+ becomes %2B). The last specified one is used when it is declared multiple times in the same query.</td>
     </tr>
     <tr>
       <td><span class="inline-code">startdate</span></td>
       <td><i>YYYYMMDD format number. Use hyphens to leave a part blank.</i></td>
-      <td>Limits your search result to anime with specific starting date, month, year, or a combination. It can be declared multiple times.</td>
+      <td>Limits your search result to anime with specific starting date, month, year, or a combination. It can be declared multiple times in the same query.</td>
     </tr>
     <tr>
       <td><span class="inline-code">enddate</span></td>
       <td><i>YYYYMMDD format number. Use hyphens to leave a part blank.</i></td>
-      <td>Limits your search result to anime with specific ending date, month, year, or a combination. It can be declared multiple times.</td>
+      <td>Limits your search result to anime with specific ending date, month, year, or a combination. It can be declared multiple times in the same query.</td>
     </tr>
     <tr>
       <td><span class="inline-code">startswithletter</span></td>
       <td><i>Anything in the English alphabet, excluding numbers and special characters.</i></td>
-      <td>Limits your search result to anime that has a title starting with a specific letter. The last specified one is used when it is declared multiple times.</td>
+      <td>Limits your search result to anime that has a title starting with a specific letter. The last specified one is used when it is declared multiple times in the same query.</td>
     </tr>
     <tr>
       <td><span class="inline-code">inc-genre</span></td>
       <td><i>Any genre on MAL.</i></td>
-      <td>Limits your search result to anime with a specific genre. It can be declared multiple times.</td>
+      <td>Limits your search result to anime with a specific genre. It can be declared multiple times in the same query.</td>
     </tr>
     <tr>
       <td><span class="inline-code">exc-genre</span></td>
       <td><i>Any genre on MAL</i></td>
-      <td>Limits your search result to anime without the specific genre. It can be declared multiple times.</td>
+      <td>Limits your search result to anime without the specific genre. It can be declared multiple times in the same query.</td>
     </tr>
   </tbody>
   <tfoot class="full-width">
@@ -145,23 +150,21 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/searc
 <pre style="background: #f0f0f0;">
   <code class="code json">
     {
-      <span class="property">"parameter"</span>: <span class="type-string">"q=love&amp;type=3"</span> <span class="type-comment">// The query string that was detected and sent to MAL. Invalid filters don't show up here.</span>
-      <span class="property">"results"</span>: [ <span class="type-comment">// Array of anime, up to 50 items per page</span>
+      <span class="property" data-title="String" data-content="The query string that matomari parsed and sent to MAL; invalid filters don't show up here">"parameter"</span>: <span class="type-string">"q=love&amp;type=3"</span>,
+      <span class="property" data-title="Array" data-content="List of anime, up to 50 items per page">"results"</span>: [
         {
-          <span class="property">"id"</span>: <span class="type-int">1006</span>,
-          <span class="property">"image_auto"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/11/21054.jpg"</span>, <span class="type-comment">// String of the full image source, only an assumption. Most of the time correct, but if this returns 404, use image_2x (lower quality) or image_1x (even lower quality) below</span>
-          <span class="property">"image_1x"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/r/50x70/images/anime/11/21054.jpg?s=3b71031c6f49b5353a68331faca00250"</span>, <span class="type-comment">// String of the image (50x70px) source URL, or null if no image</span>
-          <span class="property">"image_2x"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/r/100x140/images/anime/11/21054.jpg?s=13fdf747ad79eeea3d931b447d97f944"</span>, <span class="type-comment">// String of the image (100x140px) source URL, or null if no image</span>
-          <span class="property">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/1006/Tenchi_Muyou_in_Love"</span>, <span class="type-comment">// String with the URL to the browser page</span>
-          <span class="property">"title"</span>: <span class="type-string">"Tenchi Muyou! in Love"</span>, <span class="type-comment">// String with the title of the anime in Romaji</span>
-          <span class="property">"synopsis_snippet"</span>: <span class="type-string">"The demonic space criminal Kain has escaped from prison and destroyed the Galaxy Police headquarters. To ensure that the Jurai will not stop him, Kain travels back to 1970 to eliminate Tenchi&#039;s mother..."</span>, <span class="type-comment">// String with a quick synopsis preview. Maximum of idk (someone help!) words.</span>
-          <span class="property">"type"</span>: <span class="type-string">"Movie"</span>, <span class="type-string">// String with the type of the anime</span>
-          <span class="property">"episodes"</span>: <span class="type-int">1</span>, <span class="type-int">// Integer with the nubmer of episodes</span>
-          <span class="property">"score"</span>: <span class="type-int">7.52</span>, <span class="type-int">// Integer with the general score on MAL</span>
-          <span class="property">"startdate"</span>: <span class="type-string">"1996-04-20"</span>, <span class="type-string">// String with the airing start date; (??) if unknown</span>
-          <span class="property">"enddate"</span>: <span class="type-string">"1996-04-20"</span>, <span class="type-strng">// String with the airing end date; (??) if unknown</span>
-          <span class="property">"members_count"</span>: <span class="type-int">14468</span>, <span class="type-int">// Integer with the amount of members</span>
-          <span class="property">"rating"</span>: <span class="type-string">"PG-13"</span> <span class="type-string">// String with the rating for this anime</span>
+          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">1006</span>,
+          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Tenchi Muyou! in Love"</span>,
+          <span class="property" data-title="String" data-content="Direct URL of the anime cover image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/11/21054.jpg"</span>,
+          <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/1006/Tenchi_Muyou_in_Love"</span>,
+          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"Movie"</span>,
+          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">1</span>,
+          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places; null if not yet aired">"score"</span>: <span class="type-int">7.52</span>,
+          <span class="property" data-title="String" data-content="Airing start date; hyphens for unknown parts">"startdate"</span>: <span class="type-string">"19960420"</span>,
+          <span class="property" data-title="String" data-content="Airing end date; hyphens for unknown parts">"enddate"</span>: <span class="type-string">"199604--"</span>,
+          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">14468</span>,
+          <span class="property" data-title="Integer" data-content="Rating according to the MAL rating system">"rating"</span>: <span class="type-string">"PG-13"</span>,
+          <span class="property" data-title="String" data-content="A truncated synopsis of the anime with an ellipsis at the end if it doesn't fit">"synopsis_snippet"</span>: <span class="type-string">"The demonic space criminal Kain has escaped from prison and destroyed the Galaxy Police headquarters. To ensure that the Jurai will not stop him, Kain travels back to 1970 to eliminate Tenchi&#039;s mother..."</span>
         },
         ...
       ]
