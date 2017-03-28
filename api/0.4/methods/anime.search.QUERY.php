@@ -157,7 +157,7 @@ call_user_func(function() {
             case "pg":
               $filter_param .= "&r=2";
               break;
-            case "pg13":
+            case "pg-13":
               $filter_param .= "&r=3";
               break;
             case "r":
@@ -608,7 +608,7 @@ call_user_func(function() {
         }
       }
     }
-    $startdate = $year . $month . $day;
+    $startdate = "string_" . $year . $month . $day;
     foreach(explode("-", $enddate) as $index => $number) { // Reformat end date
       if($index == 0) {
         $month = $number;
@@ -627,25 +627,31 @@ call_user_func(function() {
         if($year == "--") {
           $year = "----";
         } else {
-          $year = date_create_from_format("y", $year)->format("Y");
+          if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
+            // Over 1940
+            $year = "19" . $year;
+          } else {
+            // Under 2040
+            $year = "20" . $year;
+          }
         }
       }
     }
-    $enddate = $year . $month . $day;
+    $enddate = "string_" . $year . $month . $day; // Make sure it is always string because hyphens can make it string
     
     array_push($results_arr, array(
       "id" => $anime->get("id"),
+      "title" => $anime->get("title"),
       "image" => $anime->get("image"),
       "url" => $anime->get("mal_url"),
-      "title" => $anime->get("title"),
-      "synopsis_snippet" => $anime->get("synopsis"),
       "type" => $anime->get("type"),
       "episodes" => $anime->get("episodes"),
       "score" => $anime->get("score"),
       "startdate" => $startdate,
       "enddate" => $enddate,
       "members_count" => $anime->get("members_count"),
-      "rating" => $rating
+      "rating" => $rating,
+      "synopsis_snippet" => $anime->get("synopsis")
     ));
   }
   
