@@ -132,6 +132,7 @@ call_user_func(function() {
     $anime->set("id", substr($item->find("td.title .hoverinfo_trigger", 0)->id, 5));
     $item->find("td.title a img", 0)->{'data-srcset'} ? $anime->set("image", $item->find("td.title a img", 0)->{'data-srcset'}) : $anime->set("image", $item->find("td.title a img", 0)->{'srcset'});
     $anime->set("mal_url", $item->find("td.title .hoverinfo_trigger", 0)->href);
+    $anime->set("title", $item->find("td.title .detail div.di-ib a.hoverinfo_trigger", 0)->innertext);
     if($showDetailed) {
       $detail_data = new Data(); // Initialise cache class, again
       $url = "https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $anime->get("id");
@@ -184,7 +185,6 @@ call_user_func(function() {
       array_push($anime_arr, $response_array);
       continue;
     }
-    $anime->set("title", $item->find("td.title .detail div.di-ib a.hoverinfo_trigger", 0)->innertext);
     $information = $item->find("td.title .detail div.information", 0)->innertext;
     $information_parts = explode("<br>", $information);
     $anime->set("type", explode(" (", trim($information_parts[0]))[0]);
