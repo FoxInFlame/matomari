@@ -38,9 +38,9 @@ anime/info/:id is a method that allows you to view the detailed information abou
     <tr>
       <td>Status Codes</td>
       <td>
-        <b>200</b> (OK)<br>
-        <b>400</b> (Invalid anime ID)<br>
-        <b>404</b> (Anime with specified ID doesn't exist, MyAnimeList is offline, or their code changed)<br>
+        <b>200</b> (<a href="responsecodes#all-ok">OK</a>)<br>
+        <b>400</b> (<a href="responsecodes#invalid-id-format">Invalid anime ID</a>)<br>
+        <b>404</b> (<a href="responsecodes#id-doesnt-exist">Anime with specified ID doesn't exist</a>, <a href="responsecodes#myanimelist-is-offline">MyAnimeList is offline</a>)<br>
         <br>
         See the message section in the error response for more details about an error.
       </td>
@@ -69,20 +69,20 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/
         ],
         <span class="property" data-title="Array" data-content="Synonyms">"synonym"</span>: []
       },
-      <span class="property" data-title="Integer" data-content="Overall rank on MAL">"rank"</span>: <span class="type-int">74</span>,
-      <span class="property" data-title="Integer" data-content="Popularity rank on MAL">"popularity"</span>: <span class="type-int">31</span>,
+      <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">74</span>,
+      <span class="property" data-title="Integer" data-content="Anime popularity rank on MAL">"popularity"</span>: <span class="type-int">31</span>,
       <span class="property" data-title="String" data-content="Direct URL of the anime image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/6/73245.jpg"</span>,
-      <span class="property" data-title="String" data-content="Source<br><br><i>Manga, Game, Music, 4-koma Manga, Light Novel, Novel, Visual Novel</i>">"source"</span>: <span class="type-string">"Manga"</span>,
+      <span class="property" data-title="String" data-content="Source of the anime">"source"</span>: <span class="type-string">"Manga"</span>,
       <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/21/One_Piece"</span>,
-      <span class="property" data-title="String" data-content="Type<br><br><i>TV, ONA, OVA, Movie, Music, Special</i>">"type"</span>: <span class="type-string">"TV"</span>,
-      <span class="property" data-title="Integer/null" data-content="Total number of episodes<br<br>null if unknown">"episodes"</span>: <span class="type-null">null</span>,
+      <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"TV"</span>,
+      <span class="property" data-title="Integer/null" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-null">null</span>,
       <span class="property" data-title="Integer" data-content="Usual episode length in minutes">"duration"</span>: <span class="type-int">24</span>,
-      <span class="property" data-title="Integer/null" data-content="Total duration (eps x duration). Not accurate, for some shows have longer specials<br><br>null if either episodes or duration is empty.">"total_duration"</span>: <span class="type-null">null</span>,
-      <span class="property" data-content="Community Score">"score"</span>: <span class="type-int" data-title="Integer" data-content="2 decimal places">8.58</span>,
-      <span class="property" data-content="Number of people who rated a score">"score_count"</span>: <span class="type-int" data-title="Integer" data-content="A natural number">318056</span>,
-      <span class="property" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int" data-title="Integer" data-content="A natural number">518679</span>,
-      <span class="property" data-content="Number of people who have it in their favorites">"favorites_count"</span>: <span class="type-int" data-title="Integer" data-content="A natural number">56364</span>,
-      <span class="property" data-content="Genres">"genres"</span>: [
+      <span class="property" data-title="Integer/null" data-content="Total duration (eps x duration). Not accurate, for some shows have longer specials; null if either episodes or duration is empty.">"total_duration"</span>: <span class="type-null">null</span>,
+      <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">8.58</span>,
+      <span class="property" data-title="Integer" data-content="Number of people who rated a score">"score_count"</span>: <span class="type-int">318056</span>,
+      <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">518679</span>,
+      <span class="property" data-title="Integer" data-content="Number of people who have it in their favorites">"favorites_count"</span>: <span class="type-int">56364</span>,
+      <span class="property" data-title="Array" data-content="Genres of the anime">"genres"</span>: [
         <span class="type-string">"Action"</span>,
         <span class="type-string">"Adventure"</span>,
         <span class="type-string">"Comedy"</span>,
@@ -91,14 +91,14 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/
         <span class="type-string">"Shounen"</span>,
         <span class="type-string">"Super Power"</span>
       ],
-      <span class="property" data-title="Array" data-content="Producers">"producers"</span>: [
+      <span class="property" data-title="Array" data-content="Producers for the anime">"producers"</span>: [
         <span class="type-string">"Fuji TV"</span>,
         <span class="type-string">"TAP"</span>
       ],
-      <span class="property" data-title="Array" data-content="Studios">"studios"</span>: [
+      <span class="property" data-title="Array" data-content="Studios making the anime">"studios"</span>: [
         <span class="type-string">"Toei Animation"</span>
       ],
-      <span class="property" data-title="Array" data-content="Licensors">"licensors"</span>: [
+      <span class="property" data-title="Array" data-content="Licensors for the anime">"licensors"</span>: [
         <span class="type-string">"FUNimation Entertainment"</span>,
         <span class="type-string">"4Kids Entertainment"</span>
       ],
