@@ -80,7 +80,7 @@ call_user_func(function() {
   $url = "https://myanimelist.net/topanime.php" . $sort_param . $page_param;
   $data = new Data(); // Initialise cache class
   
-  if($data->getCache($url)) {
+  if($data->getCache($url, 1440)) { // 24 x 60 = One Day
     $html = str_get_html($data->data);
   } else {
     $ch = curl_init();
@@ -168,10 +168,7 @@ call_user_func(function() {
         "rank" => $anime->get("rank"),
         "id" => $anime->get("id"),
         "title" => $anime->get("title"),
-        "image" => array(
-          "full" => $anime->get("image")[0],
-          "min" => $anime->get("image")[1]
-        ),
+        "image" => $anime->get("image"),
         "url" => $anime->get("mal_url"),
         "type" => $anime->get("type"),
         "episodes" => $anime->get("episodes"),
@@ -198,10 +195,7 @@ call_user_func(function() {
       "rank" => $anime->get("rank"),
       "id" => $anime->get("id"),
       "title" => $anime->get("title"),
-      "image" => array(
-        "full" => $anime->get("image")[0],
-        "min" => $anime->get("image")[1]
-      ),
+      "image" => $anime->get("image"),
       "url" => $anime->get("mal_url"),
       "type" => $anime->get("type"),
       "episodes" => $anime->get("episodes"),
