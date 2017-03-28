@@ -48,37 +48,46 @@ anime/top is a method to get the top anime on MyAnimeList.<br>
     <tr>
       <td>Status Codes</td>
       <td>
-        <b>200</b> (OK)<br>
-        <b>404</b> (MyAnimeList is offline or their code changed)<br>
-        <br>
-        See the message section in the error response for more details about an error.
+        <b>200</b> (<a href="responsecodes#all-ok">OK</a>)<br>
+        <b>404</b> (<a href="responsecodes#myanimelist-is-offline">MAL is offline</a>)<br>
+        <b>500</b> (<a href="responsecodes#bad-markup">The code for MAL is not valid HTML markup</a>)<br>
       </td>
     </tr>
   </tbody>
 </table>
+<div class="ui icon message">
+  <i class="file outline icon"></i>
+  <div class="content">
+    <p>Responses to this method are <a href="cache.html">cached</a>.</p>
+  </div>
+</div>
 <h2 class="ui header">Response</h2>
 Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/top</span>
 <pre style="background: #f0f0f0;">
   <code class="code json">
     {
-      <span class="property">"items"</span>: [ <span class="type-comment">// Array of anime, 50 items per page</span>
+      <span class="property" data-title="Array" data-content="List of anime, 50 items per page">"items"</span>: [
         {
-          <span class="property">"ranking_rank"</span>: <span class="type-int">1</span>,
-          <span class="property">"id"</span>: <span class="type-int">32281</span>,
-          <span class="property">"title"</span>: <span class="type-string">"Kimi no Na Wa."</span>,
-          <span class="property">"type"</span>: <span class="type-string">"Movie"</span>,
-          <span class="property">"episodes"</span>: <span class="type-int">1</span>,
-          <span class="property">"score"</span>: <span class="type-int">9.35</span>,
-          <span class="property">"members_count"</span>: <span class="type-int">240252</span>
+          <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">1</span>,
+          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">32281</span>,
+          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Kimi no Na Wa."</span>,
+          <span class="property" data-title="String" data-content="Direct URL of the anime image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/7/79999.jpg"</span>,
+          <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/32281/Kimi_no_Na_wa"</span>,
+          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"Movie"</span>,
+          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">1</span>,
+          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">9.33</span>,
+          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">307272</span>
         },
         {
-          <span class="property">"ranking_rank"</span>: <span class="type-int">2</span>,
-          <span class="property">"id"</span>: <span class="type-int">5114</span>,
-          <span class="property">"title"</span>: <span class="type-string">"Fullmetal Alchemist: Brotherhood"</span>,
-          <span class="property">"type"</span>: <span class="type-string">"TV"</span>,
-          <span class="property">"episodes"</span>: <span class="type-int">64</span>,
-          <span class="property">"score"</span>: <span class="type-int">9.26</span>,
-          <span class="property">"members_count"</span>: <span class="type-int">819164</span>
+          <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">2</span>,
+          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">5114</span>,
+          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Fullmetal Alchemist: Brotherhood"</span>,
+          <span class="property" data-title="String" data-content="Direct URL of the anime image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/5/47421.jpg"</span>,
+          <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">""</span>,
+          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"TV"</span>,
+          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">64</span>,
+          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">9.26</span>,
+          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">864189</span>
         },
         ...
       ]
@@ -89,38 +98,40 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/top?d
 <pre style="background: #f0f0f0">
   <code class="code json">
     {
-      <span class="property">"items"</span>: [ <span class="type-comment">// Array of anime, 50 items per page</span>
+      <span class="property" data-title="Array" data-content="List of anime, 50 items per page">"items"</span>: [
         {
-          <span class="property">"ranking_rank"</span>: <span class="type-int">1</span>,
-          <span class="property">"id"</span>: <span class="type-int">32281</span>,
-          <span class="property">"title"</span>: <span class="type-string">"Kimi no Na Wa."</span>,
-          <span class="property">"type"</span>: <span class="type-string">"Movie"</span>,
-          <span class="property">"episodes"</span>: <span class="type-int">1</span>,
-          <span class="property">"score"</span>: <span class="type-int">9.35</span>,
-          <span class="property">"score_count"</span>: <span class="type-int">102167</span>,
-          <span class="property">"members_count"</span>: <span class="type-int">240252</span>,
-          <span class="property">"popularity"</span>: <span class="type-int">164</span>
-          <span class="proeprty">"genres"</span>: [
+          <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">1</span>,
+          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">32281</span>,
+          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Kimi no Na Wa."</span>,
+          <span class="property" data-title="String" data-content="Direct URL of the anime image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/7/79999.jpg"</span>,
+          <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/32281/Kimi_no_Na_wa"</span>,
+          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"Movie"</span>,
+          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">1</span>,
+          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">9.35</span>,
+          <span class="property" data-title="Integer" data-content="Number of people who rated a score">"score_count"</span>: <span class="type-int">102167</span>,
+          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">240252</span>,
+          <span class="property" data-title="Integer" data-content="Anime popularity rank on MAL">"popularity"</span>: <span class="type-int">164</span>,
+          <span class="proeprty" data-title="Array" data-content="Genres of the anime">"genres"</span>: [
             <span class="type-string">"Drama"</span>,
             <span class="type-string">"Romance"</span>,
             <span class="type-string">"School"</span>,
             <span class="type-string">"Supernatural"</span>
           ],
-          <span class="property">"status"</span>: <span class="type-string">"Finished Airing"</span>,
-          <span class="property">"release_year"</span>: <span class="type-int">2016</span>,
-          <span class="property">"synopsis_snippet"</span>: <span class="type-string">"Mitsuha Miyamizu, a high school girl, yearns to live the life of a boy in the bustling city of Tokyo&amp;mdash;a dream that stands in stark contrast to her present life in the countryside. Meanwhile in th..."</span>
+          <span class="property" data-title="String" data-content="Airing status of the anime">"status"</span>: <span class="type-string">"Finished Airing"</span>,
+          <span class="property" data-title="Integer" data-content="4 digit release year of the anime">"release_year"</span>: <span class="type-int">2016</span>,
+          <span class="property" data-title="String" data-content="A truncated synopsis of the anime with an ellipsis at the end if it doesn't fit">"synopsis_snippet"</span>: <span class="type-string">"Mitsuha Miyamizu, a high school girl, yearns to live the life of a boy in the bustling city of Tokyo&amp;mdash;a dream that stands in stark contrast to her present life in the countryside. Meanwhile in th..."</span>
         },
         {
-          <span class="property">"ranking_rank"</span>: <span class="type-int">2</span>,
-          <span class="property">"id"</span>: <span class="type-int">5114</span>,
-          <span class="property">"title"</span>: <span class="type-string">"Fullmetal Alchemist: Brotherhood"</span>,
-          <span class="property">"type"</span>: <span class="type-string">"TV"</span>,
-          <span class="property">"episodes"</span>: <span class="type-int">64</span>,
-          <span class="property">"score"</span>: <span class="type-int">9.26</span>,
-          <span class="property">"score_count"</span>: <span class="type-int">508074</span>,
-          <span class="property">"members_count"</span>: <span class="type-int">819164</span>,
-          <span class="property">"popularity"</span>: <span class="type-int">4</span>
-          <span class="proeprty">"genres"</span>: [
+          <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">2</span>,
+          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">5114</span>,
+          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Fullmetal Alchemist: Brotherhood"</span>,
+          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"TV"</span>,
+          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">64</span>,
+          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">9.26</span>,
+          <span class="property" data-title="Integer" data-content="Number of people who rated a score">"score_count"</span>: <span class="type-int">508074</span>,
+          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">819164</span>,
+          <span class="property" data-title="Integer" data-content="Anime popularity rank on MAL">"popularity"</span>: <span class="type-int">4</span>,
+          <span class="proeprty" data-title="Array" data-content="Genres of the anime">"genres"</span>: [
             <span class="type-string">"Action"</span>,
             <span class="type-string">"Adventure"</span>,
             <span class="type-string">"Drama"</span>,
@@ -129,9 +140,9 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/top?d
             <span class="type-string">"Military"</span>,
             <span class="type-string">"Shounen"</span>
           ],
-          <span class="property">"status"</span>: <span class="type-string">"Finished Airing"</span>,
-          <span class="property">"release_year"</span>: <span class="type-int">2009</span>,
-          <span class="property">"synopsis_snippet"</span>: <span class="type-string">"&amp;quot;In order for something to be obtained, something of equal value must be lost.&amp;quot; Alchemy is bound by this Law of Equivalent Exchange&mdash;something the young brothers Edward and Alphonse ..."</span>
+          <span class="property" data-title="String" data-content="Airing status of the anime">"status"</span>: <span class="type-string">"Finished Airing"</span>,
+          <span class="property" data-title="Integer" data-content="4 digit release year of the anime">"release_year"</span>: <span class="type-int">2009</span>,
+          <span class="property" data-title="String" data-content="A truncated synopsis of the anime with an ellipsis at the end if it doesn't fit">"synopsis_snippet"</span>: <span class="type-string">"&amp;quot;In order for something to be obtained, something of equal value must be lost.&amp;quot; Alchemy is bound by this Law of Equivalent Exchange&mdash;something the young brothers Edward and Alphonse ..."</span>
         },
         ...
       ]
