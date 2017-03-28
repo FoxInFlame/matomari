@@ -584,19 +584,19 @@ call_user_func(function() {
       if($index == 0) {
         $month = $number;
         if(empty($month)) {
-          $month = "??";
+          $month = "--";
         }
       }
       if($index == 1) {
         $day = $number;
         if(empty($day)) {
-          $day = "??";
+          $day = "--";
         }
       }
       if($index == 2) {
         $year = $number;
-        if($year == "??") {
-          $year = "????";
+        if($year == "--") {
+          $year = "----";
         } else {
           if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
             // Over 1940
@@ -608,30 +608,30 @@ call_user_func(function() {
         }
       }
     }
-    $startdate = $year . "-" . $month . "-" . $day;
+    $startdate = $year . $month . $day;
     foreach(explode("-", $enddate) as $index => $number) { // Reformat end date
       if($index == 0) {
         $month = $number;
         if(empty($month)) {
-          $month = "??";
+          $month = "--";
         }
       }
       if($index == 1) {
         $day = $number;
         if(empty($day)) {
-          $day = "??";
+          $day = "--";
         }
       }
       if($index == 2) {
         $year = $number;
-        if($year == "??") {
-          $year = "????";
+        if($year == "--") {
+          $year = "----";
         } else {
           $year = date_create_from_format("y", $year)->format("Y");
         }
       }
     }
-    $enddate = $year . "-" . $month . "-" . $day;
+    $enddate = $year . $month . $day;
     
     array_push($results_arr, array(
       "id" => $anime->get("id"),
