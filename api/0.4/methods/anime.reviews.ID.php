@@ -3,6 +3,7 @@
 
 Shows reviews on an anime.
 
+This method is cached for a week. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/reviews/:id
 Authentication: None Required.
@@ -25,6 +26,7 @@ header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 require_once(dirname(__FILE__) . "/../absoluteGMT.php");
+require_once(dirname(__FILE__) . "/../cache/class.cache.php");
 
 call_user_func(function() {
   
@@ -36,27 +38,57 @@ call_user_func(function() {
   
   $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : "1";
   
-  $id = isset($_GET['id']) ? $_GET['id'] : "";
-  if(empty($id)) {
+  $parts = isset($_GET['id']) ? explode("/",$_GET['id']) : array();
+  if(empty($parts)) {
     echo json_encode(array(
       "message" => "The id parameter is not defined."
     ));
     http_response_code(400);
     return;
   }
-  if(!is_numeric($id)) {
+  if(!is_numeric($parts[0])) {
     echo json_encode(array(
       "message" => "Specified anime id is not a number."
     ));
     http_response_code(400);
     return;
   }
-  $html = @file_get_html("https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/reviews?p=" . $page);
-  if(!$html) {
+  
+  $url = "https://myanimelist.net/anime/" . $parts[0] . "/FoxInFlameIsAwesome/reviews?p=" . $page;
+  $data = new Data();
+  
+  if($data->getCache($url)) {
+    $html = str_get_html($data->data);
+  } else {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    if(!$response) {
+       echo json_encode(array(
+        "message" => "MAL is offline."
+      ));
+      http_response_code(404);
+      return;
+    }
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
+      echo json_encode(array(
+        "message" => "Anime with specified id could not be found."
+      ));
+      http_response_code(404);
+      return;
+    }
+    curl_close($ch);
+    
+    $data->saveCache($url, $response);
+    $html = str_get_html($response);
+  }
+  
+  if(!is_object($html)) {
     echo json_encode(array(
-      "message" => "Anime with specified id was not found."
+      "message" => "The code for MAL is not valid HTML markup.",
     ));
-    http_response_code(404);
+    http_response_code(500);
     return;
   }
   
@@ -135,7 +167,7 @@ call_user_func(function() {
       "author" => array(
         "username" => $review_author_username,
         "url" => $review_author_url,
-        "image_url" => $review_author_image_url
+        "image" => $review_author_image_url
       ),
       "episodes_seen" => $review_episodes_seen,
       "helpful_count" => $review_helpful_count,

@@ -3,6 +3,7 @@
 
 Shows characters in an anime.
 
+This method is cached for a week. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/characters/:id
 Authentication: None Required.

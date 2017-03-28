@@ -1,11 +1,11 @@
 <?php
 /*
 
-Shows staff in an anime.
+Shows news related to an anime.
 
 This method is cached for a week. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
-        /anime/staff/:id
+        /anime/news/:id
 Authentication: None Required.
 Parameters:
   - None.
@@ -20,6 +20,10 @@ A Part of the matomari API.
 // [+] -------------------HEADERS-------------------- [+]
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
+
+ini_set("display_errors", true);
+ini_set("display_startup_errors", true);
+error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -51,7 +55,7 @@ call_user_func(function() {
     return;
   }
 
-  $url = "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/characters";
+  $url = "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/news";
   $data = new Data();
   
   if($data->getCache($url)) {
@@ -95,32 +99,28 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  $staffs_arr = array();
+  $news_arr = array();
   
-  $charstaffs = $html->find("#content tbody tr", 0)->children(1)->find(".js-scrollfix-bottom-rel", 0)->children();
-  $process = false;
-  foreach($charstaffs as $charstaff) {
-    if(strpos($charstaff->name, "staff") !== false) $process = true; // Don't start processing before staffs is mentioned (there is an empty element with the name staff right before staff section)
-    if(!$process) continue;
-    if($charstaff->tag !== "table") continue; // Only loop tables (there should only be one)
-    foreach($charstaff->children() as $staff) { // For some reason all staff are in one table of their own so loop that (apparently tbody is not index in simplehtmldom or it would've been $charstaf->children(0)->children()...)
-      $staff_arr = array(); // Not to be confused with plural array. This contains information about one staff.
-      $staff_name = $staff->find("td", 1)->find("a", 0)->innertext; // name, not sorted with comma (as it is on MAL)
-      $staff_id = explode("/", $staff->find("td", 1)->find("a", 0)->href)[2]; // Assuming everyone has an id
-      $staff_roles = $staff->find("td", 1)->find("small", 0) ? explode(", ", $staff->find("td", 1)->find("small", 0)->innertext) : array(); // array with roles or empty if no roles (doesn't have a role)
-      $staff_image = strpos($staff->find("td", 0)->find("img", 0)->{'data-src'}, "voiceactors") !== false ? $staff->find("td", 0)->find("img", 0)->{'data-src'} : null; // Apparently staff is considered as VAs on MAL
-      array_push($staffs_arr, array(
-        "name" => $staff_name,
-        "id" => $staff_id,
-        "image" => $staff_image,
-        "roles" => $staff_roles // Beware, roles, not role like characters
-      ));
+  $children = $html->find("#content tr", 0)->children(1)->find(".js-scrollfix-bottom-rel", 0)->children();
+  
+  foreach($children as $child) {
+    if(strpos($child->class, "clearfix") === false) {
+      continue;
     }
+    array_push($news_arr, array(
+      "id" => substr($child->find(".picSurround a", 0)->href, 6),
+      "image" => $child->find(".picSurround a img", 0)->{'data-srcset'} ? $child->find(".picSurround a img", 0)->{'data-srcset'} : $child->find(".picSurround a img", 0)->{'srcset'},
+      "title" => $child->find(".spaceit a strong", 0)->innertext,
+      "url" => "https://myanimelist.net" . $child->find(".picSurround a", 0)->href,
+      "content_snippet" => str_replace($child->find(".clearfix p a", 0)->outertext, "", $child->find(".clearfix p", 0)->innertext),
+      "author" => $child->find(".lightLink a", 0)->innertext,
+      "time" => $child->find(".lightLink", 0)->find("text", 0)->innertext,
+      "discuss" => $child->find(".lightLink a", 1)->href
+    ));
   }
   
-  
   $output = array(
-    "staff" => $staffs_arr
+    "news" => $news_arr
   );
   
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3

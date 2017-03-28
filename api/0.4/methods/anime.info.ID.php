@@ -3,7 +3,7 @@
 
 Shows detailed information about an anime.
 
-This method is cached for a day. Set the nocache parameter to true to use a fresh version (slower).
+This method is cached for a week. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/info/:id
 Authentication: None Required.
@@ -144,6 +144,7 @@ call_user_func(function() {
         preg_match("/\d+(?= hr.)/", $value->plaintext, $matches);
         $hour = trim($matches[0], " ");
         $hour_minutes = intval($hour) * 60;
+        $minutes = $hour_minutes;
       }
       if(strpos($value->plaintext, "min.") !== false) {
         preg_match("/\d+(?= min.)/", $value->plaintext, $matches);

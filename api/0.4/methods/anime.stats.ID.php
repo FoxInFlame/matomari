@@ -3,7 +3,7 @@
 
 Shows stats of an anime.
 
-This method is cached for a day. Set the nocache parameter to true to use a fresh version (slower).
+This method is cached for a week. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /anime/stats/:id
 Authentication: None Required.

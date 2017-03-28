@@ -133,10 +133,7 @@ call_user_func(function() {
     array_push($recommendations_arr, array(
       "to" => array(
         "id" => $to_anime->get("id"),
-        "image" => array(
-          "full" => $to_anime->get("image")[0],
-          "min" => $to_anime->get("image")[1]
-        ),
+        "image" => $to_anime->get("image"),
         "title" => $to_anime->get("title"),
         "url" => $to_anime->get("mal_url")
       ),
