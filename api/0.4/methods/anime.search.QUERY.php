@@ -591,19 +591,19 @@ call_user_func(function() {
     foreach(explode("-", $startdate) as $index => $number) { // Reformat start date
       if($index == 0) {
         $month = $number;
-        if(empty($month)) {
+        if($month == "??") {
           $month = "--";
         }
       }
       if($index == 1) {
         $day = $number;
-        if(empty($day)) {
+        if($day == "??") {
           $day = "--";
         }
       }
       if($index == 2) {
         $year = $number;
-        if($year == "--") {
+        if($year == "??") {
           $year = "----";
         } else {
           if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
@@ -620,19 +620,19 @@ call_user_func(function() {
     foreach(explode("-", $enddate) as $index => $number) { // Reformat end date
       if($index == 0) {
         $month = $number;
-        if(empty($month)) {
+        if($month == "??") {
           $month = "--";
         }
       }
       if($index == 1) {
         $day = $number;
-        if(empty($day)) {
+        if($day == "??") {
           $day = "--";
         }
       }
       if($index == 2) {
         $year = $number;
-        if($year == "--") {
+        if($year == "??") {
           $year = "----";
         } else {
           if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
