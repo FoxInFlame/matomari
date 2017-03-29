@@ -25,6 +25,8 @@ header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 require_once(dirname(__FILE__) . "/../absoluteGMT.php");
+require_once(dirname(__FILE__) . "/../class/class.anime.php");
+require_once(dirname(__FILE__) . "/../class/class.cache.php");
 
 call_user_func(function() {
   
@@ -38,34 +40,55 @@ call_user_func(function() {
   $show = ($page - 1) * 100;
   $page_param = "?show=" . $show;
   
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/recommendations.php" . $page_param);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $response_string = curl_exec($ch);
+  $url = "https://myanimelist.net/recommendations.php" . $page_param;
+  $data = new Data();
   
-  if(!$response_string) {
-    if($page != 1) {
-      curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/recommendations.php");
-      $response_string = curl_exec($ch);
-      curl_close($ch);
-      if(!$response_string) {
-        echo json_encode(array(
-          "message" => "MAL is offline, or their code changed."
-        ));
-        http_response_code(404);
-        return;
+  if($data->getCache($url)) {
+    $html = str_get_html($data->data);
+  } else {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    if(!$response) {
+      if($page != 1) {
+        if($data->getCache("https://myanimelist.net/recommendations.php")) {
+          $html = str_get_html($data->data);
+        } else {
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/recommendations.php");
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          $response = curl_exec($ch);
+          if(!$response) {
+            echo json_encode(array(
+              "message" => "MAL is offline."
+            ));
+            http_response_code(404);
+            return;
+          }
+          $html = str_get_html($response);
+        }
+      } else {
+        $html = str_get_html($response);
       }
-    } else {
-      curl_close($ch);
       echo json_encode(array(
-        "message" => "MAL is offline, or their code changed."
+        "message" => "MAL is offline."
       ));
       http_response_code(404);
       return;
     }
+    curl_close($ch);
+    
+    $data->saveCache($url, $response);
   }
   
-  $html = str_get_html($response_string);
+  if(!is_object($html)) {
+    echo json_encode(array(
+      "message" => "The code for MAL is not valid HTML markup.",
+    ));
+    http_response_code(500);
+    return;
+  }
   
   $recommendations = $html->find("#contentWrapper #content", 0)->children(2)->children();
   $recommendations_arr = array();
@@ -77,33 +100,29 @@ call_user_func(function() {
       continue;
     }
     $from = $recommendation->find("table td", 0);
-    $from_id = substr($from->find(".picSurround a", 0)->id, 9);
-    $from_picture = $from->find(".picSurround a img", 0)->{'data-srcset'};
-    $from_picture_1x = explode(" 1x,", $from_picture)[0];
-    $from_picture_2x = substr(explode(" 1x,", $from_picture)[1], 0, -3);
-    $from_title = $from->find("a strong", 0)->innertext;
+    $from_anime = new Anime();
+    $from_anime->set("id", substr($from->find(".picSurround a", 0)->id, 9));
+    $from->find(".picSurround a img", 0)->{'data-srcset'} ? $from_anime->set("image", $from->find(".picSurround a img", 0)->{'data-srcset'}) : $from_anime->set("image", $from->find(".picSurround a img", 0)->{'srcset'});
+    $from_anime->set("title", $from->find("a strong", 0)->innertext);
     $to = $recommendation->find("table td", 1);
-    $to_id = substr($to->find(".picSurround a", 0)->id, 9);
-    $to_picture = $to->find(".picSurround a img", 0)->{'data-srcset'};
-    $to_picture_1x = explode(" 1x,", $to_picture)[0];
-    $to_picture_2x = substr(explode(" 1x,", $to_picture)[1], 0, -3);
-    $to_title = $to->find("a strong", 0)->innertext;
+    $to_anime = new Anime();
+    $to_anime->set("id", substr($to->find(".picSurround a", 0)->id, 9));
+    $to->find(".picSurround a img", 0)->{'data-srcset'} ? $to_anime->set("image", $to->find(".picSurround a img", 0)->{'data-srcset'}) : $to_anime->set("image", $to->find(".picSurround a img", 0)->{'srcset'});
+    $to_anime->set("title", $to->find("a strong", 0)->innertext);
     $reason = $recommendation->children(1)->innertext;
     $author = $recommendation->children(2)->find("a", 1)->innertext;
     $time_1 = explode(" - ", $recommendation->children(2)->innertext);
     $time = end($time_1);
     array_push($recommendations_arr, array(
       "from" => array(
-        "id" => $from_id,
-        "title" => $from_title,
-        "image_1x" => $from_picture_1x,
-        "image_2x" => $from_picture_2x
+        "id" => $from_anime->get("id"),
+        "title" => $from_anime->get("title"),
+        "image" => $from_anime->get("image")
       ),
       "to" => array(
-        "id" => $to_id,
-        "title" => $to_title,
-        "image_1x" => $to_picture_1x,
-        "image_2x" => $to_picture_2x
+        "id" => $to_anime->get("id"),
+        "title" => $to_anime->get("title"),
+        "image" => $to_anime->get("image")
       ),
       "reason" => $reason,
       "author" => $author,
