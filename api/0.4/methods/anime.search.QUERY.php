@@ -55,12 +55,15 @@ call_user_func(function() {
     return;
   }
   if(strlen($parts[0]) < 3 && isset($_GET['q'])) {
-    if(!isset($_GET['filter']) || empty($_GET['filter'])) {
-      echo json_encode(array(
-        "message" => "Query must be at least 3 letters long."
-      ));
-      http_response_code(400);
-      return;
+    switch(strlen($parts[0])) {
+      // MAL doesn't accept queries less than 3 characters (doesn't load)
+      // but if you add spaces, it still shows the error message but results will load.
+      case 2:
+        $parts[0] = $parts[0] . " "; // Add one space to make it three letters, don't percent encode it, because it will automatically
+        break;
+      case 1:
+        $parts[0] = $parts[0] . "  "; // Add two spaces to make it three letters
+        break;
     }
   }
   $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
