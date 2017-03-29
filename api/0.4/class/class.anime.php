@@ -74,11 +74,14 @@ class Anime {
         $this->popularity = $value ? trim($value) : $value;
         break;
       case "image":
-        if(strpos($value, " 1x, ") !== false) { // Contains two with ?s=
+        if(strpos($value, " 1x,") !== false) { // Contains two with ?s=
           $value = explode(" 1x,", $value)[0];
         }
         if(strpos($value, "/r/") !== false) { // URL is /r/ and contains ?s=
           $value = str_replace("/r/50x70", "", explode("?s=", $value)[0]);
+        }
+        if(strpos($value, "t.jpg") !== false || strpos($value, "l.jpg") !== false) { // URL has a modifier
+          $value = str_replace("l.jpg", ".jpg", str_replace("t.jpg", ".jpg", $value));
         }
         $this->image_url = $value ? trim($value) : $value;
         break;
