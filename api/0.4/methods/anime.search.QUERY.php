@@ -47,6 +47,13 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   $parts = isset($_GET['q']) ? explode("/",$_GET['q']) : array();
+  if(empty($parts)) {
+    echo json_encode(array(
+      "message" => "The q parameter is not defined."
+    ));
+    http_response_code(400);
+    return;
+  }
   if(strlen($parts[0]) < 3 && isset($_GET['q'])) {
     if(!isset($_GET['filter']) || empty($_GET['filter'])) {
       echo json_encode(array(
@@ -580,6 +587,7 @@ call_user_func(function() {
     if($rating == "-") {
       $rating = null;
     }
+    $year = $month = $day = "";
     foreach(explode("-", $startdate) as $index => $number) { // Reformat start date
       if($index == 0) {
         $month = $number;

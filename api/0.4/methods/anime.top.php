@@ -188,7 +188,7 @@ call_user_func(function() {
     $information = $item->find("td.title .detail div.information", 0)->innertext;
     $information_parts = explode("<br>", $information);
     $anime->set("type", explode(" (", trim($information_parts[0]))[0]);
-    $anime->set("episodes", substr(explode(" (", trim($information_parts[0]))[1], 0, -5));
+    substr(explode(" (", trim($information_parts[0]))[1], 0, -5) != "?" ? $anime->set("episodes", substr(explode(" (", trim($information_parts[0]))[1], 0, -5)) : $anime->set("episodes", null);
     $anime->set("members_count", str_replace(",", "", substr(trim($information_parts[2]), 0, -8)));
     $anime->set("score", $item->find("td.score span.text", 0)->innertext);
     array_push($anime_arr, array(
