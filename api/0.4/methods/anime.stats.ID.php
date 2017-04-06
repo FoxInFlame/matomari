@@ -98,59 +98,49 @@ call_user_func(function() {
   $summary = array(
     "watching" => 0,
     "completed" => 0,
-    "onhold" => 0,
+    "on_hold" => 0,
     "dropped" => 0,
-    "plantowatch" => 0,
+    "plan_to_watch" => 0,
     "total" => 0
   );
   $score = array(
-    array(
-      "score" => 1,
+    "1" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 2,
+    "2" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 3,
+    "3" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 4,
+    "4" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 5,
+    "5" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 6,
+    "6" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 7,
+    "7" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 8,
+    "8" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 9,
+    "9" => array(
       "percentage" => 0,
       "count" => 0
     ),
-    array(
-      "score" => 10,
+    "10" => array(
       "percentage" => 0,
       "count" => 0
     )
@@ -168,7 +158,7 @@ call_user_func(function() {
       continue;
     }
     if(strpos($elem_spaceit, "On-Hold") !== false) {
-      $summary["onhold"] = str_replace(",", "", substr($elem_spaceit->plaintext, 10));
+      $summary["on_hold"] = str_replace(",", "", substr($elem_spaceit->plaintext, 10));
       continue;
     }
     if(strpos($elem_spaceit, "Dropped") !== false) {
@@ -176,14 +166,14 @@ call_user_func(function() {
       continue;
     }
     if(strpos($elem_spaceit, "Plan to Watch") !== false) {
-      $summary["plantowatch"] = str_replace(",", "", substr($elem_spaceit->plaintext, 16));
+      $summary["plan_to_watch"] = str_replace(",", "", substr($elem_spaceit->plaintext, 16));
       continue;
     }
     if(strpos($elem_spaceit, "Total") !== false) {
-      $summary["total"] = $summary["watching"] + $summary["completed"] + $summary["onhold"] + $summary["dropped"] + $summary["plantowatch"];
+      $summary["total"] = $summary["watching"] + $summary["completed"] + $summary["on_hold"] + $summary["dropped"] + $summary["plan_to_watch"];
       if(str_replace(",", "", substr($elem_spaceit->plaintext, 8)) != $summary["total"]) { // Not triple equal because the first one is string but the second one is int and so the type is different
         echo json_encode(array(
-          "message" => "Some math going on.... Something about the total amount not being the same as the total on MAL."
+          "message" => "Some weird math going on.... Something about the total amount not being the same as the total on MAL."
         ));
         http_response_code(500);
         return;
@@ -199,15 +189,14 @@ call_user_func(function() {
     $tr_percentage = substr($tr->find("td span text", 0)->innertext, 6, -2); // Remove &nbsp; and space and percentage sign after
     $tr_count = substr($tr->find("td span small", 0)->innertext, 1, -7); // Remove opening bracket and " votes)"
     foreach($score as $key => $score_1) {
-      if($score_1["score"] != $tr_score) continue;
-      $score[$key]["score"] = $tr_score;
+      if($key != $tr_score) continue;
       $score[$key]["percentage"] = $tr_percentage;
       $score[$key]["count"] = $tr_count; // http://stackoverflow.com/questions/15024616/php-foreach-change-original-array-values
     }
   }
   $output = array(
-    "summary" => $summary,
-    "score" => $score
+    "list_stats" => $summary,
+    "score_distribution" => $score
   );
   
   // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
