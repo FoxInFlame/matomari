@@ -139,6 +139,7 @@ call_user_func(function() {
   
   $output = array(
     "status" => $status,
+    "rewatching" => $rewatching,
     "episodes" => $episodes,
     "score" => $score,
     "startdate" => "string_" . $startdate,
