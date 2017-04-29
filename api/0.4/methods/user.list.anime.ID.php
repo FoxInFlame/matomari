@@ -24,6 +24,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../class/class.anime.php");
 
 call_user_func(function() {
   
@@ -110,26 +111,27 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  $html->find("#add_anime_status option[selected]", 0) && $html->find("#add_anime_status option[selected]", 0)->value != "" ? $status = $html->find("#add_anime_status option[selected]", 0)->value : $status = ""; // Selected or nothing
-  $html->find("#add_anime_is_rewatching", 0)->checked ? $rewatching = true : $rewatching = false; // checked=checked or nothing
-  $episodes = $html->find("#add_anime_num_watched_episodes", 0)->value; // 0 or episode number
-  $html->find("#add_anime_score option[selected]", 0) && $html->find("#add_anime_score option[selected]", 0)->value != "" ? $score = $html->find("#add_anime_score option[selected]", 0)->value : $score = ""; // Selected or nothing
+  $anime = new Anime();
+  
+  $html->find("#add_anime_status option[selected]", 0) && $html->find("#add_anime_status option[selected]", 0)->value != "" ? $anime->set("user_status", $html->find("#add_anime_status option[selected]", 0)->value) : $anime->set("user_status", null); // Selected or nothing
+  $html->find("#add_anime_is_rewatching", 0)->checked ? $anime->set("user_rewatching", true) : $anime->set("user_rewatching", false); // checked=checked or nothing
+  $anime->set("user_episodes", $html->find("#add_anime_num_watched_episodes", 0)->value); // 0 or episode number
+  $html->find("#add_anime_score option[selected]", 0) && $html->find("#add_anime_score option[selected]", 0)->value != "" ? $anime->set("user_score", $html->find("#add_anime_score option[selected]", 0)->value) : $anime->set("score", null); // Selected or nothing
   $html->find("#add_anime_start_date_month option[selected]", 0) && $html->find("#add_anime_start_date_month option[selected]", 0)->value != "" ? $startdate_month = substr("0" . $html->find("#add_anime_start_date_month option[selected]", 0)->value, -2) : $startdate_month = "--"; // Selected (int) or nothing
   $html->find("#add_anime_start_date_day option[selected]", 0) && $html->find("#add_anime_start_date_day option[selected]", 0)->value != "" ? $startdate_day = substr("0" . $html->find("#add_anime_start_date_day option[selected]", 0)->value, -2) : $startdate_day = "--"; // Selected (int) or nothing
   $html->find("#add_anime_start_date_year option[selected]", 0) && $html->find("#add_anime_start_date_year option[selected]", 0)->value != "" ? $startdate_year = $html->find("#add_anime_start_date_year option[selected]", 0)->value : $startdate_year = "----"; // Selected (int) or nothing
+  $anime->set("user_start_date", $startdate_year . $startdate_month . $startdate_day);
   $html->find("#add_anime_finish_date_month option[selected]", 0) && $html->find("#add_anime_finish_date_month option[selected]", 0)->value != "" ? $enddate_month = substr("0" . $html->find("#add_anime_finish_date_month option[selected]", 0)->value, -2) : $enddate_month = "--"; // Selected (int) or nothing
   $html->find("#add_anime_finish_date_day option[selected]", 0) && $html->find("#add_anime_finish_date_day option[selected]", 0)->value != "" ? $enddate_day = substr("0" . $html->find("#add_anime_finish_date_day option[selected]", 0)->value, -2) : $enddate_day = "--"; // Selected (int) or nothing
   $html->find("#add_anime_finish_date_year option[selected]", 0) && $html->find("#add_anime_finish_date_year option[selected]", 0)->value != "" ? $enddate_year = $html->find("#add_anime_finish_date_year option[selected]", 0)->value : $enddate_year = "----"; // Selected (int) or nothing
-  $tags = html_entity_decode($html->find("#add_anime_tags", 0)->innertext, ENT_QUOTES); // empty or something - decode quotes and all that
-  $html->find("#add_anime_priority option[selected]", 0) ? $priority = $html->find("#add_anime_priority option[selected]", 0)->value : $priority = "0"; // There is no empty situation, 0 is the default.
-  $html->find("#add_anime_storage_type option[selected]", 0) && $html->find("#add_anime_storage_type option[selected]", 0)->value != "" ? $storage = $html->find("#add_anime_storage_type option[selected]", 0)->value : $storage = "";
-  $storage_value = $html->find("#add_anime_storage_value", 0)->value;
-  $rewatch_times = $html->find("#add_anime_num_watched_times", 0)->value; // 0 or something
-  $html->find("#add_anime_rewatch_value option[selected]", 0) && $html->find("#add_anime_rewatch_value option[selected]", 0)->value != "" ? $rewatch_value = $html->find("#add_anime_rewatch_value option[selected]", 0)->value : $rewatch_value = "";
-  $comments = html_entity_decode($html->find("#add_anime_comments", 0)->innertext, ENT_QUOTES); // Decode quotes and all that
-  
-  $startdate = $startdate_year . $startdate_month . $startdate_day;
-  $enddate = $enddate_year . $enddate_month . $enddate_day;
+  $anime->set("user_end_date", $enddate_year . $enddate_month . $enddate_day);
+  $anime->set("user_tags", html_entity_decode($html->find("#add_anime_tags", 0)->innertext, ENT_QUOTES)); // empty or something - decode quotes and all that
+  $html->find("#add_anime_priority option[selected]", 0) ? $anime->set("user_priority", $html->find("#add_anime_priority option[selected]", 0)->value) : $anime->set("priority", "0"); // There is no empty situation, 0 is the default.
+  $html->find("#add_anime_storage_type option[selected]", 0) && $html->find("#add_anime_storage_type option[selected]", 0)->value != "" ? $anime->set("user_storage", $html->find("#add_anime_storage_type option[selected]", 0)->value) : $anime->set("user_storage", null);
+  $anime->set("user_storage_value", $html->find("#add_anime_storage_value", 0)->value);
+  $anime->set("user_rewatch_times", $html->find("#add_anime_num_watched_times", 0)->value); // 0 or something
+  $html->find("#add_anime_rewatch_value option[selected]", 0) && $html->find("#add_anime_rewatch_value option[selected]", 0)->value != "" ? $anime->set("user_rewatch_value", $html->find("#add_anime_rewatch_value option[selected]", 0)->value): $anime->set("user_rewatch_value", null);
+  $anime->set("user_comments", html_entity_decode($html->find("#add_anime_comments", 0)->innertext, ENT_QUOTES)); // Decode quotes and all that
   
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
@@ -138,19 +140,19 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   $output = array(
-    "status" => $status,
-    "rewatching" => $rewatching,
-    "episodes" => $episodes,
-    "score" => $score,
-    "startdate" => "string_" . $startdate,
-    "enddate" => "string_" . $enddate,
-    "tags" => $tags,
-    "priority" => $priority,
-    "storage" => $storage,
-    "storage_value" => $storage_value,
-    "rewatch_times" => $rewatch_times,
-    "rewatch_value" => $rewatch_value,
-    "comments" => $comments
+    "status" => $anime->get("user_status"),
+    "rewatching" => $anime->get("user_rewatching"),
+    "episodes" => $anime->get("user_episodes"),
+    "score" => $anime->get("user_score"),
+    "startdate" => "string_" . $anime->get("user_startdate"),
+    "enddate" => "string_" . $anime->get("user_enddate"),
+    "tags" => $anime->get("user_tags"),
+    "priority" => $anime->get("user_priority"),
+    "storage" => $anime->get("user_storage"),
+    "storage_value" => $anime->get("user_storage_value"),
+    "rewatch_times" => $anime->get("user_rewatch_times"),
+    "rewatch_value" => $anime->get("user_rewatch_value"),
+    "comments" => $anime->get("user_comments")
   );
   
   // Remove string_ after parse
