@@ -44,17 +44,19 @@ class Anime {
   private $synopsis_snippet;
   
   // User info
-  private $user_status;
-  private $user_rewatching;
-  private $user_episodes;
-  private $user_start_date;
-  private $user_end_date;
-  private $user_tags = array();
-  private $user_priority;
-  private $user_storage;
-  private $user_rewatch_count;
-  private $user_rewatch_value;
-  private $user_comments;
+  private $user_status; // String
+  private $user_rewatching; // Boolean
+  private $user_episodes; // Integer
+  private $user_score;
+  private $user_startdate; // String
+  private $user_enddate; // String
+  private $user_tags = array(); // Array
+  private $user_priority; // String
+  private $user_storage; // String
+  private $user_storage_value; // Integer
+  private $user_rewatch_times; // Integer
+  private $user_rewatch_value; // String
+  private $user_comments; // String
   
   public function set($data, $value) {
     switch($data) {
@@ -143,6 +145,30 @@ class Anime {
         $this->synopsis_snippet = $value ? trim($value) : $value;
         break;
       case "user_status":
+        if(is_numeric($value)) {
+          switch(trim($value)) {
+            case "1":
+              $value = "watching";
+              break;
+            case "2":
+              $value = "completed";
+              break;
+            case "3":
+              $value = "on_hold";
+              break;
+            case "4":
+              $value = "dropped";
+              break;
+            case "6":
+              $value = "plan_to_watch";
+              break;
+            default:
+              $value = "watching";
+              break;
+          }
+        } else {
+          if($value !== "watching" && $value !== "completed" && $value !== "on_hold" && $value !== "dropped" && $value !== "plan_to_watch" && $value !== null) $value = "watching";
+        }
         $this->user_status = $value ? trim($value) : $value;
         break;
       case "user_rewatching":
@@ -151,23 +177,73 @@ class Anime {
       case "user_episodes":
         $this->user_episodes = $value ? trim($value) : $value;
         break;
-      case "user_start_date":
-        $this->user_start_date = $value ? trim($value) : $value;
+      case "user_score":
+        $this->user_score = $value ? trim($value) : $value;
         break;
-      case "user_end_date":
-        $this->user_end_date = $value ? trim($value) : $value;
+      case "user_startdate":
+        $this->user_startdate = $value ? trim($value) : $value;
+        break;
+      case "user_enddate":
+        $this->user_enddate = $value ? trim($value) : $value;
         break;
       case "user_tags":
         $this->user_tags = $value ? trim($value) : $value;
         break;
       case "user_priority":
+        switch($value) {
+          case "0":
+            $value = "low";
+            break;
+          case "1":
+            $value = "medium";
+            break;
+          case "2":
+            $value = "high";
+            break;
+          default:
+            $value = "low";
+            break;
+        }
         $this->user_priority = $value ? trim($value) : $value;
         break;
       case "user_storage":
+        if(is_numeric($value)) {
+          switch(trim($value)) {
+            case "1":
+              $value = "hard_drive";
+              break;
+            case "2":
+              $value = "dvd_cd";
+              break;
+            case "3":
+              $value = "none";
+              break;
+            case "4":
+              $value = "retail_dvd";
+              break;
+            case "6":
+              $value = "vhs";
+              break;
+            case "7":
+              $value = "external_hd";
+              break;
+            case "8":
+              $value = "nas";
+              break;
+            case "9":
+              $value = "bluray";
+              break;
+            default:
+              $value = null;
+              break;
+          }
+        } else {
+          if($value !== "hard_drive" && $value !== "dvd_cd" && $value !== "none" && $value !== "retail_dvd" && $value !== "vhs" && $value !== "external_hd" && $value !== "nas" && $value !== "bluray" && $value !== null) $value = null;
+        }
         $this->user_storage = $value ? trim($value) : $value;
         break;
-      case "user_rewatch_count":
-        $this->user_rewatch_count = $value ? trim($value) : $value;
+      case "user_rewatch_times":
+        $this->user_rewatch_times = $value ? trim($value) : $value;
         break;
       case "user_rewatch_value":
         $this->user_rewatch_value = $value ? trim($value) : $value;
@@ -270,11 +346,14 @@ class Anime {
       case "user_episodes":
         return $this->user_episodes;
         break;
-      case "user_start_date":
-        return $this->user_start_date;
+      case "user_score":
+        return $this->user_score;
         break;
-      case "user_end_date":
-        return $this->user_end_date;
+      case "user_startdate":
+        return $this->user_startdate;
+        break;
+      case "user_enddate":
+        return $this->user_enddate;
         break;
       case "user_tags":
         return $this->user_tags;
@@ -285,8 +364,8 @@ class Anime {
       case "user_storage":
         return $this->user_storage;
         break;
-      case "user_rewatch_count":
-        return $this->user_rewatch_count;
+      case "user_rewatch_times":
+        return $this->user_rewatch_times;
         break;
       case "user_rewatch_value":
         return $this->user_rewatch_value;
