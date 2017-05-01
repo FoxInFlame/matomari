@@ -352,7 +352,7 @@ class Anime {
             return 4;
             break;
           case "plan_to_watch":
-            return 5;
+            return 6;
             break;
         }
         return $this->user_status;
