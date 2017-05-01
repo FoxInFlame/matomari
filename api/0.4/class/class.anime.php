@@ -338,6 +338,26 @@ class Anime {
         return($this->synopsis_snippet);
         break;
       case "user_status":
+        switch($this->user_status) {
+          case "watching":
+            return 1;
+            break;
+          case "completed":
+            return 2;
+            break;
+          case "onhold":
+            return 3;
+            break;
+          case "dropped":
+            return 4;
+            break;
+          case "plan_to_watch":
+            return 5;
+            break;
+        }
+        return $this->user_status;
+        break;
+      case "user_status_str":
         return $this->user_status;
         break;
       case "user_rewatching":
