@@ -10,15 +10,15 @@ Authentication: HTTP Basic Auth with MAL Credentials.
 Parameters:
   - None.
 Data:
-  - status: Status of the anime, 'watching', 'completed', 'onhold', 'dropped', or 'plantowatch'
+  - status: Status of the anime, numerical or 'watching', 'completed', 'on_hold', 'dropped', or 'plan_to_watch'
   - rewatching: Rewatching right now (boolean, true/false)
   - episodes: Watched episodes (integer)
   - score: Score, 1-10, or empty to set as default (nothing)
-  - startdate: YYYYMMDD format date (-- if unknown, example: 20160316, 2017--07)
-  - enddate: YYYYMMDD format date (-- if unknown)
+  - start_date: YYYYMMDD format date (-- if unknown, example: 20160316, 2017--07)
+  - end_date: YYYYMMDD format date (-- if unknown)
   - tags: Tags, separated by comma
   - priority: Priority in list, 'low', 'medium' or 'high'
-  - storage: Storage type, 'harddrive', 'dvdcd', 'none', 'retaildvd', 'vhs', 'externalhd', 'nas', 'bluray', or empty to set as default (nothing)
+  - storage: Storage type, 'hard_drive', 'dvd_cd', 'none', 'retail_dvd', 'vhs', 'external_hd', 'nas', 'bluray', or empty to set as default (nothing)
   - storage_value: Storage value, whatver GB or something (integer)
   - rewatch_times: Total rewatched times (integer)
   - rewatch_value: Value for rewatching, 'verylow', 'low', 'medium', 'high', 'veryhigh', or empty to set as default (nothing)
@@ -171,7 +171,7 @@ call_user_func(function() {
   
   if(empty($anime_id) || empty($aeps) || empty($astatus)) {
     echo json_encode(array(
-      "The code for MAL appears to have changed."
+      "message"=> "The code for MAL appears to have changed."
     ));
     http_response_code(500);
     return;
@@ -190,12 +190,12 @@ call_user_func(function() {
   $html->find("#add_anime_is_rewatching", 0)->checked ? $rewatching = "1" : $rewatching = "0"; // checked=checked or nothing
   $episodes = $html->find("#add_anime_num_watched_episodes", 0)->value; // 0 or episode number
   $html->find("#add_anime_score option[selected]", 0) && $html->find("#add_anime_score option[selected]", 0)->value != "" ? $score = $html->find("#add_anime_score option[selected]", 0)->value : $score = ""; // Selected or nothing
-  $html->find("#add_anime_start_date_month option[selected]", 0) && $html->find("#add_anime_start_date_month option[selected]", 0)->value != "" ? $startdate_month = $html->find("#add_anime_start_date_month option[selected]", 0)->value : $startdate_month = ""; // Selected (int) or nothing
-  $html->find("#add_anime_start_date_day option[selected]", 0) && $html->find("#add_anime_start_date_day option[selected]", 0)->value != "" ? $startdate_day = $html->find("#add_anime_start_date_day option[selected]", 0)->value : $startdate_day = ""; // Selected (int) or nothing
-  $html->find("#add_anime_start_date_year option[selected]", 0) && $html->find("#add_anime_start_date_year option[selected]", 0)->value != "" ? $startdate_year = $html->find("#add_anime_start_date_year option[selected]", 0)->value : $startdate_year = ""; // Selected (int) or nothing
-  $html->find("#add_anime_finish_date_month option[selected]", 0) && $html->find("#add_anime_finish_date_month option[selected]", 0)->value != "" ? $enddate_month = $html->find("#add_anime_finish_date_month option[selected]", 0)->value : $enddate_month = ""; // Selected (int) or nothing
-  $html->find("#add_anime_finish_date_day option[selected]", 0) && $html->find("#add_anime_finish_date_day option[selected]", 0)->value != "" ? $enddate_day = $html->find("#add_anime_finish_date_day option[selected]", 0)->value : $enddate_day = ""; // Selected (int) or nothing
-  $html->find("#add_anime_finish_date_year option[selected]", 0) && $html->find("#add_anime_finish_date_year option[selected]", 0)->value != "" ? $enddate_year = $html->find("#add_anime_finish_date_year option[selected]", 0)->value : $enddate_year = ""; // Selected (int) or nothing
+  $html->find("#add_anime_start_date_month option[selected]", 0) && $html->find("#add_anime_start_date_month option[selected]", 0)->value != "" ? $start_date_month = $html->find("#add_anime_start_date_month option[selected]", 0)->value : $start_date_month = ""; // Selected (int) or nothing
+  $html->find("#add_anime_start_date_day option[selected]", 0) && $html->find("#add_anime_start_date_day option[selected]", 0)->value != "" ? $start_date_day = $html->find("#add_anime_start_date_day option[selected]", 0)->value : $start_date_day = ""; // Selected (int) or nothing
+  $html->find("#add_anime_start_date_year option[selected]", 0) && $html->find("#add_anime_start_date_year option[selected]", 0)->value != "" ? $start_date_year = $html->find("#add_anime_start_date_year option[selected]", 0)->value : $start_date_year = ""; // Selected (int) or nothing
+  $html->find("#add_anime_finish_date_month option[selected]", 0) && $html->find("#add_anime_finish_date_month option[selected]", 0)->value != "" ? $end_date_month = $html->find("#add_anime_finish_date_month option[selected]", 0)->value : $end_date_month = ""; // Selected (int) or nothing
+  $html->find("#add_anime_finish_date_day option[selected]", 0) && $html->find("#add_anime_finish_date_day option[selected]", 0)->value != "" ? $end_date_day = $html->find("#add_anime_finish_date_day option[selected]", 0)->value : $end_date_day = ""; // Selected (int) or nothing
+  $html->find("#add_anime_finish_date_year option[selected]", 0) && $html->find("#add_anime_finish_date_year option[selected]", 0)->value != "" ? $end_date_year = $html->find("#add_anime_finish_date_year option[selected]", 0)->value : $end_date_year = ""; // Selected (int) or nothing
   $tags = html_entity_decode($html->find("#add_anime_tags", 0)->innertext); // empty or something  -  Decode quotes and all that
   $html->find("#add_anime_priority option[selected]", 0) ? $priority = $html->find("#add_anime_priority option[selected]", 0)->value : $priority = "0"; // There is no empty situation, 0 is the default.
   $html->find("#add_anime_storage_type option[selected]", 0) && $html->find("#add_anime_storage_type option[selected]", 0)->value != "" ? $storage = $html->find("#add_anime_storage_type option[selected]", 0)->value : $storage = "";
@@ -213,28 +213,40 @@ call_user_func(function() {
       return;
     }
   } else {
-    switch(strtolower($json['status'])) {
-      case "watching":
-        $status = 1;
-        break;
-      case "completed":
-        $status = 2;
-        break;
-      case "onhold":
-        $status = 3;
-        break;
-      case "dropped":
-        $status = 4;
-        break;
-      case "plantowatch":
-        $status = 6;
-        break;
-      default:
+    if(is_numeric($json['status'])) {
+      if($json['status'] !== "1" && $json['status'] !== "2" && $json['status'] !== "3" && $json['status'] !== "4" && $json['status'] !== "6") {
         echo json_encode(array(
           "message" => "JSON key 'status' contains an invalid value."
         ));
         http_response_code(400);
         return;
+      } else {
+        $status = $json['status'];
+      }
+    } else {
+      switch(strtolower($json['status'])) {
+        case "watching":
+          $status = 1;
+          break;
+        case "completed":
+          $status = 2;
+          break;
+        case "on_hold":
+          $status = 3;
+          break;
+        case "dropped":
+          $status = 4;
+          break;
+        case "plan_to_watch":
+          $status = 6;
+          break;
+        default:
+          echo json_encode(array(
+            "message" => "JSON key 'status' contains an invalid value."
+          ));
+          http_response_code(400);
+          return;
+      }
     }
   }
   
@@ -296,55 +308,55 @@ call_user_func(function() {
     }
   }
   
-  if(isset($json['startdate']) && !empty($json['startdate'])) {
-    // $json['startdate'] == "20160131" || "----0131"
-    if(strlen($json['startdate']) != 8) {
+  if(isset($json['start_date']) && !empty($json['start_date'])) {
+    // $json['start_date'] == "20160131" || "----0131"
+    if(strlen($json['start_date']) != 8) {
       echo json_encode(array(
-        "message" => "JSON key 'startdate' contains an invalid value."
+        "message" => "JSON key 'start_date' contains an invalid value."
       ));
       http_response_code(400);
       return;
     }
-    if(is_numeric(substr($json['startdate'], 0, 4))) {
-      $startdate_year = (int)substr($json['startdate'], 0, 4);
+    if(is_numeric(substr($json['start_date'], 0, 4))) {
+      $start_date_year = (int)substr($json['start_date'], 0, 4);
     } else {
-      $startdate_year = "";
+      $start_date_year = "";
     }
-    if(is_numeric(substr($json['startdate'], 4, 2))) {
-      $startdate_month = (int)substr($json['startdate'], 4, 2);
+    if(is_numeric(substr($json['start_date'], 4, 2))) {
+      $start_date_month = (int)substr($json['start_date'], 4, 2);
     } else {
-      $startdate_month = "";
+      $start_date_month = "";
     }
-    if(is_numeric(substr($json['startdate'], 6, 2))) {
-      $startdate_day = (int)substr($json['startdate'], 6, 2);
+    if(is_numeric(substr($json['start_date'], 6, 2))) {
+      $start_date_day = (int)substr($json['start_date'], 6, 2);
     } else {
-      $startdate_day = "";
+      $start_date_day = "";
     }
   }
   
-  if(isset($json['enddate']) && !empty($json['enddate'])) {
-    // $json['startdate'] == "20160131" || "----0131"
-    if(strlen($json['enddate']) != 8) {
+  if(isset($json['end_date']) && !empty($json['end_date'])) {
+    // $json['start_date'] == "20160131" || "----0131"
+    if(strlen($json['end_date']) != 8) {
       echo json_encode(array(
-        "message" => "JSON key 'enddate' contains an invalid value."
+        "message" => "JSON key 'end_date' contains an invalid value."
       ));
       http_response_code(400);
       return;
     }
-    if(is_numeric(substr($json['enddate'], 0, 4))) {
-      $enddate_year = (int)substr($json['enddate'], 0, 4);
+    if(is_numeric(substr($json['end_date'], 0, 4))) {
+      $end_date_year = (int)substr($json['end_date'], 0, 4);
     } else {
-      $enddate_year = "";
+      $end_date_year = "";
     }
-    if(is_numeric(substr($json['enddate'], 4, 2))) {
-      $enddate_month = (int)substr($json['enddate'], 4, 2);
+    if(is_numeric(substr($json['end_date'], 4, 2))) {
+      $end_date_month = (int)substr($json['end_date'], 4, 2);
     } else {
-      $enddate_month = "";
+      $end_date_month = "";
     }
-    if(is_numeric(substr($json['enddate'], 6, 2))) {
-      $enddate_day = (int)substr($json['enddate'], 6, 2);
+    if(is_numeric(substr($json['end_date'], 6, 2))) {
+      $end_date_day = (int)substr($json['end_date'], 6, 2);
     } else {
-      $enddate_day = "";
+      $end_date_day = "";
     }
   }
   
@@ -378,22 +390,22 @@ call_user_func(function() {
       $storage = "";
     } else {
       switch(strtolower($json['storage'])) {
-        case "harddrive":
+        case "hard_drive":
           $storage = "1";
           break;
-        case "dvdcd":
+        case "dvd_cd":
           $storage = "2";
           break;
         case "none":
           $storage = "3";
           break;
-        case "retaildvd":
+        case "retail_dvd":
           $storage = "4";
           break;
         case "vhs":
           $storage = "5";
           break;
-        case "externalhd":
+        case "external_hd":
           $storage = "6";
           break;
         case "nas":
@@ -479,14 +491,14 @@ call_user_func(function() {
       "num_watched_episodes" => $episodes,
       "score" => $score,
       "start_date" => array(
-        "month" => $startdate_month,
-        "day" => $startdate_day,
-        "year" => $startdate_year
+        "month" => $start_date_month,
+        "day" => $start_date_day,
+        "year" => $start_date_year
       ),
       "finish_date" => array(
-        "month" => $enddate_month,
-        "day" => $enddate_day,
-        "year" => $enddate_year
+        "month" => $end_date_month,
+        "day" => $end_date_day,
+        "year" => $end_date_year
       ),
       "tags" => $tags,
       "priority" => $priority,

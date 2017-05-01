@@ -45,6 +45,7 @@ call_user_func(function() {
     return;
   } else {
     $MALsession = getSession($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+    if(!$MALsession) return;
   }
 
 
@@ -141,6 +142,7 @@ call_user_func(function() {
   
   $output = array(
     "status" => $anime->get("user_status"),
+    "status_str" => $anime->get("user_status_str"),
     "rewatching" => $anime->get("user_rewatching"),
     "episodes" => $anime->get("user_episodes"),
     "score" => $anime->get("user_score"),
