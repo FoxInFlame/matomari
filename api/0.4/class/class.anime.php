@@ -172,7 +172,7 @@ class Anime {
         $this->user_status = $value ? trim($value) : $value;
         break;
       case "user_rewatching":
-        $this->user_rewatching = $value ? trim($value) : $value;
+        $this->user_rewatching = $value;
         break;
       case "user_episodes":
         $this->user_episodes = $value ? trim($value) : $value;
