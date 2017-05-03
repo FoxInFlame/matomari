@@ -131,7 +131,7 @@ call_user_func(function() {
   $html->find("#add_anime_storage_type option[selected]", 0) && $html->find("#add_anime_storage_type option[selected]", 0)->value != "" ? $anime->set("user_storage", $html->find("#add_anime_storage_type option[selected]", 0)->value) : $anime->set("user_storage", null);
   $anime->set("user_storage_value", $html->find("#add_anime_storage_value", 0)->value);
   $anime->set("user_rewatch_times", $html->find("#add_anime_num_watched_times", 0)->value); // 0 or something
-  $html->find("#add_anime_rewatch_value option[selected]", 0) && $html->find("#add_anime_rewatch_value option[selected]", 0)->value != "" ? $anime->set("user_rewatch_value", $html->find("#add_anime_rewatch_value option[selected]", 0)->value): $anime->set("user_rewatch_value", null);
+  $html->find("#add_anime_rewatch_value option[selected]", 0) && $html->find("#add_anime_rewatch_value option[selected]", 0)->value != "" ? $anime->set("user_rewatch_value", $html->find("#add_anime_rewatch_value option[selected]", 0)->value) : $anime->set("user_rewatch_value", null);
   $anime->set("user_comments", html_entity_decode($html->find("#add_anime_comments", 0)->innertext, ENT_QUOTES)); // Decode quotes and all that
   
   // [+] ============================================== [+]
