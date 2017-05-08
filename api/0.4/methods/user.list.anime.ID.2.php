@@ -289,22 +289,26 @@ call_user_func(function() {
     if($json['score'] == "") {
       $score = "";
     } else {
-      if(!is_numeric($json['score'])) {
-        echo json_encode(array(
-          "message" => "JSON key 'score' contains an invalid value."
-        ));
-        http_response_code(400);
-        return;
+      if($json['score'] == "0" || $json['score'] == null) {
+        $score = "0";
+      } else {
+        if(!is_numeric($json['score'])) {
+          echo json_encode(array(
+            "message" => "JSON key 'score' contains an invalid value."
+          ));
+          http_response_code(400);
+          return;
+        }
+        $json['score'] = round($json['score']);
+        if($json['score'] > 10 || $json['score'] < 1) {
+          echo json_encode(array(
+            "message" => "JSON key 'score' contains an invalid value."
+          ));
+          http_response_code(400);
+          return;
+        }
+        $score = $json['score'];
       }
-      $json['score'] = round($json['score']);
-      if($json['score'] > 10 || $json['score'] < 1) {
-        echo json_encode(array(
-          "message" => "JSON key 'score' contains an invalid value."
-        ));
-        http_response_code(400);
-        return;
-      }
-      $score = $json['score'];
     }
   }
   
