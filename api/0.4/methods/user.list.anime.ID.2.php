@@ -286,29 +286,26 @@ call_user_func(function() {
   }
   
   if(isset($json['score'])) {
-    if($json['score'] == "") {
+    if($json['score'] == "" || $json['score'] == "0" || $json['score'] == null) {
+      // Set it as 0
       $score = "";
     } else {
-      if($json['score'] == "0" || $json['score'] == null) {
-        $score = "0";
-      } else {
-        if(!is_numeric($json['score'])) {
-          echo json_encode(array(
-            "message" => "JSON key 'score' contains an invalid value."
-          ));
-          http_response_code(400);
-          return;
-        }
-        $json['score'] = round($json['score']);
-        if($json['score'] > 10 || $json['score'] < 1) {
-          echo json_encode(array(
-            "message" => "JSON key 'score' contains an invalid value."
-          ));
-          http_response_code(400);
-          return;
-        }
-        $score = $json['score'];
+      if(!is_numeric($json['score'])) {
+        echo json_encode(array(
+          "message" => "JSON key 'score' contains an invalid value."
+        ));
+        http_response_code(400);
+        return;
       }
+      $json['score'] = round($json['score']);
+      if($json['score'] > 10 || $json['score'] < 1) {
+        echo json_encode(array(
+          "message" => "JSON key 'score' contains an invalid value."
+        ));
+        http_response_code(400);
+        return;
+      }
+      $score = $json['score'];
     }
   }
   
