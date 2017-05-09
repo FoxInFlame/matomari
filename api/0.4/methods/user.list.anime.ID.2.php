@@ -251,7 +251,9 @@ call_user_func(function() {
   }
   
   if(isset($json['rewatching']) && !empty($json['episodes'])) {
-    switch(strtolower($json['rewatching'])) {
+    $rewatching = (int)filter_var(strtolower($json['rewatching']), FILTER_VALIDATE_BOOLEAN);
+    echo $rewatching;
+    /*switch(strtolower($json['rewatching'])) {
       case "true":
         $rewatching = "1";
         break;
@@ -264,7 +266,7 @@ call_user_func(function() {
         ));
         http_response_code(400);
         return;
-    }
+    }*/
   }
   
   if(isset($json['episodes']) && !empty($json['episodes'])) {
@@ -489,6 +491,7 @@ call_user_func(function() {
     "astatus" => $astatus,
     "add_anime" => array(
       "status" => $status,
+      "is_rewatching" => $rewatching,
       "num_watched_episodes" => $episodes,
       "score" => $score,
       "start_date" => array(
