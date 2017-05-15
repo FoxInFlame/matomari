@@ -169,7 +169,7 @@ call_user_func(function() {
   $aeps = $html->find("#anime_num_episodes", 0)->value;
   $astatus = $html->find("#anime_airing_status", 0)->value;
   
-  if(empty($anime_id) || empty($aeps) || empty($astatus)) {
+  if(!isset($anime_id) || !isset($aeps) || !isset($astatus)) {
     echo json_encode(array(
       "message"=> "The code for MAL appears to have changed."
     ));
