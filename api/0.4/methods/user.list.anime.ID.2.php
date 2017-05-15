@@ -277,7 +277,7 @@ call_user_func(function() {
       http_response_code(400);
       return;
     }
-    if($json['episodes'] > $aeps) {
+    if($aeps !== "0" && $json['episodes'] > $aeps) {
       echo json_encode(array(
         "message" => "JSON key 'episodes' contains an invalid value."
       ));
