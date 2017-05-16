@@ -250,9 +250,8 @@ call_user_func(function() {
     }
   }
   
-  if(isset($json['rewatching']) && !empty($json['episodes'])) {
+  if(isset($json['rewatching'])) {//  && !empty($json['episodes'])
     $rewatching = (int)filter_var(strtolower($json['rewatching']), FILTER_VALIDATE_BOOLEAN);
-    echo $rewatching;
     /*switch(strtolower($json['rewatching'])) {
       case "true":
         $rewatching = "1";
@@ -491,7 +490,6 @@ call_user_func(function() {
     "astatus" => $astatus,
     "add_anime" => array(
       "status" => $status,
-      "is_rewatching" => $rewatching,
       "num_watched_episodes" => $episodes,
       "score" => $score,
       "start_date" => array(
@@ -509,6 +507,7 @@ call_user_func(function() {
       "storage_type" => $storage,
       "storage_value" => $storage_value,
       "num_watched_times" => $rewatch_times,
+      "rewatch_value" => $rewatch_value,
       "comments" => $comments,
       "is_asked_to_discuss" => "0",
       "sns_post_type" => "0",
@@ -517,7 +516,7 @@ call_user_func(function() {
     "csrf_token" => $MALsession['csrf_token']
   );
   
-  if($rewatching) $post_fields['add_anime']['rewatch_value'] = $rewatching; // It doesn't exist in the query if it's not true.
+  if($rewatching) $post_fields['add_anime']['is_rewatching'] = $rewatching; // It doesn't exist in the query if it's not true.
 
   
   $ch = curl_init();
