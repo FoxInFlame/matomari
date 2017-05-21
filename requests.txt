@@ -3,6 +3,8 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [DONE] GET anime/top - List of top anime (with pagination / types) detail parameter shows more details individually.
 
+[DONE] GET anime/random - Redirect to a random anime/info/:id page.
+
 [DONE] GET anime/search/:query - Search anime. (with pagination / filters) detail parameter shows more details individually.
 
 [DONE] GET anime/recommendations - Latest anime recommendations (with pagination)
