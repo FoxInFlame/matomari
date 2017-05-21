@@ -10,6 +10,7 @@ $showFile_method = "";
 $filenames = array( // Available methods
   "anime",
   "anime/top",
+  "anime/random",
   "anime/search/:query",
   "anime/recommendations",
   "anime/info/:id",
