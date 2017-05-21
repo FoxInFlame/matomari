@@ -8,7 +8,7 @@ Method: GET
         /anime/random
 Authentication: None Required.
 Parameters:
-  - page: [Optional] Page number. If page doesn't exist, becomes 1. (defaults to 1)
+  - None.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -24,9 +24,6 @@ A Part of the matomari API.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../absoluteGMT.php");
-require_once(dirname(__FILE__) . "/../class/class.anime.php");
 
 call_user_func(function() {
   
@@ -62,6 +59,6 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   http_response_code(302);
-  header('Location: /api/0.4/methods/anime.info.php?id=' . $success_id, true, 302);
+  header('Location: /api/0.4/methods/anime.info.ID.php?id=' . $success_id, true, 302);
 
 });
