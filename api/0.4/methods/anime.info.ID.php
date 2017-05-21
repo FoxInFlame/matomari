@@ -147,30 +147,34 @@ call_user_func(function() {
       strpos($value->innertext, "Unknown") !== false ? $anime->set("status", null) : $anime->set("status", substr($value->plaintext, 11));
     }
     if(strpos($value->plaintext, "Duration:") !== false) {
-      if(strpos($value->plaintext, "hr.") !== false) {
-        preg_match("/\d+(?= hr.)/", $value->plaintext, $matches);
-        $hour = trim($matches[0], " ");
-        $hour_minutes = intval($hour) * 60;
-        $minutes = $hour_minutes;
-      }
-      if(strpos($value->plaintext, "min.") !== false) {
-        preg_match("/\d+(?= min.)/", $value->plaintext, $matches);
-        $minutes = trim($matches[0], " ");
-        if(isset($hour_minutes)) {
-          $minutes = intval($minutes) + intval($hour_minutes);
+      if(strpos($value->innertext, "Unknown") !== false) {
+        $anime->set("duration", null);
+      } else {
+        if(strpos($value->plaintext, "hr.") !== false) {
+          preg_match("/\d+(?= hr.)/", $value->plaintext, $matches);
+          $hour = trim($matches[0], " ");
+          $hour_minutes = intval($hour) * 60;
+          $minutes = $hour_minutes;
         }
-      }
-      if(strpos($value->plaintext, "sec.") !== false) { // Example id: 33902
-        preg_match("/\d+(?= sec.)/", $value->plaintext, $matches);
-        $seconds = trim($matches[0], " ");
-        $seconds_minutes = $seconds / 60;
-        if(isset($minutes)) {
-          $minutes = intval($minutes) + intval($seconds_minutes);
-        } else {
-          $minutes = $seconds_minutes;
+        if(strpos($value->plaintext, "min.") !== false) {
+          preg_match("/\d+(?= min.)/", $value->plaintext, $matches);
+          $minutes = trim($matches[0], " ");
+          if(isset($hour_minutes)) {
+            $minutes = intval($minutes) + intval($hour_minutes);
+          }
         }
+        if(strpos($value->plaintext, "sec.") !== false) { // Example id: 33902
+          preg_match("/\d+(?= sec.)/", $value->plaintext, $matches);
+          $seconds = trim($matches[0], " ");
+          $seconds_minutes = $seconds / 60;
+          if(isset($minutes)) {
+            $minutes = intval($minutes) + intval($seconds_minutes);
+          } else {
+            $minutes = $seconds_minutes;
+          }
+        }
+        $anime->set("duration", $minutes);
       }
-      $anime->set("duration", $minutes);
       $anime->get("duration") !== null && $anime->get("episodes") !== null ? $anime->set("total_duration", intval($anime->get("duration")) * intval($anime->get("episodes"))) : $anime->set("total_duration", null); // Set total duration only if duration and episodes are defined
     }
     if(strpos($value->plaintext, "Rating:") !== false) {
