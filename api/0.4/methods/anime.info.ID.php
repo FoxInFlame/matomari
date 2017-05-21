@@ -73,6 +73,14 @@ call_user_func(function() {
       http_response_code(404);
       return;
     }
+    echo curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 429) {
+      echo json_encode(array(
+        "message" => "Too many requests."
+      ));
+      http_response_code(429);
+      return; // return so don't save cache
+    }
     if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
       echo json_encode(array(
         "message" => "Anime with specified id could not be found."
@@ -100,8 +108,9 @@ call_user_func(function() {
   
   $anime = new Anime();
   
+  echo $html;
   $anime->set("id", $parts[0]);
-  $anime->set("title", $html->find("div#contentWrapper div h1.h1 span", 0)->plaintext, 0, -1);
+  $anime->set("title", $html->find("div#contentWrapper div h1.h1 span", 0)->plaintext);
   $alternativeTitles = $html->find("div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad");
   $alternativeTitles_eng = array(); // Changed from string because there can be multiple
   $alternativeTitles_jap = array();
