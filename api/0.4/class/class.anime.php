@@ -76,6 +76,10 @@ class Anime {
         $this->popularity = $value ? trim($value) : $value;
         break;
       case "image":
+        if($value === null) {
+          $this->image_url = $value;
+          break;
+        }
         if(strpos($value, " 1x,") !== false) { // Contains two with ?s=
           $value = explode(" 1x,", $value)[0];
         }
