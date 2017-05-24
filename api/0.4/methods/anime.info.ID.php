@@ -133,7 +133,7 @@ call_user_func(function() {
   $anime->set("image", $html->find("div#contentWrapper div#content table div a img.ac", 0)->src);
   $anime->set("mal_url", trim($html->find("div#contentWrapper div#content table div.js-scrollfix-bottom-rel div#horiznav_nav ul li a", 0)->href));
   trim($html->find("div#contentWrapper div#content div.anime-detail-header-stats .score", 0)->plaintext) == "N/A" ? $anime->set("score", null) : $anime->set("score", trim($html->find("div#contentWrapper div#content div.anime-detail-header-stats .score", 0)->plaintext));
-  $anime->set("synopsis", htmlspecialchars_decode(html_entity_decode(trim($html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0)->innertext, " "), 0, "UTF-8")));
+  $html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0) ? $anime->set("synopsis", htmlspecialchars_decode(html_entity_decode(trim($html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0)->innertext, " "), 0, "UTF-8"))) : $anime->set("synopsis", null);
   $information = $html->find("div#contentWrapper div#content div.js-scrollfix-bottom div");
   foreach($information as $value) {
     if(strpos($value->plaintext, "Type:") !== false) {
