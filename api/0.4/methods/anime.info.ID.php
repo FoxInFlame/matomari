@@ -27,7 +27,7 @@ error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-header("Cache-Control: no-cache, must-revalidate");
+header("Cache-Control: max-age=604800, public"); // 1 week
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 require_once(dirname(__FILE__) . "/../class/class.anime.php");
 require_once(dirname(__FILE__) . "/../class/class.cache.php");
@@ -130,7 +130,7 @@ call_user_func(function() {
   ));
   $html->find("div#contentWrapper div#content div.anime-detail-header-stats span.ranked strong", 0)->plaintext == "N/A" ? $anime->set("rank", null) : $anime->set("rank", substr($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.ranked strong", 0)->plaintext, 1));
   $anime->set("popularity", substr($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.popularity strong", 0)->plaintext, 1));
-  $anime->set("image", $html->find("div#contentWrapper div#content table div a img.ac", 0)->src);
+  $html->find("div#contentWrapper div#content table div a img.ac", 0) ? $anime->set("image", $html->find("div#contentWrapper div#content table div a img.ac", 0)->src) : $anime->set("image", null);
   $anime->set("mal_url", trim($html->find("div#contentWrapper div#content table div.js-scrollfix-bottom-rel div#horiznav_nav ul li a", 0)->href));
   trim($html->find("div#contentWrapper div#content div.anime-detail-header-stats .score", 0)->plaintext) == "N/A" ? $anime->set("score", null) : $anime->set("score", trim($html->find("div#contentWrapper div#content div.anime-detail-header-stats .score", 0)->plaintext));
   $html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0) ? $anime->set("synopsis", htmlspecialchars_decode(html_entity_decode(trim($html->find("div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]", 0)->innertext, " "), 0, "UTF-8"))) : $anime->set("synopsis", null);
