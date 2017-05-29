@@ -120,7 +120,7 @@ class Anime {
         if(!$value) break;
         
         $value = trim($value);
-        if(strpos($value, " to ") !== -1) {
+        if(strpos($value, " to ") !== false) {
           // contains "to"
           $exploded = explode(" to ", $value);
           $this->air_date_start = $exploded[0] !== "?" ? getAbsoluteTimeGMT($exploded[0], "!M j, Y")->format("c") : null;
