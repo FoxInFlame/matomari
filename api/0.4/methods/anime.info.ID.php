@@ -144,7 +144,10 @@ call_user_func(function() {
       strpos($value->innertext, "Unknown") !== false ? $anime->set("episodes", null) : $anime->set("episodes", substr($value->plaintext, 13));
     }
     if(strpos($value->plaintext, "Status:") !== false) {
-      strpos($value->innertext, "Unknown") !== false ? $anime->set("status", null) : $anime->set("status", substr($value->plaintext, 11));
+      strpos($value->innertext, "Unknown") !== false ? $anime->set("air_status", null) : $anime->set("air_status", substr($value->plaintext, 11));
+    }
+    if(strpos($value->plaintext, "Aired:") !== false) {
+      $anime->set("air_dates", explode("</span>", $value->innertext)[1]); // Also sets premier date if it's a movie
     }
     if(strpos($value->plaintext, "Duration:") !== false) {
       if(strpos($value->innertext, "Unknown") !== false) {
@@ -253,6 +256,9 @@ call_user_func(function() {
     "url" => $anime->get("mal_url"),
     "type" => $anime->get("type"),
     "episodes" => $anime->get("episodes"),
+    "air_status" => $anime->get("air_status"),
+    "air_dates" => $anime->get("air_dates"),
+    "premier_date" => $anime->get("premier_date"),
     "duration" => $anime->get("duration"),
     "total_duration" => $anime->get("total_duration"),
     "score" => $anime->get("score"),
