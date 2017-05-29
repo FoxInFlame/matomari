@@ -147,7 +147,7 @@ call_user_func(function() {
       strpos($value->innertext, "Unknown") !== false ? $anime->set("air_status", null) : $anime->set("air_status", substr($value->plaintext, 11));
     }
     if(strpos($value->plaintext, "Aired:") !== false) {
-      $anime->set("air_dates", explode("</span>", $value->innertext)[1]); // Also sets premier date if it's a movie
+      strpos($value->innertext, "Unknown") !== false ? $anime->set("air_dates", null) : $anime->set("air_dates", explode("</span>", $value->innertext)[1]); // Also sets premier date if it's a movie
     }
     if(strpos($value->plaintext, "Duration:") !== false) {
       if(strpos($value->innertext, "Unknown") !== false) {
