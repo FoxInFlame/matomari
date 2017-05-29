@@ -1,5 +1,5 @@
 <?php
-function getAbsoluteTimeGMT($string, $defaultFormat = "M j, g:i A") {
+function getAbsoluteTimeGMT($string, $defaultFormat = "!M j, g:i A") {
   $string = trim($string); // Super important! :)
   if(strpos($string, "ago") !== false) {
     /*Note: These are returning approximate values */
@@ -34,16 +34,16 @@ function getAbsoluteTimeGMT($string, $defaultFormat = "M j, g:i A") {
     }
     return $date;
   } else if(strpos($string, "Today") !== false) {
-    $date = date_create_from_format("g:i A", substr($string, 7), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
+    $date = date_create_from_format("!g:i A", substr($string, 7), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
     return $date;
   } else if(strpos($string, "Yesterday") !== false) {
-    $date = date_create_from_format("g:i A", substr($string, 11), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
+    $date = date_create_from_format("!g:i A", substr($string, 11), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
     $date->modify("-1 day");
     return $date;
   } else {
     $date = date_create_from_format($defaultFormat, $string, new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
-    if($defaultFormat == "M j, g:i A" && !$date) {
-      $date = date_create_from_format("M j, Y g:i A", $string, new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
+    if($defaultFormat == "!M j, g:i A" && !$date) {
+      $date = date_create_from_format("!M j, Y g:i A", $string, new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
     }
     return $date;
   }
