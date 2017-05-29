@@ -5,51 +5,55 @@ Inspired by Atarashii API
 
 */
 
+require_once(dirname(__FILE__) . "/../absoluteGMT.php");
+
 class Anime {
   
   // Normal anime info
-  private $id;
-  private $title;
-  private $mal_url;
-  private $image_url;
-  private $other_titles = array();
-  private $type;
-  private $episodes;
-  private $status;
-  private $air_date;
-  private $season;
-  private $air_time;
-  private $producers = array();
-  private $licensors = array();
-  private $studios = array();
-  private $source;
-  private $genres = array();
-  private $duration;
-  private $total_duration;
-  private $rating;
-  private $score;
-  private $score_count;
-  private $rank;
-  private $popularity;
-  private $members_count;
-  private $favorites_count;
-  private $external_links = array();
-  private $synopsis;
-  private $background;
-  private $related = array();
-  private $theme_songs = array();
+  private $id; // Integer
+  private $title; // String
+  private $mal_url; // String
+  private $image_url; // String
+  private $other_titles = array(); // Array
+  private $type; // String
+  private $episodes; // Integer / null
+  private $air_status; // String
+  private $air_date_start; // String
+  private $air_date_end; // String
+  private $premier_date; // String
+  private $season; // String
+  private $air_time; // String
+  private $producers = array(); // Array
+  private $licensors = array(); // Array
+  private $studios = array(); // Array
+  private $source; // String
+  private $genres = array(); // Array
+  private $duration; // Integer / null
+  private $total_duration; // Integer / null
+  private $rating; // String
+  private $score; // Integer
+  private $score_count; // Integer
+  private $rank; // Integer
+  private $popularity; // Integer
+  private $members_count; // Integer
+  private $favorites_count; // Integer
+  private $external_links = array(); // Array (object)
+  private $synopsis; // String
+  private $background; // String
+  private $related = array(); // Array (object)
+  private $theme_songs = array(); // Array (object)
   
   // t=64
-  private $release_year;
-  private $synopsis_snippet;
+  private $release_year; // Integer
+  private $synopsis_snippet; // String
   
   // User info
   private $user_status; // String
   private $user_rewatching; // Boolean
   private $user_episodes; // Integer
   private $user_score;
-  private $user_startdate; // String
-  private $user_enddate; // String
+  private $user_start_date; // String
+  private $user_end_date; // String
   private $user_tags = array(); // Array
   private $user_priority; // String
   private $user_storage; // String
@@ -106,8 +110,24 @@ class Anime {
       case "episodes":
         $this->episodes = $value ? trim($value) : $value;
         break;
-      case "status":
-        $this->status = $value ? trim($value) : $value;
+      case "air_status":
+        $this->air_status = $value ? trim($value) : $value;
+        break;
+      case "air_dates":
+        $this->air_date_start = null;
+        $this->air_date_end = null;
+        $this->premier_date = null;
+        if(!$value) break;
+        
+        $value = trim($value);
+        if(strpos($value, " to ") !== -1) {
+          // contains "to"
+          $exploded = explode(" to ", $value);
+          $this->air_date_start = $exploded[0] !== "?" ? getAbsoluteTimeGMT($exploded[0], "!M j, Y")->format("c") : null;
+          $this->air_date_end = $exploded[1] !== "?" ? getAbsoluteTimeGMT($exploded[1], "!M j, Y")->format("c") : null;
+        } else {
+          $this->premier_date = $value;
+        }
         break;
       case "duration":
         $this->duration = $value ? trim($value) : $value;
@@ -184,11 +204,11 @@ class Anime {
       case "user_score":
         $this->user_score = $value ? trim($value) : $value;
         break;
-      case "user_startdate":
-        $this->user_startdate = $value ? trim($value) : $value;
+      case "user_start_date":
+        $this->user_start_date = $value ? trim($value) : $value;
         break;
-      case "user_enddate":
-        $this->user_enddate = $value ? trim($value) : $value;
+      case "user_end_date":
+        $this->user_end_date = $value ? trim($value) : $value;
         break;
       case "user_tags":
         $this->user_tags = $value ? trim($value) : $value;
@@ -295,8 +315,17 @@ class Anime {
       case "episodes":
         return $this->episodes;
         break;
-      case "status":
-        return $this->status;
+      case "air_status":
+        return $this->air_status;
+        break;
+      case "air_dates":
+        return array(
+          "from" => $this->air_date_start,
+          "to" => $this->air_date_end
+        );
+        break;
+      case "premier_date":
+        return $this->premier_date;
         break;
       case "duration":
         return $this->duration;
@@ -373,11 +402,11 @@ class Anime {
       case "user_score":
         return $this->user_score;
         break;
-      case "user_startdate":
-        return $this->user_startdate;
+      case "user_start_date":
+        return $this->user_start_date;
         break;
-      case "user_enddate":
-        return $this->user_enddate;
+      case "user_end_date":
+        return $this->user_end_date;
         break;
       case "user_tags":
         return $this->user_tags;
