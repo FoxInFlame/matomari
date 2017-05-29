@@ -126,7 +126,7 @@ class Anime {
           $this->air_date_start = $exploded[0] !== "?" ? getAbsoluteTimeGMT($exploded[0], "!M j, Y")->format("c") : null;
           $this->air_date_end = $exploded[1] !== "?" ? getAbsoluteTimeGMT($exploded[1], "!M j, Y")->format("c") : null;
         } else {
-          $this->premier_date = $value;
+          $this->premier_date = getAbsoluteTimeGMT($value, "!M j, Y")->format("c");
         }
         break;
       case "duration":
