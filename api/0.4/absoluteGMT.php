@@ -34,10 +34,11 @@ function getAbsoluteTimeGMT($string, $defaultFormat = "!M j, g:i A") {
     }
     return $date;
   } else if(strpos($string, "Today") !== false) {
-    $date = date_create_from_format("!g:i A", substr($string, 7), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
+    $date = date_create_from_format("g:i A", substr($string, 7), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
     return $date;
   } else if(strpos($string, "Yesterday") !== false) {
-    $date = date_create_from_format("!g:i A", substr($string, 11), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
+    echo substr($string, 11);
+    $date = date_create_from_format("g:i A", substr($string, 11), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
     $date->modify("-1 day");
     return $date;
   } else {
