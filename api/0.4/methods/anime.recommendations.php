@@ -42,6 +42,8 @@ call_user_func(function() {
   
   $url = "https://myanimelist.net/recommendations.php" . $page_param;
   $data = new Data();
+
+  $html = null;
   
   if($data->getCache($url)) {
     $html = str_get_html($data->data);
@@ -81,15 +83,7 @@ call_user_func(function() {
     
     $data->saveCache($url, $response);
   }
-  
-  if(!is_object($html)) {
-    echo json_encode(array(
-      "message" => "The code for MAL is not valid HTML markup.",
-    ));
-    http_response_code(500);
-    return;
-  }
-  
+
   $recommendations = $html->find("#contentWrapper #content", 0)->children(2)->children();
   $recommendations_arr = array();
   foreach($recommendations as $key => $recommendation) {
@@ -126,7 +120,7 @@ call_user_func(function() {
       ),
       "reason" => $reason,
       "author" => $author,
-      "time" => getAbsoluteTimeGMT($time, "M j, Y")->format("c")
+      "time" => getAbsoluteTimeGMT($time, "M j, Y|")->format("c")
     ));
   }
   
