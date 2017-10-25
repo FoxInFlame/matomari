@@ -1,0 +1,309 @@
+{
+	"id": "c1fa7ca0-9df5-4f5e-9103-4b7cdc58244a",
+	"name": "0.4 anime / matomari",
+	"allTests": [],
+	"timestamp": "2017-08-12T13:28:02.693Z",
+	"collection_id": "9d9a82ab-987a-e75f-75c7-0602bc8a6024",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "531eca80-9051-c915-5e5c-f9d67eb1e276",
+	"data": [],
+	"delay": "50",
+	"count": 10,
+	"collection": {
+		"id": "9d9a82ab-987a-e75f-75c7-0602bc8a6024",
+		"name": "0.4 anime / matomari",
+		"description": "An unofficial API for MyAnimeList. Although very slow (scans the whole MAL page + hoster is free), it works, and that's what's important.",
+		"order": [
+			"a09fdcb6-c471-8481-d47e-04283fd81385",
+			"4f97879c-4a59-e378-472c-5e5b44674622"
+		],
+		"folders": [],
+		"folders_order": [],
+		"timestamp": 0,
+		"synced": true,
+		"remote_id": "0",
+		"owner": "1147227",
+		"sharedWithTeam": false,
+		"subscribed": false,
+		"remoteLink": null,
+		"remoteLinkUpdatedAt": null,
+		"public": false,
+		"createdAt": "2017-01-29T16:13:49.000Z",
+		"updatedAt": 1502543143188,
+		"write": true,
+		"published": false,
+		"favorite": false,
+		"permissions": {},
+		"syncedPermissions": {}
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"key": "animeid",
+			"value": "27129",
+			"enabled": true,
+			"type": "text"
+		}
+	],
+	"results": [
+		{
+			"name": "anime.info.ID",
+			"id": "a09fdcb6-c471-8481-d47e-04283fd81385",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"tests": {
+				"name": "Content-Type is present",
+				"status": "pass",
+				"Content-Type is application/json": true,
+				"Error message present": true
+			},
+			"testPassFailCounts": {
+				"Content-Type is present": {
+					"pass": 10,
+					"fail": 0
+				},
+				"Content-Type is application/json": {
+					"pass": 10,
+					"fail": 0
+				},
+				"Error message present": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				"2558",
+				"3232",
+				"2773",
+				"2746",
+				"812",
+				"707",
+				"2209",
+				"2211",
+				"670",
+				"673"
+			],
+			"allTests": [
+				{
+					"Content-Type is present": true,
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true,
+					"Error message present": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true,
+					"Error message present": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true,
+					"Error message present": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true,
+					"Error message present": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true,
+					"Error message present": true
+				}
+			],
+			"time": "673",
+			"totalRequestTime": "255832322773274681270722092211670673",
+			"iterationResults": {}
+		},
+		{
+			"name": "anime/search/",
+			"id": "4f97879c-4a59-e378-472c-5e5b44674622",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "Content-Type is present",
+				"status": "pass",
+				"Content-Type is application/json": true
+			},
+			"testPassFailCounts": {
+				"Content-Type is present": {
+					"pass": 10,
+					"fail": 0
+				},
+				"Content-Type is application/json": {
+					"pass": 10,
+					"fail": 0
+				}
+			},
+			"times": [
+				"667",
+				"759",
+				"666",
+				"650",
+				"746",
+				"959",
+				"638",
+				"747",
+				"789",
+				"747"
+			],
+			"allTests": [
+				{
+					"Content-Type is present": true,
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				},
+				{
+					"name": "Content-Type is present",
+					"status": "pass",
+					"Content-Type is application/json": true
+				}
+			],
+			"time": "747",
+			"totalRequestTime": "667759666650746959638747789747",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 45,
+	"totalFail": 0,
+	"totalTime": 25959,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "anime.info.ID",
+			"id": "a09fdcb6-c471-8481-d47e-04283fd81385",
+			"url": "https://www.matomari.tk/api/0.4/methods//anime.info.ID.php?id=2814",
+			"time": "673",
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"testPassFailCounts": {
+				"Content-Type is present": {
+					"pass": 10,
+					"fail": 0
+				},
+				"Content-Type is application/json": {
+					"pass": 10,
+					"fail": 0
+				},
+				"Error message present": {
+					"pass": 5,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "anime/search/",
+			"id": "4f97879c-4a59-e378-472c-5e5b44674622",
+			"url": "https://www.matomari.tk/api/0.4/methods//anime.search.QUERY.php?q=One Punch Man&inc-genres=romance",
+			"time": "747",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Content-Type is present": {
+					"pass": 10,
+					"fail": 0
+				},
+				"Content-Type is application/json": {
+					"pass": 10,
+					"fail": 0
+				}
+			}
+		}
+	],
+	"synced": false
+}

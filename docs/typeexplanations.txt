@@ -1,0 +1,37 @@
+This document is only for reference for FoxInFlame.
+
+Anime
+---
+
+duration - Integer | Usual episode length in minutes
+enddate - String | Airing end date; hyphens for unknown parts
+english - Array | English title names
+episodes - Integer | Total number of episodes; null if unknown
+genres - Array | Genres of the anime
+id - Integer | The anime id in the database
+image - String | Direct URL of the anime cover image
+list_anime - Array | List of anime, 50 items per page
+list_recommendations - Array | List of recommendations, around 90-100 items per page
+japanese - Array | Japanese title names
+licensors - Array | Licensors for the anime
+members_count - Integer | Number of people who have it in their list
+other_titles - Object | Titles in different languages
+popularity - Integer | Anime popularity rank on MAL
+producers - Array | Producers for the anime
+rank - Integer | Overall anime rank on MAL
+rating - String | Rating according to the MAL classification system
+release_year - Integer | 4-digit release year of the anime
+score - Integer | MAL Community Score to 2 decimal places
+score_count - Integer | Number of people who rated a score
+source - String | Source material of the anime
+startdate - String | Airing start date; hyphens for unknown parts
+status - String | Airing status of the anime
+studios - Array | Studios for the anime
+synonyms - Array | Synonym title names
+synopsis - String | HTML formatted full synopsis
+synopsis_snippet - String | A truncated synopsis of the anime with an ellipsis at the end if it doesn't fit
+time - String | ISO 86601 date
+title - String | The anime title
+total_duration - Integer/null | Total duration (eps x duration). Not accurate, for some shows have longer specials; null if either episodes or duration is empty.
+type - String | Anime media type
+url - String | Browser link for the anime
