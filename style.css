@@ -1,0 +1,273 @@
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: -ms-linear-gradient(bottom left, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%); /* ie10+ */
+  background: -moz-linear-gradient(bottom left, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%); /* ff3.6+ */
+  background: -o-linear-gradient(bottom left, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%); /* opera 11.10+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(78, 46, 161, 1)), color-stop(100%, rgba(46, 81, 162, 1))); /* safari4+,chrome 10 */
+  background: -webkit-linear-gradient(bottom left, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%); /* safari5.1+,chrome11+ */
+  background: linear-gradient(to top right, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%); /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e51a2', endColorstr='#4e2ea1',GradientType=1 ); /* ie6-9 */
+}
+
+#main {
+  max-width: 80vw;
+  position: absolute;
+  top: calc(50% + 1.5rem);
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#logo {
+  margin-right: auto;
+  margin-left: auto;
+  width: 206px;
+  height: 159px;
+  opacity: 0;
+  transition: margin-top 1000ms ease-in-out;
+}
+
+#logo.animateSVG {
+  opacity: 1;
+}
+
+#logo_matomari g {
+  display: inline;
+}
+
+#logo_matomari path {
+  fill: none;
+  fill-rule: evenodd;
+  stroke: #ffffff;
+  stroke-width: 0.5px;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-opacity: 1;
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana1 {
+  stroke-dasharray: 8;
+  animation: writehiragana_one 10s linear;
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana2 {
+  stroke-dasharray: 9;
+  animation: writehiragana_two 10s linear;
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana3 {
+  stroke-dasharray: 33;
+  animation: writehiragana_three 10s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana4 {
+  stroke-dasharray: 7;
+  animation: writehiragana_four 10s linear;
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana5 {
+  stroke-dasharray: 23;
+  animation: writehiragana_five 10s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana6 {
+  stroke-dasharray: 7;
+  animation: writehiragana_six 10s linear;
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana7 {
+  stroke-dasharray: 8;
+  animation: writehiragana_seven 10s linear;
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana8 {
+  stroke-dasharray: 31;
+  animation: writehiragana_eight 10s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana9 {
+  stroke-dasharray: 11;
+  animation: writehiragana_nine 10s linear;
+}
+
+.animateSVG #logo_matomari path#logo_matomari_hiragana10 {
+  stroke-dasharray: 20;
+  animation: writehiragana_ten 10s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.animateSVG #logo_matomari path#logo_matomari_english_main {
+  stroke-dasharray: 270;
+  animation: writeenglish_main 10s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.animateSVG #logo_matomari path#logo_matomari_english_t {
+  stroke-dasharray: 9;
+  animation: writeenglish_t 10s linear;
+}
+
+.animateSVG #logo_matomari path#logo_matomari_english_i {
+  stroke-dasharray: 2;
+  animation: writeenglish_i 10s linear;
+}
+
+/* MA */
+
+@keyframes writehiragana_one {
+    0% {
+        stroke-dashoffset: 8;
+    }
+    2% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes writehiragana_two {
+    0%, 3% {
+        stroke-dashoffset: 9;
+    }
+    5% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes writehiragana_three {
+    0%, 6% {
+        stroke-dashoffset: 33;
+    }
+    10% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* TO */
+
+@keyframes writehiragana_four {
+    0%, 11% {
+        stroke-dashoffset: 7;
+    }
+    14% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes writehiragana_five {
+    0%, 15% {
+        stroke-dashoffset: 23;
+    }
+    19% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* MA */
+
+@keyframes writehiragana_six {
+    0%, 20% {
+        stroke-dashoffset: 7;
+    }
+    22% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes writehiragana_seven {
+    0%, 23% {
+        stroke-dashoffset: 8;
+    }
+    25% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes writehiragana_eight {
+    0%, 26% {
+        stroke-dashoffset: 31;
+    }
+    30% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* RI */
+
+@keyframes writehiragana_nine {
+    0%, 31% {
+        stroke-dashoffset: 11;
+    }
+    34% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes writehiragana_ten {
+    0%, 34% {
+        stroke-dashoffset: 20;
+    }
+    40% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* ENGLISH */
+
+@keyframes writeenglish_main {
+    0%, 50% {
+        stroke-dashoffset: 270;
+    }
+    95% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes writeenglish_t {
+    0%, 97% {
+        stroke-dashoffset: 9;
+    }
+    99% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes writeenglish_i {
+    0%, 99% {
+        stroke-dashoffset: 2;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+#cta_main {
+  position: relative;
+  top: 50px;
+  padding: 1rem 1.5rem;
+  border-radius: 3rem;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  outline: none;
+  color: black;
+  opacity: 0;
+  box-shadow: none;
+  transition: background 200ms ease-out, box-shadow 200ms ease-out, padding 200ms ease-out, opacity 0.3s ease-in;
+}
+
+#cta_main:hover {
+  padding: 1rem 2rem;
+  background: -ms-linear-gradient(bottom left, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* ie10+ */
+  background: -moz-linear-gradient(bottom left, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* ff3.6+ */
+  background: -o-linear-gradient(bottom left, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* opera 11.10+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(229, 229, 229, 1)), color-stop(100%, rgba(255, 255, 255, 1))); /* safari4+,chrome 10 */
+  background: -webkit-linear-gradient(bottom left, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* safari5.1+,chrome11+ */
+  background: linear-gradient(to top right, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#e5e5e5',GradientType=1 ); /* ie6-9 */
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+}
