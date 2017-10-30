@@ -147,7 +147,7 @@ class AnimeParser {
         if(strpos($value->innertext, "Unknown") === false) {
           if(strpos($value->find("text", 2)->innertext, " to ") !== false) {
             // contains "to"
-            $exploded = explode(" to ", $value->find("text", 2)->innertext);
+            $exploded = array_map("trim", explode(" to ", $value->find("text", 2)->innertext));
             if($exploded[0] !== "?") {
               $anime->set("air_date_from", (string)getAbsoluteTimeGMT($exploded[0], "!M j, Y")->format("c"));
             }
@@ -155,7 +155,6 @@ class AnimeParser {
               $anime->set("air_date_to", (string)getAbsoluteTimeGMT($exploded[1], "!M j, Y")->format("c"));
             }
           } else {
-            echo $value->find("text", 2)->innertext;
             $anime->set("premier_date", (string)getAbsoluteTimeGMT($value->find("text", 2)->innertext, "!M j, Y")->format("c"));
           }
         }
