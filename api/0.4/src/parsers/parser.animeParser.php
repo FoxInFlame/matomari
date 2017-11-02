@@ -340,7 +340,9 @@ class AnimeParser {
     $background_td = $html->find("div#contentWrapper div#content .js-scrollfix-bottom-rel", 0)->find("table td", 0)->innertext;
     $background_td_section = explode("</h2>", $background_td)[2];
     $background = explode("<div", $background_td_section)[0];
-    $anime->set("background", (string)trim($background));
+    if(strpos($background, "No background information has been added to this title") === false) {
+      $anime->set("background", (string)trim($background));
+    }
 
     return $anime->asArray(); 
   }
