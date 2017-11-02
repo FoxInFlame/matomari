@@ -143,8 +143,8 @@ class Anime {
       case "related":
         $this->info["related"] = $value;
         break;
-      case "theme_sogs":
-        $this->info["related"] = $value;
+      case "theme_songs":
+        $this->info["theme_songs"] = $value;
         break;
     }
   }
@@ -234,6 +234,18 @@ class Anime {
         break;
       case "members_favorited":
         return $this->info["members_favorited"];
+        break;
+      case "external_links":
+        return $this->info["external_links"];
+        break;
+      case "background":
+        return $this->info["background"];
+        break;
+      case "related":
+        return $this->info["related"];
+        break;
+      case "theme_songs":
+        return $this->info["theme_songs"];
         break;
       case "user_status":
         switch($this->user_status) {
