@@ -200,22 +200,6 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
     $this->assertEquals($animeMembers_Favorited, $anime->get("members_favorited"));
   }
 
-  public function testExternal_Links() {
-    $anime = new Anime();
-    $animeExternal_Links = array(
-      array(
-        "name" => str_shuffle("Official Site"),
-        "url" => str_shuffle("https://shirobako-anime.com")
-      ),
-      array(
-        "name" => str_shuffle("AnimeDB"),
-        "url" => str_shuffle("https://anidb.info/perl-bin/animedb.pl?show=anime&aid=10779")
-      )
-    );
-    $anime->set("external_links", $animeExternal_Links);
-    $this->assertEquals($animeExternal_Links, $anime->get("external_links"));
-  }
-
   public function testBackground() {
     $anime = new Anime();
     $animeBackground = str_shuffle("<i>Shirobako</i> won the Animation Kobe Television Award in 2015.");

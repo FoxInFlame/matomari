@@ -25,14 +25,14 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: max-age=604800, public"); // 1 week
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../parsers/class.animeParser.php");
+require_once(dirname(__FILE__) . "/../parsers/parser.animeParser.php");
 require_once(dirname(__FILE__) . "/../classes/class.cache.php");
 
 call_user_func(function() {
   
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
-  // [+] --------------GETTING THE VALUES-------------- [+]
+  // [+] ---------------------CURL--------------------- [+]
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
@@ -56,6 +56,7 @@ call_user_func(function() {
   $data = new Data();
   
   if($data->getCache($url)) {
+    // Use cache if there is one
     $content = $data->data;
   } else {
     $ch = curl_init();
@@ -89,11 +90,13 @@ call_user_func(function() {
     $content = $response;
   }
   
-  //  [+] ============================================== [+]
-  //  [+] --------------SETTING THE VALUES-------------- [+]
-  //  [+] ============================================== [+]
+  // [+] ============================================== [+]
+  // [+] ---------------------------------------------- [+]
+  // [+] ---------------------PARSE-------------------- [+]
+  // [+] ---------------------------------------------- [+]
+  // [+] ============================================== [+]
 
-  $anime = AnimeParser::parse($content, "JSON_NUMERIC_CHECK_in_place");
+  $anime = AnimeParser::parse($content);
 
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
@@ -101,7 +104,8 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
   echo json_encode($anime);
-  http_response_code(200);});
+  http_response_code(200);
+
+});
 ?>

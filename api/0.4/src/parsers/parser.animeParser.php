@@ -144,7 +144,7 @@ class AnimeParser {
       //   Dec 6th, 2014
       // </div>
       if(strpos($value->plaintext, "Aired:") !== false) {
-        if(strpos($value->innertext, "Unknown") === false) {
+        if(strpos($value->innertext, "Unknown") === false && strpos($value->innertext, "Not available") === false) {
           if(strpos($value->find("text", 2)->innertext, " to ") !== false) {
             // contains "to"
             $exploded = array_map("trim", explode(" to ", $value->find("text", 2)->innertext));
@@ -154,8 +154,10 @@ class AnimeParser {
             if($exploded[1] !== "?") {
               $anime->set("air_date_to", (string)getAbsoluteTimeGMT($exploded[1], "!M j, Y")->format("c"));
             }
-          } else {
+          } else if(strpos($value->find("text", 2), ",") !== false) {
             $anime->set("premier_date", (string)getAbsoluteTimeGMT($value->find("text", 2)->innertext, "!M j, Y")->format("c"));
+          } else {
+            $anime->set("premier_date", (string)getAbsoluteTimeGMT($value->find("text", 2)->innertext, "!Y")->format("c"));
           }
         }
       }
@@ -166,7 +168,7 @@ class AnimeParser {
       //   <a href="https://myanimelist.net/anime/season/2014/fall">Fall 2014</a>
       // </div>
       if(strpos($value->plaintext, "Premiered:") !== false) {
-        if(strpos($value->plaintext, "Unknown") === false) {
+        if(strpos($value->plaintext, "?") === false) {
           $anime->set("season", (string)trim($value->find("a", 0)->innertext));
         }
       }
@@ -278,13 +280,12 @@ class AnimeParser {
               $minutes = $seconds_minutes;
             }
           }
-          if(strpos($value->plaintext, " per ep.") !== false) {
-            $anime->set("duration_per_episode", (int)$minutes);
-            if($anime->get("episodes") == null) {
-              $anime->set("duration_total", null);
-            } else {
-              $anime->set("duration_total", (int)$anime->get("episodes") * (int)$minutes);
-            }
+
+          $anime->set("duration_per_episode", (int)$minutes);
+          if($anime->get("episodes") == null) {
+            $anime->set("duration_total", null);
+          } else {
+            $anime->set("duration_total", (int)$anime->get("episodes") * (int)$minutes);
           }
         }
       }
@@ -333,17 +334,6 @@ class AnimeParser {
       // </div>
       if(strpos($value->plaintext, "Favorites:") !== false) {
         $anime->set("members_favorited", (int)trim(str_replace(",", "", $value->find("text", 2)->innertext)));
-      }
-
-      // The External Links
-      // <div class="pb16">
-      //   <a href="http://shirobako-anime.com" target="_blank">Official Site</a>, 
-      //   <a href="http://anidb.info/perl-bin/animedb.pl?show=anime&aid=10779" target="_blank">AnimeDB</a>
-      // </div>
-
-      if($value->class === "pb16") {
-        $genres_str = explode(", ", $value->plaintext);
-        $anime->set("external_links", array_map("trim", $genres_str));
       }
     }
 

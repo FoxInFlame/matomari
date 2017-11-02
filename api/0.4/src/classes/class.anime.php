@@ -38,7 +38,6 @@ class Anime {
     "members_scored" => null,
     "members_inlist" => null,
     "members_favorited" => null,
-    "external_links" => array(),
     "background" => null,
     "related" => array(),
     "theme_songs" => array()
@@ -133,9 +132,6 @@ class Anime {
         break;
       case "members_favorited":
         $this->info["members_favorited"] = $value;
-        break;
-      case "external_links":
-        $this->info["external_links"] = $value;
         break;
       case "background":
         $this->info["background"] = $value;
@@ -234,9 +230,6 @@ class Anime {
         break;
       case "members_favorited":
         return $this->info["members_favorited"];
-        break;
-      case "external_links":
-        return $this->info["external_links"];
         break;
       case "background":
         return $this->info["background"];

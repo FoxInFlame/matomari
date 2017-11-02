@@ -9,7 +9,7 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [DONE] GET anime/recommendations - Latest anime recommendations (with pagination)
 
-[DONE] GET anime/info/:id - Get detailed information about specific anime
+[REFACTORED][DONE] GET anime/info/:id - Get detailed information about specific anime
 
 [DONE] POST anime/info/:id - Update information about specific anime.
 
