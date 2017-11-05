@@ -43,16 +43,13 @@ call_user_func(function() {
     if(in_array($id, $not_arr)) continue; // Skip if it's in the not_arr
     
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime/" . $id . "/FoxInFlameIsAwesome/news"); // /news always exists and is pretty light-weight
+    curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/includes/ajax.inc.php?t=64&id=" . $id); // Pretty light-weight
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
     $response = curl_exec($ch);
-    
-    $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  
     curl_close($ch);
-    if($httpcode == 404) {
-      $success_id = false;
-    } else {
+    if(strpos($response, "No such series found") === false) {
       $success_id = $id;
     }
   }
@@ -64,6 +61,6 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   http_response_code(302);
-  header('Location: https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=' . $success_id, true, 302); // TODO: Change this URL to REST
+  header('Location: /api/0.4/src/methods/anime.info.ID.php?id=' . $success_id, true, 302); // TODO: Change this URL to REST
 
 });
