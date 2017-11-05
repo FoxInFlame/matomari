@@ -148,15 +148,15 @@ class AnimeInfoParser {
             // contains "to"
             $exploded = array_map("trim", explode(" to ", $value->find("text", 2)->innertext));
             if($exploded[0] !== "?") {
-              $anime->set("air_date_from", (string)getAbsoluteTimeGMT($exploded[0], "!M j, Y")->format("c"));
+              $anime->set("air_date_from", (string)getAbsoluteTimeGMT($exploded[0], "!M j, Y")->format("Y-m-d"));
             }
             if($exploded[1] !== "?") {
-              $anime->set("air_date_to", (string)getAbsoluteTimeGMT($exploded[1], "!M j, Y")->format("c"));
+              $anime->set("air_date_to", (string)getAbsoluteTimeGMT($exploded[1], "!M j, Y")->format("Y-m-d"));
             }
           } else if(strpos($value->find("text", 2), ",") !== false) {
-            $anime->set("premier_date", (string)getAbsoluteTimeGMT($value->find("text", 2)->innertext, "!M j, Y")->format("c"));
+            $anime->set("premier_date", (string)getAbsoluteTimeGMT($value->find("text", 2)->innertext, "!M j, Y")->format("Y-m-d"));
           } else {
-            $anime->set("premier_date", (string)getAbsoluteTimeGMT($value->find("text", 2)->innertext, "!Y")->format("c"));
+            $anime->set("premier_date", (string)$value->find("text", 2)->innertext . "-xx-xx");
           }
         }
       }
