@@ -27,16 +27,12 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-ini_set("display_errors", true);
-ini_set("display_startup_errors", true);
-error_reporting(E_ALL);
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-header("Cache-Control: no-cache, must-revalidate");
+header("Cache-Control: max-age=604800, public"); // 1 week
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../class/class.anime.php");
-require_once(dirname(__FILE__) . "/../class/class.cache.php");
+require_once(dirname(__FILE__) . "/../parsers/parser.animeSearch.php");
+require_once(dirname(__FILE__) . "/../classes/class.cache.php");
 
 call_user_func(function() {
   
@@ -46,26 +42,6 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
   
-  $parts = isset($_GET['q']) ? explode("/",$_GET['q']) : array();
-  if(empty($parts)) {
-    echo json_encode(array(
-      "message" => "The q parameter is not defined."
-    ));
-    http_response_code(400);
-    return;
-  }
-  if(strlen($parts[0]) < 3 && isset($_GET['q'])) {
-    switch(strlen($parts[0])) {
-      // MAL doesn't accept queries less than 3 characters (doesn't load)
-      // but if you add spaces, it still shows the error message but results will load.
-      case 2:
-        $parts[0] = $parts[0] . " "; // Add one space to make it three letters, don't percent encode it, because it will automatically
-        break;
-      case 1:
-        $parts[0] = $parts[0] . "  "; // Add two spaces to make it three letters
-        break;
-    }
-  }
   $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
   $filters = explode(",", $filter);
   $filter_param = "";
@@ -498,37 +474,59 @@ call_user_func(function() {
       }
     }
   } else {
+    if(!isset($_GET['q'])) {
+      echo json_encode(array(
+        "message" => "The q parameter is not defined."
+      ));
+      http_response_code(400);
+      return;
+    }
     $filter_param = "";
+  }
+
+  if(!isset($_GET['q'])) $_GET['q'] = "";
+  if(strlen($_GET['q']) < 3 && isset($_GET['q'])) {
+    switch(strlen($_GET['q'])) {
+      // MAL doesn't accept queries less than 3 characters (doesn't load)
+      // but if you add spaces, it still shows the error message but results will load.
+      case 2:
+        $_GET['q'] = $_GET['q'] . " "; // Add one space to make it three letters, don't percent encode it, because it will automatically
+        break;
+      case 1:
+        $_GET['q'] = $_GET['q'] . "  "; // Add two spaces to make it three letters
+        break;
+    }
   }
   
   $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : "1";
   $show = ($page - 1) * 50;
   $page_param = "&show=" . $show;
   
-  $url = "https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g" . $page_param; // c[] parameter for showing all columns
+  $url = "https://myanimelist.net/anime.php?q=" . urlencode($_GET['q']) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g" . $page_param; // c[] parameter for showing all columns
   $data = new Data();
   
   if($data->getCache($url)) {
-    $html = str_get_html($data->data);
+    $content = $data->data;
   } else {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
+    $response = curl_exec($ch);
     if(!$response) {
-      if($page != 1) {
-        $url = "https://myanimelist.net/anime.php?q=" . urlencode($parts[0]) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g";
-        curl_setopt($ch, CURLOPT_URL, $url);
+      echo json_encode(array(
+        "message" => "MAL is offline."
+      ));
+      http_response_code(404);
+      return;
+    }
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
+      if($page != 1) { // If page isn't one, try one
+        curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime.php?q=" . urlencode($_GET['q']) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g");
         $response = curl_exec($ch);
         curl_close($ch);
-        if(!$response) {
-          echo json_encode(array(
-            "message" => "MAL is offline."
-          ));
-          http_response_code(404);
-          return;
-        }
       } else {
+        curl_close($ch);
         echo json_encode(array(
           "message" => "MAL is offline."
         ));
@@ -536,136 +534,18 @@ call_user_func(function() {
         return;
       }
     }
-    curl_close($ch);
     
     $data->saveCache($url, $response);
-    $html = str_get_html($response);
+    $content = $response;
   }
-  
-  if(!is_object($html)) {
-    echo json_encode(array(
-      "message" => "The code for MAL is not valid HTML markup.",
-    ));
-    http_response_code(500);
-    return;
-  }
-  
-  
-  $tr = $html->find("#contentWrapper #content div.list table tbody tr");
-  if(count($tr) == 0) {
-    echo json_encode(array(
-      "parameter" => "q=" . urlencode($parts[0]) . $filter_param,
-      "results" => array()
-    ));
-    http_response_code(200);
-    return;
-  }
-  array_shift($tr);
-  $results_arr = array();
-  foreach($tr as $value) {
-    $pictd = $value->find("td", 0);
-    $infotd = $value->find("td", 1);
-    $typetd = $value->find("td", 2);
-    $episodestd = $value->find("td", 3);
-    $scoretd = $value->find("td", 4);
-    $startdatetd = $value->find("td", 5);
-    $enddatetd = $value->find("td", 6);
-    $membercounttd = $value->find("td", 7);
-    $ratingtd = $value->find("td", 8);
     
-    $anime = new Anime();
-    
-    $anime->set("id", trim(substr(trim($pictd->find("div.picSurround a", 0)->id), 5)));
-    trim($pictd->find("div.picSurround a img", 0)->srcset) ? $anime->set("image", trim($pictd->find("div.picSurround a img", 0)->srcset)) : $anime->set("image", trim($pictd->find("div.picSurround a img", 0)->{'data-srcset'}));
-    $anime->set("mal_url", trim($infotd->find("a.hoverinfo_trigger", 0)->href));
-    $anime->set("title", "string_" . trim($infotd->find("a.hoverinfo_trigger strong", 0)->innertext));
-    $anime->set("synopsis", trim(str_replace("read more.", "", $infotd->find("div.pt4", 0)->plaintext)));
-    trim($typetd->innertext) != "-" ? $anime->set("type", trim($typetd->innertext)) : $anime->set("type", null);
-    trim($episodestd->innertext) != "-" ? $anime->set("episodes", trim($episodestd->innertext)) : $anime->set("episodes", null);
-    trim($scoretd->innertext) != "N/A" ? $anime->set("score", trim($scoretd->innertext)) : $anime->set("score", null);
-    $startdate = trim($startdatetd->innertext);
-    $enddate = trim($enddatetd->innertext);
-    $anime->set("members_count", str_replace(",", "", trim($membercounttd->innertext)));
-    $rating = trim($ratingtd->innertext);
-    if($rating == "-") {
-      $rating = null;
-    }
-    $year = $month = $day = "";
-    foreach(explode("-", $startdate) as $index => $number) { // Reformat start date
-      if($index == 0) {
-        $month = $number;
-        if($month == "??") {
-          $month = "--";
-        }
-      }
-      if($index == 1) {
-        $day = $number;
-        if($day == "??") {
-          $day = "--";
-        }
-      }
-      if($index == 2) {
-        $year = $number;
-        if($year == "??") {
-          $year = "----";
-        } else {
-          if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
-            // Over 1940
-            $year = "19" . $year;
-          } else {
-            // Under 2040
-            $year = "20" . $year;
-          }
-        }
-      }
-    }
-    $startdate = "string_" . $year . $month . $day;
-    foreach(explode("-", $enddate) as $index => $number) { // Reformat end date
-      if($index == 0) {
-        $month = $number;
-        if($month == "??") {
-          $month = "--";
-        }
-      }
-      if($index == 1) {
-        $day = $number;
-        if($day == "??") {
-          $day = "--";
-        }
-      }
-      if($index == 2) {
-        $year = $number;
-        if($year == "??") {
-          $year = "----";
-        } else {
-          if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
-            // Over 1940
-            $year = "19" . $year;
-          } else {
-            // Under 2040
-            $year = "20" . $year;
-          }
-        }
-      }
-    }
-    $enddate = "string_" . $year . $month . $day; // Make sure it is always string because hyphens can make it string
-    
-    array_push($results_arr, array(
-      "id" => $anime->get("id"),
-      "title" => $anime->get("title"),
-      "image" => $anime->get("image"),
-      "url" => $anime->get("mal_url"),
-      "type" => $anime->get("type"),
-      "episodes" => $anime->get("episodes"),
-      "score" => $anime->get("score"),
-      "startdate" => $startdate,
-      "enddate" => $enddate,
-      "members_count" => $anime->get("members_count"),
-      "rating" => $rating,
-      "synopsis_snippet" => $anime->get("synopsis")
-    ));
-  }
+  // [+] ============================================== [+]
+  // [+] ---------------------------------------------- [+]
+  // [+] ---------------------PARSE-------------------- [+]
+  // [+] ---------------------------------------------- [+]
+  // [+] ============================================== [+]  
   
+  $results_arr = AnimeSearchParser::parse($content);
   
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
@@ -674,13 +554,12 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   $output = array(
-    "parameter" => "q=" . urlencode($parts[0]) . $filter_param,
+    "parameter" => "q=" . urlencode($_GET['q']) . $filter_param,
+    "page" => (int)$page,
     "results" => $results_arr
   );
   
-  // Remove string_ after parse
-  // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
-  echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
+  echo json_encode($output);
   http_response_code(200);
   
 });
