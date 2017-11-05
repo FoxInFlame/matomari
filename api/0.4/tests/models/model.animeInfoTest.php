@@ -105,14 +105,7 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
     $this->assertEquals($animeAir_Date_From, $anime->get("air_date_from"));
     $this->assertEquals($animeAir_Date_To, $anime->get("air_date_to"));
   }
-
-  public function testPremier_Date() {
-    $anime = new AnimeInfo();
-    $animePremier_Date = str_shuffle('2014-10-09T08:00:00+00:00');
-    $anime->set("premier_date", $animePremier_Date);
-    $this->assertEquals($animePremier_Date, $anime->get("premier_date"));
-  }
-
+  
   public function testSeason() {
     $anime = new AnimeInfo();
     $animeSeason = array_rand(array('Fall ', 'Summer ', 'Winter ', 'Fox ')) . (string)rand(1, 3000);
@@ -125,6 +118,13 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
     $animeAir_Time = str_shuffle("Thursdays at 23:30 (JST)");
     $anime->set("air_time", $animeAir_Time);
     $this->assertEquals($animeAir_Time, $anime->get("air_time"));
+  }
+
+  public function testPremier_Date() {
+    $anime = new AnimeInfo();
+    $animePremier_Date = str_shuffle('2014-10-09T08:00:00+00:00');
+    $anime->set("premier_date", $animePremier_Date);
+    $this->assertEquals($animePremier_Date, $anime->get("premier_date"));
   }
 
   public function testProducers() {

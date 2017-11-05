@@ -21,9 +21,9 @@ class AnimeInfo {
       "from" => null,
       "to" => null
     ),
-    "premier_date" => null,
     "season" => null,
     "air_time" => null,
+    "premier_date" => null,
     "producers" => array(),
     "licensors" => array(),
     "studios" => array(),
