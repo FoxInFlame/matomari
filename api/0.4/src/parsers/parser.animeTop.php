@@ -39,7 +39,7 @@ class AnimeTopParser {
       if($item->find("td.title a img", 0)->{'data-srcset'}) {
         $anime->set("image_url", (string)str_replace("webp", "jpg", str_replace("/r/50x70", "", explode("?s=", $item->find("td.title a img", 0)->{'data-srcset'})[0])));
       } else {
-        $anime->set("image_url", (string)$item->find("td.title a img", 0)->{'srcset'});
+        $anime->set("image_url", (string)str_replace("webp", "jpg", str_replace("/r/50x70", "", explode("?s=", $item->find("td.title a img", 0)->{'srcset'})[0]));
       }
 
       // The Score
