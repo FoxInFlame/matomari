@@ -2,7 +2,7 @@
 
 require_once(dirname(__FILE__) . "/../absoluteGMT.php");
 
-class Anime {
+class AnimeInfo {
 
   private $info = array(
     "id" => null,
@@ -13,7 +13,6 @@ class Anime {
     "rank" => null,
     "popularity" => null,
     "synopsis" => null,
-
     "other_titles" => array(),
     "type" => null,
     "episodes" => null,

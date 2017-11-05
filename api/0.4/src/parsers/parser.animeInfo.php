@@ -1,10 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . "/../absoluteGMT.php");
-require_once(dirname(__FILE__) . "/../classes/class.anime.php");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
+require_once(dirname(__FILE__) . "/../models/model.animeInfo.php");
 
-class AnimeParser {
+class AnimeInfoParser {
 
   public static function parse($response) {
     $html = str_get_html($response);
@@ -17,7 +16,7 @@ class AnimeParser {
       return;
     }
 
-    $anime = new Anime();
+    $anime = new AnimeInfo();
 
     // Important Information -------------------------------------------------------------------------------------
 
