@@ -23,7 +23,7 @@ class AnimeInfoParserTest extends TestCase {
     $this->assertEquals("TV", $anime["type"]);
     $this->assertNull($anime["episodes"]);
     $this->assertEquals("Currently Airing", $anime["air_status"]);
-    $this->assertEquals("1999-10-20T08:00:00+00:00", $anime["air_dates"]["from"]);
+    $this->assertEquals("1999-10-20", $anime["air_dates"]["from"]);
     $this->assertNull($anime["air_dates"]["to"]);
     $this->assertNull($anime["premier_date"]);
     $this->assertEquals("Fall 1999", $anime["season"]);
@@ -49,8 +49,8 @@ class AnimeInfoParserTest extends TestCase {
     $this->assertInternalType('array', $anime);
     $this->assertEquals(25835, $anime["id"]);
     $this->assertEquals("Shirobako", $anime["title"]);
-    $this->assertEquals("2014-10-09T08:00:00+00:00", $anime["air_dates"]["from"]);
-    $this->assertEquals("2015-03-26T08:00:00+00:00", $anime["air_dates"]["to"]);
+    $this->assertEquals("2014-10-09", $anime["air_dates"]["from"]);
+    $this->assertEquals("2015-03-26", $anime["air_dates"]["to"]);
     $this->assertEquals(576, $anime["duration"]["total"]);
     $this->assertEquals(24, $anime["duration"]["per_episode"]);
   }

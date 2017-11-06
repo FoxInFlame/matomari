@@ -98,8 +98,8 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
 
   public function testAir_Dates() {
     $anime = new AnimeInfo();
-    $animeAir_Date_From = str_shuffle('2014-10-09T08:00:00+00:00');
-    $animeAir_Date_To = str_shuffle('2015-03-26T08:00:00+00:00');
+    $animeAir_Date_From = str_shuffle('2014-10-09');
+    $animeAir_Date_To = str_shuffle('2015-03-26');
     $anime->set("air_date_from", $animeAir_Date_From);
     $anime->set("air_date_to", $animeAir_Date_To);
     $this->assertEquals($animeAir_Date_From, $anime->get("air_date_from"));
