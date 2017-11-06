@@ -81,19 +81,19 @@ class AnimeSearchParser {
         if($index == 0) {
           $month = $number;
           if($month == "??") {
-            $month = "--";
+            $month = "xx";
           }
         }
         if($index == 1) {
           $day = $number;
           if($day == "??") {
-            $day = "--";
+            $day = "xx";
           }
         }
         if($index == 2) {
           $year = $number;
           if($year == "??") {
-            $year = "----";
+            $year = "xxxx";
           } else {
             if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
               // Over 1940
