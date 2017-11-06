@@ -556,7 +556,7 @@ call_user_func(function() {
   $output = array(
     "parameter" => "q=" . urlencode($_GET['q']) . $filter_param,
     "page" => (int)$page,
-    "results" => $results_arr
+    "items" => $results_arr
   );
   
   echo json_encode($output);
