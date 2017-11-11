@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-require_once(dirname(__FILE__) . "/../../src/parsers/parser.animeInfo.php");
+require_once(dirname(__FILE__) . "/../../src/parsers/parser.anime.info.ID.php");
 
 class AnimeInfoParserTest extends TestCase {
 
