@@ -37,7 +37,6 @@ function getAbsoluteTimeGMT($string, $defaultFormat = "!M j, g:i A") {
     $date = date_create_from_format("g:i A", substr($string, 7), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
     return $date;
   } else if(strpos($string, "Yesterday") !== false) {
-    echo substr($string, 11);
     $date = date_create_from_format("g:i A", substr($string, 11), new DateTimeZone("Etc/GMT+8"))->setTimeZone(new DateTimeZone("Etc/GMT"));
     $date->modify("-1 day");
     return $date;
