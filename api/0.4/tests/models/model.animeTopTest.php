@@ -68,6 +68,13 @@ class AnimeTopTest extends TestCase {
     $this->assertEquals($animeMembers_InList, $anime->get("members_inlist"));
   }
 
+  public function testMembers_Favorited() {
+    $anime = new AnimeTop();
+    $animeMembers_Favorited = rand();
+    $anime->set("members_favorited", $animeMembers_Favorited);
+    $this->assertEquals($animeMembers_Favorited, $anime->get("members_favorited"));
+  }
+
   public function testAsArray() {
     $anime = new AnimeTop();
     $array = $anime->asArray();
