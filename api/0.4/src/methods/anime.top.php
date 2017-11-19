@@ -1,6 +1,7 @@
 <?php
 /*
 
+Status: Completed and Tested.
 Get top ranked anime.
 
 This method is cached for a day. Set the nocache parameter to true to use a fresh version (slower).

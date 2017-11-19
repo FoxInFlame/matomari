@@ -1,6 +1,7 @@
 <?php
 /*
 
+Status: Completed and Tested.
 Shows detailed information about an anime.
 
 This method is cached for a week. Set the nocache parameter to true to use a fresh version (slower).

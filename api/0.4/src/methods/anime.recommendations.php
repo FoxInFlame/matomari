@@ -1,8 +1,10 @@
 <?php
 /*
 
+Status: Completed and Tested.
 Get latest anime recommendations.
 
+This method is not cached.
 Method: GET
         /anime/recommendations
 Authentication: None Required.
@@ -25,8 +27,9 @@ header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 require_once(dirname(__FILE__) . "/../absoluteGMT.php");
-require_once(dirname(__FILE__) . "/../class/class.anime.php");
-require_once(dirname(__FILE__) . "/../class/class.cache.php");
+require_once(dirname(__FILE__) . "/../classes/class.cache.php");
+require_once(dirname(__FILE__) . "/../models/model.recommendation.php");
+require_once(dirname(__FILE__) . "/../parsers/parser.anime.recommendations.php");
 
 call_user_func(function() {
   
@@ -42,87 +45,51 @@ call_user_func(function() {
   
   $url = "https://myanimelist.net/recommendations.php" . $page_param;
   $data = new Data();
-
-  $html = null;
   
   if($data->getCache($url)) {
-    $html = str_get_html($data->data);
+    $content = $data->data;
   } else {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
     if(!$response) {
-      if($page != 1) {
-        if($data->getCache("https://myanimelist.net/recommendations.php")) {
-          $html = str_get_html($data->data);
-        } else {
-          $ch = curl_init();
-          curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/recommendations.php");
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-          $response = curl_exec($ch);
-          if(!$response) {
-            echo json_encode(array(
-              "message" => "MAL is offline."
-            ));
-            http_response_code(404);
-            return;
-          }
-          $html = str_get_html($response);
-        }
-      } else {
-        $html = str_get_html($response);
-      }
       echo json_encode(array(
         "message" => "MAL is offline."
       ));
       http_response_code(404);
       return;
     }
-    curl_close($ch);
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
+      if($page != 1) { // If page isn't one, try one
+        if($data->getCache("https://myanimelist.net/recommendations.php")) {
+          $response = $data->data;
+        } else {
+          curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/recommendations.php");
+          $response = curl_exec($ch);
+          curl_close($ch);
+        }
+      } else {
+        curl_close($ch);
+        echo json_encode(array(
+          "message" => "MAL is offline."
+        ));
+        http_response_code(404);
+        return;
+      }
+    }
     
-    $data->saveCache($url, $response);
+    $data->saveCache($url, $response, 5);
+    $content = $response;
   }
-
-  $recommendations = $html->find("#contentWrapper #content", 0)->children(2)->children();
-  $recommendations_arr = array();
-  foreach($recommendations as $key => $recommendation) {
-    if($key === 0) {
-      continue;
-    }
-    if($key === (count($recommendations) - 1)) {
-      continue;
-    }
-    $from = $recommendation->find("table td", 0);
-    $from_anime = new Anime();
-    $from_anime->set("id", substr($from->find(".picSurround a", 0)->id, 9));
-    $from->find(".picSurround a img", 0)->{'data-srcset'} ? $from_anime->set("image", $from->find(".picSurround a img", 0)->{'data-srcset'}) : $from_anime->set("image", $from->find(".picSurround a img", 0)->{'srcset'});
-    $from_anime->set("title", $from->find("a strong", 0)->innertext);
-    $to = $recommendation->find("table td", 1);
-    $to_anime = new Anime();
-    $to_anime->set("id", substr($to->find(".picSurround a", 0)->id, 9));
-    $to->find(".picSurround a img", 0)->{'data-srcset'} ? $to_anime->set("image", $to->find(".picSurround a img", 0)->{'data-srcset'}) : $to_anime->set("image", $to->find(".picSurround a img", 0)->{'srcset'});
-    $to_anime->set("title", $to->find("a strong", 0)->innertext);
-    $reason = $recommendation->children(1)->innertext;
-    $author = $recommendation->children(2)->find("a", 1)->innertext;
-    $time_1 = explode(" - ", $recommendation->children(2)->innertext);
-    $time = end($time_1);
-    array_push($recommendations_arr, array(
-      "from" => array(
-        "id" => $from_anime->get("id"),
-        "title" => $from_anime->get("title"),
-        "image" => $from_anime->get("image")
-      ),
-      "to" => array(
-        "id" => $to_anime->get("id"),
-        "title" => $to_anime->get("title"),
-        "image" => $to_anime->get("image")
-      ),
-      "reason" => $reason,
-      "author" => $author,
-      "time" => getAbsoluteTimeGMT($time, "M j, Y|")->format("c")
-    ));
-  }
+    
+  // [+] ============================================== [+]
+  // [+] ---------------------------------------------- [+]
+  // [+] ---------------------PARSE-------------------- [+]
+  // [+] ---------------------------------------------- [+]
+  // [+] ============================================== [+]  
+  
+  $recommendations_arr = AnimeRecommendationsParser::parse($content);
   
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
@@ -133,10 +100,8 @@ call_user_func(function() {
   $output = array(
     "items" => $recommendations_arr
   );
-  
-  // Remove string_ after parse
-  // JSON_NUMERIC_CHECK flag requires at least PHP 5.3.3
-  echo str_replace("string_", "", json_encode($output, JSON_NUMERIC_CHECK));
+
+  echo json_encode($output);
   http_response_code(200);
   
 });

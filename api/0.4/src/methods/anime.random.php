@@ -8,7 +8,7 @@ Method: GET
         /anime/random
 Authentication: None Required.
 Parameters:
-  - not: [Optional] List of ids to not include in the random, separated by comma
+  - None.
 
 Created by FoxInFlame.
 A Part of the matomari API.
@@ -26,9 +26,6 @@ header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 
 call_user_func(function() {
-  
-  isset($_GET['not']) && !empty($_GET['not']) ? $not = $_GET['not'] : $not = "";
-  $not_arr = explode(",", $not);
   
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]

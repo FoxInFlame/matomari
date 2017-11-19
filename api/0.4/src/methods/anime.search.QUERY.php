@@ -1,6 +1,7 @@
 <?php
 /*
 
+Status: Completed and Tested.
 Shows anime search results for a query. Maximum 50 results. Filtering supported.
 
 This method is cached for a day. Set the nocache parameter to true to use a fresh version (slower).
@@ -512,7 +513,6 @@ call_user_func(function() {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
-    $response = curl_exec($ch);
     if(!$response) {
       echo json_encode(array(
         "message" => "MAL is offline."
@@ -522,9 +522,13 @@ call_user_func(function() {
     }
     if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 404) {
       if($page != 1) { // If page isn't one, try one
-        curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime.php?q=" . urlencode($_GET['q']) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g");
-        $response = curl_exec($ch);
-        curl_close($ch);
+        if($data->getCache("https://myanimelist.net/anime.php?q=" . urlencode($_GET['q']) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g")) {
+          $response = $data->data;
+        } else {
+          curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/anime.php?q=" . urlencode($_GET['q']) . $filter_param . "&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g");
+          $response = curl_exec($ch);
+          curl_close($ch);
+        }
       } else {
         curl_close($ch);
         echo json_encode(array(
