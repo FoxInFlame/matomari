@@ -17,7 +17,7 @@ class Data {
   public function getCache($url, $curl_options = array()) {
     $this->dir = dirname(__FILE__) . "/../cache/";
     /*$this->expire = 1440; // 24 hours*/
-    $this->expire = 21900; // 1 year - Cache will be purged from another script every day anyway
+    $this->expire = 525600; // 1 year - Cache will be purged from another script every day anyway
     $this->extension = ".html";
     $this->ignore_pages = array(
       "/mymessages.php",
@@ -51,7 +51,7 @@ class Data {
     return false;
   }
   
-  public function saveCache($url, $data, $expire = 21900) {
+  public function saveCache($url, $data, $expire = 525600) {
     $this->dir = dirname(__FILE__) . "/../cache/";
     $this->expire = $expire; // One Year
     $this->extension = ".html";
