@@ -1,5 +1,7 @@
 # matomari
 
+![Version](https://img.shields.io/badge/dynamic/json.svg?label=Version&colorB=7dc93c&prefix=&suffix=&style=flat&query=$.version&uri=https%3A%2F%2Fwww.matomari.tk%2Fapi%2F0.4%2Fsrc%2Fmethods%2Finfo.php) ![phpunit Coverage](https://img.shields.io/badge/dynamic/json.svg?label=phpunit%20Coverage&colorB=ef5350&prefix=&suffix=%25&style=flat&query=$.completed_percentage&uri=https%3A%2F%2Fwww.matomari.tk%2Fapi%2F0.4%2Fsrc%2Fmethods%2Finfo.php) ![Completed Methods](https://img.shields.io/badge/dynamic/json.svg?label=Completed%20Methods&colorB=6488da&prefix=&suffix=&query=$.total_tested_methods&uri=https%3A%2F%2Fwww.matomari.tk%2Fapi%2F0.4%2Fsrc%2Fmethods%2Finfo.php)
+
 A couple of MAL related scrapers and stuff like that, put together in a RESTful API.
 
 Please, always remember that these scrapers are often not 100% stable for production, because when the layout of MAL changes, it won't work anymore. 
