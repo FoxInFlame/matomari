@@ -1,3 +1,4 @@
 __pycache__/
 api/0.4/src/cache/
 api/0.4/src/methods/testing.php
+api/0.4/coverage
