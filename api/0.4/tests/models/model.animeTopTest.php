@@ -75,6 +75,19 @@ class AnimeTopTest extends TestCase {
     $this->assertEquals($animeMembers_Favorited, $anime->get("members_favorited"));
   }
 
+  public function testNonExistentSet() {
+    $anime = new AnimeTop();
+    $animeTmp = str_shuffle("weeeeeeee");
+    $this->expectException(ModelKeyDoesNotExist::class);
+    $anime->set("nonexistentstuff", $animeTmp);
+  }
+
+  public function testNonExistentGet() {
+    $anime = new AnimeTop();    
+    $this->expectException(ModelKeyDoesNotExist::class);
+    $anime->get("nonexistentstuff");
+  }
+
   public function testAsArray() {
     $anime = new AnimeTop();
     $array = $anime->asArray();

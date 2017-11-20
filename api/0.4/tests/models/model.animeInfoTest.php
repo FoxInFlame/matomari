@@ -89,11 +89,11 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
     $this->assertEquals($animeEpisodes, $anime->get("episodes"));
   }
 
-  public function tesetAir_Status() {
+  public function testAir_Status() {
     $anime = new AnimeInfo();
     $animeAir_Status = str_shuffle('Currently Airing');
     $anime->set("air_status", $animeAir_Status);
-    $this->assertEquals($animeAir_Status, $anime->get("animeAir_Status"));
+    $this->assertEquals($animeAir_Status, $anime->get("air_status"));
   }
 
   public function testAir_Dates() {
@@ -251,6 +251,19 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
     );
     $anime->set("theme_songs", $animeTheme_Songs);
     $this->assertEquals($animeTheme_Songs, $anime->get("theme_songs"));
+  }
+
+  public function testNonExistentSet() {
+    $anime = new AnimeInfo();
+    $animeTmp = str_shuffle("weeeeeeee");
+    $this->expectException(ModelKeyDoesNotExist::class);
+    $anime->set("nonexistentstuff", $animeTmp);
+  }
+
+  public function testNonExistentGet() {
+    $anime = new AnimeInfo();    
+    $this->expectException(ModelKeyDoesNotExist::class);
+    $anime->get("nonexistentstuff");
   }
 
   public function testAsArray() {

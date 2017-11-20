@@ -82,6 +82,19 @@ class RecommendationTest extends TestCase {
     $this->assertEquals($timestamp, $recommendation->get("timestamp"));
   }
 
+  public function testNonExistentSet() {
+    $anime = new Recommendation();
+    $animeTmp = str_shuffle("weeeeeeee");
+    $this->expectException(ModelKeyDoesNotExist::class);
+    $anime->set("nonexistentstuff", $animeTmp);
+  }
+
+  public function testNonExistentGet() {
+    $anime = new Recommendation();    
+    $this->expectException(ModelKeyDoesNotExist::class);
+    $anime->get("nonexistentstuff");
+  }
+
   public function testAsArray() {
     $anime = new AnimeTop();
     $array = $anime->asArray();
