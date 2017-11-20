@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__) . "/../absoluteGMT.php");
+require_once(dirname(__FILE__) . "/../exceptions.php");
 
 class AnimeTop {
 
@@ -53,6 +54,8 @@ class AnimeTop {
       case "members_favorited":
         $this->info["members_favorited"] = $value;
         break;
+      default:
+        throw new ModelKeyDoesNotExist("Nonexistent set key.");
     }
   }
   
@@ -60,34 +63,26 @@ class AnimeTop {
     switch($data) {
       case "id":
         return $this->info["id"];
-        break;
       case "title":
         return $this->info["title"];
-        break;
       case "mal_url":
         return $this->info["mal_url"];
-        break;
       case "image_url":
         return $this->info["image_url"];
-        break;
       case "score":
         return $this->info["score"];
-        break;
       case "rank":
         return $this->info["rank"];
-        break;
       case "type":
         return $this->info["type"];
-        break;
       case "episodes":
         return $this->info["episodes"];
-        break;
       case "members_inlist":
         return $this->info["members_inlist"];
-        break;
       case "members_favorited":
         return $this->info["members_favorited"];
-        break;
+      default:
+        throw new ModelKeyDoesNotExist("Nonexistent get key.");
     }
   }
 }

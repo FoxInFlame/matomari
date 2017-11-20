@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__) . "/../absoluteGMT.php");
+require_once(dirname(__FILE__) . "/../exceptions.php");
 
 class Recommendation {
 
@@ -61,6 +62,8 @@ class Recommendation {
       case "timestamp":
         $this->info["timestamp"] = $value;
         break;
+      default:
+        throw new ModelKeyDoesNotExist("Nonexistent set key.");
     }
   }
   
@@ -68,37 +71,28 @@ class Recommendation {
     switch($data) {
       case "from_id":
         return $this->info["from"]["id"];
-        break;
       case "from_title":
         return $this->info["from"]["title"];
-        break;
       case "from_mal_url":
         return $this->info["from"]["mal_url"];
-        break;
       case "from_image_url":
         return $this->info["from"]["image_url"];
-        break;
       case "to_id":
         return $this->info["to"]["id"];
-        break;
       case "to_title":
         return $this->info["to"]["title"];
-        break;
       case "to_mal_url":
         return $this->info["to"]["mal_url"];
-        break;
       case "to_image_url":
         return $this->info["to"]["image_url"];
-        break;
       case "reason":
         return $this->info["reason"];
-        break;
       case "author":
         return $this->info["author"];
-        break;
       case "timestamp":
         return $this->info["timestamp"];
-        break;
+      default:
+        throw new ModelKeyDoesNotExist("Nonexistent get key.");
     }
   }
 }
