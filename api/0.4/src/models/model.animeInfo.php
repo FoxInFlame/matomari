@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__) . "/../absoluteGMT.php");
+require_once(dirname(__FILE__) . "/../exceptions.php");
 
 class AnimeInfo {
 
@@ -142,7 +143,7 @@ class AnimeInfo {
         $this->info["theme_songs"] = $value;
         break;
       default:
-        throw new Exception("Nonexistent set key.");
+        throw new ModelKeyDoesNotExist("Nonexistent set key.");
     }
   }
   
@@ -210,46 +211,8 @@ class AnimeInfo {
         return $this->info["related"];
       case "theme_songs":
         return $this->info["theme_songs"];
-      case "user_status":
-        switch($this->user_status) {
-          case "watching":
-            return 1;
-          case "completed":
-            return 2;
-          case "onhold":
-            return 3;
-          case "dropped":
-            return 4;
-          case "plan_to_watch":
-            return 6;
-        }
-        return $this->user_status;
-      case "user_status_str":
-        return $this->user_status;
-      case "user_rewatching":
-        return $this->user_rewatching;
-      case "user_episodes":
-        return $this->user_episodes;
-      case "user_score":
-        return $this->user_score;
-      case "user_start_date":
-        return $this->user_start_date;
-      case "user_end_date":
-        return $this->user_end_date;
-      case "user_tags":
-        return $this->user_tags;
-      case "user_priority":
-        return $this->user_priority;
-      case "user_storage":
-        return $this->user_storage;
-      case "user_rewatch_times":
-        return $this->user_rewatch_times;
-      case "user_rewatch_value":
-        return $this->user_rewatch_value;
-      case "user_comments":
-        return $this->user_comments;
       default:
-        throw new Exception("Nonexistent get key.");
+        throw new ModelKeyDoesNotExist("Nonexistent get key.");
     }
   }
 }
