@@ -1,6 +1,7 @@
 <?php
 /*
 
+Status: Completed and Tested.
 Get an anime in the user's list.
 
 Method: GET
