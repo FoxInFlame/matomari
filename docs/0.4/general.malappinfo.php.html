@@ -66,8 +66,8 @@ Request to <span class="inline-code">https://www.matomari.tk/api/0.4/general/mal
 <pre style="background: #F0F0F0;">
   <xmp class="code xml">
     <!--
-    "<?" causes errors in HTML:
-      <?xml version="1.0" encoding="UTF-8"?>
+    "<?" causes errors when loading this HTML in PHP (even when commented), hence the space:
+      < ?xml version="1.0" encoding="UTF-8"?>
     -->
     <myanimelist>
         <myinfo>
