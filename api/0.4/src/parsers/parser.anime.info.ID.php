@@ -61,7 +61,7 @@ class AnimeInfoParser {
     }
 
     // The Popularity
-    // <span class="numbers popularity">Popularity <strong>#552</strong></span>    
+    // <span class="numbers popularity">Popularity <strong>#552</strong></span>
     if($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.popularity strong", 0)->plaintext != "N/A") {
       $anime->set("popularity", (int)substr($html->find("div#contentWrapper div#content div.anime-detail-header-stats span.popularity strong", 0)->plaintext, 1));
     }
@@ -78,7 +78,7 @@ class AnimeInfoParser {
     // <div class="spaceit_pad">
     //   <span class="dark_text">English:</span>
     //     The Last: Naruto the Movie
-    // 
+    //
     // </div>
     $alternativeTitles = $html->find("div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad");
     $alternativeTitles_eng = array(); // Changed from string because there can be multiple
@@ -178,7 +178,9 @@ class AnimeInfoParser {
       //   Thursdays at 23:30 (JST)
       // </div>
       if(strpos($value->plaintext, "Broadcast:") !== false) {
-        if(strpos($value->plaintext, "Unknown") === false) {
+        if(strpos($value->plaintext, "Not scheduled once per week") !== false) {
+          $anime->set("air_time", (string)"Irregular");
+        } elseif(strpos($value->plaintext, "Unknown") === false) {
           $anime->set("air_time", (string)trim($value->find("text", 2)->innertext));
         }
       }
@@ -313,7 +315,7 @@ class AnimeInfoParser {
       // </div>
       if(strpos($value->plaintext, "Score:") !== false) {
         if(strpos($value->plaintext, "users") !== false) {
-          $anime->set("members_scored", (int)trim(str_replace(",", "", $value->find("span[itemprop=\"ratingCount\"]", 0)->innertext)));
+          $anime->set("members_scored", (int)trim(str_replace(",", "", $value->find("div.js-statistics-info span", 2)->innertext)));
         }
       }
 
@@ -343,7 +345,7 @@ class AnimeInfoParser {
       $anime->set("background", (string)trim($background));
     }
 
-    return $anime->asArray(); 
+    return $anime->asArray();
   }
 
 };
