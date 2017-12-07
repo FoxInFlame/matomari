@@ -315,7 +315,7 @@ class AnimeInfoParser {
       // </div>
       if(strpos($value->plaintext, "Score:") !== false) {
         if(strpos($value->plaintext, "users") !== false) {
-          $anime->set("members_scored", (int)trim(str_replace(",", "", $value->find("div.js-statistics-info span", 2)->innertext)));
+          $anime->set("members_scored", (int)trim(str_replace(",", "", $value->find("span", 2)->innertext)));
         }
       }
 
