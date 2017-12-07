@@ -42,7 +42,7 @@ class AnimeInfo {
     "related" => array(),
     "theme_songs" => array()
   );
-  
+
   public function asArray() {
     return $this->info;
   }
@@ -146,7 +146,7 @@ class AnimeInfo {
         throw new ModelKeyDoesNotExist("Nonexistent set key.");
     }
   }
-  
+
   public function get($data) {
     switch($data) {
       case "id":
