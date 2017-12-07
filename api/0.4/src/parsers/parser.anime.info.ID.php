@@ -338,9 +338,12 @@ class AnimeInfoParser {
       }
     }
 
+    // The Background
+    // Complicated shit right here. 
+    // It also seems like a <h2> appears after the background when ran from the server but locally it is a <div> that appears.
     $background_td = $html->find("div#contentWrapper div#content .js-scrollfix-bottom-rel", 0)->find("table td", 0)->innertext;
     $background_td_section = explode("</h2>", $background_td)[2];
-    $background = explode("<div", $background_td_section)[0];
+    $background = explode("<h2", explode("<div", $background_td_section)[0])[0];
     if(strpos($background, "No background information has been added to this title") === false) {
       $anime->set("background", (string)trim($background));
     }
