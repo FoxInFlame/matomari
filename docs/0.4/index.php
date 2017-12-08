@@ -200,7 +200,7 @@ if(isset($_GET['file'])) {
               Methods
               <div class="menu">
                 <?php
-                $fixedMenuItems = array("General", "Anime", "Users", "Settings", "Clubs", "Forum", "Blogs", "News", "Articles", "People", "Characters");
+                $fixedMenuItems = array("General", "Anime", "@me", "Users", "Settings", "Clubs", "Forum", "Blogs", "News", "Articles", "People", "Characters");
                 foreach($fixedMenuItems as $item) {
                   if($item == "Users") {
                     $item2 = "User";
