@@ -1,9 +1,9 @@
 <?php
 
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../models/model.userListAnime.php");
+require_once(dirname(__FILE__) . "/../models/model.meListAnime.php");
 
-class userListAnimeParser {
+class MeListAnimeParser {
 
   public static function parse($response) {
     $html = str_get_html($response);
@@ -16,7 +16,7 @@ class userListAnimeParser {
       return;
     }
 
-    $anime = new UserListAnime();
+    $anime = new MeListAnime();
 
     // The ID
     // <input type="hidden" name="anime_id" id="anime_id" value="32281">

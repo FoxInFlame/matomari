@@ -1,14 +1,14 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-require_once(dirname(__FILE__) . "/../../src/parsers/parser.user.list.anime.ID.php");
+require_once(dirname(__FILE__) . "/../../src/parsers/parser.me.list.anime.ID.php");
 
-class UserListAnimeParserTest extends TestCase {
+class MeListAnimeParserTest extends TestCase {
 
   public function testParse() {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.editlist.anime.34240.html");
 
-    $anime = UserListAnimeParser::parse($content);
+    $anime = MeListAnimeParser::parse($content);
     $this->assertInternalType('array', $anime);
     $this->assertEquals(34240, $anime["id"]);
     $this->assertEquals(2, $anime["watch_status"]);

@@ -5,7 +5,7 @@ Status: Completed and Tested.
 Get an anime in the user's list.
 
 Method: GET
-        /user/list/anime/:id
+        /@me/list/anime/:id
 Authentication: HTTP Basic Auth with MAL Credentials.
 Parameters:
   - None.
@@ -24,8 +24,7 @@ A Part of the matomari API.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../parsers/parser.user.list.anime.ID.php");
+require_once(dirname(__FILE__) . "/../parsers/parser.@me.list.anime.ID.php");
 
 call_user_func(function() {
   
@@ -105,7 +104,7 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]  
   
-  $anime = UserListAnimeParser::parse($content);
+  $anime = MeListAnimeParser::parse($content);
 
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]

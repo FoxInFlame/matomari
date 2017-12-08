@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . "/../absoluteGMT.php");
 require_once(dirname(__FILE__) . "/../exceptions.php");
 
-class UserListAnime {
+class MeListAnime {
 
   private $info_liststatus = array(
     "id" => null,
