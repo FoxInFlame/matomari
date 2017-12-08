@@ -26,9 +26,8 @@ A Part of the matomari API.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: max-age=86400, public"); // 1 day
-require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../parsers/parser.anime.top.php");
 require_once(dirname(__FILE__) . "/../classes/class.cache.php");
+require_once(dirname(__FILE__) . "/../parsers/parser.anime.top.php");
 
 call_user_func(function() {
   

@@ -25,10 +25,7 @@ A Part of the matomari API.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../absoluteGMT.php");
 require_once(dirname(__FILE__) . "/../classes/class.cache.php");
-require_once(dirname(__FILE__) . "/../models/model.recommendation.php");
 require_once(dirname(__FILE__) . "/../parsers/parser.anime.recommendations.php");
 
 call_user_func(function() {
