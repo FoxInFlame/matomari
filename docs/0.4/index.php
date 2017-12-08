@@ -267,9 +267,6 @@ if(isset($_GET['file'])) {
               case "user":
                 showSidebar("user");
                 break;
-              case "settings":
-                showSidebar("settings");
-                break;
               case "clubs":
               case "club":
                 showSidebar("club");
@@ -306,8 +303,13 @@ if(isset($_GET['file'])) {
           <div class="ui segment">
             <?php
             if(file_exists($showFile)) {
-              echo "<h1 class=\"ui header\">" . $showFile_method . " <a title=\"View Source for method\" href=\"https://github.com/FoxInFlame/matomari/tree/0.4/api/0.4/methods/" . substr($showFile, 0, -5) . ".php\"><i class=\"icon external\" style=\"float:right\"></i></a></h1>";
-              include($showFile);
+              if(count(explode("/", $showFile_method)) == 1) {
+                echo "<h1 class=\"ui header\">" . $showFile_method . "</h1><br>";
+                include($showFile);
+              } else {
+                echo "<h1 class=\"ui header\">" . $showFile_method . " <a title=\"View Source for method\" href=\"https://github.com/FoxInFlame/matomari/tree/0.4/api/0.4/src/methods/" . substr($showFile, 0, -5) . ".php\"><i class=\"icon external\" style=\"float:right\"></i></a></h1><br>";
+                include($showFile);
+              }
             } else {
               echo "No documentation has been created on this page.";
             }
