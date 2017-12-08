@@ -260,6 +260,9 @@ if(isset($_GET['file'])) {
               case "anime":
                 showSidebar("anime");
                 break;
+              case "@me":
+                showSidebar("@me");
+                break;
               case "users":
               case "user":
                 showSidebar("user");
