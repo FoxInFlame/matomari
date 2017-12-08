@@ -11,8 +11,6 @@ NOTE! This is only a to do list and 99% of these are not implemented.
 
 [REFACTORED][DONE] GET anime/info/:id - Get detailed information about specific anime
 
-[DONE] POST anime/info/:id - Update information about specific anime.
-
 [DONE] GET anime/reviews/:id - Get reviews on specific anime (with sort parameter)
 
 [DONE] GET anime/recommendations/:id - Get recommendations from specific anime. detail parameter shows more details individually.
@@ -43,6 +41,80 @@ GET anime/moreinfo/:id - Returns more info about specific anime. Empty if not fo
 
 -----------------------
 
+GET @me/info - Get information about sender.
+
+POST @me/info - Change information about sender.
+
+GET @me/stats - Get stats for sender.
+
+GET @me/favorites - Get favorites for sender.
+
+POST @me/favorites - Add a new favorite to the sender.
+
+PUT @me/favorites - Reorder favorites for the sender.
+
+DELETE @me/favorites - Remove a favorite from the sender.
+
+GET @me/reviews - Get reviews written by sender.
+
+GET @me/recommendations - Get recommendations written by sender.
+
+GET @me/clubs - Get clubs sender is in.
+
+GET @me/friends - Get friends for sender.
+
+GET @me/friends/:username - Sends friend request to user.
+
+GET @me/comments - Get comments for sender.
+
+GET @me/comments/:username - Posts a comment to user.
+
+GET @me/conversation/:username - Get the comment to comment conversation between sender and specific user.
+
+GET @me/list/anime - Get sender's anime list.
+
+GET @me/list/manga - Get sender's manga list.
+
+[DONE] GET @me/list/anime/:id - Get information about anime in sender's list. 404 if not in list.
+
+POST @me/list/anime/:id - Update or Add information about anime in sender's list.
+
+GET @me/history/anime/:id - Get the history for an anime in sender's list.
+
+GET @me/history/manga/:id - Get the history for a manga in sender's list.
+
+GET @me/history - Get the overall history for sender.
+
+GET @me/history/anime - Get the anime history for sender.
+
+GET @me/history/manga - Get the manga history for sender.
+
+GET @me/notifications - Get notifications for sender (with pagination / filter).
+
+POST @me/notifications - Set specific notification as read, or accept friend request.
+
+GET @me/messages - Get all messages (with pagination)
+
+GET @me/message/:id - Get specific message.
+
+PUT @me/message/:id - Set specific messages as read or unread
+
+DELETE @me/message/:id - Delete specific message.
+
+GET @me/message/thread/:id - Get specific message thread.
+
+POST @me/message/thread/:id - Post a reply to a message thread.
+
+POST @me/message - Send a message.
+
+GET @me/settings/profile - Get profile settings.
+
+POST @me/settings/profile - Update profile settings.
+
+POST @me/settings/image - Update profile picture to a base64 image.
+
+-----------------------
+
 GET users/search/:query - Search for users (with filters / pagination)
 
 GET users/recent - Get recently online users and current online count.
@@ -51,17 +123,9 @@ GET users/recommendations - Get users who posted most recommendations.
 
 [DONE] GET user/info/:username - Get information about specific user.
 
-POST user/info/:username - Change information about specific user.
-
 [DONE] GET user/stats/:username - Get stats for a specific user.
 
 [DONE] GET user/favorites/:username - Get favorites for a specific user.
-
-[DONE] GET user/favorites - Get favorites for the authorised user.
-
-[DONE] POST user/favorites - Add a new favorite to the authorised user.
-
-[DONE] DELETE user/favorites - Remove a favorite from the authorised user.
 
 GET user/reviews/:username - Get reviews written by a specific user.
 
@@ -71,19 +135,9 @@ GET user/clubs/:username - Get clubs a specific user is in.
 
 GET user/friends/:username - Get friends for a specific user.
 
-POST user/friends/:username - Becomes friends with a specific user.
-
 GET user/comments/:username - Get profile comments (with pagination)
 
-POST user/comments/:username - Send a comment to specific user.
-
-GET user/conversation/:username - Get the comment to comment conversation between sender and specific user.
-
-POST user/conversation/:username - Send a comment to a conversation.
-
-GET user/list/anime/:id - Get information about anime in your list. 404 if not in list.
-
-POST user/list/anime/:id - Update or Add information about anime in your list.
+GET user/conversation/:username/:username - Get the comment to comment conversation between two users.
 
 GET user/list/anime/:username - Get the anime list of a user.
 
@@ -93,51 +147,15 @@ GET user/list/anime/:username/:id - Get the 'more' info of an anime in the list 
 
 GET user/list/manga/:username/:id - Get the 'more' info of an manga in the list of a user.
 
-GET user/list/history/anime/:id - Get specific update history on anime.
-
-GET user/list/history/manga/:id - Get specific update history on manga.
-
 [DONE] GET user/history/:username - Get update history (with filter).
 
-[DONE] GET user/notifications - Get all notifications (with pagination / filter)
+GET user/history/anime/:username - Get anime history for a user.
 
-[DONE] POST user/notifications - Set specific notification as read, or accept friend request.
-
-[DONE] GET user/messages - Get all messages (with pagination)
-
-[DONE] POST user/messages - Set specific messages as read or unread
-
-GET user/message/:id - Get specific message.
-
-DELETE user/message/:id - Delete specific message.
-
-[DONE] POST user/message - Send a message.
-
-GET user/message/thread/:id - Get specific message thread.
-
-POST user/message/thread/:id - Post a reply to a message thread.
-
------------------------
-
-GET settings/profile - Get profile settings.
-
-POST settings/profile - Update profile settings.
-
-GET settings/favorites - Get favorites.
-
-POST settings/favorites - Add, and reorder favorites.
-
-GET settings/forum - Get forum settings.
-
-POST settings/forum - Update forum settings.
-
-POST settings/image - Update profile picture to a base64 image.
+GET user/history/manga/:username - Get manga history for a user.
 
 -----------------------
 
 GET clubs/recent - Recently posted clubs
-
-GET clubs/me - Clubs a specific user is part in.
 
 [DONE] GET club/info/:id - Get information about a specific club.
 
