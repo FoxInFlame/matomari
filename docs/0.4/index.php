@@ -173,9 +173,9 @@ if(isset($_GET['file'])) {
   <body>
     <div class="ui fixed large menu">
       <div class="ui container">
-        <div class="item">
-          <a href="/"><img class="logo" src="../../favicon.ico"></a>
-        </div>
+        <a href="/" class="item">
+          <img class="logo" src="../../favicon.ico">
+        </a>
         <a class="item" href="https://github.com/FoxInFlame/matomari">GitHub</a>
         <div class="ui dropdown item">
           0.3
