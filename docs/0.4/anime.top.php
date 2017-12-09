@@ -112,7 +112,7 @@ $model = [
       ]
     ]
   ]
-]
+];
 
 require_once("model2list.php"); // This reads $model and echoes a model.
 ?>
