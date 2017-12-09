@@ -26,7 +26,7 @@ $filenames = array( // Available methods
   "anime/clubs/:id",
   "anime/pictures/:id",
   "anime/moreinfo/:id",
-
+  
   "users",
   "users/search/:query",
   "users/recent",
@@ -51,13 +51,13 @@ $filenames = array( // Available methods
   "user/messages/:id",
   "user/message",
   "user/message/thread/:id",
-
+  
   "settings",
   "settings/profile",
   "settings/favorites",
   "settings/forum",
   "settings/image",
-
+  
   "clubs",
   "clubs/recent",
   "clubs/me",
@@ -66,7 +66,7 @@ $filenames = array( // Available methods
   "club/members/:id",
   "club/forum/:id",
   "club/forum/:id",
-
+  
   "forum",
   "forum/top",
   "forum/recent",
@@ -75,7 +75,7 @@ $filenames = array( // Available methods
   "forum/topic/:id",
   "forum/watched",
   "forum/ignored",
-
+  
   "blogs",
   "blogs/recent",
   "blog/posts/:username",
@@ -83,24 +83,24 @@ $filenames = array( // Available methods
   "blog/post/:id",
   "blog/comments/:id",
   "blog/comments/:id",
-
+  
   "news",
   "news/top",
   "news/team",
-
+  
   "articles",
   "articles/top",
   "articles/columnists",
   "articles/search/:query",
   "article/:id",
-
+  
   "people",
   "people/top",
   "people/search/:query",
   "people/info/:id",
   "people/news/:id",
   "people/pictures/:id",
-
+  
   "characters",
   "characters/top",
   "characters/search/:query",
@@ -108,12 +108,12 @@ $filenames = array( // Available methods
   "character/particles/:id",
   "character/pictures/:id",
   "character/clubs/:id",
-
+  
   "general",
   "general/quickSearch/:query",
   "general/wallpaper",
-  "general/malappinfo",
-
+  "general/malappinfo.php",
+  
   "responsecodes"
 );
 if(isset($_GET['file'])) {
