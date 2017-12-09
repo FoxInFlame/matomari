@@ -1,3 +1,4 @@
+<!--Make responsecodes page easier to read and navigate and maintain -->
 <h1 class="ui header">Response Codes</h1>
 <div id="code-200" class="ui segment">
   <h2 class="ui header">200</h2>
