@@ -7,130 +7,8 @@ error_reporting(E_ALL);
 $time_start = microtime(true);
 $showFile = "index.html"; // Default page - 0.4/index.html
 $showFile_method = "";
-$filenames = array( // Available methods
-  "anime",
-  "anime/top",
-  "anime/random",
-  "anime/search/:query",
-  "anime/recommendations",
-  "anime/info/:id",
-  "anime/reviews/:id",
-  "anime/recommendations/:id",
-  "anime/stats/:id",
-  "anime/recent/:id",
-  "anime/characters/:id",
-  "anime/staff/:id",
-  "anime/news/:id",
-  "anime/forum/:id",
-  "anime/articles/:id",
-  "anime/clubs/:id",
-  "anime/pictures/:id",
-  "anime/moreinfo/:id",
-  
-  "@me",
-  "@me/info",
-  "@me/stats",
-  "@me/favorites",
-  "@me/reviews",
-  "@me/recommendations",
-  "@me/clubs",
-  "@me/friends",
-  "@me/friends/:username",
-  "@me/comments",
-  "@me/comments/:username",
-  "@me/conversation/:username",
-  "@me/list/anime",
-  "@me/list/manga",
-  "@me/list/anime/:id",
-  "@me/list/manga/:id",
-  "@me/history",
-  "@me/history/anime",
-  "@me/history/manga",
-  "@me/notifications",
-  "@me/messages",
-  "@me/message/:id",
-  "@me/message/thread/:id",
-  "@me/message",
-  "@me/settings/profile",
-  "@me/settings/image",
-
-  "users",
-  "users/search/:query",
-  "users/recent",
-  "users/recommendations",
-  "user/info/:username",
-  "user/stats/:username",
-  "user/reviews/:username",
-  "user/recommendations/:username",
-  "user/clubs/:username",
-  "user/friends/:username",
-  "user/comments/:username",
-  "user/conversation/:username/:username",
-  "user/list/anime/:username",
-  "user/list/manga/:username",
-  "user/list/anime/:username/:id",
-  "user/list/manga/:username/:id",
-  "user/history/:username",
-  "user/history/anime/:username",
-  "user/history/manga/:username",
-
-  "clubs",
-  "clubs/recent",
-  "club/info/:id",
-  "club/comments/:id",
-  "club/members/:id",
-  "club/forum/:id",
-  "club/forum/:id",
-  
-  "forum",
-  "forum/top",
-  "forum/recent",
-  "forum/search/:query",
-  "forum/board/:id",
-  "forum/topic/:id",
-  "forum/watched",
-  "forum/ignored",
-  
-  "blogs",
-  "blogs/recent",
-  "blog/posts/:username",
-  "blog/post",
-  "blog/post/:id",
-  "blog/comments/:id",
-  "blog/comments/:id",
-  
-  "news",
-  "news/top",
-  "news/team",
-  
-  "articles",
-  "articles/top",
-  "articles/columnists",
-  "articles/search/:query",
-  "article/:id",
-  
-  "people",
-  "people/top",
-  "people/search/:query",
-  "people/info/:id",
-  "people/news/:id",
-  "people/pictures/:id",
-  
-  "characters",
-  "characters/top",
-  "characters/search/:query",
-  "character/info/:id",
-  "character/particles/:id",
-  "character/pictures/:id",
-  "character/clubs/:id",
-  
-  "general",
-  "general/quickSearch/:query",
-  "general/wallpaper",
-  "general/malappinfo.php",
-  
-  "responsecodes"
-);
+require_once("methods.php");
+array_push($filenames, "responsecodes");
 if(isset($_GET['file'])) {
   foreach($filenames as $filename) {
     $tmp1 = str_replace("/", ".", $filename); // Reformat method URL to file URL
@@ -167,8 +45,11 @@ if(isset($_GET['file'])) {
     <?php
     }
     ?>
-    <link href="../../semantic/semantic.min.css" rel="stylesheet">
-    <link href="../../css/docs.css" rel="stylesheet">
+    <link href="../semantic/semantic.min.css" rel="stylesheet">
+    <link href="../css/0.4/docs.css" rel="stylesheet">
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../semantic/semantic.min.js"></script>
   </head>
   <body>
     <div class="ui fixed large menu">
@@ -196,6 +77,7 @@ if(isset($_GET['file'])) {
         <div class="ui dropdown item">
           0.4
           <div class="menu">
+            <a href="<?=dirname($_SERVER["PHP_SELF"])?>/../0.4/" class="item">Main Page</a>
             <div class="item">
               Methods
               <div class="menu">
@@ -322,9 +204,7 @@ if(isset($_GET['file'])) {
       }
       ?>
     </div>
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../semantic/semantic.min.js"></script>
-    <script src="../../js/docs.js"></script>
+    <script src="../js/docs.js"></script>
   </body>
 </html>
 <?php
