@@ -1,15 +1,18 @@
 NOTE! This is only a to do list and 99% of these are not implemented.
 
+[DONE] = Method works. 
+[REFACTORED] = Gone through the recode (into model and parser) and testing phase
+: = Documentation is up-to-date.
 
-[REFACTORED][DONE] GET anime/top - List of top anime (with pagination / types) detail parameter shows more details individually.
+:[REFACTORED][DONE] GET anime/top - List of top anime (with pagination / types) detail parameter shows more details individually.
 
-[DONE] GET anime/random - Redirect to a random anime/info/:id page.
+:[DONE] GET anime/random - Redirect to a random anime/info/:id page.
 
-[REFACTORED][DONE] GET anime/search/:query - Search anime. (with pagination / filters) detail parameter shows more details individually.
+:[REFACTORED][DONE] GET anime/search/:query - Search anime. (with pagination / filters) detail parameter shows more details individually.
 
 [REFACTORED][DONE] GET anime/recommendations - Latest anime recommendations (with pagination)
 
-[REFACTORED][DONE] GET anime/info/:id - Get detailed information about specific anime
+:[REFACTORED][DONE] GET anime/info/:id - Get detailed information about specific anime
 
 [DONE] GET anime/reviews/:id - Get reviews on specific anime (with sort parameter)
 
