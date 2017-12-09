@@ -29,7 +29,9 @@ call_user_func(function() {
   
   $methods_arr = array();
   $methods_dir = new DirectoryIterator(dirname(__FILE__));
+  require_once(dirname(__FILE__) . "/../../../../docs/0.4/methods.php");
   $tested_methods_arr = array();
+  $documented_methods_arr = array();
   foreach($methods_dir as $fileinfo) {
     if($fileinfo->isFile()) {
       $method_name = $fileinfo->getFilename();
@@ -44,11 +46,13 @@ call_user_func(function() {
         }
       }
 
-      array_push($methods_arr, implode("/", $method_name_final_arr));
-
       $contents = file(dirname(__FILE__) . "/" . $fileinfo->getFilename());
       if(strpos($contents[3], "Status: Completed and Tested.") !== false) {
         array_push($tested_methods_arr, implode("/", $method_name_final_arr));
+      }
+
+      if(file_exists(dirname(__FILE__) . "/../../../../docs/0.4/" . str_replace(".php", ".html", $fileinfo->getFilename()))) {
+        array_push($documented_methods_arr, implode("/", $method_name_final_arr));
       }
     }
   }
@@ -72,11 +76,15 @@ call_user_func(function() {
       "date" => $response[0]->commit->author->date,
       "days_ago" => $difference->days
     ),
-    "completed_percentage" => round(count($tested_methods_arr) / count($methods_arr) * 100, 2), // Round to 2 decimal places.
-    "total_methods" => count($methods_arr),
-    "methods" => $methods_arr,
+    "completed_percentage" => round(count($tested_methods_arr) / count($filenames) * 100, 2), // Round to 2 decimal places.
+    "documented_percentage_total" => round(count($documented_methods_arr) / count($filenames) * 100, 2),
+    "documented_percentage_tested" => round(count($documented_methods_arr) / count($tested_methods_arr) * 100, 2),
+    "total_methods" => count($filenames),
+    "methods" => $filenames,
     "total_tested_methods" => count($tested_methods_arr),
-    "tested_methods" => $tested_methods_arr
+    "tested_methods" => $tested_methods_arr,
+    "total_documented_methods" => count($documented_methods_arr),
+    "documented_methods" => $documented_methods_arr
   ));
 });
 
