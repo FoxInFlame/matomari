@@ -28,7 +28,7 @@ anime/search/:query is a method to get anime search results of a query on MAL.<b
           <tbody class="top aligned">
             <tr>
               <td><span class="inline-code">:query</span> [Optional]</td>
-              <td>Search query. It must be at least 3 letters long if specified. If unspecified, a filter parameter needs to be specified instead.</td>
+              <td>Search query. If unspecified, a filter parameter needs to be specified instead.</td>
               <td>Show anime that's related to the specified query.</td>
             </tr>
             <tr>
