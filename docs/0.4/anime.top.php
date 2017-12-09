@@ -53,7 +53,7 @@ anime/top is a method to get the top anime on MyAnimeList.<br>
 <div class="ui icon message">
   <i class="file outline icon"></i>
   <div class="content">
-    <p>Responses to this method are <a href="cache.html">cached</a>.</p>
+    <p>Responses to this method are <a href="cache.html">cached</a> for <b>a day</b>.</p>
   </div>
 </div>
 <h2 class="ui header">Call</h2>

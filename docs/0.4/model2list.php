@@ -6,6 +6,8 @@ function get_icon($type) {
     return "sort numeric ascending";
   } else if(strtolower($type) == "string") {
     return "sort alphabet ascending";
+  } else if(strtolower($type) == "object") {
+    return "code";
   }
 }
 

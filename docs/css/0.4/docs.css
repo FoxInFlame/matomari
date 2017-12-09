@@ -23,6 +23,13 @@ a:active, a:visited:active {
   background: rgba(46, 81, 162, 0.1);
 }
 
+.ui.tab[data-tab="model"] .item i {
+  padding-top: .07142857em;
+  padding-right: .28571429em;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+
 .inline-code {
   padding-left: 0.3em;
   padding-right: 0.3em;

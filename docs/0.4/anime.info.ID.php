@@ -48,59 +48,255 @@ anime/info/:id is a method that allows you to view the detailed information abou
 <div class="ui icon message">
   <i class="file outline icon"></i>
   <div class="content">
-    <p>Responses to this method are <a href="cache.html">cached</a>.</p>
+    <p>Responses to this method are <a href="cache.html">cached</a> for <b>a week</b>.</p>
   </div>
 </div>
-<h2 class="ui header">Response</h2>
-Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/info/21</span>
-<pre style="background: #F0F0F0;">
-  <code class="code json">
-    {
-      <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">21</span>,
-      <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"One Piece"</span>,
-      <span class="property">"other_titles"</span>: {
-        <span class="property" data-title="Array" data-content="English names">"english"</span>: [
-          <span class="type-string">"One Piece"</span>
-        ],
-        <span class="property" data-title="Array" data-content="Japanese Names">"japanese"</span>: [
-          <span class="type-string">"ONE PIECE"</span>
-        ],
-        <span class="property" data-title="Array" data-content="Synonyms">"synonym"</span>: []
-      },
-      <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">74</span>,
-      <span class="property" data-title="Integer" data-content="Anime popularity rank on MAL">"popularity"</span>: <span class="type-int">31</span>,
-      <span class="property" data-title="String" data-content="Direct URL of the anime cover image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/6/73245.jpg"</span>,
-      <span class="property" data-title="String" data-content="Source of the anime">"source"</span>: <span class="type-string">"Manga"</span>,
-      <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/21/One_Piece"</span>,
-      <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"TV"</span>,
-      <span class="property" data-title="Integer/null" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-null">null</span>,
-      <span class="property" data-title="Integer" data-content="Usual episode length in minutes">"duration"</span>: <span class="type-int">24</span>,
-      <span class="property" data-title="Integer/null" data-content="Total duration (eps x duration). Not accurate, for some shows have longer specials; null if either episodes or duration is empty.">"total_duration"</span>: <span class="type-null">null</span>,
-      <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">8.58</span>,
-      <span class="property" data-title="Integer" data-content="Number of people who rated a score">"score_count"</span>: <span class="type-int">318056</span>,
-      <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">518679</span>,
-      <span class="property" data-title="Integer" data-content="Number of people who have it in their favorites">"favorites_count"</span>: <span class="type-int">56364</span>,
-      <span class="property" data-title="Array" data-content="Genres of the anime">"genres"</span>: [
-        <span class="type-string">"Action"</span>,
-        <span class="type-string">"Adventure"</span>,
-        <span class="type-string">"Comedy"</span>,
-        <span class="type-string">"Drama"</span>,
-        <span class="type-string">"Fantasy"</span>,
-        <span class="type-string">"Shounen"</span>,
-        <span class="type-string">"Super Power"</span>
+<h2 class="ui header">Call</h2>
+<div class="ui top attached tabular menu example-code">
+  <a class="item active" data-tab="model">Model</a>
+  <a class="item" data-tab="request">Example Request</a>
+  <a class="item" data-tab="response">Example Response</a>
+</div>
+<div class="ui bottom attached tab segment active" data-tab="model">
+<?php
+// Model of the result. Ignore all double brackets - [{}]
+$model = [
+  "id" => [
+    "type" => "Integer",
+    "description" => "The anime id on MAL"
+  ],
+  "title" => [
+    "type" => "String",
+    "description" => "The anime title"
+  ],
+  "mal_url" => [
+    "type" => "String",
+    "description" => "Browser URL for the anime on MAL"
+  ],
+  "image_url" => [
+    "type" => "String",
+    "description" => "Direct URL of the anime cover image on MAL"
+  ],
+  "score" => [
+    "type" => "Integer",
+    "description" => "Community score to 2 decimal places"
+  ],
+  "rank" => [
+    "type" => "Integer",
+    "description" => "Overall anime rank on MAL"
+  ],
+  "popularity" => [
+    "type" => "Integer",
+    "description" => "Anime popularity rank on MAL"
+  ],
+  "synopsis" => [
+    "type" => "String",
+    "description" => "HTML formatted full synopsis"
+  ],
+  "other_titles" => [
+    "type" => "Object",
+    "description" => "Other titles for the anime on MAL",
+    "children" => [
+      "english" => [
+        "type" => "String",
+        "description" => "Alternative English titles on MAL"
       ],
-      <span class="property" data-title="Array" data-content="Producers for the anime">"producers"</span>: [
-        <span class="type-string">"Fuji TV"</span>,
-        <span class="type-string">"TAP"</span>
+      "japanese" => [
+        "type" => "String",
+        "description" => "Alternative Japanese titles on MAL"
       ],
-      <span class="property" data-title="Array" data-content="Studios making the anime">"studios"</span>: [
-        <span class="type-string">"Toei Animation"</span>
+      "synonyms" => [
+        "type" => "String",
+        "description" => "Synonymous titles on MAL"
+      ]
+    ]
+  ],
+  "type" => [
+    "type" => "String",
+    "description" => "Anime media type"
+  ],
+  "episodes" => [
+    "type" => "Integer",
+    "description" => "Total number of episodes; null if unknown"
+  ],
+  "air_status" => [
+    "type" => "String",
+    "description" => "The airing status of the anime"
+  ],
+  "air_dates" => [
+    "type" => "Object",
+    "description" => "The air dates of the anime",
+    "children" => [
+      "from" => [
+        "type" => "String",
+        "description" => "Air start date in DD-MM-YYYY format"
       ],
-      <span class="property" data-title="Array" data-content="Licensors for the anime">"licensors"</span>: [
-        <span class="type-string">"FUNimation Entertainment"</span>,
-        <span class="type-string">"4Kids Entertainment"</span>
+      "to" => [
+        "type" => "String",
+        "description" => "Air end date in DD-MM-YYYY format"
+      ]
+    ]
+  ],
+  "season" => [
+    "type" => "String",
+    "description" => "The season and year of the release (null if movie)"
+  ],
+  "air_time" => [
+    "type" => "String",
+    "description" => "Unparsed air time and day as it appears on MAL (null if movie)"
+  ],
+  "premier_date" => [
+    "type" => "String",
+    "description" => "The premier date of the anime (null unless movie)"
+  ],
+  "producers" => [
+    "type" => "Array",
+    "description" => "Producers for the anime"
+  ],
+  "licensors" => [
+    "type" => "Array",
+    "description" => "Licensors for the anime"
+  ],
+  "studios" => [
+    "type" => "Array",
+    "description" => "Studios for the anime"
+  ],
+  "source" => [
+    "type" => "String",
+    "description" => "The original source for the anime"
+  ],
+  "genres" => [
+    "type" => "Array",
+    "description" => "The genres of the anime on MAL"
+  ],
+  "duration" => [
+    "type" => "Object",
+    "description" => "The durations for the anime",
+    "children" => [
+      "total" => [
+        "type" => "Integer",
+        "description" => "The estimated total length of the anime in minutes"
       ],
-      <span class="property" data-title="String" data-content="HTML formatted full synopsis">"synopsis"</span>: <span class="type-string">"Gol D. Roger was known as the \"Pirate King,\" the strongest and the most...(truncated)..."</span>
-    }
-  </code>
-</pre>
+      "per_episode" => [
+        "type" => "Integer",
+        "description" => "The length of one episode of the anime in minutes"
+      ]
+    ]
+  ],
+  "rating" => [
+    "type" => "String",
+    "description" => "Unparsed rating of the anime as it appears on MAL"
+  ],
+  "members_scored" => [
+    "type" => "Integer",
+    "description" => "Number of people who set a score"
+  ],
+  "members_inlist" => [
+    "type" => "Integer",
+    "description" => "Number of people who have it in their list on MAL (null if sorted by favorites)"
+  ],
+  "members_favorited" => [
+    "type" => "Integer",
+    "description" => "Number of people who have it in their favorites on MAL (null unless sorted by favorites)"
+  ],
+  "background" => [
+    "type" => "String",
+    "description" => "The background info for the anime on MAL"
+  ],
+  "related" => [
+    "type" => "Array",
+    "description" => "Not done."
+  ],
+  "theme_songs" => [
+    "type" => "Array",
+    "description" => "Not done."
+  ]
+];
+
+require_once("model2list.php"); // This reads $model and echoes a model.
+?>
+</div>
+<div class="ui bottom attached tab segment" data-tab="request">
+  <pre style="background: #f0f0f0">
+    <code>
+curl -i
+     -H "Accept: application/json"
+     -X GET
+     "https://www.matomari.tk/api/0.4/anime/info/25835"
+    </code>
+  </pre>
+</div>
+<div class="ui bottom attached tab segment" data-tab="response">
+  <pre style="background: #f0f0f0">
+    <code>
+HTTP/1.1 200 OK
+Date: Sat, 09 Dec 2017 13:58:26 GMT
+Content-Type: application/json
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+Cache-Control: max-age=604800, public
+
+{
+  "id": 25835,
+  "title": "Shirobako",
+  "mal_url": "https://myanimelist.net/anime/25835/Shirobako",
+  "image_url": "https://myanimelist.cdn-dena.com/images/anime/6/68021.jpg",
+  "score": 8.46,
+  "rank": 133,
+  "popularity": 320,
+  "synopsis": "It all started in Kaminoyama High School, when five best friends—Aoi Miyamori, Ema Yasuhara, Midori Imai, Shizuka Sakaki, and Misa Toudou—discovered their collective love for all things anime and formed the animation club. After making their first amateur anime together and showcasing it at the culture festival, the group vow to pursue careers in the industry, aiming to one day work together and create their own mainstream show. &lt;br /&gt; &lt;br /&gt; Two and a half years later, Aoi and Ema have managed to land jobs at the illustrious Musashino Animation production company. The others, however, are finding it difficult to get their dream jobs. Shizuka is feeling the weight of not being recognized as a capable voice actor, Misa has a secure yet unsatisfying career designing 3D models for a car company, and Midori is a university student intent on pursuing her dream as a story writer. These five girls will learn that the path to success is one with many diversions, but dreams can still be achieved through perseverance and a touch of eccentric creativity.&lt;br /&gt; &lt;br /&gt; [Written by MAL Rewrite]",
+  "other_titles": {
+    "english": [
+      "Shirobako"
+    ],
+    "japanese": [
+      "SHIROBAKO"
+    ],
+    "synonyms": [
+      "White Box"
+    ]
+  },
+  "type": "TV",
+  "episodes": 24,
+  "air_status": "Finished Airing",
+  "air_dates": {
+    "from": "2014-10-09",
+    "to": "2015-03-26"
+  },
+  "season": "Fall 2014",
+  "air_time": "Thursdays at 23:30 (JST)",
+  "premier_date": null,
+  "producers": [
+    "Sotsu",
+    "Movic",
+    "Warner Bros.",
+    "KlockWorx",
+    "Showgate",
+    "Infinite"
+  ],
+  "licensors": [
+    "Sentai Filmworks"
+  ],
+  "studios": [
+    "P.A. Works"
+  ],
+  "source": "Original",
+  "genres": [
+    "Comedy",
+    "Drama"
+  ],
+  "duration": {
+    "total": 576,
+    "per_episode": 24
+  },
+  "rating": "PG-13 - Teens 13 or older",
+  "members_scored": 67773,
+  "members_inlist": 200193,
+  "members_favorited": 4321,
+  "background": "&lt;i&gt;Shirobako&lt;/i&gt; won the Animation Kobe Television Award in 2015.",
+  "related": [ ],
+  "theme_songs": [ ]
+}
+    </code>
+  </pre>
+</div>
