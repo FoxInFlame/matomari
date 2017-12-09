@@ -178,7 +178,7 @@ if($showFile == "main.html") {
                 showSidebar("general");
                 break;
             }
-            ?> 
+            ?>
           </div>
         </div>
         <div class="column sixteen wide mobile sixteen wide tablet twelve wide computer">
