@@ -16,24 +16,7 @@ anime/random is a method to get a random anime on MyAnimeList.<br>
     </tr>
     <tr>
       <td>Parameters</td>
-      <td>
-        <table class="ui celled table">
-          <thead>
-            <tr>
-              <th class="four wide">Name</th>
-              <th class="four wide">Possible Values</th>
-              <th class="eight wide">Description</th>
-            </tr>
-          </thead>
-          <tbody class="top aligned">
-            <tr>
-              <td><span class="inline-code">not</span> [Optional]</td>
-              <td><i>Comma separated natural numbers that's in the MAL database</i></td>
-              <td>Exclude the specified anime ids from the randomiser.</td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
+      <td>None</td>
     </tr>
     <tr>
       <td>Status Codes</td>
