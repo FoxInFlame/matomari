@@ -49,7 +49,6 @@ anime/search/:query is a method to get anime search results of a query on MAL.<b
       <td>Status Codes</td>
       <td>
         <b>200</b> (<a href="responsecodes#all-ok">OK</a>)<br>
-        <b>400</b> (<a href="responsecodes#query-at-least-3-letters">Query must be at least 3 letters long</a>)<br>
         <b>404</b> (<a href="responsecodes#myanimelist-is-offline">MAL is offline</a>)<br>
         <b>500</b> (<a href="responsecodes#bad-markup">The code for MAL is not valid HTML markup</a>)<br>
       </td>
@@ -59,7 +58,7 @@ anime/search/:query is a method to get anime search results of a query on MAL.<b
 <div class="ui icon message">
   <i class="file outline icon"></i>
   <div class="content">
-    <p>Responses to this method are <a href="cache.html">cached</a>.</p>
+    <p>Responses to this method are <a href="cache.html">cached</a> for <b>a week</b>.</p>
   </div>
 </div>
 <div class="ui info icon message">
@@ -145,29 +144,143 @@ The available filters are:
     </tr>
   </tfoot>
 </table>
-<h2 class="ui header">Response</h2>
-Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/search/love?filter=type:movie</span>
-<pre style="background: #f0f0f0;">
-  <code class="code json">
-    {
-      <span class="property" data-title="String" data-content="The query string that matomari parsed and sent to MAL; invalid filters don't show up here">"parameter"</span>: <span class="type-string">"q=love&amp;type=3"</span>,
-      <span class="property" data-title="Array" data-content="List of anime, up to 50 items per page">"results"</span>: [
-        {
-          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">1006</span>,
-          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Tenchi Muyou! in Love"</span>,
-          <span class="property" data-title="String" data-content="Direct URL of the anime cover image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/11/21054.jpg"</span>,
-          <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/1006/Tenchi_Muyou_in_Love"</span>,
-          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"Movie"</span>,
-          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">1</span>,
-          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places; null if not yet aired">"score"</span>: <span class="type-int">7.52</span>,
-          <span class="property" data-title="String" data-content="Airing start date; hyphens for unknown parts">"startdate"</span>: <span class="type-string">"19960420"</span>,
-          <span class="property" data-title="String" data-content="Airing end date; hyphens for unknown parts">"enddate"</span>: <span class="type-string">"199604--"</span>,
-          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">14468</span>,
-          <span class="property" data-title="Integer" data-content="Rating according to the MAL rating system">"rating"</span>: <span class="type-string">"PG-13"</span>,
-          <span class="property" data-title="String" data-content="A truncated synopsis of the anime with an ellipsis at the end if it doesn't fit">"synopsis_snippet"</span>: <span class="type-string">"The demonic space criminal Kain has escaped from prison and destroyed the Galaxy Police headquarters. To ensure that the Jurai will not stop him, Kain travels back to 1970 to eliminate Tenchi&#039;s mother..."</span>
-        },
-        ...
+
+<h2 class="ui header">Call</h2>
+<div class="ui top attached tabular menu example-code">
+  <a class="item active" data-tab="model">Model</a>
+  <a class="item" data-tab="request">Example Request</a>
+  <a class="item" data-tab="response">Example Response</a>
+</div>
+<div class="ui bottom attached tab segment active" data-tab="model">
+<?php
+// Model of the result. Ignore all double brackets - [{}]
+$model = [
+  "parameter" => [
+    "type" => "String",
+    "description" => "The URL parameters that was constructed (together with filters) and sent to MAL"
+  ],
+  "page" => [
+    "type" => "Integer",
+    "description" => "The page"
+  ],
+  "items" => [
+    "type" => "Array",
+    "description" => "List of anime, 50 items per page",
+    "children" => [
+      "id" => [
+        "type" => "Integer",
+        "description" => "The anime id on MAL"
+      ],
+      "title" => [
+        "type" => "String",
+        "description" => "The anime title"
+      ],
+      "mal_url" => [
+        "type" => "String",
+        "description" => "Browser URL for the anime on MAL"
+      ],
+      "image_url" => [
+        "type" => "String",
+        "description" => "Direct URL of the anime cover image on MAL"
+      ],
+      "score" => [
+        "type" => "Integer",
+        "description" => "Community score to 2 decimal places"
+      ],
+      "type" => [
+        "type" => "String",
+        "description" => "Anime media type"
+      ],
+      "episodes" => [
+        "type" => "Integer",
+        "description" => "Total number of episodes; null if unknown"
+      ],
+      "air_dates" => [
+        "type" => "Object",
+        "description" => "The air dates of the anime",
+        "children" => [
+          "from" => [
+            "type" => "String",
+            "description" => "Air start date in YYYY-MM-DD format (with x as unknown)"
+          ],
+          "to" => [
+            "type" => "String",
+            "description" => "Air end date in YYYY-MM-DD format (with x as unknown)"
+          ]
+        ]
+      ],
+      "rating" => [
+        "type" => "String",
+        "description" => "The rating on MAL (without the details)"
+      ],
+      "members_inlist" => [
+        "type" => "Integer",
+        "description" => "Number of people who have it in their list on MAL"
       ]
-    }
-  </code>
-</pre>
+    ]
+  ]
+];
+
+require_once("model2list.php"); // This reads $model and echoes a model.
+?>
+</div>
+<div class="ui bottom attached tab segment" data-tab="request">
+  <pre style="background: #f0f0f0">
+    <code>
+curl -i
+     -H "Accept: application/json"
+     -X GET
+     "https://www.matomari.tk/api/0.4/anime/search/love?filter=type:movie"
+    </code>
+  </pre>
+</div>
+<div class="ui bottom attached tab segment" data-tab="response">
+  <pre style="background: #f0f0f0">
+    <code>
+HTTP/1.1 200 OK
+Date: Sat, 09 Dec 2017 15:00:42 GMT
+Content-Type: application/json
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+Cache-Control: max-age=604800, public
+
+{
+  "parameter": "q=love&amp;type=3",
+  "page": 1,
+  "items": [
+    {
+      "id": 1006,
+      "title": "Tenchi Muyou! in Love",
+      "mal_url": "https://myanimelist.net/anime/1006/Tenchi_Muyou_in_Love",
+      "image_url": "https://myanimelist.cdn-dena.com/images/anime/11/21054.jpg",
+      "score": 7.51,
+      "type": "Movie",
+      "episodes": 1,
+      "air_dates": {
+        "from": "1996-04-20",
+        "to": "1996-04-20"
+      },
+      "rating": "PG-13",
+      "members_inlist": 15629
+    },
+    {
+      "id": 6535,
+      "title": "Ai",
+      "mal_url": "https://myanimelist.net/anime/6535/Ai",
+      "image_url": "https://myanimelist.cdn-dena.com/images/anime/13/64699.jpg",
+      "score": 4.42,
+      "type": "Movie",
+      "episodes": 1,
+      "air_dates": {
+        "from": "1963-xx-xx",
+        "to": "1963-xx-xx"
+      },
+      "rating": "PG-13",
+      "members_inlist": 2349
+    },
+    ...
+  ]
+}
+    </code>
+  </pre>
+</div>
