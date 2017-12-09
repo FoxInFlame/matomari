@@ -41,6 +41,7 @@ anime/info/:id is a method that allows you to view the detailed information abou
         <b>200</b> (<a href="responsecodes#all-ok">OK</a>)<br>
         <b>400</b> (<a href="responsecodes#invalid-id-format">Invalid anime ID</a>)<br>
         <b>404</b> (<a href="responsecodes#id-doesnt-exist">Anime with specified ID doesn't exist</a> &middot; <a href="responsecodes#myanimelist-is-offline">MAL is offline</a>)<br>
+        <b>429</b> (<a href="responsecodes#too-many-requests">Too Many Requests</a>)<br>
       </td>
     </tr>
   </tbody>

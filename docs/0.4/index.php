@@ -3,7 +3,6 @@ ini_set("display_errors", true);
 ini_set("display_startup_errors", true);
 error_reporting(E_ALL);
 
-
 $time_start = microtime(true);
 $showFile = "main.php"; // Default page - 0.4/index.html
 $showFile_method = "";
@@ -31,7 +30,7 @@ if(isset($_GET['file'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php
-if($showFile == "index.html") {
+if($showFile == "main.html") {
 ?>
     <title>Version 0.4 - matomari API Docs</title>
 <?php

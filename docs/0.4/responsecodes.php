@@ -55,7 +55,7 @@
       </tbody>
     </table>
   </div>
-  <div class="ui divider"></div>
+</div>
 
 <div id="code-404" class="ui segment">
   <h2 class="ui header">404</h2>
@@ -110,7 +110,35 @@
       </tbody>
     </table>
   </div>
-  <div class="ui divider"></div>
+</div>
+
+<div id="code-429" class="ui segment">
+  <h2 class="ui header">429</h2>
+  <div id="too-many-requests">
+    <h3 class="ui teal header">Too Many Requests</h3>
+    <table class="ui fixed celled table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Displayed When</th>
+          <th>Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            You sent the right request but MyAnimeList got stressed out by your quick requests, and the server was not able to process it.
+          </td>
+          <td>
+            When requests to MyAnimeList fail with a response code of 429.
+          </td>
+          <td>
+            JSON with the 'message' key containing this error.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div id="code-500" class="ui segment">
