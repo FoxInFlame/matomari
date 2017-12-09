@@ -32,7 +32,11 @@ a:active, a:visited:active {
   word-wrap: break-word;
 }
 
-.code {
+pre {
+  padding-left: 0.9em;
+}
+
+code {
   white-space: pre-wrap;
 }
 

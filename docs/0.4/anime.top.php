@@ -28,18 +28,13 @@ anime/top is a method to get the top anime on MyAnimeList.<br>
           <tbody class="top aligned">
             <tr>
               <td><span class="inline-code">sort</span> [Optional]</td>
-              <td>all, airing, upcoming, tv, movie, ova, special, bypopularity, favorite<br>(default: "all")</td>
-              <td>Sort the top anime. All of these values are the same name as the parameters used in <a href="https://myanimelist.net/topanime.php">https://myanimelist.net/topanime.php</a>.</td>
+              <td>all, airing, upcoming, tv, movie, ova, special, bypopularity, byfavorites<br>(default: "all")</td>
+              <td>Sort the top anime.</td>
             </tr>
             <tr>
               <td><span class="inline-code">page</span> [Optional]</td>
               <td><i>Any natural number.</i><br>(default: "1")</td>
               <td>Page number for the top anime. If the page doesn't exist, it will become 1.</td>
-            </tr>
-            <tr>
-              <td><span class="inline-code">details</span> [Optional]</td>
-              <td>true or anything else for false<br>(default: none)</td>
-              <td>Setting this to true will return the synopsis snippet, genres, release year, member count, score count and all that but the request will take more than 50 seconds. Not recommended for use.</td>
             </tr>
           </tbody>
         </table>
@@ -68,124 +63,122 @@ anime/top is a method to get the top anime on MyAnimeList.<br>
   <a class="item" data-tab="response">Example Response</a>
 </div>
 <div class="ui bottom attached tab segment active" data-tab="model">
-  <div class="ui list">
-    <div class="item">
-      <i class="unordered list icon"></i>
-      <div class="content">
-        <div class="header">items</div>
-        <div class="description">List of anime, 50 items per page</div>
-        <div class="list">
-          <div class="item">
-            <i class="sort numeric ascending icon"></i>
-            <div class="content">
-              <div class="header">rank</div>
-              <div class="description">Overall anime rank on MAL</div>
-            </div>
-          </div>
-          <div class="item">
-            <i class="sort numeric ascending icon"></i>
-            <div class="content">
-              <div class="header">id</div>
-              <div class="description">The anime id on MAL</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<?php
+// Model of the result. Ignore all double brackets - [{}]
+$model = [
+  "items" => [
+    "type" => "Array",
+    "description" => "List of anime, 50 items per page",
+    "children" => [
+      "id" => [
+        "type" => "Integer",
+        "description" => "The anime id on MAL"
+      ],
+      "title" => [
+        "type" => "String",
+        "description" => "The anime title"
+      ],
+      "mal_url" => [
+        "type" => "String",
+        "description" => "Browser URL for the anime on MAL"
+      ],
+      "image_url" => [
+        "type" => "String",
+        "description" => "Direct URL of the anime cover image on MAL"
+      ],
+      "score" => [
+        "type" => "Integer",
+        "description" => "Community score to 2 decimal places"
+      ],
+      "rank" => [
+        "type" => "Integer",
+        "description" => "Anime rank in the chosen sort (NOT the overall MAL rank!)"
+      ],
+      "type" => [
+        "type" => "String",
+        "description" => "Anime media type"
+      ],
+      "episodes" => [
+        "type" => "Integer",
+        "description" => "Total number of episodes; null if unknown"
+      ],
+      "members_inlist" => [
+        "type" => "Integer",
+        "description" => "Number of people who have it in their list on MAL (null if sorted by favorites)"
+      ],
+      "members_favorited" => [
+        "type" => "Integer",
+        "description" => "Number of people who have it in their favorites on MAL (null unless sorted by favorites)"
+      ]
+    ]
+  ]
+]
+
+require_once("model2list.php"); // This reads $model and echoes a model.
+?>
 </div>
 <div class="ui bottom attached tab segment" data-tab="request">
-
+  <pre style="background: #f0f0f0">
+    <code>
+curl -i
+     -H "Accept: application/json"
+     -X GET
+     "https://www.matomari.tk/api/0.4/anime/top?sort=byfavorites"
+    </code>
+  </pre>
 </div>
 <div class="ui bottom attached tab segment" data-tab="response">
+  <pre style="background: #f0f0f0">
+    <code>
+HTTP/1.1 200 OK
+Date: Sat, 09 Dec 2017 09:24:14 GMT
+Content-Type: application/json
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+Cache-Control: max-age=86400, public
 
+{
+  "page": 1,
+  "items": [
+    {
+      "id": 5114,
+      "title": "Fullmetal Alchemist: Brotherhood",
+      "mal_url": "https:\/\/myanimelist.net\/anime\/5114\/Fullmetal_Alchemist__Brotherhood",
+      "image_url": "https:\/\/myanimelist.cdn-dena.com\/images\/anime\/5\/47421.jpg",
+      "score": 9.25,
+      "rank": 1,
+      "type": "TV",
+      "episodes": 64,
+      "members_inlist": null,
+      "members_favorited": 96368
+    },
+    {
+      "id": 9253,
+      "title": "Steins;Gate",
+      "mal_url": "https:\/\/myanimelist.net\/anime\/9253\/Steins_Gate",
+      "image_url": "https:\/\/myanimelist.cdn-dena.com\/images\/anime\/5\/73199.jpg",
+      "score": 9.14,
+      "rank": 2,
+      "type": "TV",
+      "episodes": 24,
+      "members_inlist": null,
+      "members_favorited": 83325
+    },
+    {
+      "id": 1535,
+      "title": "Death Note",
+      "mal_url": "https:\/\/myanimelist.net\/anime\/1535\/Death_Note",
+      "image_url": "https:\/\/myanimelist.cdn-dena.com\/images\/anime\/9\/9453.jpg",
+      "score": 8.68,
+      "rank": 3,
+      "type": "TV",
+      "episodes": 37,
+      "members_inlist": null,
+      "members_favorited": 82819
+    },
+    ...
+  ]
+}
+    </code>
+  </pre>
 </div>
-<h2 class="ui header">Response</h2>
-Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/top</span>
-<pre style="background: #f0f0f0;">
-  <code class="code json">
-    {
-      <span class="property" data-title="Array" data-content="List of anime, 50 items per page">"items"</span>: [
-        {
-          <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">1</span>,
-          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">32281</span>,
-          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Kimi no Na Wa."</span>,
-          <span class="property" data-title="String" data-content="Direct URL of the anime cover image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/7/79999.jpg"</span>,
-          <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/32281/Kimi_no_Na_wa"</span>,
-          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"Movie"</span>,
-          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">1</span>,
-          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">9.33</span>,
-          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">307272</span>
-        },
-        {
-          <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">2</span>,
-          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">5114</span>,
-          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Fullmetal Alchemist: Brotherhood"</span>,
-          <span class="property" data-title="String" data-content="Direct URL of the anime cover image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/5/47421.jpg"</span>,
-          <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">""</span>,
-          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"TV"</span>,
-          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">64</span>,
-          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">9.26</span>,
-          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">864189</span>
-        },
-        ...
-      ]
-    }
-  </code>
-</pre>
-Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/top?detail=true</span>
-<pre style="background: #f0f0f0">
-  <code class="code json">
-    {
-      <span class="property" data-title="Array" data-content="List of anime, 50 items per page">"items"</span>: [
-        {
-          <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">1</span>,
-          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">32281</span>,
-          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Kimi no Na Wa."</span>,
-          <span class="property" data-title="String" data-content="Direct URL of the anime cover image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/7/79999.jpg"</span>,
-          <span class="property" data-title="String" data-content="Browser link for the anime">"url"</span>: <span class="type-string">"https://myanimelist.net/anime/32281/Kimi_no_Na_wa"</span>,
-          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"Movie"</span>,
-          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">1</span>,
-          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">9.35</span>,
-          <span class="property" data-title="Integer" data-content="Number of people who rated a score">"score_count"</span>: <span class="type-int">102167</span>,
-          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">240252</span>,
-          <span class="property" data-title="Integer" data-content="Anime popularity rank on MAL">"popularity"</span>: <span class="type-int">164</span>,
-          <span class="property" data-title="Array" data-content="Genres of the anime">"genres"</span>: [
-            <span class="type-string">"Drama"</span>,
-            <span class="type-string">"Romance"</span>,
-            <span class="type-string">"School"</span>,
-            <span class="type-string">"Supernatural"</span>
-          ],
-          <span class="property" data-title="String" data-content="Airing status of the anime">"status"</span>: <span class="type-string">"Finished Airing"</span>,
-          <span class="property" data-title="Integer" data-content="4 digit release year of the anime">"release_year"</span>: <span class="type-int">2016</span>,
-          <span class="property" data-title="String" data-content="A truncated synopsis of the anime with an ellipsis at the end if it doesn't fit">"synopsis_snippet"</span>: <span class="type-string">"Mitsuha Miyamizu, a high school girl, yearns to live the life of a boy in the bustling city of Tokyo&amp;mdash;a dream that stands in stark contrast to her present life in the countryside. Meanwhile in th..."</span>
-        },
-        {
-          <span class="property" data-title="Integer" data-content="Overall anime rank on MAL">"rank"</span>: <span class="type-int">2</span>,
-          <span class="property" data-title="Integer" data-content="The anime id on MAL">"id"</span>: <span class="type-int">5114</span>,
-          <span class="property" data-title="String" data-content="The anime title on MAL">"title"</span>: <span class="type-string">"Fullmetal Alchemist: Brotherhood"</span>,
-          <span class="property" data-title="String" data-content="Direct URL of the anime cover image">"image"</span>: <span class="type-string">"https://myanimelist.cdn-dena.com/images/anime/5/47421.jpg"</span>,
-          <span class="property" data-title="String" data-content="Anime media type">"type"</span>: <span class="type-string">"TV"</span>,
-          <span class="property" data-title="Integer" data-content="Total number of episodes; null if unknown">"episodes"</span>: <span class="type-int">64</span>,
-          <span class="property" data-title="Integer" data-content="Community Score to 2 decimal places">"score"</span>: <span class="type-int">9.26</span>,
-          <span class="property" data-title="Integer" data-content="Number of people who rated a score">"score_count"</span>: <span class="type-int">508074</span>,
-          <span class="property" data-title="Integer" data-content="Number of people who have it in their list">"members_count"</span>: <span class="type-int">819164</span>,
-          <span class="property" data-title="Integer" data-content="Anime popularity rank on MAL">"popularity"</span>: <span class="type-int">4</span>,
-          <span class="property" data-title="Array" data-content="Genres of the anime">"genres"</span>: [
-            <span class="type-string">"Action"</span>,
-            <span class="type-string">"Adventure"</span>,
-            <span class="type-string">"Drama"</span>,
-            <span class="type-string">"Fantasy"</span>,
-            <span class="type-string">"Magic"</span>,
-            <span class="type-string">"Military"</span>,
-            <span class="type-string">"Shounen"</span>
-          ],
-          <span class="property" data-title="String" data-content="Airing status of the anime">"status"</span>: <span class="type-string">"Finished Airing"</span>,
-          <span class="property" data-title="Integer" data-content="4 digit release year of the anime">"release_year"</span>: <span class="type-int">2009</span>,
-          <span class="property" data-title="String" data-content="A truncated synopsis of the anime with an ellipsis at the end if it doesn't fit">"synopsis_snippet"</span>: <span class="type-string">"&amp;quot;In order for something to be obtained, something of equal value must be lost.&amp;quot; Alchemy is bound by this Law of Equivalent Exchange&mdash;something the young brothers Edward and Alphonse ..."</span>
-        },
-        ...
-      ]
-    }
-  </code>
-</pre>
