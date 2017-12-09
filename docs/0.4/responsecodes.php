@@ -56,8 +56,11 @@
     </table>
   </div>
   <div class="ui divider"></div>
-  <div id="query-at-least-3-letters">
-    <h3 class="ui red header">Query must be at least 3 letters long</h3>
+
+<div id="code-404" class="ui segment">
+  <h2 class="ui header">404</h2>
+  <div id="id-doesnt-exist">
+    <h3 class="ui red header">Specified ID doesn't exist</h3>
     <table class="ui fixed celled table">
       <thead>
         <tr>
@@ -69,22 +72,19 @@
       <tbody>
         <tr>
           <td>
-            The request you sent contains a query in the URL that is less than 3 characters. The search query must be 3 letters or longer, for MyAnimeList is unable to process it. Please use <a href="general.quickSearch.QUERY">general/quickSearch/:query</a> to search less than 3 letters.
+            You sent the right request, but MyAnimeList could not find an entry with the ID provided so the server was not able to process it.
           </td>
           <td>
-            When the check for the length of characters for the search query returns a value smaller than 3. It is before data is sent to MyAnimeList.
+            When the cURL to the MyAnimeList request failed with a 404 error.
           </td>
           <td>
-            JSON with 'message' key containing this error.
+            JSON with the 'message' key containing this error.
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-</div>
-
-<div id="code-404" class="ui segment">
-  <h2 class="ui header">404</h2>
+  <div class="ui divider"></div>
   <div id="myanimelist-is-offline">
     <h3 class="ui red header">MyAnimeList is offline</h3>
     <table class="ui fixed celled table">
@@ -111,31 +111,6 @@
     </table>
   </div>
   <div class="ui divider"></div>
-  <div id="id-doesnt-exist">
-    <h3 class="ui red header">Specified ID doesn't exist</h3>
-    <table class="ui fixed celled table">
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Displayed When</th>
-          <th>Response</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            You sent the right request, but MyAnimeList could not find an entry with the ID provided so the server was not able to process it.
-          </td>
-          <td>
-            When the cURL to the MyAnimeList request failed with a 404 error.
-          </td>
-          <td>
-            JSON with the 'message' key containing this error.
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </div>
 
 <div id="code-500" class="ui segment">
