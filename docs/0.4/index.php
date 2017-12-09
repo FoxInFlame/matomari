@@ -211,4 +211,5 @@ if($showFile == "main.html") {
 echo "<!--File loaded: " . $showFile . "-->\n";
 $time_end = microtime(true);
 echo "<!--Dynamic documentation page generated in " . ($time_end - $time_start) . " seconds.-->";
+echo "<!--Part of the matomari API-->";
 ?>
