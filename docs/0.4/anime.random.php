@@ -49,7 +49,33 @@ anime/random is a method to get a random anime on MyAnimeList.<br>
     <p>Responses to this method are <b>not</b> <a href="cache.html">cached</a>.</p>
   </div>
 </div>
-<h2 class="ui header">Response</h2>
-Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/random</span><br>
 
-302 redirect with the <span class="inline-code">Location</span> header pointing to <a href="anime.info.ID.html">anime/info/:id</a>.
+<h2 class="ui header">Call</h2>
+<div class="ui top attached tabular menu example-code">
+  <a class="item active" data-tab="request">Example Request</a>
+  <a class="item" data-tab="response">Example Response</a>
+</div>
+<div class="ui bottom attached tab segment" data-tab="request">
+  <pre style="background: #f0f0f0">
+    <code>
+curl -i
+     -H "Accept: application/json"
+     -X GET
+     "https://www.matomari.tk/api/0.4/anime/random"
+    </code>
+  </pre>
+</div>
+<div class="ui bottom attached tab segment" data-tab="response">
+  <pre style="background: #f0f0f0">
+    <code>
+HTTP/1.1 302 Found
+Date: Sat, 09 Dec 2017 14:46:45 GMT
+Content-Type: application/json
+Content-Length: 0
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+Cache-Control: no-cache, must-revalidate
+Location: /api/0.4/anime/info/18451
+    </code>
+  </pre>
+</div>

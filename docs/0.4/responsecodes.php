@@ -112,7 +112,7 @@
   </div>
   <div class="ui divider"></div>
   <div id="id-doesnt-exist">
-    <h3 class="ui red header">Specied ID doesn't exist</h3>
+    <h3 class="ui red header">Specified ID doesn't exist</h3>
     <table class="ui fixed celled table">
       <thead>
         <tr>

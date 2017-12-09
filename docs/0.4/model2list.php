@@ -7,7 +7,7 @@ function get_icon($type) {
   } else if(strtolower($type) == "string") {
     return "sort alphabet ascending";
   } else if(strtolower($type) == "object") {
-    return "code";
+    return "angle double right";
   }
 }
 
