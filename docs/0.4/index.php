@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 
 $time_start = microtime(true);
-$showFile = "index.html"; // Default page - 0.4/index.html
+$showFile = "main.php"; // Default page - 0.4/index.html
 $showFile_method = "";
 require_once("methods.php");
 array_push($filenames, "responsecodes");
@@ -19,7 +19,7 @@ if(isset($_GET['file'])) {
     }
     if($tmp2 == $_GET['file']) {
       $showFile_method = $filename;
-      $showFile = $tmp2 . ".html";
+      $showFile = $tmp2 . ".php";
       break;
     }
   }
@@ -30,25 +30,26 @@ if(isset($_GET['file'])) {
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php
-    if($showFile == "index.html") {
-    ?>
+<?php
+if($showFile == "index.html") {
+?>
     <title>Version 0.4 - matomari API Docs</title>
-    <?php
-    } else if($showFile == "responsecodes.html") {
-    ?>
+<?php
+} else if($showFile == "responsecodes.html") {
+?>
     <title>Response Codes - 0.4 | matomari API Docs</title>
-    <?php
-    } else {
-    ?>
+<?php
+} else {
+?>
     <title><?=$showFile_method?> - 0.4 | matomari API Docs</title>
-    <?php
-    }
-    ?>
+<?php
+}
+?>
     <link href="../semantic/semantic.min.css" rel="stylesheet">
     <link href="../css/0.4/docs.css" rel="stylesheet">
 
     <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.address-1.6.js"></script>
     <script src="../semantic/semantic.min.js"></script>
   </head>
   <body>
@@ -112,7 +113,7 @@ if(isset($_GET['file'])) {
         </div>
       </div>
       <?php
-      if($showFile == "index.html" || $showFile == "responsecodes.html") {
+      if($showFile == "main.php" || $showFile == "responsecodes.php") {
         include($showFile);
       } else {
       ?>

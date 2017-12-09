@@ -61,6 +61,45 @@ anime/top is a method to get the top anime on MyAnimeList.<br>
     <p>Responses to this method are <a href="cache.html">cached</a>.</p>
   </div>
 </div>
+<h2 class="ui header">Call</h2>
+<div class="ui top attached tabular menu example-code">
+  <a class="item active" data-tab="model">Model</a>
+  <a class="item" data-tab="request">Example Request</a>
+  <a class="item" data-tab="response">Example Response</a>
+</div>
+<div class="ui bottom attached tab segment active" data-tab="model">
+  <div class="ui list">
+    <div class="item">
+      <i class="unordered list icon"></i>
+      <div class="content">
+        <div class="header">items</div>
+        <div class="description">List of anime, 50 items per page</div>
+        <div class="list">
+          <div class="item">
+            <i class="sort numeric ascending icon"></i>
+            <div class="content">
+              <div class="header">rank</div>
+              <div class="description">Overall anime rank on MAL</div>
+            </div>
+          </div>
+          <div class="item">
+            <i class="sort numeric ascending icon"></i>
+            <div class="content">
+              <div class="header">id</div>
+              <div class="description">The anime id on MAL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui bottom attached tab segment" data-tab="request">
+
+</div>
+<div class="ui bottom attached tab segment" data-tab="response">
+
+</div>
 <h2 class="ui header">Response</h2>
 Request to <span class="inline-code">https://www.matomari.tk/api/0.4/anime/top</span>
 <pre style="background: #f0f0f0;">

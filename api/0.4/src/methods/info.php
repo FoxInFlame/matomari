@@ -51,7 +51,7 @@ call_user_func(function() {
         array_push($tested_methods_arr, implode("/", $method_name_final_arr));
       }
 
-      if(file_exists(dirname(__FILE__) . "/../../../../docs/0.4/" . str_replace(".php", ".html", $fileinfo->getFilename()))) {
+      if(file_exists(dirname(__FILE__) . "/../../../../docs/0.4/" . $fileinfo->getFilename())) {
         array_push($documented_methods_arr, implode("/", $method_name_final_arr));
       }
     }
