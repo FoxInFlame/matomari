@@ -129,11 +129,11 @@ $model = [
     "children" => [
       "from" => [
         "type" => "String",
-        "description" => "Air start date in DD-MM-YYYY format"
+        "description" => "Air start date in YYYY-MM-DD format (with x as unknown)"
       ],
       "to" => [
         "type" => "String",
-        "description" => "Air end date in DD-MM-YYYY format"
+        "description" => "Air end date in YYYY-MM-DD format (with x as unknown)"
       ]
     ]
   ],
