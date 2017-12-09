@@ -8,4 +8,9 @@ $(document).ready(function() {
       transition: "fade"
     });
   }
+  if($(".example-code").length !== 0) {
+    $(".example-code .item").tab({
+      history: true
+    });
+  }
 });
