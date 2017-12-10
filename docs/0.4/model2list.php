@@ -4,6 +4,8 @@ function get_icon($type) {
     return "unordered list";
   } else if(strtolower($type) == "integer") {
     return "sort numeric ascending";
+  } else if(strtolower($type) == "float") {
+    return "circle";
   } else if(strtolower($type) == "string") {
     return "sort alphabet ascending";
   } else if(strtolower($type) == "object") {
@@ -11,7 +13,7 @@ function get_icon($type) {
   }
 }
 
-$output = "<div class=\"ui list\">";
+$output = "<i>Hover over the icons to see the type of each key!</i><br><br><div class=\"ui list\">";
 model2list($model);
 
 function model2list($model) {

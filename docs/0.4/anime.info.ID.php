@@ -79,7 +79,7 @@ $model = [
     "description" => "Direct URL of the anime cover image on MAL"
   ],
   "score" => [
-    "type" => "Integer",
+    "type" => "Float",
     "description" => "Community score to 2 decimal places"
   ],
   "rank" => [
