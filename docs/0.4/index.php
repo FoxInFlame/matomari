@@ -30,11 +30,11 @@ if(isset($_GET['file'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php
-if($showFile == "main.html") {
+if($showFile == "main.php") {
 ?>
     <title>Version 0.4 - matomari API Docs</title>
 <?php
-} else if($showFile == "responsecodes.html") {
+} else if($showFile == "responsecodes.php") {
 ?>
     <title>Response Codes - 0.4 | matomari API Docs</title>
 <?php
