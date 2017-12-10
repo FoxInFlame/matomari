@@ -34,43 +34,43 @@ class AnimeRecommendationsParser {
 
       // The From ID
       // <a class="hoverinfo_trigger" id="#raArea1_801" rel="#raInfo1_801" href="/anime/801/Ghost_in_the_Shell__Stand_Alone_Complex_2nd_GIG">...</a>
-      $recommendation->set("from_id", (int)substr($from->find(".picSurround a", 0)->id, 9));
+      $recommendation->set("rec_from_id", (int)substr($from->find(".picSurround a", 0)->id, 9));
 
       // The From Title
       // <strong>Ghost in the Shell: Stand Alone Complex 2nd GIG</strong>
-      $recommendation->set("from_title", (string)$from->find("a strong", 0)->innertext);
+      $recommendation->set("rec_from_title", (string)$from->find("a strong", 0)->innertext);
 
       // The MAL URL
       // <a href="/anime/801/Ghost_in_the_Shell__Stand_Alone_Complex_2nd_GIG" title="Ghost in the Shell: Stand Alone Complex 2nd GIG"><strong>Ghost in the Shell: Stand Alone Complex 2nd GIG</strong></a>
-      $recommendation->set("from_mal_url", (string)"https://myanimelist.net" . $from->find("a", 0)->href);
+      $recommendation->set("rec_from_mal_url", (string)"https://myanimelist.net" . $from->find("a", 0)->href);
 
       // The From Image URL
       // <img src="https://myanimelist.cdn-dena.com/images/anime/11/51465t.webp" data-src="https://myanimelist.cdn-dena.com/images/anime/11/51465t.webp" data-srcset="https://myanimelist.cdn-dena.com/images/anime/11/51465t.webp 1x,https://myanimelist.cdn-dena.com/r/100x140/images/anime/11/51465.webp?s=713477ab78fb1bbe684e9805e5ed0b55 2x" width="50" alt="Anime: Ghost in the Shell: Stand Alone Complex 2nd GIG" class=" lazyloaded" srcset="https://myanimelist.cdn-dena.com/images/anime/11/51465t.webp 1x,https://myanimelist.cdn-dena.com/r/100x140/images/anime/11/51465.webp?s=713477ab78fb1bbe684e9805e5ed0b55 2x">
       if($from->find(".picSurround a img", 0)->{'data-srcset'}) {
-        $recommendation->set("from_image_url", (string)str_replace("t.webp", ".jpg", str_replace("t.jpg", ".jpg", explode(" 1x", $from->find(".picSurround a img", 0)->{'data-srcset'})[0])));
+        $recommendation->set("rec_from_image_url", (string)str_replace("t.webp", ".jpg", str_replace("t.jpg", ".jpg", explode(" 1x", $from->find(".picSurround a img", 0)->{'data-srcset'})[0])));
       } else {
-        $recommendation->set("from_image_url", (string)str_replace("t.webp", ".jpg", str_replace("t.jpg", ".jpg", explode(" 1x", $from->find(".picSurround a img", 0)->srcset)[0])));
+        $recommendation->set("rec_from_image_url", (string)str_replace("t.webp", ".jpg", str_replace("t.jpg", ".jpg", explode(" 1x", $from->find(".picSurround a img", 0)->srcset)[0])));
       }
 
       $to = $item->find("table td", 1);
 
       // The To ID
       // <a class="hoverinfo_trigger" id="#raArea2_1096" rel="#raInfo2_1096" href="/anime/1096/Mobile_Police_Patlabor_2__The_Movie">...</a>
-      $recommendation->set("to_id", (int)substr($to->find(".picSurround a", 0)->id, 9));
+      $recommendation->set("rec_to_id", (int)substr($to->find(".picSurround a", 0)->id, 9));
 
       // The To Title
       // <strong>Mobile Police Patlabor 2: The Movie</strong>
-      $recommendation->set("to_title", (string)$to->find("a strong", 0)->innertext);
+      $recommendation->set("rec_to_title", (string)$to->find("a strong", 0)->innertext);
 
       // The MAL URL
       // <a href="/anime/1096/Mobile_Police_Patlabor_2__The_Movie" title="Mobile Police Patlabor 2: The Movie"><strong>Mobile Police Patlabor 2: The Movie</strong></a>
-      $recommendation->set("to_mal_url", (string)"https://myanimelist.net" . $to->find("a", 0)->href);
+      $recommendation->set("rec_to_mal_url", (string)"https://myanimelist.net" . $to->find("a", 0)->href);
       // The To Image URL
       // <img src="https://myanimelist.cdn-dena.com/images/anime/6/74764t.webp" data-src="https://myanimelist.cdn-dena.com/images/anime/6/74764t.webp" data-srcset="https://myanimelist.cdn-dena.com/images/anime/6/74764t.webp 1x,https://myanimelist.cdn-dena.com/r/100x140/images/anime/6/74764.webp?s=9c4ea7009abb614a65d2b313c1ad03de 2x" width="50" alt="Anime: Mobile Police Patlabor 2: The Movie" class=" lazyloaded" srcset="https://myanimelist.cdn-dena.com/images/anime/6/74764t.webp 1x,https://myanimelist.cdn-dena.com/r/100x140/images/anime/6/74764.webp?s=9c4ea7009abb614a65d2b313c1ad03de 2x">
       if($to->find(".picSurround a img", 0)->{'data-srcset'}) {
-        $recommendation->set("to_image_url", (string)str_replace("t.webp", ".jpg", str_replace("t.jpg", ".jpg", explode(" 1x", $to->find(".picSurround a img", 0)->{'data-srcset'})[0])));
+        $recommendation->set("rec_to_image_url", (string)str_replace("t.webp", ".jpg", str_replace("t.jpg", ".jpg", explode(" 1x", $to->find(".picSurround a img", 0)->{'data-srcset'})[0])));
       } else {
-        $recommendation->set("to_image_url", (string)str_replace("t.webp", ".jpg", str_replace("t.jpg", ".jpg", explode(" 1x", $to->find(".picSurround a img", 0)->srcset)[0])));
+        $recommendation->set("rec_to_image_url", (string)str_replace("t.webp", ".jpg", str_replace("t.jpg", ".jpg", explode(" 1x", $to->find(".picSurround a img", 0)->srcset)[0])));
       }
 
       // The Reason

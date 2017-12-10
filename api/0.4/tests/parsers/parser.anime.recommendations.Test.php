@@ -10,14 +10,14 @@ class AnimeRecommendationsParserTest extends TestCase {
 
     $recommendations = AnimeRecommendationsParser::parse($content);
     $this->assertInternalType('array', $recommendations);
-    $this->assertEquals(1827, $recommendations[0]["from"]["id"]);
-    $this->assertEquals("Seirei no Moribito", $recommendations[0]["from"]["title"]);
-    $this->assertEquals("https://myanimelist.net/anime/1827/Seirei_no_Moribito", $recommendations[0]["from"]["mal_url"]);
-    $this->assertEquals("https://myanimelist.cdn-dena.com/images/anime/4/50337.jpg", $recommendations[0]["from"]["image_url"]);
-    $this->assertEquals(34599, $recommendations[0]["to"]["id"]);
-    $this->assertEquals("Made in Abyss", $recommendations[0]["to"]["title"]);
-    $this->assertEquals("https://myanimelist.net/anime/34599/Made_in_Abyss", $recommendations[0]["to"]["mal_url"]);
-    $this->assertEquals("https://myanimelist.cdn-dena.com/images/anime/6/86733.jpg", $recommendations[0]["to"]["image_url"]);
+    $this->assertEquals(1827, $recommendations[0]["rec_from"]["id"]);
+    $this->assertEquals("Seirei no Moribito", $recommendations[0]["rec_from"]["title"]);
+    $this->assertEquals("https://myanimelist.net/anime/1827/Seirei_no_Moribito", $recommendations[0]["rec_from"]["mal_url"]);
+    $this->assertEquals("https://myanimelist.cdn-dena.com/images/anime/4/50337.jpg", $recommendations[0]["rec_from"]["image_url"]);
+    $this->assertEquals(34599, $recommendations[0]["rec_to"]["id"]);
+    $this->assertEquals("Made in Abyss", $recommendations[0]["rec_to"]["title"]);
+    $this->assertEquals("https://myanimelist.net/anime/34599/Made_in_Abyss", $recommendations[0]["rec_to"]["mal_url"]);
+    $this->assertEquals("https://myanimelist.cdn-dena.com/images/anime/6/86733.jpg", $recommendations[0]["rec_to"]["image_url"]);
   }
 
 }

@@ -8,57 +8,57 @@ class RecommendationTest extends TestCase {
   public function testFromID() {
     $recommendation = new Recommendation();
     $fromID = rand(1, 50000);
-    $recommendation->set("from_id", $fromID);
-    $this->assertEquals($fromID, $recommendation->get("from_id"));
+    $recommendation->set("rec_from_id", $fromID);
+    $this->assertEquals($fromID, $recommendation->get("rec_from_id"));
   }
 
   public function testFromTitle() {
     $recommendation = new Recommendation();
     $fromTitle = str_shuffle("FoxInFlame is an admirable person.");
-    $recommendation->set("from_title", $fromTitle);
-    $this->assertEquals($fromTitle, $recommendation->get("from_title"));
+    $recommendation->set("rec_from_title", $fromTitle);
+    $this->assertEquals($fromTitle, $recommendation->get("rec_from_title"));
   }
 
   public function testFromMal_Url() {
     $recommendation = new Recommendation();
     $fromMal_Url = "https://myanimelist.net/anime/" . (string)rand(1, 50000);
-    $recommendation->set("from_mal_url", $fromMal_Url);
-    $this->assertEquals($fromMal_Url, $recommendation->get("from_mal_url"));
+    $recommendation->set("rec_from_mal_url", $fromMal_Url);
+    $this->assertEquals($fromMal_Url, $recommendation->get("rec_from_mal_url"));
   }
 
   public function testFromImage_Url() {
     $recommendation = new Recommendation();
     $fromImage_Url = "https://myanimelist.cdn-dena.com/images/anime/6/" . (string)rand(1, 50000) . "/.jpg";
-    $recommendation->set("from_image_url", $fromImage_Url);
-    $this->assertEquals($fromImage_Url, $recommendation->get("from_image_url"));
+    $recommendation->set("rec_from_image_url", $fromImage_Url);
+    $this->assertEquals($fromImage_Url, $recommendation->get("rec_from_image_url"));
   }
 
   public function testToID() {
     $recommendation = new Recommendation();
     $toID = rand(1, 50000);
-    $recommendation->set("to_id", $toID);
-    $this->assertEquals($toID, $recommendation->get("to_id"));
+    $recommendation->set("rec_to_id", $toID);
+    $this->assertEquals($toID, $recommendation->get("rec_to_id"));
   }
 
   public function testToTitle() {
     $recommendation = new Recommendation();
     $toTitle = str_shuffle("FoxInFlame is an admirable person.");
-    $recommendation->set("to_title", $toTitle);
-    $this->assertEquals($toTitle, $recommendation->get("to_title"));
+    $recommendation->set("rec_to_title", $toTitle);
+    $this->assertEquals($toTitle, $recommendation->get("rec_to_title"));
   }
 
   public function testToMal_Url() {
     $recommendation = new Recommendation();
     $toMal_Url = "https://myanimelist.net/anime/" . (string)rand(1, 50000);
-    $recommendation->set("to_mal_url", $toMal_Url);
-    $this->assertEquals($toMal_Url, $recommendation->get("to_mal_url"));
+    $recommendation->set("rec_to_mal_url", $toMal_Url);
+    $this->assertEquals($toMal_Url, $recommendation->get("rec_to_mal_url"));
   }
 
   public function testToImage_Url() {
     $recommendation = new Recommendation();
     $toImage_Url = "https://myanimelist.cdn-dena.com/images/anime/6/" . (string)rand(1, 50000) . "/.jpg";
-    $recommendation->set("to_image_url", $toImage_Url);
-    $this->assertEquals($toImage_Url, $recommendation->get("to_image_url"));
+    $recommendation->set("rec_to_image_url", $toImage_Url);
+    $this->assertEquals($toImage_Url, $recommendation->get("rec_to_image_url"));
   }
 
   public function testReason() {
