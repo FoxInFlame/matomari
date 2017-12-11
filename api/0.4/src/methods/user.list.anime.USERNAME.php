@@ -76,6 +76,13 @@ call_user_func(function() {
       http_response_code(404);
       return;
     }
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 429) {
+      echo json_encode(array(
+        "message" => "Too many requests."
+      ));
+      http_response_code(429);
+      return; // return so don't save cache
+    }
     if(strpos($response, "<myanimelist></myanimelist>") !== false) {
       echo json_encode(array(
         "message" => "The provided user could not be found."
@@ -116,6 +123,13 @@ call_user_func(function() {
       ));
       http_response_code(404);
       return;
+    }
+    if(curl_getinfo($ch, CURLINFO_HTTP_CODE) === 429) {
+      echo json_encode(array(
+        "message" => "Too many requests."
+      ));
+      http_response_code(429);
+      return; // return so don't save cache
     }
     curl_close($ch);
 
