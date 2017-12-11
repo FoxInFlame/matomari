@@ -10,6 +10,8 @@ function get_icon($type) {
     return "sort alphabet ascending";
   } else if(strtolower($type) == "object") {
     return "angle double right";
+  } else if(strtolower($type) == "boolean") {
+    return "options";
   }
 }
 
