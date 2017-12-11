@@ -99,15 +99,15 @@ $model = [
     "description" => "Other titles for the anime on MAL",
     "children" => [
       "english" => [
-        "type" => "String",
+        "type" => "Array",
         "description" => "Alternative English titles on MAL"
       ],
       "japanese" => [
-        "type" => "String",
+        "type" => "Array",
         "description" => "Alternative Japanese titles on MAL"
       ],
       "synonyms" => [
-        "type" => "String",
+        "type" => "Array",
         "description" => "Synonymous titles on MAL"
       ]
     ]
