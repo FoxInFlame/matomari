@@ -189,7 +189,7 @@ if($showFile == "main.php") {
                 echo "<h1 class=\"ui header\">" . $showFile_method . "</h1><br>";
                 include($showFile);
               } else {
-                echo "<h1 class=\"ui header\">" . $showFile_method . " <a title=\"View Source for method\" href=\"https://github.com/FoxInFlame/matomari/tree/0.4/api/0.4/src/methods/" . substr($showFile, 0, -5) . ".php\"><i class=\"icon external\" style=\"float:right\"></i></a></h1><br>";
+                echo "<h1 class=\"ui header\">" . $showFile_method . " <a title=\"View Source for method\" href=\"https://github.com/FoxInFlame/matomari/tree/0.4/api/0.4/src/methods/" . substr($showFile, 0, -4) . ".php\"><i class=\"icon external\" style=\"float:right\"></i></a></h1><br>";
                 include($showFile);
               }
             } else {
