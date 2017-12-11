@@ -14,16 +14,16 @@ class Model {
       case "air_status":
         switch($value) {
           case $value === 1:
-          case $value === "airing":
-            $value = 1;
+          case $value === "currently airing":
+            $value = "currently_airing";
             break;
           case $value === 2:
           case $value === "finished airing":
-            $value = 2;
+            $value = "finished_airing";
             break;
           case $value === 3:
           case $value === "not yet aired":
-            $value = 3;
+            $value = "not_yet_aired";
             break;
           default:
             throw new ModelValueNotValid("The provided value is invalid.");
@@ -46,23 +46,23 @@ class Model {
         switch($value) {
           case $value === 1:
           case $value === "watching":
-            $value = 1;
+            $value = "watching";
             break;
           case $value === 2:
           case $value === "completed":
-            $value = 2;
+            $value = "completed";
             break;
           case $value === 3:
           case $value === "on_hold":
-            $value = 3;
+            $value = "on_hold";
             break;
           case $value === 4:
           case $value === "dropped":
-            $value = 4;
+            $value = "dropped";
             break;
           case $value === 6:
           case $value === "plan_to_watch":
-            $value = 6;
+            $value = "plan_to_watch";
             break;
           default:
             throw new ModelValueNotValid("The provided value is invalid.");
