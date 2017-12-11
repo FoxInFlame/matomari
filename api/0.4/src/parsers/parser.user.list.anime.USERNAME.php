@@ -222,6 +222,6 @@ class UserListAnimeParser {
       "total" => (int)$xmlresponse->myinfo->user_watching + (int)$xmlresponse->myinfo->user_completed + (int)$xmlresponse->myinfo->user_onhold + (int)$xmlresponse->myinfo->user_dropped + (int)$xmlresponse->myinfo->plantowatch
     );
 
-    return [$anime_arr, $anime_stats];
+    return [$anime_stats, $anime_arr];
   }
 }

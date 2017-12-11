@@ -1,6 +1,7 @@
 <?php
 /*
 
+Status: Completed and Tested.
 Displays a user's anime list with pagination.
 
 This method is cached for an hour. Set the nocache parameter to true to use a fresh version (slower).
@@ -132,7 +133,7 @@ call_user_func(function() {
   $anime = UserListAnimeParser::parse($malresponse_xml, $malresponse_json);
 
 
-  header("matomari-Total-Count: " . (string)$anime[1]["total"]);
+  header("matomari-Total-Count: " . (string)$anime[0]["total"]);
   $page_parameters = $_GET;
   $link_headers = [];
   if($page > 1) {
@@ -141,18 +142,18 @@ call_user_func(function() {
     $page_parameters['page'] = $page - 1;
     array_push($link_headers, "<https://www.matomari.tk" . $_SERVER['PHP_SELF'] . http_build_query($page_parameters) . ">; rel=\"prev\"");
   }
-  if($page + 1 <= ceil($anime[1]["total"] / 300)) {// If the next page still exists
+  if($page + 1 <= ceil($anime[0]["total"] / 300)) {// If the next page still exists
     $page_parameters['page'] = $page + 1;
     array_push($link_headers, "<https://www.matomari.tk" . $_SERVER['PHP_SELF'] . http_build_query($page_parameters) . ">; rel=\"next\"");
   }
-  $page_parameters['page'] = ceil($anime[1]["total"] / 300); // Round up.
+  $page_parameters['page'] = ceil($anime[0]["total"] / 300); // Round up.
   array_push($link_headers, "<https://www.matomari.tk" . $_SERVER['PHP_SELF'] . http_build_query($page_parameters) . ">; rel=\"last\"");
   
   header("Link: " . implode(", ", $link_headers));
 
   echo json_encode(array(
-    "stats" => $anime[1],
-    "items" => $anime[0]
+    "stats" => $anime[0],
+    "items" => $anime[1]
   ));
 
   http_response_code(200);
