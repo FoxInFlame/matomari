@@ -206,7 +206,7 @@ class UserListAnimeParser {
           $anime->set("storage_amount", (float)$storage_stuff[1]);
         }
       }
-      $anime->set("rewatching", (bool)($jsonresponse_arr_new[$key]->is_rewatching === "0"));
+      $anime->set("rewatching", (bool)($jsonresponse_arr_new[$key]->is_rewatching === 1));
       $anime->set("last_updated", (string)getAbsoluteTimeGMT($xmlanime->my_last_updated, "U")->format("c"));
       $anime->set("days_spent_watching", (int)$jsonresponse_arr_new[$key]->days_string);
 
