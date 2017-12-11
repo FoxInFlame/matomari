@@ -8,7 +8,7 @@ class MeListAnime extends Model {
     "id" => null,
     "watch_status" => null,
     "watched_episodes" => null,
-    "score" => null,
+    "watch_score" => null,
     "watch_dates" => array(
       "from" => null,
       "to" => null,
