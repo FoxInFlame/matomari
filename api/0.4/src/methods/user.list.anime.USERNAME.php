@@ -3,6 +3,7 @@
 
 Displays a user's anime list with pagination.
 
+This method is cached for an hour. Set the nocache parameter to true to use a fresh version (slower).
 Method: GET
         /user/list/anime/:username
 Authentication: None Required.
@@ -22,10 +23,10 @@ A Part of the matomari API.
 // [+] ============================================== [+]
 
 header("Access-Control-Allow-Origin: *");
-header("Cache-Control: no-cache, must-revalidate");
-header("Content-Type: application/json"); // 1 day
+header("Cache-Control: max-age=3600, public");
+header("Content-Type: application/json");
 require_once(dirname(__FILE__) . "/../classes/class.cache.php");
-# require_once(dirname(__FILE__) . "/../parsers/parser.user.list.anime.USERNAME.php");
+require_once(dirname(__FILE__) . "/../parsers/parser.user.list.anime.USERNAME.php");
 
 call_user_func(function() {
 
@@ -46,7 +47,7 @@ call_user_func(function() {
   if(isset($_GET['status'])) {
     if(!is_numeric($_GET['status']) || !in_array($_GET['status'], ["1", "2", "3", "4", "6", "7"])) {
       echo json_encode(array(
-        "message" => "Specified status is not valid."
+        "message" => "The provided status is not valid."
       ));
       http_response_code(400);
       return;
@@ -56,27 +57,36 @@ call_user_func(function() {
     $status = "7";
   }
 
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://myanimelist.net/malappinfo.php?u=" . $_GET['username'] . "&type=anime&status=all");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $malresponse_xml = curl_exec($ch);
-  curl_close($ch);
-  if(!$malresponse_xml) {
-    echo json_encode(array(
-      "message" => "MAL is offline."
-    ));
-    http_response_code(404);
-    return;
+  $url = "https://myanimelist.net/malappinfo.php?u=" . $_GET['username'] . "&type=anime&status=all";
+  $data = new Data();
+  
+  if($data->getCache($url, 60, ".xml")) { // One hour server cache.
+    // Use cache if there is one
+    $malresponse_xml = $data->data;
+  } else {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    if(!$response) {
+      echo json_encode(array(
+        "message" => "MAL is offline."
+      ));
+      http_response_code(404);
+      return;
+    }
+    if(strpos($response, "<myanimelist></myanimelist>") !== false) {
+      echo json_encode(array(
+        "message" => "The provided user could not be found."
+      ));
+      http_response_code(404);
+      return;
+    }
+    curl_close($ch);
+    
+    $data->saveCache($url, $response, ".xml");
+    $malresponse_xml = $response;
   }
-  if(strpos($malresponse_xml, "<myanimelist></myanimelist>") !== false) {
-    echo json_encode(array(
-      "message" => "User not found."
-    ));
-    http_response_code(404);
-    return;
-  }
-
-  $malresponse_xml = new SimpleXMLElement($malresponse_xml);
 
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
@@ -84,45 +94,65 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
 
-  $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : "1";
+  $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
 
   $offset = ($page - 1) * 300;
   
-  $ch = curl_init();
   $url = "https://myanimelist.net/animelist/" . $_GET['username'] . "/load.json?offset=" . $offset . "&status=" . $status;
+  $data = new Data();
 
-  // cURL
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $url); // Set the URL
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the content
-  $malresponse_json = curl_exec($ch); // Execute the request, and show the response
-  if(!$malresponse_json) {
-    echo json_encode(array(
-      "message" => "MAL is offline."
-    ));
-    http_response_code(404);
-    return;
-  }
-  $malresponse_json_arr = json_decode($malresponse_json);
-  $malresponse_json_reformatted = [];
-  foreach($malresponse_json_arr as $malresponse_json_item) {
-    $malresponse_json_reformatted[$malresponse_json_item->anime_id] = $malresponse_json_item;
-  }
+  if($data->getCache($url, 60, ".json")) { // One hour server cache.
+    // Use cache if there is one
+    $malresponse_json = $data->data;
+  } else {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    if(!$response) {
+      echo json_encode(array(
+        "message" => "MAL is offline."
+      ));
+      http_response_code(404);
+      return;
+    }
+    curl_close($ch);
 
-  foreach($malresponse_xml->anime as $anime) {
-    $key = (string)$anime->series_animedb_id;
-    if(!array_key_exists($key, $malresponse_json_reformatted)) continue;
-    $malresponse_json_reformatted[$key]->anime_synonyms = (string)$anime->series_synonyms;
-    $malresponse_json_reformatted[$key]->anime_image_path = (string)$anime->series_image;
-    $malresponse_json_reformatted[$key]->last_updated = (string)$anime->my_last_updated;
-    unset($malresponse_json_reformatted[$key]->anime_studios);
-    unset($malresponse_json_reformatted[$key]->anime_licensors);
-    unset($malresponse_json_reformatted[$key]->anime_season);
-    unset($malresponse_json_reformatted[$key]->anime_studios);
+    $data->saveCache($url, $response, ".json");
+    $malresponse_json = $response;
   }
+  
+  
+  // [+] ============================================== [+]
+  // [+] ---------------------------------------------- [+]
+  // [+] ---------------------PARSE-------------------- [+]
+  // [+] ---------------------------------------------- [+]
+  // [+] ============================================== [+]
+
+  $anime = UserListAnimeParser::parse($malresponse_xml, $malresponse_json);
+
+
+  header("matomari-Total-Count: " . (string)$anime[1]["total"]);
+  $page_parameters = $_GET;
+  $link_headers = [];
+  if($page > 1) {
+    $page_parameters['page'] = 1;
+    array_push($link_headers, "<https://www.matomari.tk" . $_SERVER['PHP_SELF'] . http_build_query($page_parameters) . ">; rel=\"first\"");
+    $page_parameters['page'] = $page - 1;
+    array_push($link_headers, "<https://www.matomari.tk" . $_SERVER['PHP_SELF'] . http_build_query($page_parameters) . ">; rel=\"prev\"");
+  }
+  if($page + 1 <= ceil($anime[1]["total"] / 300)) {// If the next page still exists
+    $page_parameters['page'] = $page + 1;
+    array_push($link_headers, "<https://www.matomari.tk" . $_SERVER['PHP_SELF'] . http_build_query($page_parameters) . ">; rel=\"next\"");
+  }
+  $page_parameters['page'] = ceil($anime[1]["total"] / 300); // Round up.
+  array_push($link_headers, "<https://www.matomari.tk" . $_SERVER['PHP_SELF'] . http_build_query($page_parameters) . ">; rel=\"last\"");
+  
+  header("Link: " . implode(", ", $link_headers));
 
   echo json_encode(array(
-    "items" => $malresponse_json_reformatted
+    "stats" => $anime[1],
+    "items" => $anime[0]
   ));
 
   http_response_code(200);
