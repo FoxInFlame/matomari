@@ -55,7 +55,7 @@ call_user_func(function() {
   $url = "https://myanimelist.net/anime/" . $parts[0];
   $data = new Data();
   
-  if($data->getCache($url)) {
+  if($data->getCache($url, 604800)) {
     // Use cache if there is one
     $content = $data->data;
   } else {

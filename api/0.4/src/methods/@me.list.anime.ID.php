@@ -4,6 +4,7 @@
 Status: Completed and Tested.
 Get an anime in the user's list.
 
+This method is not cached.
 Method: GET
         /@me/list/anime/:id
 Authentication: HTTP Basic Auth with MAL Credentials.

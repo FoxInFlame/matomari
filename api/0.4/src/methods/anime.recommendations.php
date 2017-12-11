@@ -4,7 +4,7 @@
 Status: Completed and Tested.
 Get latest anime recommendations.
 
-This method is not cached.
+This method is cached for an hour.
 Method: GET
         /anime/recommendations
 Authentication: None Required.
@@ -24,7 +24,7 @@ A Part of the matomari API.
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-header("Cache-Control: no-cache, must-revalidate");
+header("Cache-Control: max-age=3600, public");
 require_once(dirname(__FILE__) . "/../classes/class.cache.php");
 require_once(dirname(__FILE__) . "/../parsers/parser.anime.recommendations.php");
 
@@ -43,7 +43,7 @@ call_user_func(function() {
   $url = "https://myanimelist.net/recommendations.php" . $page_param;
   $data = new Data();
   
-  if($data->getCache($url)) {
+  if($data->getCache($url, 60)) {
     $content = $data->data;
   } else {
     $ch = curl_init();
