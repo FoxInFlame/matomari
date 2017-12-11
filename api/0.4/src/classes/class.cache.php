@@ -10,25 +10,26 @@ class Data {
   private $dir; // Default cache directory
   private $expire; // Default expiration of cache (probably in minutes)
   private $extension; // Default cache extension (don't know why it's neccessary, but the tutorial had this)
-  private $ignore_pages = array(); // Array of pages to ignore
+  private $ignore_pages = array(
+    "/mymessages.php",
+    "/notification"
+  ); // Array of pages to ignore
   private $url; // URL
   public $data;
+
+  public function __construct() {
+    $this->dir = dirname(__FILE__) . "/../cache/"; // Functions can't be used when initialising class properties
+  }
   
-  public function getCache($url, $curl_options = array()) {
-    $this->dir = dirname(__FILE__) . "/../cache/";
+  public function getCache($url, $expire = 525600, $extension = ".html") {
     /*$this->expire = 1440; // 24 hours*/
-    $this->expire = 525600; // 1 year - Cache will be purged from another script every day anyway
-    $this->extension = ".html";
-    $this->ignore_pages = array(
-      "/mymessages.php",
-      "/notification"
-    );
-    
+    // 1 year - Cache will be purged from another script every day anyway
+
     if(isset($_GET['nocache']) && $_GET['nocache'] == "true") {
       return false;
     }
     
-    $cache_file = $this->dir . md5($url) . $this->extension;
+    $cache_file = $this->dir . md5($url) . $extension;
     
     $ignore = false;
     
@@ -39,7 +40,7 @@ class Data {
       }
     }
     
-    if(!$ignore && file_exists($cache_file)  && (filemtime($cache_file) > (time() - 60 * $this->expire))) {
+    if(!$ignore && file_exists($cache_file)  && (filemtime($cache_file) > (time() - 60 * $expire))) {
       // ob_start(); // Optionally ob_start("ob_gzhandler") to GZip (compress) before sending
       // readfile($cache_file);
       // ob_end_flush();
@@ -51,16 +52,8 @@ class Data {
     return false;
   }
   
-  public function saveCache($url, $data, $expire = 525600) {
-    $this->dir = dirname(__FILE__) . "/../cache/";
-    $this->expire = $expire; // One Year
-    $this->extension = ".html";
-    $this->ignore_pages = array(
-      "/mymessages.php",
-      "/notification"
-    );
-    
-    $cache_file = $this->dir . md5($url) . $this->extension;
+  public function saveCache($url, $data, $extension = ".html") {
+    $cache_file = $this->dir . md5($url) . $extension;
     
     $ignore = false;
     
@@ -84,10 +77,7 @@ class Data {
     return true;
   }
   
-  public function purgeCache($url = false) {
-    $this->dir = dirname(__FILE__) . "/../cache/";
-    $this->extension = ".html";
-    
+  public function purgeCache($url = false, $extension = ".html") {
     if($url) {
       $cache_file = $this->dir . md5($url) . $this->extension;
       
