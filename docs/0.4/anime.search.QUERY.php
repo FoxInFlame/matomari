@@ -34,7 +34,7 @@ anime/search/:query is a method to get anime search results of a query on MAL.<b
             <tr>
               <td><span class="inline-code">page</span> [Optional]</td>
               <td><i>Any natural number.</i><br>(default: "1")</td>
-              <td>Page number for the top anime. If the page doesn't exist, it will become 1.</td>
+              <td>Page number for the query results. If the page doesn't exist, it will become 1.</td>
             </tr>
             <tr>
               <td><span class="inline-code">filter</span> [Optional]</td>
@@ -201,11 +201,11 @@ $model = [
         "children" => [
           "from" => [
             "type" => "String",
-            "description" => "Air start date in YYYY-MM-DD format (with x as unknown)"
+            "description" => "Air start date in YYYY-MM-DD format (with - as unknown)"
           ],
           "to" => [
             "type" => "String",
-            "description" => "Air end date in YYYY-MM-DD format (with x as unknown)"
+            "description" => "Air end date in YYYY-MM-DD format (with - as unknown)"
           ]
         ]
       ],
