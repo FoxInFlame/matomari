@@ -75,6 +75,7 @@ class AnimeSearchParser {
       }
 
       // The Air-From Date
+      // MM-DD-YY (and ?? if unknown, - if everything is unknown)
       $mal_air_date_from = trim($td_air_date_from->innertext);
       if($mal_air_date_from !== "-") {
         foreach(explode("-", $mal_air_date_from) as $index => $number) {
@@ -82,19 +83,19 @@ class AnimeSearchParser {
           if($index == 0) {
             $month = $number;
             if($month == "??") {
-              $month = "xx";
+              $month = "-";
             }
           }
           if($index == 1) {
             $day = $number;
             if($day == "??") {
-              $day = "xx";
+              $day = "-";
             }
           }
           if($index == 2) {
             $year = $number;
             if($year == "??") {
-              $year = "xxxx";
+              $year = "-";
             } else {
               if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
                 // Over 1940
@@ -116,19 +117,19 @@ class AnimeSearchParser {
           if($index == 0) {
             $month = $number;
             if($month == "??") {
-              $month = "xx";
+              $month = "-";
             }
           }
           if($index == 1) {
             $day = $number;
             if($day == "??") {
-              $day = "xx";
+              $day = "-";
             }
           }
           if($index == 2) {
             $year = $number;
             if($year == "??") {
-              $year = "xxxx";
+              $year = "-";
             } else {
               if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
                 // Over 1940
