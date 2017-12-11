@@ -49,7 +49,8 @@ class AnimeTopTest extends TestCase {
 
   public function testType() {
     $anime = new AnimeTop();
-    $animeType = array_rand(array('TV', 'Wow it\'s an OVA', 'Music', 'MOVIE!'));
+    $animeType_arr = array('TV', 'Movie', 'Music', 'Music');
+    $animeType = $animeType_arr[array_rand($animeType_arr)];
     $anime->set("type", $animeType);
     $this->assertEquals($animeType, $anime->get("type"));
   }

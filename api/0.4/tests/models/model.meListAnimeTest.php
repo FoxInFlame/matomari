@@ -12,8 +12,8 @@ class MeListAnimeTest extends TestCase {
     $this->assertEquals($animeID, $anime->get("id"));
   }
 
-  public function testStatus() {
-    $userListAnimeStatus = [1, 2, 3, 4, 6];
+  public function testWatch_Status() {
+    $userListAnimeStatus = ["watching", "completed", "on_hold", "dropped", "plan_to_watch"];
     foreach($userListAnimeStatus as $status) {
       $anime = new MeListAnime();
       $anime->set("watch_status", $status);
@@ -21,25 +21,25 @@ class MeListAnimeTest extends TestCase {
     }
   }
 
-  public function testInvalidStatus () {
+  public function testInvalidStatus() {
     $userListAnimeStatus = "invalid";
     $anime = new MeListAnime();
     $this->expectException(ModelValueNotValid::class);
     $anime->set("watch_status", $userListAnimeStatus);
   }
 
-  public function testEpisodes() {
+  public function testWatched_Episodes() {
     $anime = new MeListAnime();
     $userListAnimeEpisodes = rand();
     $anime->set("watched_episodes", $userListAnimeEpisodes);
     $this->assertEquals($userListAnimeEpisodes, $anime->get("watched_episodes"));
   }
 
-  public function testScore() {
+  public function testWatch_Score() {
     $anime = new MeListAnime();
     $userListAnimeScore = rand(pow(10, 2), pow(10, 3) - 1) / 100;
-    $anime->set("score", $userListAnimeScore);
-    $this->assertEquals($userListAnimeScore, $anime->get("score"));
+    $anime->set("watch_score", $userListAnimeScore);
+    $this->assertEquals($userListAnimeScore, $anime->get("watch_score"));
   }
 
   public function testWatch_Dates() {
@@ -60,7 +60,7 @@ class MeListAnimeTest extends TestCase {
   }
 
   public function testPriority() {
-    $userListAnimePriority = [0, 1, 2];
+    $userListAnimePriority = ["high", "medium", "low"];
     foreach($userListAnimePriority as $priority) {
       $anime = new MeListAnime();
       $anime->set("priority", $priority);

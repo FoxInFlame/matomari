@@ -11,13 +11,13 @@ class MeListAnimeParserTest extends TestCase {
     $anime = MeListAnimeParser::parse($content);
     $this->assertInternalType('array', $anime);
     $this->assertEquals(34240, $anime["id"]);
-    $this->assertEquals(2, $anime["watch_status"]);
+    $this->assertEquals("completed", $anime["watch_status"]);
     $this->assertEquals(1, $anime["watched_episodes"]);
-    $this->assertEquals(9, $anime["score"]);
+    $this->assertEquals(9, $anime["watch_score"]);
     $this->assertEquals("2016-10-29", $anime["watch_dates"]["from"]);
     $this->assertEquals("2016-10-29", $anime["watch_dates"]["from"]);
     $this->assertEquals("Music, Sci-Fi, Source:Music, Studio:A-1 Pictures, AWESOME, LOVE THE MUSIC, Collaboration of A1 and Crunchy, BEAUTIFUL, Duration:6min", $anime["tags"]);
-    $this->assertEquals(2, $anime["priority"]);
+    $this->assertEquals("high", $anime["priority"]);
     $this->assertEquals(6, $anime["storage"]);
     $this->assertEquals(16, $anime["storage_amount"]);
     $this->assertEquals(false, $anime["rewatching"]);

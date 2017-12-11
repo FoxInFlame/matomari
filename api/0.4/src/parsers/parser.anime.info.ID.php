@@ -133,7 +133,7 @@ class AnimeInfoParser {
       // </div>
       if(strpos($value->plaintext, "Status:") !== false) {
         if(strpos($value->innertext, "Unknown") === false) {
-          $anime->set("air_status", (string)trim($value->find("text", 2)->innertext));
+          $anime->set("air_status", strtolower(trim((string)$value->find("text", 2)->innertext)));
         }
       }
 

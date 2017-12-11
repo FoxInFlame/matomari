@@ -35,7 +35,7 @@ class MeListAnimeParser {
     // <select id="add_anime_score" name="add_anime[score]" class="inputtext">
     //    <option value="">Select score</option><option value="10" selected="selected">(10) Masterpiece</option><option value="9">(9) Great</option><option value="8">(8) Very Good</option><option value="7">(7) Good</option><option value="6">(6) Fine</option><option value="5">(5) Average</option><option value="4">(4) Bad</option><option value="3">(3) Very Bad</option><option value="2">(2) Horrible</option><option value="1">(1) Appalling</option></select>
     if($html->find("#add_anime_score option[selected]", 0) && $html->find("#add_anime_score option[selected]", 0)->value !== "") {
-      $anime->set("score", (int)$html->find("#add_anime_score option[selected]", 0)->value);
+      $anime->set("watch_score", (int)$html->find("#add_anime_score option[selected]", 0)->value);
     }
 
     // The "from" watch dates

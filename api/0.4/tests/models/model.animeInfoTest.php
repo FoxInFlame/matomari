@@ -77,7 +77,8 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
 
   public function testType() {
     $anime = new AnimeInfo();
-    $animeType = array_rand(array('TV', 'Wow it\'s an OVA', 'Music', 'MOVIE!'));
+    $animeType_arr = array('TV', 'Movie', 'Music', 'Music');
+    $animeType = $animeType_arr[array_rand($animeType_arr)];
     $anime->set("type", $animeType);
     $this->assertEquals($animeType, $anime->get("type"));
   }
@@ -91,9 +92,11 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
 
   public function testAir_Status() {
     $anime = new AnimeInfo();
-    $animeAir_Status = str_shuffle('Currently Airing');
-    $anime->set("air_status", $animeAir_Status);
-    $this->assertEquals($animeAir_Status, $anime->get("air_status"));
+    $animeAir_Status_arr = ['currently airing', 'finished airing', 'not yet aired'];
+    foreach($animeAir_Status_arr as $animeAir_Status) {
+      $anime->set("air_status", $animeAir_Status);
+      $this->assertEquals(str_replace(" ", "_", $animeAir_Status), $anime->get("air_status"));
+    }
   }
 
   public function testAir_Dates() {
@@ -108,7 +111,8 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
   
   public function testSeason() {
     $anime = new AnimeInfo();
-    $animeSeason = array_rand(array('Fall ', 'Summer ', 'Winter ', 'Fox ')) . (string)rand(1, 3000);
+    $animeSeason_arr = array('Fall ', 'Summer ', 'Winter ', 'Fox ');
+    $animeSeason = $animeSeason_arr[array_rand($animeSeason_arr)] . (string)rand(1, 3000);
     $anime->set("season", $animeSeason);
     $this->assertEquals($animeSeason, $anime->get("season"));
   }

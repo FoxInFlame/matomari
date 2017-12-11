@@ -22,7 +22,7 @@ class AnimeInfoParserTest extends TestCase {
     $this->assertEquals("ONE PIECE", $anime["other_titles"]["japanese"][0]);
     $this->assertEquals("TV", $anime["type"]);
     $this->assertNull($anime["episodes"]);
-    $this->assertEquals("Currently Airing", $anime["air_status"]);
+    $this->assertEquals("currently_airing", $anime["air_status"]);
     $this->assertEquals("1999-10-20", $anime["air_dates"]["from"]);
     $this->assertNull($anime["air_dates"]["to"]);
     $this->assertNull($anime["premier_date"]);
