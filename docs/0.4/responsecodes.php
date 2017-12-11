@@ -32,7 +32,7 @@
 <div id="code-400" class="ui segment">
   <h2 class="ui header">400</h2>
   <div id="invalid-id-format">
-    <h3 class="ui red header">Invalid ID format</h3>
+    <h3 class="ui red header">Invalid Parameter format</h3>
     <table class="ui fixed celled table">
       <thead>
         <tr>
@@ -44,13 +44,13 @@
       <tbody>
         <tr>
           <td>
-            The request you sent contains an ID that does not fit the criteria (e.g. not numeric) so the server was not able to process it.
+            The request you sent contained a parameter that does not fit the criteria (e.g. not numeric if an id) so the server was not able to process it.
           </td>
           <td>
-            When the check for numeric ID or the check for empty ID returns false.
+            When the specific checks on each method does not pass.
           </td>
           <td>
-            JSON with 'message' key explaining what's wrong with the ID.
+            JSON with 'message' key explaining which parameter is how wrong.
           </td>
         </tr>
       </tbody>
