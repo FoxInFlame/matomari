@@ -4,7 +4,7 @@ ini_set("display_startup_errors", true);
 error_reporting(E_ALL);
 
 $time_start = microtime(true);
-$showFile = "main.php"; // Default page - 0.4/index.html
+$showFile = "main.php"; // Default page
 $showFile_method = "";
 require_once("methods.php");
 array_push($filenames, "responsecodes");
