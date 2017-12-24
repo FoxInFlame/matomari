@@ -12,6 +12,10 @@ function get_icon($type) {
     return "angle double right";
   } else if(strtolower($type) == "boolean") {
     return "options";
+  } else if(strtolower($type) == "element") {
+    return "code";
+  } else if(strtolower($type) == "root element") {
+    return "file text outline";
   }
 }
 
