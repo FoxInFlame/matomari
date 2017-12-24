@@ -22,9 +22,9 @@ A Part of the matomari API.
 // [+] ---------------------------------------------- [+]
 // [+] ============================================== [+]
 
-header("access-control-allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Cache-Control: no-cache, must-revalidate");
-header("Content-Type: text/xml");
+header("Content-Type: application/xml");
 
 // Global Variables (and their defaults).
 $username;
