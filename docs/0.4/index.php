@@ -10,15 +10,18 @@ require_once("methods.php");
 array_push($filenames, "responsecodes");
 if(isset($_GET['file'])) {
   foreach($filenames as $filename) {
-    $tmp1 = str_replace("/", ".", $filename); // Reformat method URL to file URL
-    if(strpos($tmp1, ":") === false) {
-      $tmp2 = $tmp1;
-    } else {
-      $tmp2 = explode(":", $tmp1)[0] . strtoupper(explode(":", $tmp1)[1]);
+    // For each method that exists in methods.php (not neccessarily everything that actually exists)
+    $filename_dots = str_replace("/", ".", $filename); // Reformat method URL to file URL
+    $filename_dots_components = explode(".", $filename_dots);
+    foreach($filename_dots_components as $key => $component) { // foreach component of the URL
+      if($component[0] === ":") { // Strings can be seen as character arrays
+        $filename_dots_components[$key] = strtoupper(substr($component, 1));
+      }
     }
-    if($tmp2 == $_GET['file']) {
+    $filename_dots = implode(".", $filename_dots_components);
+    if($filename_dots == $_GET['file']) { // If this is the requested documentation file
       $showFile_method = $filename;
-      $showFile = $tmp2 . ".php";
+      $showFile = $filename_dots . ".php";
       break;
     }
   }
@@ -124,17 +127,19 @@ if($showFile == "main.php") {
               global $filenames;
               global $showFile_method;
               foreach($filenames as $filename) {
-                $tmp1 = str_replace("/", ".", $filename);
-                if(strpos($tmp1, ":") === false) {
-                  $tmp2 = $tmp1;
-                } else {
-                  $tmp2 = explode(":", $tmp1)[0] . strtoupper(explode(":", $tmp1)[1]);
+                $filename_dots = str_replace("/", ".", $filename); // Reformat method URL to file URL
+                $filename_dots_components = explode(".", $filename_dots);
+                foreach($filename_dots_components as $key => $component) { // foreach component of the URL
+                  if($component[0] === ":") { // Strings can be seen as character arrays
+                    $filename_dots_components[$key] = strtoupper(substr($component, 1));
+                  }
                 }
+                $filename_dots = implode(".", $filename_dots_components);
                 if(substr($filename, 0, strlen($basename)) !== $basename) continue; // Don't show if the method doesn't start with basename. Used this instead of strpos() because some methods have basenames in their method names (e.g. user/history/anime/:id).
                 if($showFile_method == $filename) {
                   echo "<a class=\"item active\">" . $showFile_method . "</a>\n";
                 } else {
-                  echo "<a href=\"" . dirname($_SERVER["PHP_SELF"]) . "/../0.4/" . $tmp2 . "\" class=\"item\">" . $filename . "</a>\n";
+                  echo "<a href=\"" . dirname($_SERVER["PHP_SELF"]) . "/../0.4/" . $filename_dots . "\" class=\"item\">" . $filename . "</a>\n";
                 }
               }
             }
@@ -185,7 +190,7 @@ if($showFile == "main.php") {
           <div class="ui segment">
             <?php
             if(file_exists($showFile)) {
-              if(count(explode("/", $showFile_method)) == 1) {
+              if(count(explode("/", $showFile_method)) == 1) { // If the page is a category (e.g. anime, users, manga)
                 echo "<h1 class=\"ui header\">" . $showFile_method . "</h1><br>";
                 include($showFile);
               } else {
@@ -208,8 +213,11 @@ if($showFile == "main.php") {
   </body>
 </html>
 <?php
-echo "<!--File loaded: " . $showFile . "-->\n";
+echo "<!--" . PHP_EOL;
+echo "Documentation file loaded: " . $showFile . PHP_EOL;
 $time_end = microtime(true);
-echo "<!--Dynamic documentation page generated in " . ($time_end - $time_start) . " seconds.-->";
-echo "<!--Part of the matomari API-->";
+echo "Dynamic documentation page generated in " . ($time_end - $time_start) . " seconds." . PHP_EOL;
+echo PHP_EOL;
+echo "Part of the matomari API." . PHP_EOL;
+echo "-->";
 ?>
