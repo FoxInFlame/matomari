@@ -201,7 +201,7 @@ $model = [
       ],
       "storage" => [
         "type" => "Integer",
-        "description" => "The storage type id - Not ported to string yet"
+        "description" => "Numerical storage type id"
       ], // TODO: Port to string 
       "storage_amount" => [
         "type" => "Integer",
@@ -213,7 +213,7 @@ $model = [
       ],
       "last_updated" => [
         "type" => "String",
-        "description" => "Full ISO 8601 date and time in GMT"
+        "description" => "Full ISO 8601 date and time in GMT when the user last changed watch_status or watched_episodes"
       ],
       "days_spent_watching" => [
         "type" => "Integer",
