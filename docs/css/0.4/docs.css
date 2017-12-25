@@ -47,23 +47,10 @@ code {
   white-space: pre-wrap;
 }
 
-.json .property {
-  color: black;
-  /*font-weight: bold;*/
+.event .meta .header {
+  font-size: inherit;
 }
 
-.json .type-string {
-  color: green;
-}
-
-.json .type-null {
-  color: gray;
-}
-
-.json .type-int {
-  color: blue;
-}
-
-.json .type-comment {
-  color: #bc8f8f;
+.ui.feed>.event>.content .meta>:first-child {
+  margin-left: .75em;
 }
