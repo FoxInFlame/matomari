@@ -92,7 +92,7 @@ if($showFile == "main.php") {
                   } else {
                     $item2 = $item;
                   }
-                  if(strpos($showFile, strtolower($item2)) !== false) {
+                  if(strpos(explode(".", $showFile)[0], strtolower($item2)) !== false) {
                     echo "<a href=\"" . dirname($_SERVER["PHP_SELF"]) . "/../0.4/" . strtolower($item) . "\" class=\"item active\">" . $item . "</a>\n";
                   } else {
                     echo "<a href=\"" . dirname($_SERVER["PHP_SELF"]) . "/../0.4/" . strtolower($item) . "\" class=\"item\">" . $item . "</a>\n";
