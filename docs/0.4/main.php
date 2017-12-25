@@ -119,7 +119,7 @@ This is the documentation for version 0.4 of the matomari API.<br>
           </div>
           <div class=\"content\">
             <div class=\"summary\">
-              <a href=\"" . $commit["author"]["html_url"] . "\">" . $commit["author"]["login"] . "</a> commited " . $files_changed . " file" . ($files_changed > 1 ? "s" : "") . ".
+              <a href=\"" . $commit["author"]["html_url"] . "\">" . $commit["author"]["login"] . "</a> commited <a href=\"" . $commit["html_url"] . "\">" . $files_changed . " file" . ($files_changed > 1 ? "s" : "") . "</a>.
               <div class=\"date\">
                 " . time_elapsed_string($commit["commit"]["author"]["date"], 1) . "
               </div>
