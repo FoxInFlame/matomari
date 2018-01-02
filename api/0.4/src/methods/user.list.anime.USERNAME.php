@@ -144,7 +144,7 @@ call_user_func(function() {
   // [+] ---------------------------------------------- [+]
   // [+] ============================================== [+]
 
-  $anime = UserListAnimeParser::parse($malresponse_xml, $malresponse_json);
+  $anime = UserListAnimeUSERNAMEParser::parse($malresponse_xml, $malresponse_json);
 
 
   header("matomari-Total-Count: " . (string)$anime[0]["total"]);

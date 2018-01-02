@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 require_once(dirname(__FILE__) . "/../models/model.meListAnime.php");
 
-class MeListAnimeParser {
+class MeListAnimeIDParser {
 
   public static function parse($response) {
     $html = str_get_html($response);
@@ -63,7 +63,7 @@ class MeListAnimeParser {
     } else {
       $watch_date_from_day = "xx";
     }
-    $anime->set("watch_date_from", (string)($watch_date_from_year . "-" . $watch_date_from_month . "-" . $watch_date_from_day));
+    $anime->set("watch_dates//from", (string)($watch_date_from_year . "-" . $watch_date_from_month . "-" . $watch_date_from_day));
 
     // The "to" watch dates
     // Year:
@@ -90,7 +90,7 @@ class MeListAnimeParser {
     } else {
       $watch_date_to_day = "xx";
     }
-    $anime->set("watch_date_to", (string)($watch_date_to_year . "-" . $watch_date_to_month . "-" . $watch_date_to_day));
+    $anime->set("watch_dates//to", (string)($watch_date_to_year . "-" . $watch_date_to_month . "-" . $watch_date_to_day));
     
     // The Tags
     // <textarea id="add_anime_tags" name="add_anime[tags]" class="textarea" rows="3" cols="45">Drama,  Romance,  School,  Supernatural,  Source:Original,  THIS ANIME HAS A 9.4 RATING; THE HIGHEST ON MY LIST,  OKAY THIS ANIME IS BEAUTIFUL I WATCHED IT THE DAY IT CAME OUT AND I CRIED,  Studio:CoMix Wave Films</textarea>

@@ -3,12 +3,12 @@
 use PHPUnit\Framework\TestCase;
 require_once(dirname(__FILE__) . "/../../src/parsers/parser.anime.info.ID.php");
 
-class AnimeInfoParserTest extends TestCase {
+class AnimeInfoIDParserTest extends TestCase {
 
   public function testParse_21() {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.anime.21.html");
 
-    $anime = AnimeInfoParser::parse($content);
+    $anime = AnimeInfoIDParser::parse($content);
     $this->assertInternalType('array', $anime);
     $this->assertEquals(21, $anime["id"]);
     $this->assertEquals("One Piece", $anime["title"]);
@@ -45,7 +45,7 @@ class AnimeInfoParserTest extends TestCase {
   public function testParse_25835() {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.anime.25835.html");
 
-    $anime = AnimeInfoParser::parse($content);
+    $anime = AnimeInfoIDParser::parse($content);
     $this->assertInternalType('array', $anime);
     $this->assertEquals(25835, $anime["id"]);
     $this->assertEquals("Shirobako", $anime["title"]);
@@ -58,7 +58,7 @@ class AnimeInfoParserTest extends TestCase {
   public function testParse_29949() {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.anime.29949.html");
 
-    $anime = AnimeInfoParser::parse($content);
+    $anime = AnimeInfoIDParser::parse($content);
     $this->assertInternalType('array', $anime);
     $this->assertEquals(29949, $anime["id"]);
     $this->assertEquals("Nami", $anime["title"]);
@@ -72,7 +72,7 @@ class AnimeInfoParserTest extends TestCase {
   public function testParse_36474() {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.anime.36474.html");
 
-    $anime = AnimeInfoParser::parse($content);
+    $anime = AnimeInfoIDParser::parse($content);
     $this->assertInternalType('array', $anime);
     $this->assertEquals(36474, $anime["id"]);
     $this->assertNull($anime["score"]);

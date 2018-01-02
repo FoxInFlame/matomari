@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 require_once(dirname(__FILE__) . "/../models/model.userListAnime.php");
 
-class UserListAnimeParser {
+class UserListAnimeUSERNAMEParser {
 
   public static function parse($xmlresponse, $jsonresponse) {
     libxml_use_internal_errors(true);
@@ -82,7 +82,7 @@ class UserListAnimeParser {
             }
           }
         }
-        $anime->set("air_date_from", (string)$year . "-" . $month . "-" . $day);
+        $anime->set("air_dates//from", (string)$year . "-" . $month . "-" . $day);
       }
 
       $mal_air_end_date = $jsonresponse_arr_new[$key]->anime_end_date_string;
@@ -117,7 +117,7 @@ class UserListAnimeParser {
             }
           }
         }
-        $anime->set("air_date_to", (string)$year . "-" . $month . "-" . $day);
+        $anime->set("air_dates//to", (string)$year . "-" . $month . "-" . $day);
       }
       $anime->set("rating", (string)$jsonresponse_arr_new[$key]->anime_mpaa_rating_string);
       $anime->set("watch_status", (int)$jsonresponse_arr_new[$key]->status);
@@ -156,7 +156,7 @@ class UserListAnimeParser {
             }
           }
         }
-        $anime->set("watch_date_from", (string)$year . "-" . $month . "-" . $day);
+        $anime->set("watch_dates//from", (string)$year . "-" . $month . "-" . $day);
       }
 
       $mal_watch_finish_date = $jsonresponse_arr_new[$key]->finish_date_string;
@@ -191,7 +191,7 @@ class UserListAnimeParser {
             }
           }
         }
-        $anime->set("watch_date_to", (string)$year . "-" . $month . "-" . $day);
+        $anime->set("watch_dates//to", (string)$year . "-" . $month . "-" . $day);
       }
 
       $anime->set("tags", (string)$jsonresponse_arr_new[$key]->tags);

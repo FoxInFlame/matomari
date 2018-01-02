@@ -5,6 +5,7 @@ require_once(dirname(__FILE__) . "/model.php");
 class Recommendation extends Model {
 
   public $info = array(
+    "id" => null,
     "rec_from" => array(
       "id" => null,
       "title" => null,

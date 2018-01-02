@@ -103,10 +103,10 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
     $anime = new AnimeInfo();
     $animeAir_Date_From = str_shuffle('2014-10-09');
     $animeAir_Date_To = str_shuffle('2015-03-26');
-    $anime->set("air_date_from", $animeAir_Date_From);
-    $anime->set("air_date_to", $animeAir_Date_To);
-    $this->assertEquals($animeAir_Date_From, $anime->get("air_date_from"));
-    $this->assertEquals($animeAir_Date_To, $anime->get("air_date_to"));
+    $anime->set("air_dates//from", $animeAir_Date_From);
+    $anime->set("air_dates//to", $animeAir_Date_To);
+    $this->assertEquals($animeAir_Date_From, $anime->get("air_dates//from"));
+    $this->assertEquals($animeAir_Date_To, $anime->get("air_dates//to"));
   }
   
   public function testSeason() {
@@ -170,10 +170,10 @@ Fast forward two and a half years and two of those members, Aoi Miyamori and Ema
     $anime = new AnimeInfo();
     $animeDuration_Total = rand(1, 500);
     $animeDuration_PerEpisode = rand(1, 60);
-    $anime->set("duration_total", $animeDuration_Total);
-    $anime->set("duration_per_episode", $animeDuration_PerEpisode);
-    $this->assertEquals($animeDuration_Total, $anime->get("duration_total"));
-    $this->assertEquals($animeDuration_PerEpisode, $anime->get("duration_per_episode"));
+    $anime->set("duration//total", $animeDuration_Total);
+    $anime->set("duration//per_episode", $animeDuration_PerEpisode);
+    $this->assertEquals($animeDuration_Total, $anime->get("duration//total"));
+    $this->assertEquals($animeDuration_PerEpisode, $anime->get("duration//per_episode"));
   }
 
   public function testRating() {

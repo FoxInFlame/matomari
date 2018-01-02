@@ -3,12 +3,12 @@
 use PHPUnit\Framework\TestCase;
 require_once(dirname(__FILE__) . "/../../src/parsers/parser.anime.search.QUERY.php");
 
-class AnimeSearchParserTest extends TestCase {
+class AnimeSearchQUERYParserTest extends TestCase {
 
   public function testParse() {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.animesearch.eva.html");
 
-    $anime = AnimeSearchParser::parse($content);
+    $anime = AnimeSearchQUERYParser::parse($content);
     $this->assertInternalType('array', $anime);
     $this->assertEquals(32, $anime[0]["id"]);
     $this->assertEquals("Neon Genesis Evangelion: The End of Evangelion", $anime[0]["title"]);

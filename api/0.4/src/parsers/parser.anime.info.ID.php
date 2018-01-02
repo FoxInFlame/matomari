@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 require_once(dirname(__FILE__) . "/../models/model.animeInfo.php");
 
-class AnimeInfoParser {
+class AnimeInfoIDParser {
 
   public static function parse($response) {
     $html = str_get_html($response);
@@ -148,10 +148,10 @@ class AnimeInfoParser {
             // contains "to"
             $exploded = array_map("trim", explode(" to ", $value->find("text", 2)->innertext));
             if($exploded[0] !== "?") {
-              $anime->set("air_date_from", (string)getAbsoluteTimeGMT($exploded[0], "!M j, Y")->format("Y-m-d"));
+              $anime->set("air_dates//from", (string)getAbsoluteTimeGMT($exploded[0], "!M j, Y")->format("Y-m-d"));
             }
             if($exploded[1] !== "?") {
-              $anime->set("air_date_to", (string)getAbsoluteTimeGMT($exploded[1], "!M j, Y")->format("Y-m-d"));
+              $anime->set("air_dates//to", (string)getAbsoluteTimeGMT($exploded[1], "!M j, Y")->format("Y-m-d"));
             }
           } else if(strpos($value->find("text", 2), ",") !== false) {
             $anime->set("premier_date", (string)getAbsoluteTimeGMT($value->find("text", 2)->innertext, "!M j, Y")->format("Y-m-d"));
@@ -282,11 +282,11 @@ class AnimeInfoParser {
             }
           }
 
-          $anime->set("duration_per_episode", (int)$minutes);
+          $anime->set("duration//per_episode", (int)$minutes);
           if($anime->get("episodes") == null) {
-            $anime->set("duration_total", null);
+            $anime->set("duration//total", null);
           } else {
-            $anime->set("duration_total", (int)$anime->get("episodes") * (int)$minutes);
+            $anime->set("duration//total", (int)$anime->get("episodes") * (int)$minutes);
           }
         }
       }

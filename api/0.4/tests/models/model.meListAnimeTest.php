@@ -46,10 +46,10 @@ class MeListAnimeTest extends TestCase {
     $anime = new MeListAnime();
     $userListAnimeWatch_Date_From = str_shuffle('2014-10-09');
     $userListAnimeWatch_Date_To = str_shuffle('2015-03-26');
-    $anime->set("watch_date_from", $userListAnimeWatch_Date_From);
-    $anime->set("watch_date_to", $userListAnimeWatch_Date_To);
-    $this->assertEquals($userListAnimeWatch_Date_From, $anime->get("watch_date_from"));
-    $this->assertEquals($userListAnimeWatch_Date_To, $anime->get("watch_date_to"));
+    $anime->set("watch_dates//from", $userListAnimeWatch_Date_From);
+    $anime->set("watch_dates//to", $userListAnimeWatch_Date_To);
+    $this->assertEquals($userListAnimeWatch_Date_From, $anime->get("watch_dates//from"));
+    $this->assertEquals($userListAnimeWatch_Date_To, $anime->get("watch_dates//to"));
   }
 
   public function testTags() {

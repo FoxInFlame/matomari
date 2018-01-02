@@ -59,10 +59,10 @@ class AnimeSearchTest extends TestCase {
     $anime = new AnimeSearch();
     $animeAir_Date_From = str_shuffle('2014-10-09');
     $animeAir_Date_To = str_shuffle('2015-03-26');
-    $anime->set("air_date_from", $animeAir_Date_From);
-    $anime->set("air_date_to", $animeAir_Date_To);
-    $this->assertEquals($animeAir_Date_From, $anime->get("air_date_from"));
-    $this->assertEquals($animeAir_Date_To, $anime->get("air_date_to"));
+    $anime->set("air_dates//from", $animeAir_Date_From);
+    $anime->set("air_dates//to", $animeAir_Date_To);
+    $this->assertEquals($animeAir_Date_From, $anime->get("air_dates//from"));
+    $this->assertEquals($animeAir_Date_To, $anime->get("air_dates//to"));
   }
 
   public function testRating() {

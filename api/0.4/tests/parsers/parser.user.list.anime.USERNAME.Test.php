@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 require_once(dirname(__FILE__) . "/../../src/parsers/parser.user.list.anime.USERNAME.php");
 
-class UserListAnimeParserTest extends TestCase {
+class UserListAnimeUSERNAMEParserTest extends TestCase {
 
   private $anime; 
 
@@ -11,7 +11,7 @@ class UserListAnimeParserTest extends TestCase {
     $xmlcontent = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.malappinfo.Drutol.xml");
     $jsoncontent = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.listload.Drutol.json");
 
-    return UserListAnimeParser::parse($xmlcontent, $jsoncontent);
+    return UserListAnimeUSERNAMEParser::parse($xmlcontent, $jsoncontent);
   }
 
   /**

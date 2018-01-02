@@ -3,12 +3,12 @@
 use PHPUnit\Framework\TestCase;
 require_once(dirname(__FILE__) . "/../../src/parsers/parser.@me.list.anime.ID.php");
 
-class MeListAnimeParserTest extends TestCase {
+class MeListAnimeIDParserTest extends TestCase {
 
   public function testParse() {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.editlist.anime.34240.html");
 
-    $anime = MeListAnimeParser::parse($content);
+    $anime = MeListAnimeIDParser::parse($content);
     $this->assertInternalType('array', $anime);
     $this->assertEquals(34240, $anime["id"]);
     $this->assertEquals("completed", $anime["watch_status"]);

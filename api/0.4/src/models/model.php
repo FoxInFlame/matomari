@@ -30,18 +30,6 @@ class Model {
         }
         $this->info["air_status"] = $value;
         break;
-      case "air_date_from":
-        $this->info["air_dates"]["from"] = $value;
-        break;
-      case "air_date_to":
-        $this->info["air_dates"]["to"] = $value;
-        break;
-      case "duration_total":
-        $this->info["duration"]["total"] = $value;
-        break;
-      case "duration_per_episode":
-        $this->info["duration"]["per_episode"] = $value;
-        break;
       case "watch_status":
         switch($value) {
           case $value === 1:
@@ -68,12 +56,6 @@ class Model {
             throw new ModelValueNotValid("The provided value is invalid.");
         }
         $this->info["watch_status"] = $value;
-        break;
-      case "watch_date_from":
-        $this->info["watch_dates"]["from"] = $value;
-        break;
-      case "watch_date_to":
-        $this->info["watch_dates"]["to"] = $value;
         break;
       case "priority":
         switch($value) {
@@ -176,68 +158,32 @@ class Model {
         }
         $this->info["rewatch_value"] = $value;
         break;
-      case "rec_from_id":
-      case "rec_from_title":
-      case "rec_from_mal_url":
-      case "rec_from_image_url":
-        $this->info["rec_from"][substr($data, 9)] = $value;
-        break;
-      case "rec_to_id":
-      case "rec_to_title":
-      case "rec_to_mal_url":
-      case "rec_to_image_url":
-        $this->info["rec_to"][substr($data, 7)] = $value;
-        break;
       default:
-        if(array_key_exists($data, $this->info)) {
-          $this->info[$data] = $value;
-        } else {
-          throw new ModelKeyDoesNotExist("Nonexistent set key.");
+        $data_levels = explode("//", $data);
+        $temp_arr = &$this->info; // Reference operator
+        foreach($data_levels as $level) {
+          if(array_key_exists($level, $temp_arr)) {
+            $temp_arr = &$temp_arr[$level];
+          } else {  
+            throw new ModelKeyDoesNotExist("Nonexistent set key.");
+          }
         }
+        $temp_arr = $value;
         break;
     }
   }
 
   public function get($data) {
-    switch($data) {
-      case "air_date_from":
-        return $this->info["air_dates"]["from"];
-        break;
-      case "air_date_to":
-        return $this->info["air_dates"]["to"];
-        break;
-      case "duration_total":
-        return $this->info["duration"]["total"];
-        break;
-      case "duration_per_episode":
-        return $this->info["duration"]["per_episode"];
-        break;
-      case "watch_date_from":
-        return $this->info["watch_dates"]["from"];
-        break;
-      case "watch_date_to":
-        return $this->info["watch_dates"]["to"];
-        break;
-      case "rec_from_id":
-      case "rec_from_title":
-      case "rec_from_mal_url":
-      case "rec_from_image_url":
-        return $this->info["rec_from"][substr($data, 9)];
-        break;
-      case "rec_to_id":
-      case "rec_to_title":
-      case "rec_to_mal_url":
-      case "rec_to_image_url":
-        return $this->info["rec_to"][substr($data, 7)];
-        break;
-      default:
-        if(array_key_exists($data, $this->info)) {
-          return $this->info[$data];
-        } else {
-          throw new ModelKeyDoesNotExist("Nonexistent get key.");
-        }
-        break;
+    $data_levels = explode("//", $data);
+    $temp_arr = &$this->info; // Reference operator
+    foreach($data_levels as $level) {
+      if(array_key_exists($level, $temp_arr)) {
+        $temp_arr = &$temp_arr[$level];
+      } else {  
+        throw new ModelKeyDoesNotExist("Nonexistent get key.");
+      }
     }
+    return $temp_arr;
   }
 }
 ?>

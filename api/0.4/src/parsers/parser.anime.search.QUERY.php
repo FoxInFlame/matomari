@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
 require_once(dirname(__FILE__) . "/../models/model.animeSearch.php");
 
-class AnimeSearchParser {
+class AnimeSearchQUERYParser {
 
   public static function parse($response) {
     $html = str_get_html($response);
@@ -107,7 +107,7 @@ class AnimeSearchParser {
             }
           }
         } 
-        $anime->set("air_date_from", (string)$year . "-" . $month . "-" .$day);
+        $anime->set("air_dates//from", (string)$year . "-" . $month . "-" .$day);
       }
 
       // The Air-To Date
@@ -141,7 +141,7 @@ class AnimeSearchParser {
             }
           }
         }
-        $anime->set("air_date_to", (string)$year . "-" . $month . "-" . $day);
+        $anime->set("air_dates//to", (string)$year . "-" . $month . "-" . $day);
       }
 
       // The Rating

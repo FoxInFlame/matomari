@@ -1,10 +1,10 @@
 <phpunit>
   <testsuites>
     <testsuite name="Models">
-      <directory>./tests/models</directory>
+      <directory>tests/models</directory>
     </testsuite>
     <testsuite name="Parsers">
-      <directory>./tests/parsers</directory>
+      <directory>tests/parsers</directory>
     </testsuite>
     <!--<testsuite name="Methods"></testsuite>-->
   </testsuites>
