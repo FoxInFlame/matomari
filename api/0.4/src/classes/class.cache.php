@@ -19,6 +19,10 @@ class Data {
 
   public function __construct() {
     $this->dir = dirname(__FILE__) . "/../cache/"; // Functions can't be used when initialising class properties
+
+    if(!file_exists($this->dir)) {
+      mkdir($this->dir, 0777);
+    }
   }
   
   public function getCache($url, $expire = 525600, $extension = ".html") {
