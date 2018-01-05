@@ -9,7 +9,7 @@ class AnimeTopParserTest extends TestCase {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.topanime.html");
 
     $anime = AnimeTopParser::parse($content);
-    $this->assertInternalType('array', $anime);
+    $this->assertInternalType("array", $anime);
     $this->assertEquals(5114, $anime[0]["id"]);
     $this->assertEquals("Fullmetal Alchemist: Brotherhood", $anime[0]["title"]);
     $this->assertEquals("https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood", $anime[0]["mal_url"]);

@@ -9,7 +9,7 @@ class AnimeInfoIDParserTest extends TestCase {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.anime.21.html");
 
     $anime = AnimeInfoIDParser::parse($content);
-    $this->assertInternalType('array', $anime);
+    $this->assertInternalType("array", $anime);
     $this->assertEquals(21, $anime["id"]);
     $this->assertEquals("One Piece", $anime["title"]);
     $this->assertEquals("https://myanimelist.net/anime/21/One_Piece", $anime["mal_url"]);

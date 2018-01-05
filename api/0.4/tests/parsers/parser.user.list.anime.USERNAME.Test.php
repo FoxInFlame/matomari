@@ -18,9 +18,9 @@ class UserListAnimeUSERNAMEParserTest extends TestCase {
   * @depends testParse
   */
   public function testType($anime) {
-    $this->assertInternalType('array', $anime);
-    $this->assertInternalType('array', $anime[0]);
-    $this->assertInternalType('array', $anime[1]);
+    $this->assertInternalType("array", $anime);
+    $this->assertInternalType("array", $anime[0]);
+    $this->assertInternalType("array", $anime[1]);
   }
 
   /**

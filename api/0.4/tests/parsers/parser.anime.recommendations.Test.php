@@ -9,7 +9,7 @@ class AnimeRecommendationsParserTest extends TestCase {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.animerecommendations.html");
 
     $recommendations = AnimeRecommendationsParser::parse($content);
-    $this->assertInternalType('array', $recommendations);
+    $this->assertInternalType("array", $recommendations);
     $this->assertEquals(1827, $recommendations[0]["rec_from"]["id"]);
     $this->assertEquals("Seirei no Moribito", $recommendations[0]["rec_from"]["title"]);
     $this->assertEquals("https://myanimelist.net/anime/1827/Seirei_no_Moribito", $recommendations[0]["rec_from"]["mal_url"]);

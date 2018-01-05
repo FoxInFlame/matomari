@@ -9,7 +9,7 @@ class MeListAnimeIDParserTest extends TestCase {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.editlist.anime.34240.html");
 
     $anime = MeListAnimeIDParser::parse($content);
-    $this->assertInternalType('array', $anime);
+    $this->assertInternalType("array", $anime);
     $this->assertEquals(34240, $anime["id"]);
     $this->assertEquals("completed", $anime["watch_status"]);
     $this->assertEquals(1, $anime["watched_episodes"]);

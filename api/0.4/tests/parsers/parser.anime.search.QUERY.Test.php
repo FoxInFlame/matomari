@@ -9,7 +9,7 @@ class AnimeSearchQUERYParserTest extends TestCase {
     $content = file_get_contents(dirname(__FILE__) . "/../mal_pages/mal_page.animesearch.eva.html");
 
     $anime = AnimeSearchQUERYParser::parse($content);
-    $this->assertInternalType('array', $anime);
+    $this->assertInternalType("array", $anime);
     $this->assertEquals(32, $anime[0]["id"]);
     $this->assertEquals("Neon Genesis Evangelion: The End of Evangelion", $anime[0]["title"]);
     $this->assertEquals("https://myanimelist.net/anime/32/Neon_Genesis_Evangelion__The_End_of_Evangelion", $anime[0]["mal_url"]);
