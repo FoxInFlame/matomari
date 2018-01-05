@@ -13,7 +13,7 @@ class AnimeReview extends Model {
     ),
     "episodes_seen" => null,
     "helpful_count" => null,
-    "ratings" => array(
+    "scores" => array(
       "overall" => null,
       "story" => null,
       "animation" => null,

@@ -54,33 +54,33 @@ class AnimeReviewsIDParser {
       //        </strong>
       $review->set("helpful_count", (int)$value->find(".spaceit table td", 1)->find(".lightLink strong span", 0)->innertext);
 
-      // Ratings
-      $review_ratings = $value->find(".textReadability div table", 0);
-      foreach($review_ratings->find("tr") as $tr) {
+      // Scores
+      $review_scores = $value->find(".textReadability div table", 0);
+      foreach($review_scores->find("tr") as $tr) {
         if(strpos($tr->find("td", 0)->innertext, "Overall") !== false) {
-          // Overall Rating
+          // Overall Score
           // <td class="borderClass bgColor1"><strong>10</strong></td>
-          $review->set("ratings//overall", (int)$tr->find("td strong", 1)->innertext);
+          $review->set("scores//overall", (int)$tr->find("td strong", 1)->innertext);
         } else if(strpos($tr->find("td", 0)->innertext, "Story") !== false) {
-          // Story Rating
+          // Story Score
           // <td class="borderClass">8</td>
-          $review->set("ratings//story", (int)$tr->find("td", 1)->innertext);
+          $review->set("scores//story", (int)$tr->find("td", 1)->innertext);
         } else if(strpos($tr->find("td", 0)->innertext, "Animation") !== false) {
-          // Animation Rating
+          // Animation Score
           // <td class="borderClass">9</td>
-          $review->set("ratings//animation", (int)$tr->find("td", 1)->innertext);
+          $review->set("scores//animation", (int)$tr->find("td", 1)->innertext);
         } else if(strpos($tr->find("td", 0)->innertext, "Sound") !== false) {
-          // Sound Rating
+          // Sound Score
           // <td class="borderClass">0</td>
-          $review->set("ratings//sound", (int)$tr->find("td", 1)->innertext);
+          $review->set("scores//sound", (int)$tr->find("td", 1)->innertext);
         } else if(strpos($tr->find("td", 0)->innertext, "Character") !== false) {
-          // Character Rating
+          // Character Score
           // <td class="borderClass">10</td>
-          $review->set("ratings//character", (int)$tr->find("td", 1)->innertext);
+          $review->set("scores//character", (int)$tr->find("td", 1)->innertext);
         } else if(strpos($tr->find("td", 0)->innertext, "Enjoyment") !== false) {
-          // Enjoyment Rating
+          // Enjoyment Score
           // <td class="borderClass" style="border-width: 0;">10</td>
-          $review->set("ratings//enjoyment", (int)$tr->find("td", 1)->innertext);
+          $review->set("scores//enjoyment", (int)$tr->find("td", 1)->innertext);
         }
       }
       

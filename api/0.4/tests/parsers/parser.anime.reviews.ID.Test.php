@@ -15,7 +15,7 @@ class AnimeReviewsIDParserTest extends TestCase {
     $this->assertEquals(25835, $reviews[0]["target"]["id"]);
     $this->assertEquals(24, $reviews[0]["episodes_seen"]);
     $this->assertEquals(373, $reviews[0]["helpful_count"]);
-    $this->assertEquals(10, $reviews[0]["ratings"]["overall"]); // Skip other ratings with the assumption that if the first worked others would work
+    $this->assertEquals(10, $reviews[0]["scores"]["overall"]); // Skip other ratings with the assumption that if the first worked others would work
     $this->assertEquals("chesudesu", $reviews[0]["author"]["username"]);
   }
 

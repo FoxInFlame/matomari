@@ -47,26 +47,26 @@ class AnimeReviewTest extends TestCase {
     $this->assertEquals($reviewHelpful_Count, $review->get("helpful_count"));
   }
 
-  public function testRatings() {
+  public function testScores() {
     $review = new AnimeReview();
-    $reviewRatingOverall = rand(0, 10);
-    $review->set("ratings//overall", $reviewRatingOverall);
-    $this->assertEquals($reviewRatingOverall, $review->get("ratings//overall"));
-    $reviewRatingStory = rand(0, 10);
-    $review->set("ratings//story", $reviewRatingStory);
-    $this->assertEquals($reviewRatingStory, $review->get("ratings//story"));
-    $reviewRatingAnimation = rand(0, 10);
-    $review->set("ratings//animation", $reviewRatingAnimation);
-    $this->assertEquals($reviewRatingAnimation, $review->get("ratings//animation"));
-    $reviewRatingSound = rand(0, 10);
-    $review->set("ratings//sound", $reviewRatingSound);
-    $this->assertEquals($reviewRatingSound, $review->get("ratings//sound"));
-    $reviewRatingCharacter = rand(0, 10);
-    $review->set("ratings//character", $reviewRatingCharacter);
-    $this->assertEquals($reviewRatingCharacter, $review->get("ratings//character"));
-    $reviewRatingEnjoyment = rand(0, 10);
-    $review->set("ratings//enjoyment", $reviewRatingEnjoyment);
-    $this->assertEquals($reviewRatingEnjoyment, $review->get("ratings//enjoyment"));
+    $reviewScoreOverall = rand(0, 10);
+    $review->set("scores//overall", $reviewScoreOverall);
+    $this->assertEquals($reviewScoreOverall, $review->get("scores//overall"));
+    $reviewScoreStory = rand(0, 10);
+    $review->set("scores//story", $reviewScoreStory);
+    $this->assertEquals($reviewScoreStory, $review->get("scores//story"));
+    $reviewScoreAnimation = rand(0, 10);
+    $review->set("scores//animation", $reviewScoreAnimation);
+    $this->assertEquals($reviewScoreAnimation, $review->get("scores//animation"));
+    $reviewScoreSound = rand(0, 10);
+    $review->set("scores//sound", $reviewScoreSound);
+    $this->assertEquals($reviewScoreSound, $review->get("scores//sound"));
+    $reviewScoreCharacter = rand(0, 10);
+    $review->set("scores//character", $reviewScoreCharacter);
+    $this->assertEquals($reviewScoreCharacter, $review->get("scores//character"));
+    $reviewScoreEnjoyment = rand(0, 10);
+    $review->set("scores//enjoyment", $reviewScorenjoyment);
+    $this->assertEquals($reviewScoreEnjoyment, $review->get("scores//enjoyment"));
   }
 
   public function testReview() {
