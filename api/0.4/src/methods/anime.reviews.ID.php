@@ -76,7 +76,7 @@ call_user_func(function() {
 
   $data = new Data();
   
-  if($data->getCache($url)) {
+  if($data->getCache($url, 1440)) {
     $content = $data->data;
   } else {
     $ch = curl_init();
