@@ -12,7 +12,15 @@ class AnimeInfoIDParser {
       echo json_encode(array(
         "message" => "The code for MAL is not valid HTML markup.",
       ));
-      http_response_code(500);
+      http_response_code(502);
+      return;
+    }
+
+    if(!is_object($html->find("body.page-common"))) {
+      echo json_encode(array(
+        "message" => "MAL is currently under maintenance."
+      ));
+      http_response_code(503);
       return;
     }
 

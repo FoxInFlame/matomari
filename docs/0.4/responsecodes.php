@@ -143,7 +143,7 @@
 </div>
 
 <div id="code-500" class="ui segment">
-  <h2 class="ui header">500</h2>
+  <h2 class="ui header">502</h2>
   <div id="bad-markup">
     <h3 class="ui purple header">The code for MAL is not valid HTML markup</h3>
     <table class="ui fixed celled table">
@@ -161,6 +161,35 @@
           </td>
           <td>
             When str_get_html() function with the response content is not an object - it should be an object containing elements if it were a valid markup.
+          </td>
+          <td>
+            JSON with the 'message' key containing this error.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="code-503" class="ui segment">
+  <h2 class="ui header">503</h2>
+  <div id="bad-markup">
+    <h3 class="ui purple header">MAL is currently under maintenance</h3>
+    <table class="ui fixed celled table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Displayed When</th>
+          <th>Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            You sent the right request, but MAL was unable to process it because it is under maintenance. Check MAL's Twitter account and try again when MAL is back up.
+          </td>
+          <td>
+            A &lt;body&gt; with a "page-common" class is not found.
           </td>
           <td>
             JSON with the 'message' key containing this error.

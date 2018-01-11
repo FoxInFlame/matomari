@@ -12,7 +12,7 @@ class UserListAnimeUSERNAMEParser {
       echo json_encode(array(
         "message" => "The code for MAL is not valid XML markup.",
       ));
-      http_response_code(500);
+      http_response_code(502);
       return;
     }
 
@@ -21,7 +21,7 @@ class UserListAnimeUSERNAMEParser {
       echo json_encode(array(
         "message" => "The code for MAL is not valid JSON markup.",
       ));
-      http_response_code(500);
+      http_response_code(502);
       return;
     }
 
