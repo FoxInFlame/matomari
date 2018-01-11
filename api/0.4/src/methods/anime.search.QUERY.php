@@ -551,6 +551,8 @@ call_user_func(function() {
   
   $results_arr = AnimeSearchQUERYParser::parse($content);
   
+  if(!$results_arr) return;
+
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
   // [+] --------------------OUTPUT-------------------- [+]

@@ -119,6 +119,8 @@ call_user_func(function() {
 
   $anime = AnimeTopParser::parse($content);
 
+  if(!$anime) return;
+  
   $page = (($anime[0]["rank"] - 1) / 50) + 1;
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]

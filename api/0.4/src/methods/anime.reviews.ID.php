@@ -112,6 +112,8 @@ call_user_func(function() {
 
   $reviews_arr = AnimeReviewsIDParser::parse($content);
 
+  if(!$reviews_arr) return;
+
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
   // [+] --------------------OUTPUT-------------------- [+]

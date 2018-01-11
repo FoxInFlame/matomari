@@ -146,6 +146,8 @@ call_user_func(function() {
 
   $anime = UserListAnimeUSERNAMEParser::parse($malresponse_xml, $malresponse_json);
 
+  if(!$anime) return;
+
 
   header("matomari-Total-Count: " . (string)$anime[0]["total"]);
   $page_parameters = $_GET;

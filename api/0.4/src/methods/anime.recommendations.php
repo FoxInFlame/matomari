@@ -88,6 +88,8 @@ call_user_func(function() {
   
   $recommendations_arr = AnimeRecommendationsParser::parse($content);
   
+  if(!$recommendations_arr) return;
+
   // [+] ============================================== [+]
   // [+] ---------------------------------------------- [+]
   // [+] --------------------OUTPUT-------------------- [+]
