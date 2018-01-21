@@ -11,8 +11,7 @@ array_push($filenames, "responsecodes");
 if(isset($_GET['file'])) {
   foreach($filenames as $filename) {
     // For each method that exists in methods.php (not neccessarily everything that actually exists)
-    $filename_dots = str_replace("/", ".", $filename); // Reformat method URL to file URL
-    $filename_dots_components = explode(".", $filename_dots);
+    $filename_dots_components = explode("/", $filename); // Reformat method URL to file URL
     foreach($filename_dots_components as $key => $component) { // foreach component of the URL
       if($component[0] === ":") { // Strings can be seen as character arrays
         $filename_dots_components[$key] = strtoupper(substr($component, 1));
