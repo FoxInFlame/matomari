@@ -98,6 +98,13 @@ call_user_func(function() {
       http_response_code(404);
       return;
     }
+    if(!preg_match('/<body [a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*class="[a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*page-common/g', $response)) {
+      echo json_encode(array(
+        "message" => "MAL is under maintenance."
+      ));
+      http_response_code(503);
+      return;
+    }
     curl_close($ch);
     
     $data->saveCache($url, $response);

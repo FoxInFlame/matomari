@@ -8,14 +8,14 @@ class MeListAnimeIDParser {
   public static function parse($response) {
     $html = str_get_html($response);
 
-    if(!is_array($html)) {
+    if(!is_object($html)) {
       echo json_encode(array(
         "message" => "The code for MAL is not valid HTML markup.",
       ));
       http_response_code(502);
       return;
     }
-    if(!is_array($html->find("body.page-common"))) {
+    if(!is_array($html->find("body.page-common"))) { // Check for array because ->find() returns array while str_get_html returns objects.
       echo json_encode(array(
         "message" => "MAL is currently under maintenance."
       ));

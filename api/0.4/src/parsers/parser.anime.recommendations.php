@@ -8,22 +8,14 @@ class AnimeRecommendationsParser {
   public static function parse($response) {
     $html = str_get_html($response);
 
-    if(!is_array($html)) {
+    if(!is_object($html)) {
       echo json_encode(array(
         "message" => "The code for MAL is not valid HTML markup.",
       ));
       http_response_code(502);
       return;
     }
-
-    if(!is_array($html->find("body.page-common"))) {
-      echo json_encode(array(
-        "message" => "MAL is currently under maintenance."
-      ));
-      http_response_code(503);
-      return;
-    }
-
+    
     $recommendation_items = $html->find("#contentWrapper #content", 0)->children(2)->children();
     $recommendations_arr = array();
 
