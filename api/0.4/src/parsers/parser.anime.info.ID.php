@@ -8,7 +8,7 @@ class AnimeInfoIDParser {
   public static function parse($response) {
     $html = str_get_html($response);
 
-    if(!is_boject($html)) {
+    if(!is_object($html)) {
       echo json_encode(array(
         "message" => "The code for MAL is not valid HTML markup.",
       ));
@@ -111,7 +111,11 @@ class AnimeInfoIDParser {
       if(strpos($value->plaintext, "Type:") !== false) {
         // MAL has an ending tag without a starting tag bug so remove that
         if(strpos($value->plaintext, "Unknown") === false) {
-          $anime->set("type", (string)trim($value->find("a", 0)->innertext));
+          if($value->find("a", 0)) {
+            $anime->set("type", (string)trim($value->find("a", 0)->innertext));
+          } else {
+            $anime->set("type", (string)trim($value->find("text", 2)->innertext));
+          }
         }
       }
 
