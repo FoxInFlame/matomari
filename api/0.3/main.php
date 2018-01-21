@@ -8,7 +8,6 @@ require("json_to_xml.php");
 
 dieIfNotSet($request_parts[0]);
 
-print_r($request_parts);
 switch($request_parts[0]) {
   case "anime": // anime/
     dieIfNotSet($request_parts[1]);
