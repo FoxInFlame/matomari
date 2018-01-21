@@ -29,8 +29,8 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 require_once(dirname(__FILE__) . "/../SimpleHtmlDOM.php");
-require_once(dirname(__FILE__) . "/../class/class.anime.php");
-require_once(dirname(__FILE__) . "/../class/class.cache.php");
+#require_once(dirname(__FILE__) . "/../class/class.anime.php");
+require_once(dirname(__FILE__) . "/../classes/class.cache.php");
 
 call_user_func(function() {
   
@@ -101,8 +101,8 @@ call_user_func(function() {
   // [+] ============================================== [+]
   
   $str = $html->find("#content table tbody tr", 0);
-  $recommendations = $html->find("div");
-  
+  $recommendations = $str->find("div");
+
   $recommendations_arr = array();
   foreach($recommendations as $recommendation) {
     if(strpos($recommendation->class, "borderClass") === false) continue;

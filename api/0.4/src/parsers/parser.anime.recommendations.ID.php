@@ -27,7 +27,8 @@ class AnimeReviewsIDParser {
     $contentWrapper = $html->find("#contentWrapper", 0);
     $target_id = $contentWrapper->find("#myinfo_anime_id", 0)->value;
     $target_title = $contentWrapper->find("div h1.h1 span", 0)->innertext;
-    $reviews = $contentWrapper->find("#content tr", 0)->children()[1]->find("div.borderDark");
+    $str = $contentWrapper->find("#content table tbody tr", 0);
+    $recommendations = $contentWrapper->find("div");
     
     if(count($reviews) == 0) { // No reviews
       return array();
