@@ -131,25 +131,25 @@ $model = [
     "children" => [
       "from" => [
         "type" => "String",
-        "description" => "Air start date in YYYY-MM-DD format (with x as unknown)"
+        "description" => "Air start date in YYYY-MM-DD format (with - as unknown)"
       ],
       "to" => [
         "type" => "String",
-        "description" => "Air end date in YYYY-MM-DD format (with x as unknown)"
+        "description" => "Air end date in YYYY-MM-DD format (with - as unknown)"
       ]
     ]
   ],
   "season" => [
     "type" => "String",
-    "description" => "The season and year of the release (null if movie)"
+    "description" => "The season and year of the release (null if it aired in one day)"
   ],
   "air_time" => [
     "type" => "String",
-    "description" => "Unparsed air time and day as it appears on MAL (null if movie)"
+    "description" => "Unparsed air time and day as it appears on MAL (null if it aired in one day)"
   ],
   "premier_date" => [
     "type" => "String",
-    "description" => "The premier date of the anime (null unless movie)"
+    "description" => "The premier date of the anime (null unless it aired in one day)"
   ],
   "producers" => [
     "type" => "Array",

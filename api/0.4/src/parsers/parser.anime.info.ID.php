@@ -103,7 +103,7 @@ class AnimeInfoIDParser {
     $html_information = $html->find("div#contentWrapper div#content div.js-scrollfix-bottom div");
     foreach($html_information as $value) {
 
-      // The Type
+      // The Type (music isn't a link anymore)
       // <div>
       //   <span class="dark_text">Type:</span>
       //   <a href="https://myanimelist.net/topanime.php?type=movie">Movie</a>
@@ -160,7 +160,7 @@ class AnimeInfoIDParser {
           } else if(strpos($value->find("text", 2), ",") !== false) {
             $anime->set("premier_date", (string)getAbsoluteTimeGMT($value->find("text", 2)->innertext, "!M j, Y")->format("Y-m-d"));
           } else {
-            $anime->set("premier_date", (string)$value->find("text", 2)->innertext . "-xx-xx");
+            $anime->set("premier_date", (string)$value->find("text", 2)->innertext . "----");
           }
         }
       }
