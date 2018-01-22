@@ -2,9 +2,10 @@
 
 require './vendor/autoload.php';
 
+use PHPUnit\Framework\TestCase;
 require_once(dirname(__FILE__) . "/../../src/models/model.animeInfo.php");
 
-class AnimeInfoTest extends PHPUnit_Framework_TestCase  {
+class AnimeInfoTest extends TestCase {
 
   public function testID() {
     $anime = new AnimeInfo();
