@@ -106,7 +106,7 @@ call_user_func(function() {
         return;
       }
     }
-    if(!preg_match('/<body [a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*class="[a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*page-common/g', $response)) {
+    if(!preg_match('/<body [a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*class="[a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*page-common/', $response)) {
       echo json_encode(array(
         "message" => "MAL is under maintenance."
       ));
