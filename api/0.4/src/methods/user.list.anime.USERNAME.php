@@ -81,7 +81,7 @@ call_user_func(function() {
         "message" => "Too many requests."
       ));
       http_response_code(429);
-      return; // return so don't save cache
+      return;
     }
     if(strpos($response, "<myanimelist></myanimelist>") !== false) {
       echo json_encode(array(
