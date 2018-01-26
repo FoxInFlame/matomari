@@ -1,6 +1,0 @@
-Header set Access-Control-Allow-Origin "*"
-
-RewriteEngine On
-
-RewriteCond %{REQUEST_URI} !^/docs/0.4/index.php$
-RewriteRule ^/?0.4/(.*)$ /docs/0.4/index.php?file=$1 [L,QSA]

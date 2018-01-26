@@ -1,1 +1,0 @@
-The general methods give you access to general data that doesn't fit anywhere else. Some requests here don't have much to do with MyAnimeList.

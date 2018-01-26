@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} !^/api/index.php$
+RewriteRule ^(.*)$ /api/index.php?request=$1 [L,QSA]
