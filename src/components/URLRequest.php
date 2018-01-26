@@ -65,7 +65,7 @@ class URLRequest
     $this->url = $url;
     $this->scheme = $parsed_url['scheme'];
     $this->host = $parsed_url['host'];
-    $this->path = str_replace('/api/0.4', '', $parsed_url['path']);
+    $this->path = str_replace('/api/0.5', '', $parsed_url['path']);
     $this->query = $parsed_url['query'] ?? '';
 
   }
