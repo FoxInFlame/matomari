@@ -34,9 +34,9 @@ class RequestBuilder
    * 
    * @var Array
    */
-  private $routes = array(
+  private $routes = [
     '\/anime\/([0-9]*)\/info' => array('AnimeController', 'info')
-  );
+  ];
 
   /**
    * Build Request.
