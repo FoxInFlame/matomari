@@ -3,9 +3,9 @@
 /**
  * A part of the matomari API.
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
- * @version 0.0.1
+ * @version 0.5
  */
 
 namespace Matomari;
@@ -17,7 +17,7 @@ use Matomari\Components\Response;
 /**
  * App core class for matomari.
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  */
 class Matomari
@@ -28,7 +28,7 @@ class Matomari
    * Then create a Response instance and send away to finalisation.
    * 
    * @param Request $request The Request constructed from URLRequest
-   * @since 0.0.1
+   * @since 0.5
    */
   public function handle(Request $request) {
     $controller_name = $request->getControllerName();
@@ -46,7 +46,7 @@ class Matomari
    * Finalise the app flow. (Encode into specific formats and Cache)
    * 
    * @param Response $response
-   * @since 0.0.1
+   * @since 0.5
    */
   private function finalise(Response $response) {
     $final_response = '';
@@ -64,7 +64,7 @@ class Matomari
    * Echoes the response.
    * 
    * @param Response $response
-   * @since 0.0.1
+   * @since 0.5
    */
   private function output(String $response) {
     header('Access-Control-Allow-Origin: *');

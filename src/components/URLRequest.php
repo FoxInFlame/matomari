@@ -3,9 +3,9 @@
 /**
  * A part of the matomari API.
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
- * @version 0.0.1
+ * @version 0.5
  */
 
 namespace Matomari\Components;
@@ -13,7 +13,7 @@ namespace Matomari\Components;
 /**
  * Class URLRequest
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  */
 class URLRequest
@@ -53,7 +53,7 @@ class URLRequest
    * Constructor to build URLRequest.
    * 
    * @param String $url The raw dump of the server request URL 
-   * @since 0.0.1
+   * @since 0.5
    */
   public function __construct(String $url) {
     $parsed_url = parse_url($url);
@@ -72,7 +72,7 @@ class URLRequest
 
   /** 
    * @return String
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getURL() {
     return $this->url;
@@ -80,7 +80,7 @@ class URLRequest
 
   /** 
    * @return String
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getScheme() {
     return $this->scheme;
@@ -88,7 +88,7 @@ class URLRequest
 
   /** 
    * @return String
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getHost() {
     return $this->host;
@@ -96,7 +96,7 @@ class URLRequest
 
   /** 
    * @return String
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getPath() {
     return $this->path;
@@ -104,7 +104,7 @@ class URLRequest
 
   /** 
    * @return String
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getQuery() {
     return $this->query;

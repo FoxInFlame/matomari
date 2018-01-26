@@ -3,9 +3,9 @@
 /**
  * A part of the matomari API.
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
- * @version 0.0.1
+ * @version 0.5
  */
 
 namespace Matomari\Builders;
@@ -16,7 +16,7 @@ use Matomari\Components\Response;
 /**
  * Construct a Response object from the responses.
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  */
 class ResponseBuilder
@@ -33,7 +33,7 @@ class ResponseBuilder
    * 
    * @param Request $request The Request for the request.
    * @param Array $responsearray The response associative array.
-   * @since 0.0.1 
+   * @since 0.5 
    */
   public function build(Request $request, Array $responsearray) {
     
@@ -46,7 +46,7 @@ class ResponseBuilder
    * Retrieve the built Response.
    * 
    * @return Response
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getResponse() {
     return $this->response;

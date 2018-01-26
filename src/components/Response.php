@@ -2,9 +2,9 @@
 
 /**
  * A part of the matomari API.
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
- * @version 0.0.1
+ * @version 0.5
  */
 
 namespace Matomari\Components;
@@ -12,7 +12,7 @@ namespace Matomari\Components;
 /**
  * Class Response
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  */
 class Response
@@ -36,7 +36,7 @@ class Response
    * 
    * @param Request $request The Request constructed from the request URL.
    * @param Array $responsearray The response array created from Controllers.
-   * @since 0.0.1
+   * @since 0.5
    */
   public function __construct(Request $request, Array $responsearray) {
     $this->request = $request;
@@ -46,7 +46,7 @@ class Response
 
   /** 
    * @return Request
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getRequest() {
     return $this->request;
@@ -54,7 +54,7 @@ class Response
 
   /** 
    * @return Array
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getResponseArray() {
     return $this->responsearray;

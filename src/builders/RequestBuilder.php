@@ -3,9 +3,9 @@
 /**
  * A part of the matomari API.
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
- * @version 0.0.1
+ * @version 0.5
  */
 
 namespace Matomari\Builders;
@@ -16,7 +16,7 @@ use Matomari\Components\URLRequest;
 /**
  * Construct a Request object from relative URL request.
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  */
 class RequestBuilder
@@ -42,7 +42,7 @@ class RequestBuilder
    * Build Request.
    * 
    * @param URLRequest $urlrequest The URLRequest for the request.
-   * @since 0.0.1 
+   * @since 0.5 
    */
   public function build(URLRequest $urlrequest) {
     $path = $urlrequest->getPath();
@@ -68,7 +68,7 @@ class RequestBuilder
    * Retrieve the built Request.
    * 
    * @return Request
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getRequest() {
     return $this->request;

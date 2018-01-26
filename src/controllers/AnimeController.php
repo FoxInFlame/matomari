@@ -3,9 +3,9 @@
 /**
  * A part of the matomari API.
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
- * @version 0.0.1
+ * @version 0.5
  */
 
 namespace Matomari\Controllers;
@@ -13,7 +13,7 @@ namespace Matomari\Controllers;
 /**
  * Controller for anime details. 
  * 
- * @since 0.0.1
+ * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  */
 class AnimeController
@@ -30,7 +30,7 @@ class AnimeController
    * Get the overall anime information in detail.
    * 
    * @param Integer $anime_id The Anime ID on MAL
-   * @since 0.0.1
+   * @since 0.5
    */
   public function info($anime_id) {
     $this->responsearray = array(
@@ -42,7 +42,7 @@ class AnimeController
    * Retrieve the response.
    * 
    * @return Array
-   * @since 0.0.1
+   * @since 0.5
    */
   public function getResponseArray() {
     return $this->responsearray;
