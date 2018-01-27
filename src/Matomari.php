@@ -14,6 +14,8 @@ use Matomari\Builders\ResponseBuilder;
 use Matomari\Components\Request;
 use Matomari\Components\Response;
 
+use Spatie\ArrayToXml\ArrayToXml;
+
 /**
  * App core class for matomari.
  * 
@@ -33,8 +35,11 @@ class Matomari
   public function handle(Request $request) {
     $controller_name = $request->getControllerName();
 
+    // Calling dynamic namespaces isn't supported by Composer's "use" syntax.
+    // Thus, the entire path to the namespace has to be provided.
     $class = 'Matomari\\Controllers\\' . $controller_name;
     $controller = new $class();
+    
     $controller->{$request->getSpecifier()}(...$request->getPathVariables());
 
     $response_builder = new ResponseBuilder();
@@ -53,6 +58,9 @@ class Matomari
     if($response->getRequest()->getType() === 'json') {
       header('Content-Type: application/json');
       $final_response = json_encode($response->getResponseArray());
+    } else if($response->getRequest()->getType() === 'xml') {
+      header('Content-Type: application/xml');
+      $final_response = ArrayToXml::convert($response->getResponseArray());
     }
 
     // Do caching ehre.
