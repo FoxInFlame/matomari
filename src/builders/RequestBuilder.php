@@ -30,12 +30,12 @@ class RequestBuilder
 
   /**
    * Files and controllers to route to. (Primary Routing)
-   * ```array(ControllerName, SpecifierName)```
+   * ```[ControllerName, SpecifierName]```
    * 
    * @var Array
    */
   private $routes = [
-    '\/anime\/([0-9]*)\/info' => array('AnimeController', 'info')
+    '\/anime\/([0-9]*)\/info' => ['AnimeController', 'info']
   ];
 
   /**
@@ -51,11 +51,19 @@ class RequestBuilder
       // Also considered \b but that is for word boundaries, and things with slashes are not
       // considered as one word.
       // https://stackoverflow.com/questions/4026115/regex-word-boundary-but-for-white-space-beginning-of-line-or-end-of-line-only
-      if(!preg_match('/(?:^|\s|$)\/(xml|json)' . $key . '(?:^|\s|$)/', $path, $matches)) {
+      if(!preg_match('/(?:^|\s|$)' . $key . '(?:^|\s|$)/', $path, $matches)) {
         continue;
       }
 
-      $request = new Request($matches[1], $route[0], $route[1], array_slice($matches, 2));
+      if($_SERVER['HTTP_ACCEPT'] === 'application/json') {
+        $type = 'json';
+      } else if($_SERVER['HTTP_ACCEPT'] === 'application/xml') {
+        $type = 'xml';
+      } else {
+        $type = 'json';
+      }
+
+      $request = new Request($type, $route[0], $route[1], array_slice($matches, 1));
       $this->request = $request;
     }
 

@@ -33,9 +33,9 @@ class AnimeController
    * @since 0.5
    */
   public function info($anime_id) {
-    $this->responsearray = array(
-      'hi there'
-    );
+    $this->responsearray = [
+      'stuff' => 'hi there'
+    ];
   }
 
   /**
