@@ -40,7 +40,7 @@ class Matomari
     $class = 'Matomari\\Controllers\\' . $controller_name;
     $controller = new $class();
     
-    $controller->{$request->getSpecifier()}(...$request->getPathVariables());
+    $controller->{$request->getSpecifier()}($request->getGetVariables(), $request->getPostVariables(), ...$request->getPathVariables());
 
     $response_builder = new ResponseBuilder();
     $response_builder->build($request, $controller->getResponseArray());
