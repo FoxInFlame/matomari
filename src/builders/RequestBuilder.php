@@ -39,13 +39,24 @@ class RequestBuilder
   ];
 
   /**
-   * Build Request.
+   * Build Request, only if the request format fits into one of the predefined $routes
    * 
-   * @param URLRequest $urlrequest The URLRequest for the request.
+   * @param Array $server The raw dump of $_SERVER.
    * @since 0.5 
    */
-  public function build(URLRequest $urlrequest) {
-    $path = $urlrequest->getPath();
+  public function build(Array $server) {
+    $request_uri = $server['REQUEST_URI'];
+    $path = str_replace('/api/0.5', '', explode('?', $request_uri)[0]);
+    $query = explode('?', $request_uri)[1] ?? [];
+    if($query) parse_str($query, $get_variables);
+
+    $post_data = file_get_contents('php://input');
+    if($post_data) {
+      $post_variables = json_decode($post_data, true);
+    } else {
+      $post_variables = [];
+    }
+
     foreach($this->routes as $key => $route) {
       // Only match exact matches (so not first match)
       // Also considered \b but that is for word boundaries, and things with slashes are not
@@ -55,15 +66,16 @@ class RequestBuilder
         continue;
       }
 
-      if($_SERVER['HTTP_ACCEPT'] === 'application/json') {
+      if($server['HTTP_ACCEPT'] === 'application/json') {
         $type = 'json';
-      } else if($_SERVER['HTTP_ACCEPT'] === 'application/xml') {
+      } else if($server['HTTP_ACCEPT'] === 'application/xml') {
         $type = 'xml';
       } else {
         $type = 'json';
       }
 
-      $request = new Request($type, $route[0], $route[1], array_slice($matches, 1));
+      // Slice away the first match because that is the whole match (not needed here)
+      $request = new Request($type, $route[0], $route[1], array_slice($matches, 1), $get_variables, $post_variables);
       $this->request = $request;
     }
 
