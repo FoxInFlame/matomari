@@ -97,7 +97,7 @@
       </div>
       <a href="/docs/0.4/" id="cta_main">Start using the matomari API</a>
     </div>
-    <script>
+    <!--<script>
     window.setTimeout(function() {
       var a = document.getElementById('logo');
       a.classList ? a.classList.add('animateSVG') : a.className += ' animateSVG';
@@ -108,6 +108,6 @@
         }, 1000);
       }, 11000);
     }, 1000);
-    </script>
+    </script>-->
   </body>
 </html>
