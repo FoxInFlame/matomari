@@ -10,6 +10,8 @@
 
 namespace Matomari\Controllers;
 
+use Matomari\Collections\AnimeInfoCollection;
+
 /**
  * Controller for anime details. 
  * 
@@ -35,11 +37,21 @@ class AnimeController
    * @since 0.5
    */
   public function info($get_variables, $post_variables, $anime_id) {
-    $this->responsearray = [
-      'stuff' => 'hi there',
-      'ho' => $post_variables,
-      'get' => $get_variables
-    ];
+    $collection = new AnimeInfoCollection(
+      $anime_id
+    );
+    $this->responsearray = (array)$collection->getModel();
+  }
+
+  public function search($get_variables, $post_variables, $query) {
+    // Collection gets the data from cache, or calls a Request,
+    // then builds a Model out of it, and finally returns that Model
+    $collection = new AnimeSearchCollection(
+      $query,
+      $get_variables['filter'] ?? '',
+      $get_variables['page'] ?? '1'
+    );
+    $this->responsearray = (array)$collection->getModel();
   }
 
   /**

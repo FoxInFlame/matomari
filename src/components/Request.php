@@ -18,7 +18,7 @@ namespace Matomari\Components;
  */
 class Request
 {
-  
+   
   /**
    * Contains the requested response type.
    * @var String
