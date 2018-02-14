@@ -11,7 +11,7 @@
 namespace Matomari\Collections;
 
 use GuzzleHttp\Client;
-use Matomari\Components\Exceptions;
+use Matomari\Exceptions\MatomariError;
 use Matomari\Collections\Collection;
 use Matomari\Parsers\AnimeInfoParser;
 
@@ -35,7 +35,7 @@ class AnimeInfoCollection extends Collection
   public function __construct($anime_id) {
 
     $guzzle_client = new Client();
-    $response = $guzzle_client->request('GET', 'https://myanimelist.net/anime/' . $anime_id);
+    $response = $guzzle_client->request('GET', 'https://myanimelist.net/anime/' . $anime_id, ['http_errors' => false]);
 
     if($response->getStatusCode() === 429) {
       throw new MatomariError('Too many frequent requests. Please wait and retry.', 429);
@@ -45,7 +45,7 @@ class AnimeInfoCollection extends Collection
       throw new MatomariError('There was an unknown error with MAL. Contact FoxInFlame.', 500);
     }
 
-    $this->model = AnimeInfoParser::parse($response->getBody());
+    $this->array = AnimeInfoParser::parse($response->getBody());
   }
 
 }

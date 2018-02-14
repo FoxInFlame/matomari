@@ -40,7 +40,7 @@ class AnimeController
     $collection = new AnimeInfoCollection(
       $anime_id
     );
-    $this->responsearray = (array)$collection->getModel();
+    $this->responsearray = $collection->getArray();
   }
 
   public function search($get_variables, $post_variables, $query) {
@@ -51,7 +51,7 @@ class AnimeController
       $get_variables['filter'] ?? '',
       $get_variables['page'] ?? '1'
     );
-    $this->responsearray = (array)$collection->getModel();
+    $this->responsearray = $collection->getArray();
   }
 
   /**

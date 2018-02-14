@@ -11,9 +11,9 @@
 namespace Matomari\Parsers;
 
 use Sunra\PhpSimple\HtmlDomParser;
-use Matomari\Components\Exceptions;
+use Matomari\Exceptions\MatomariError;
 use Matomari\Components\Time;
-use Matomari\Models\AnimeInfo;
+use Matomari\Models\AnimeInfoModel;
 
 /**
  * Parse HTML of anime info pages into AnimeInfo Models
@@ -38,7 +38,7 @@ class AnimeInfoParser
       throw new MatomariError('The code for MAL is not valid HTML.', 502);
     }
 
-    $anime = new AnimeInfo();
+    $anime = new AnimeInfoModel();
 
     // The ID
     // <input type="hidden" name="aid" value="16870">
@@ -344,7 +344,7 @@ class AnimeInfoParser
       $anime->set("background", (string)trim($background));
     }
     
-    return $anime;
+    return $anime->info;
   }
 
 }

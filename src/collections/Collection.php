@@ -20,11 +20,11 @@ class Collection
 {
 
   /**
-   * Contains the model generated in the constructor.
+   * Contains the model array generated in the constructor.
    * 
-   * @var Model
+   * @var Array
    */
-  protected $model;
+  protected $array;
 
   /**
    * Retrieve the model.
@@ -32,8 +32,8 @@ class Collection
    * @return Array
    * @since 0.5
    */
-  public function getModel() {
-    return $this->model;
+  public function getArray() {
+    return $this->array;
   }
 
 }

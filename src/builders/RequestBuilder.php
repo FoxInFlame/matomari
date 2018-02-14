@@ -12,6 +12,7 @@ namespace Matomari\Builders;
 
 use Matomari\Components\Request;
 use Matomari\Components\URLRequest;
+use Matomari\Exceptions\MatomariError;
 
 /**
  * Construct a Request object from relative URL request.
@@ -84,7 +85,7 @@ class RequestBuilder
     }
 
     if(!$this->request) {
-      echo 'no such method.';
+      throw new MatomariError('No such method.', 400);
     }
   }
 

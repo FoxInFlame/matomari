@@ -16,7 +16,7 @@ use Matomari\Models\Model;
  * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  */
-class AnimeInfo extends Model
+class AnimeInfoModel extends Model
 {
   public $info = array(
     "id" => null,

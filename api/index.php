@@ -14,11 +14,20 @@ use Matomari\Builders\URLRequestBuilder;
 use Matomari\Builders\RequestBuilder;
 use Matomari\Matomari;
 
-// Build instance of Request.
-$request_builder = new RequestBuilder();
-$request_builder->build($_SERVER);
-$request = $request_builder->getRequest();
+try {
+  // Build instance of Request.
+  $request_builder = new RequestBuilder();
+  $request_builder->build($_SERVER);
+  $request = $request_builder->getRequest();
 
-// Start core.
-$matomari = new Matomari();
-$matomari->handle($request);
+  // Start core.
+  $matomari = new Matomari();
+  $matomari->handle($request);
+} catch (Exception $e) {
+  echo json_encode(array(
+    'code' => $e->getCode(),
+    'message' => $e->getMessage()
+  ));
+  http_response_code($e->getCode());
+  return;
+}

@@ -7,8 +7,8 @@
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  * @version 0.5
  */
+namespace Matomari\Exceptions;
 
-class MatomariError extends Exception {}
-  
-class ModelKeyDoesNotExist extends Exception {}
+use Exception;
+
 class ModelValueNotValid extends Exception {}
