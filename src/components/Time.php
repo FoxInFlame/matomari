@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A part of the matomari API.
  * 
