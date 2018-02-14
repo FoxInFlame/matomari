@@ -48,7 +48,7 @@ class Matomari
   }
 
   /**
-   * Finalise the app flow. (Encode into specific formats and Cache)
+   * Finalise the app flow. (Encode into specific formats)
    * 
    * @param Response $response
    * @since 0.5

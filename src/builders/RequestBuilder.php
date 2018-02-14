@@ -48,7 +48,11 @@ class RequestBuilder
     $request_uri = $server['REQUEST_URI'];
     $path = str_replace('/api/0.5', '', explode('?', $request_uri)[0]);
     $query = explode('?', $request_uri)[1] ?? [];
-    if($query) parse_str($query, $get_variables);
+    if($query) {
+      parse_str($query, $get_variables);
+    } else {
+      $get_variables = [];
+    }
 
     $post_data = file_get_contents('php://input');
     if($post_data) {
