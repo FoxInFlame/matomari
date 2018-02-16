@@ -45,7 +45,12 @@ class AnimeInfoCollection extends Collection
       throw new MatomariError('There was an unknown error with MAL. Contact FoxInFlame.', 500);
     }
 
-    $this->array = AnimeInfoParser::parse($response->getBody());
+    $body = $response->getBody();
+    if(!preg_match('/<body [a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*class="[a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*page-common/', $body)) {
+      throw new MatomariError('MAL is currently under maintenance. Please wait and retry.', 503);
+    }
+
+    $this->array = AnimeInfoParser::parse($body);
   }
 
 }

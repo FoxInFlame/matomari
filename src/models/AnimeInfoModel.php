@@ -18,42 +18,65 @@ use Matomari\Models\Model;
  */
 class AnimeInfoModel extends Model
 {
-  public $info = array(
-    "id" => null,
-    "title" => null,
-    "mal_url" => null,
-    "image_url" => null,
-    "score" => null,
-    "rank" => null,
-    "popularity" => null,
-    "synopsis" => null,
-    "other_titles" => array(),
-    "type" => null,
-    "episodes" => null,
-    "air_status" => null,
-    "air_dates" => array(
-      "from" => null,
-      "to" => null
-    ),
-    "season" => null,
-    "air_time" => null,
-    "premier_date" => null,
-    "producers" => array(),
-    "licensors" => array(),
-    "studios" => array(),
-    "source" => null,
-    "genres" => array(),
-    "duration" => array(
-      "total" => null,
-      "per_episode" => null
-    ),
-    "rating" => null,
-    "members_scored" => null,
-    "members_inlist" => null,
-    "members_favorited" => null,
-    "background" => null,
-    "related" => array(),
-    "theme_songs" => array()
-  );
+  public $info = [
+    'id' => null,
+    'name' => null,
+    'mal_url' => null,
+    'image_url' => null,
+    'score' => null,
+    'rank' => null,
+    'popularity' => null,
+    'synopsis' => null,
+    'other_titles' => [
+      'english' => [],
+      'japanese' => [],
+      'synonyms' => []
+    ],
+    'type' => null,
+    'episodes' => null,
+    'air_status' => null,
+    'air_dates' => [
+      'from' => null,
+      'to' => null
+    ],
+    'season' => null,
+    'air_time' => null,
+    'premier_date' => null,
+    'producers' => [],
+    'licensors' => [],
+    'studios' => [],
+    'source' => null,
+    'genres' => [],
+    'duration' => [
+      'total' => null,
+      'per_episode' => null
+    ],
+    'classification' => [
+      'name' => null,
+      'description' => null
+    ],
+    'members_scored' => null,
+    'members_inlist' => null,
+    'members_favorited' => null,
+    'background' => null,
+    'relation' => [ // https://myanimelist.net/info.php?go=relationinfo
+      'sequel' => [],
+      'prequel' => [],
+      'alternative_setting' => [],
+      'alternative_version' => [],
+      'side_story' => [],
+      'parent_story' => [],
+      'summary' => [],
+      'full_story' => [],
+      'spin_off' => [],
+      'adaptation' => [],
+      'character' => [],
+      'other' => []
+    ],
+    'theme_songs' => [
+      'openings' => [],
+      'endings' => []
+    ]
+  ];
   
 }
