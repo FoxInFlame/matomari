@@ -24,10 +24,11 @@ try {
   $matomari = new Matomari();
   $matomari->handle($request);
 } catch (Exception $e) {
-  echo json_encode(array(
+  echo json_encode([
     'code' => $e->getCode(),
     'message' => $e->getMessage()
-  ));
+  ]);
   http_response_code($e->getCode());
+  header('Access-Control-Allow-Origin: *');
   return;
 }

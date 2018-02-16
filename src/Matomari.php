@@ -35,7 +35,7 @@ class Matomari
   public function handle(Request $request) {
     $controller_name = $request->getControllerName();
 
-    // Calling dynamic namespaces isn't supported by Composer's "use" syntax.
+    // Calling dynamic namespaces isn't supported by Composer's 'use' syntax.
     // Thus, the entire path to the namespace has to be provided.
     $class = 'Matomari\\Controllers\\' . $controller_name;
     $controller = new $class();
