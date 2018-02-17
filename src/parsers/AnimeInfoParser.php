@@ -462,11 +462,16 @@ class AnimeInfoParser extends Parser
         foreach(explode(', ', $episodes_str) as $episode) {
           if(strpos($episode, '-') !== false) {
             // Is a range
-            for($i = (int)explode('-', $episode)[0]; $i <= (int)explode('-', $episode)[1]; $i++) {
-              array_push($episodes, (int)$i);
-            }
+            array_push($episodes, [
+              'from' => (int)explode('-', $episode)[0],
+              'to' => (int)explode('-', $episode)[1]
+            ]);
           } else {
-            array_push($episodes, (int)$episode);
+            // Is a single episode
+            array_push($episodes, [
+              'from' => (int)$episode,
+              'to' => (int)$episode
+            ]);
           }
         }
       }
@@ -495,11 +500,16 @@ class AnimeInfoParser extends Parser
         foreach(explode(', ', $episodes_str) as $episode) {
           if(strpos($episode, '-') !== false) {
             // Is a range
-            for($i = (int)explode('-', $episode)[0]; $i <= (int)explode('-', $episode)[1]; $i++) {
-              array_push($episodes, (int)$i);
-            }
+            array_push($episodes, [
+              'from' => (int)explode('-', $episode)[0],
+              'to' => (int)explode('-', $episode)[1]
+            ]);
           } else {
-            array_push($episodes, (int)$episode);
+            // Is a single episode
+            array_push($episodes, [
+              'from' => (int)$episode,
+              'to' => (int)$episode
+            ]);
           }
         }
       }
