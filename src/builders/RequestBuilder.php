@@ -36,7 +36,9 @@ class RequestBuilder
    * @var Array
    */
   private $routes = [
-    '\/anime\/([0-9]*)\/info' => ['AnimeController', 'info']
+    '\/anime\/([0-9]*)\/info' => ['GET', 'AnimeController', 'info'],
+    '\/anime\/([0-9]*)\/?' => ['GET', 'AnimeController', 'info'],
+    '\/anime\/search\/(.*)' => ['GET', 'AnimeController', 'search']
   ];
 
   /**
@@ -79,9 +81,14 @@ class RequestBuilder
         $type = 'json';
       }
 
+      if($server['REQUEST_METHOD'] !== $route[0]) {
+        continue;
+      }
+
       // Slice away the first match because that is the whole match (not needed here)
-      $request = new Request($type, $route[0], $route[1], array_slice($matches, 1), $get_variables, $post_variables);
+      $request = new Request($type, $route[1], $route[2], array_slice($matches, 1), $get_variables, $post_variables);
       $this->request = $request;
+      break;
     }
 
     if(!$this->request) {
