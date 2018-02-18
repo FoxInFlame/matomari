@@ -103,7 +103,7 @@ class AnimeSearchParser extends Parser
       // The Type
       // <td class='borderClass ac bgColor0' width='45'>    Movie  </td>
       if(trim($td_type->innertext) !== '-') {
-        $anime->set('type', (string)trim($td_type->innertext));
+        $anime->set('type', (string)strtolower(trim($td_type->innertext)));
       }
       // The Episodes
       // <td class='borderClass ac bgColor0' width='40'>    1  </td>
