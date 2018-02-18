@@ -11,6 +11,7 @@
 namespace Matomari\Controllers;
 
 use Matomari\Collections\AnimeInfoCollection;
+use Matomari\Collections\AnimeSearchCollection;
 
 /**
  * Controller for anime details. 
@@ -43,13 +44,30 @@ class AnimeController
     $this->responsearray = $collection->getArray();
   }
 
-  public function search($get_variables, $post_variables, $query) {
+  public function search($get_variables, $post_variables, $query='') {
+    if($query === '') {
+      $query = $get_variables['q'] ?? '';
+    }
     // Collection gets the data from cache, or calls a Request,
     // then builds a Model out of it, and finally returns that Model
     $collection = new AnimeSearchCollection(
       $query,
-      $get_variables['filter'] ?? '',
-      $get_variables['page'] ?? '1'
+      $get_variables['page'] ?? '1',
+      $get_variables['sort'] ?? '',
+      [
+        'type' => $get_variables['type'] ?? '',
+        'score' => $get_variables['score'] ?? '',
+        'air_status' => $get_variables['air_status'] ?? '',
+        'producer' => $get_variables['producer'] ?? '',
+        'classification' => $get_variables['classification'] ?? '',
+        'air_dates' => [
+          'from' => $get_variables['air_dates.from'] ?? '',
+          'to' => $get_variables['air_dates.to'] ?? ''
+        ],
+        'letter' => $get_variables['letter'] ?? '',
+        'genres' => explode(',', ($get_variables['genres'] ?? '')),
+        'exclude_genres' => $get_variables['exclude_genres'] ?? ''
+      ]
     );
     $this->responsearray = $collection->getArray();
   }

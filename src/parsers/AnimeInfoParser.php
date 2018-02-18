@@ -266,6 +266,8 @@ class AnimeInfoParser extends Parser
           $genres_str = trim(substr($value->plaintext, 11), ' ');
           $genres_str = explode(', ', $genres_str);
           $anime->set('genres', array_map(function($item) {
+            // Remove whitespace and lowercase it so it's identical to the ones used
+            // in filtering /anime/search
             return str_replace(' ', '', strtolower(trim($item)));
           }, $genres_str));
         }
