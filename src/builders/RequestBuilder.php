@@ -31,7 +31,7 @@ class RequestBuilder
 
   /**
    * Files and controllers to route to. (Primary Routing)
-   * ```[ControllerName, SpecifierName]```
+   * ```[CheckMethod, ControllerName, SpecifierName]```
    * 
    * @var Array
    */
@@ -41,6 +41,14 @@ class RequestBuilder
     '\/anime\/search' => ['GET', 'AnimeController', 'search'],
     '\/anime\/search\/(.*)' => ['GET', 'AnimeController', 'search']
   ];
+
+  /**
+   * Array that will fill up with possible methods, when matching endpoints are foud with
+   * found with no matching methods
+   * 
+   * @var Array
+   */
+  private $accepted_methods = [];
 
   /**
    * Build Request, only if the request format fits into one of the predefined $routes
@@ -82,7 +90,9 @@ class RequestBuilder
         $type = 'json';
       }
 
+      // Check requets method.
       if($server['REQUEST_METHOD'] !== $route[0]) {
+        array_push($this->accepted_methods, $route[0]);
         continue;
       }
 
@@ -93,7 +103,12 @@ class RequestBuilder
     }
 
     if(!$this->request) {
-      throw new MatomariError('No such method.', 400);
+      if($this->accepted_methods) {
+        header('Allow: ' . implode(', ', $this->accepted_methods));
+        throw new MatomariError('No such method.', 405);
+      } else {
+        throw new MatomariError('No such method.', 400);
+      }
     }
   }
 
