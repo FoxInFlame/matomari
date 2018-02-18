@@ -107,7 +107,7 @@ class RequestBuilder
         header('Allow: ' . implode(', ', $this->accepted_methods));
         throw new MatomariError('No such method.', 405);
       } else {
-        throw new MatomariError('No such method.', 400);
+        throw new MatomariError('No such method.', 404);
       }
     }
   }
