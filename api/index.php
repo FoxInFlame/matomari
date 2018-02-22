@@ -10,7 +10,6 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Matomari\Builders\URLRequestBuilder;
 use Matomari\Builders\RequestBuilder;
 use Matomari\Matomari;
 
