@@ -25,6 +25,82 @@ class AnimeSearchCollection extends Collection
 {
 
   /**
+   * Various mapping between URL and Request.
+   * @var Array
+   */
+  private $mapping = [
+    'type' => [
+      'tv' => '1',
+      'ova' => '2',
+      'movie' => '3',
+      'special' => '4',
+      'ona' => '5',
+      'music' => '6',
+      'default' => '0'
+    ],
+    'air_status' => [
+      'currently_airing' => '1',
+      'finished_airing' => '2',
+      'not_yet_aired' => '3',
+      'default' => '0'
+    ],
+    'classification' => [
+      'g' => '1',
+      'pg' => '2',
+      'pg-13' => '3',
+      'r' => '4',
+      'r+' => '5',
+      'rx' => '6',
+      'default' => '0'
+    ],
+    'genres' => [
+      'action' => '1',
+      'adventure' => '2',
+      'cars' => '3',
+      'comedy' => '4',
+      'dementia' => '5',
+      'demons' => '6',
+      'mystery' => '7',
+      'drama' => '8',
+      'ecchi' => '9',
+      'fantasy' => '10',
+      'game' => '11',
+      'hentai' => '12',
+      'historical' => '13',
+      'horror' => '14',
+      'kids' => '15',
+      'magic' => '16',
+      'martialarts' => '17',
+      'mecha' => '18',
+      'music' => '19',
+      'parody' => '20',
+      'samurai' => '21',
+      'romance' => '22',
+      'school' => '23',
+      'scifi' => '24',
+      'shoujo' => '25',
+      'shoujoai' => '26',
+      'shounen' => '27',
+      'shounenai' => '28',
+      'space' => '29',
+      'sports' => '30',
+      'superpower' => '31',
+      'vampire' => '32',
+      'yaoi' => '33',
+      'yuri' => '34',
+      'harem' => '35',
+      'sliceoflife' => '36',
+      'supernatural' => '37',
+      'military' => '38',
+      'police' => '39',
+      'psychological' => '40',
+      'thriller' => '41',
+      'seinen' => '42',
+      'josei' => '43'
+    ]
+  ];
+
+  /**
    * Call request, create a parser, and store the model generated from the parser
    * When the deepest level of caching is required (storing HTML files), it should be
    * done in this layer.
@@ -49,7 +125,7 @@ class AnimeSearchCollection extends Collection
    *  ]
    * @since 0.5
    */
-  public function __construct(string$query, $page, $sort, $filters) {
+  public function __construct($query, $page, $sort, $filters) {
 
     $filter_param = '';
     foreach($filters as $filter_name => $filter_value) {
@@ -60,28 +136,11 @@ class AnimeSearchCollection extends Collection
       switch(strtolower($filter_name)) {
         case 'type':
           // type: TV, OVA, Movie, Special, ONA, Music.
-          switch(strtolower($filter_value)) {
-            case 'tv':
-              $filter_param .= '&type=1';
-              break;
-            case 'ova':
-              $filter_param .= '&type=2';
-              break;
-            case 'movie':
-              $filter_param .= '&type=3';
-              break;
-            case 'special':
-              $filter_param .= '&type=4';
-              break;
-            case 'ona':
-              $filter_param .= '&type=5';
-              break;
-            case 'music':
-              $filter_param .= '&type=6';
-              break;
-            default:
-              $filter_param .= '&type=0';
-              break;
+          $filter_param .= '&type=';
+          if(isset($this->mapping['type'][$filter_value])) {
+            $filter_param .= $this->mapping['type'][strtolower($filter_value)];
+          } else {
+            $filter_param .= $this->mapping['type']['default'];
           }
           break;
         case 'score':
@@ -92,47 +151,22 @@ class AnimeSearchCollection extends Collection
           }
           break;
         case 'air_status':
-          switch(strtolower($filter_value)) {
-            case 'finished_airing':
-              $filter_param .= '&status=2';
-              break;
-            case 'currently_airing':
-              $filter_param .= '&status=1';
-              break;
-            case 'not_yet_aired':
-              $filter_param .= '&status=3';
-              break;
-            default:
-              $filter_param .= '&status=0';
-              break;
+          $filter_param .= '&status=';
+          if(isset($this->mapping['air_status'][strtolower($filter_value)])) {
+            $filter_param .= $this->mapping['air_status'][strtolower($filter_value)];
+          } else {
+            $filter_param .= $this->mapping['air_status']['default'];
           }
           break;
         case 'producer':
           // TODO: Do something here...
           break;
         case 'classification':
-          switch(strtolower($filter_value)) {
-            case 'g':
-              $filter_param .= '&r=1';
-              break;
-            case 'pg':
-              $filter_param .= '&r=2';
-              break;
-            case 'pg-13':
-              $filter_param .= '&r=3';
-              break;
-            case 'r':
-              $filter_param .= '&r=4';
-              break;
-            case 'r+':
-              $filter_param .= '&r=5';
-              break;
-            case 'rx':
-              $filter_param .= '&r=6';
-              break;
-            default:
-              $filter_param .= '&r=0';
-              break;
+          $filter_param .= '&r=';
+          if(isset($this->mapping['classification'][strtolower($filter_value)])) {
+            $filter_param .= $this->mapping['classification'][strtolower($filter_value)];
+          } else {
+            $filter_param .= $this->mapping['classification']['default'];
           }
           break;
         case 'air_dates':
@@ -181,136 +215,8 @@ class AnimeSearchCollection extends Collection
           break;
         case 'genres':
           foreach($filter_value as $filter_value_genre) {
-            switch(strtolower($filter_value_genre)) {
-              case 'action':
-                $filter_param .= '&genre[]=1';
-                break;
-              case 'adventure':
-                $filter_param .= '&genre[]=2';
-                break;
-              case 'cars':
-                $filter_param .= '&genre[]=3';
-                break;
-              case 'comedy':
-                $filter_param .= '&genre[]=4';
-                break;
-              case 'dementia':
-                $filter_param .= '&genre[]=5';
-                break;
-              case 'demons':
-                $filter_param .= '&genre[]=6';
-                break;
-              case 'mystery':
-                $filter_param .= '&genre[]=7';
-                break;
-              case 'drama':
-                $filter_param .= '&genre[]=8';
-                break;
-              case 'ecchi':
-                $filter_param .= '&genre[]=9';
-                break;
-              case 'fantasy':
-                $filter_param .= '&genre[]=10';
-                break;
-              case 'game':
-                $filter_param .= '&genre[]=11';
-                break;
-              case 'hentai':
-                $filter_param .= '&genre[]=12';
-                break;
-              case 'historical':
-                $filter_param .= '&genre[]=13';
-                break;
-              case 'horror':
-                $filter_param .= '&genre[]=14';
-                break;
-              case 'kids':
-                $filter_param .= '&genre[]=15';
-                break;
-              case 'magic':
-                $filter_param .= '&genre[]=16';
-                break;
-              case 'martialarts':
-                $filter_param .= '&genre[]=17';
-                break;
-              case 'mecha':
-                $filter_param .= '&genre[]=18';
-                break;
-              case 'music':
-                $filter_param .= '&genre[]=19';
-                break;
-              case 'parody':
-                $filter_param .= '&genre[]=20';
-                break;
-              case 'samurai':
-                $filter_param .= '&genre[]=21';
-                break;
-              case 'romance':
-                $filter_param .= '&genre[]=22';
-                break;
-              case 'school':
-                $filter_param .= '&genre[]=23';
-                break;
-              case 'scifi':
-                $filter_param .= '&genre[]=24';
-                break;
-              case 'shoujo':
-                $filter_param .= '&genre[]=25';
-                break;
-              case 'shoujoai':
-                $filter_param .= '&genre[]=26';
-                break;
-              case 'shounen':
-                $filter_param .= '&genre[]=27';
-                break;
-              case 'shounenai':
-                $filter_param .= '&genre[]=28';
-                break;
-              case 'space':
-                $filter_param .= '&genre[]=29';
-                break;
-              case 'sports':
-                $filter_param .= '&genre[]=30';
-                break;
-              case 'superpower':
-                $filter_param .= '&genre[]=31';
-                break;
-              case 'vampire':
-                $filter_param .= '&genre[]=32';
-                break;
-              case 'yaoi':
-                $filter_param .= '&genre[]=33';
-                break;
-              case 'yuri':
-                $filter_param .= '&genre[]=34';
-                break;
-              case 'harem':
-                $filter_param .= '&genre[]=35';
-                break;
-              case 'sliceoflife':
-                $filter_param .= '&genre[]=36';
-                break;
-              case 'supernatural':
-                $filter_param .= '&genre[]=37';
-                break;
-              case 'military':
-                $filter_param .= '&genre[]=38';
-                break;
-              case 'police':
-                $filter_param .= '&genre[]=39';
-                break;
-              case 'psychological':
-                $filter_param .= '&genre[]=40';
-                break;
-              case 'thriller':
-                $filter_param .= '&genre[]=41';
-                break;
-              case 'seinen':
-                $filter_param .= '&genre[]=42';
-                break;
-              case 'josei':
-                $filter_param .= '&genre[]=43';
-                break;
+            if(isset($this->mapping['genres'][strtolower($filter_value_genre)])) {
+              $filter_param .= '&genre[]=' . $this->mapping['genres'][strtolower($filter_value_genre)];
             }
           }
           break;
