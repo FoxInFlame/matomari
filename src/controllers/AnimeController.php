@@ -61,8 +61,8 @@ class AnimeController
         'producer' => $get_variables['producer'] ?? '',
         'classification' => $get_variables['classification'] ?? '',
         'air_dates' => [
-          'from' => $get_variables['air_dates.from'] ?? '',
-          'to' => $get_variables['air_dates.to'] ?? ''
+          'from' => $get_variables['air_dates_from'] ?? '', // PHP converts variables with dots to underscores
+          'to' => $get_variables['air_dates_to'] ?? ''
         ],
         'letter' => $get_variables['letter'] ?? '',
         'genres' => explode(',', ($get_variables['genres'] ?? '')),
