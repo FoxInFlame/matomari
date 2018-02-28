@@ -38,7 +38,7 @@ class Response
    * @param Array $responsearray The response array created from Controllers.
    * @since 0.5
    */
-  public function __construct(Request $request, Array $responsearray) {
+  public function __construct($request, $responsearray) {
     $this->request = $request;
     $this->responsearray = $responsearray;
 

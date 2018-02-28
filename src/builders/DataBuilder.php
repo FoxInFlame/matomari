@@ -10,6 +10,8 @@
 
 namespace Matomari\Builders;
 
+use Stash;
+
 /**
  * Return array of data for the request.
  * 
@@ -36,17 +38,17 @@ class DataBuilder
     
     // Initialise the driver: FileSystem
     // We should set a cache path because the default one makes the keys too long.
-    $driver = new \Stash\Driver\FileSystem(array('path' => '/tmp/cache/'));
+    $driver = new Stash\Driver\FileSystem(array('path' => '/tmp/cache/'));
 
     // Initialise the Stash Pool using the driver.
-    $pool = new \Stash\Pool($driver);
+    $pool = new Stash\Pool($driver);
 
     // Try to get an item from the pool using $cache_key.
     $item = $pool->getItem($cache_key);
     $data = $item->get();
 
     // Set ValidationMethod to OLD so it uses the old values when a new one is updating.
-    $item->setInvalidationMethod(\Stash\Invalidation::OLD);
+    $item->setInvalidationMethod(Stash\Invalidation::OLD);
 
     if($item->isMiss()) {
 

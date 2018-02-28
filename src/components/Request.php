@@ -68,12 +68,12 @@ class Request
    * @since 0.5
    */
   public function __construct(
-    String $type,
-    String $controller,
-    String $specifier,
-    Array $path_variables,
-    Array $get_variables,
-    Array $post_variables
+    $type,
+    $controller,
+    $specifier,
+    $path_variables,
+    $get_variables,
+    $post_variables
   ) {
     $this->type = $type;
     $this->controller_name = $controller;

@@ -14,6 +14,7 @@ use Matomari\Builders\RequestBuilder;
 use Matomari\Matomari;
 
 try {
+
   // Build instance of Request.
   $request_builder = new RequestBuilder();
   $request_builder->build($_SERVER);
@@ -22,7 +23,9 @@ try {
   // Start core.
   $matomari = new Matomari();
   $matomari->handle($request);
+
 } catch (Exception $e) {
+
   echo json_encode([
     'code' => $e->getCode(),
     'message' => $e->getMessage()
@@ -30,4 +33,5 @@ try {
   http_response_code($e->getCode());
   header('Access-Control-Allow-Origin: *');
   return;
+  
 }

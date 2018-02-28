@@ -26,8 +26,8 @@ class AnimeInfoCollection extends Collection
 
   /**
    * Call request, create a parser, and store the model generated from the parser
-   * When the deepest level of caching is required (storing HTML files), it should be
-   * done in this layer.
+   * When the deepest or second deepest level of caching is required (storing HTML files
+   * or storing arrays), it should be done in this layer.
    * 
    * @param Integer $anime_id The Anime ID on MAL
    * @since 0.5

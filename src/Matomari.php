@@ -32,7 +32,7 @@ class Matomari
    * @param Request $request The Request constructed from URLRequest
    * @since 0.5
    */
-  public function handle(Request $request) {
+  public function handle($request) {
     $controller_name = $request->getControllerName();
 
     // Calling dynamic namespaces isn't supported by Composer's 'use' syntax.
@@ -53,7 +53,7 @@ class Matomari
    * @param Response $response
    * @since 0.5
    */
-  private function finalise(Response $response) {
+  private function finalise($response) {
 
     $final_response = '';
     if($response->getRequest()->getType() === 'json') {
@@ -73,12 +73,14 @@ class Matomari
   /**
    * Echoes the response.
    * 
-   * @param Response $response
+   * @param String $response
    * @since 0.5
    */
-  private function output(String $response) {
+  private function output($response) {
+
     header('Access-Control-Allow-Origin: *');
     echo $response;
+
   }
 
 }

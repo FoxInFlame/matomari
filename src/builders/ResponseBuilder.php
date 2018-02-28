@@ -35,7 +35,7 @@ class ResponseBuilder
    * @param Array $responsearray The response associative array.
    * @since 0.5 
    */
-  public function build(Request $request, Array $responsearray) {
+  public function build($request, $responsearray) {
     
     $response = new Response($request, $responsearray);
     $this->response = $response;

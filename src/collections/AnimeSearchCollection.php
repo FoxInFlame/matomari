@@ -103,9 +103,8 @@ class AnimeSearchCollection extends Collection
   ];
 
   /**
-   * Call request, create a parser, and store the model generated from the parser
-   * When the deepest level of caching is required (storing HTML files), it should be
-   * done in this layer.
+   * Parse the page, sort and filters sent by the client into MAL URL queries.
+   * Create a DataBuilder for the request, and store the result of Parsing that data.
    * 
    * @param String $query The query to search for
    * @param String $page The raw unparsed page number 

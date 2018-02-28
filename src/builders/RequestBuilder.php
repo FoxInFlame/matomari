@@ -56,7 +56,8 @@ class RequestBuilder
    * @param Array $server The raw dump of $_SERVER.
    * @since 0.5 
    */
-  public function build(Array $server) {
+  public function build($server) {
+
     $request_uri = $server['REQUEST_URI'];
     $path = str_replace('/api/0.5', '', explode('?', $request_uri)[0]);
     $query = explode('?', $request_uri)[1] ?? [];
@@ -110,6 +111,7 @@ class RequestBuilder
         throw new MatomariError('No such method.', 404);
       }
     }
+    
   }
 
   /**
