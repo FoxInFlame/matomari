@@ -54,6 +54,7 @@ class Matomari
    * @since 0.5
    */
   private function finalise(Response $response) {
+
     $final_response = '';
     if($response->getRequest()->getType() === 'json') {
       header('Content-Type: application/json');
@@ -66,6 +67,7 @@ class Matomari
     // Do caching ehre.
 
     $this->output($final_response);
+    
   }
 
   /**
