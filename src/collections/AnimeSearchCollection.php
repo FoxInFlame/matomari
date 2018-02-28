@@ -174,6 +174,7 @@ class AnimeSearchCollection extends Collection
    * @param String $sort 
    * @param Array $filters
    * @return Array
+   * @since 0.5
    */
   private function prepare_parameters($query, $page, $sort, $filters) {
 
@@ -197,6 +198,7 @@ class AnimeSearchCollection extends Collection
    * 
    * @param String $query
    * @return Array
+   * @since 0.5
    */
   private function prepare_query_parameter($query) {
     
@@ -216,6 +218,7 @@ class AnimeSearchCollection extends Collection
    * 
    * @param String $page
    * @return Array
+   * @since 0.5
    */
   private function prepare_page_parameter($page) {
     
@@ -235,6 +238,7 @@ class AnimeSearchCollection extends Collection
    * 
    * @param String $sort
    * @return Array
+   * @since 0.5
    */
   private function prepare_sort_parameter($sort) {
     return [];
@@ -245,6 +249,7 @@ class AnimeSearchCollection extends Collection
    * 
    * @param Array $filters
    * @return Array
+   * @since 0.5
    */
   private function prepare_filter_parameters($filters) {
     
@@ -286,6 +291,7 @@ class AnimeSearchCollection extends Collection
    * @param String $mapping_key The key to find the key=>value mappings for the URL segment
    * @param String $value The value of the filter that is to be searched in the mapping.
    * @return Array
+   * @since 0.5
    */
   private function prepare_simple_filter_parameter($url_key, $mapping_key, $value) {
 
@@ -308,6 +314,7 @@ class AnimeSearchCollection extends Collection
    * @param String $url_key The key for the URL segment to be generated
    * @param String $value The input score
    * @return Array
+   * @since 0.5
    */
   private function prepare_score_filter_parameter($url_key, $value) {
 
@@ -328,12 +335,14 @@ class AnimeSearchCollection extends Collection
    * 
    * @param Array $value Array containg 'from' and 'to' keys.
    * @return Array
+   * @since 0.5
    */
   private function prepare_dates_filter_parameter($value) {
 
     // This is the array that will be returned at the end of this function
     $date_parameters = [];
 
+    // TODO: Make the following two if()s into one foreach()
     if($value['from']) {
       if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-\d{2}(?:^|\s|$)/', $value['from'], $matches)) {
         // YYYY-MM-DD
@@ -433,6 +442,7 @@ class AnimeSearchCollection extends Collection
    * 
    * @param String $value Unparsed alphabetical letter to filter out the results.
    * @return Array
+   * @since 0.5
    */
   private function prepare_letter_filter_parameter($value) {
 
@@ -454,6 +464,7 @@ class AnimeSearchCollection extends Collection
    * 
    * @param Array $value Genres to include or exclude
    * @return Array
+   * @since 0.5
    */
   private function prepare_genre_filter_parameter($value) {
     
@@ -479,6 +490,7 @@ class AnimeSearchCollection extends Collection
    * @param String $sort
    * @param Array $filters
    * @return String
+   * @since 0.5
    */
   private function generate_cache_key($query, $page, $sort, $filters) {
 
