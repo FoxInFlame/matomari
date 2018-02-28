@@ -158,15 +158,15 @@ class AnimeInfoParser extends Parser
             // contains 'to'
             $exploded = array_map('trim', explode(' to ', $value->find('text', 2)->innertext));
             if($exploded[0] !== '?') {
-              $anime->set('air_dates//from', (string)Time::getAbsoluteTimeGMT($exploded[0], '!M j, Y')->format('Y-m-d'));
+              $anime->set('air_dates//from', (string)Time::convert($exploded[0])->format('Y-m-d'));
             }
             if($exploded[1] !== '?') {
-              $anime->set('air_dates//to', (string)Time::getAbsoluteTimeGMT($exploded[1], '!M j, Y')->format('Y-m-d'));
+              $anime->set('air_dates//to', (string)Time::convert($exploded[1])->format('Y-m-d'));
             }
           } else if(strpos($value->find('text', 2), ',') !== false) {
-            $anime->set('premier_date', (string)Time::getAbsoluteTimeGMT($value->find('text', 2)->innertext, '!M j, Y')->format('Y-m-d'));
+            $anime->set('premier_date', (string)Time::convert($value->find('text', 2)->innertext)->format('Y-m-d'));
           } else {
-            $anime->set('premier_date', (string)$value->find('text', 2)->innertext . '----');
+            $anime->set('premier_date', (string)trim($value->find('text', 2)->innertext) . '----');
           }
         }
       }
@@ -317,7 +317,7 @@ class AnimeInfoParser extends Parser
       //   PG-13 - Teens 13 or older
       // </div>
       if(strpos($value->plaintext, 'Rating:') !== false) {
-        if(strpos($value->plaintext, 'Unknown') === false) {
+        if(strpos($value->plaintext, 'Unknown') === false && strpos($value->plaintext, 'None') === false) {
           $classification_fulltext = trim($value->find('text' , 2)->innertext);
           $anime->set('classification//name', (string)explode(' - ', $classification_fulltext)[0]);
           $anime->set('classification//description', (string)explode(' - ', $classification_fulltext)[1]);
