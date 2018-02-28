@@ -342,95 +342,57 @@ class AnimeSearchCollection extends Collection
     // This is the array that will be returned at the end of this function
     $date_parameters = [];
 
-    // TODO: Make the following two if()s into one foreach()
-    if($value['from']) {
-      if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-\d{2}(?:^|\s|$)/', $value['from'], $matches)) {
-        // YYYY-MM-DD
-        $date_parameters['sy'] = explode('-', $matches[0])[0];
-        $date_parameters['sm'] = explode('-', $matches[0])[1];
-        $date_parameters['sd'] = explode('-', $matches[0])[2];
-      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}--(?:^|\s|$)/', $value['from'], $matches)) {
-        // YYYY-MM--
-        $date_parameters['sy'] = explode('-', $matches[0])[0];
-        $date_parameters['sm'] = explode('-', $matches[0])[1];
-        $date_parameters['sd'] = '0';
-      } else if(preg_match('/(?:^|\s|$)\d{4}----(?:^|\s|$)/', $value['from'], $matches)) {
-        // YYYY-MM--
-        $date_parameters['sy'] = explode('-', $matches[0])[0];
-        $date_parameters['sm'] = '0';
-        $date_parameters['sd'] = '0';
-      } else if(preg_match('/(?:^|\s|$)\d{4}---\d{2}(?:^|\s|$)/', $value['from'], $matches)) {
-        // YYYY---DD
-        $date_parameters['sy'] = explode('-', $matches[0])[0];
-        $date_parameters['sm'] = '0';
-        $date_parameters['sd'] = explode('---', $matches[0])[1];
-      } else if(preg_match('/(?:^|\s|$)--\d{2}-\d{2}(?:^|\s|$)/', $value['from'], $matches)) {
-        // --MM-DD
-        $date_parameters['sy'] = '0';
-        $date_parameters['sm'] = explode('-', $matches[0])[2];
-        $date_parameters['sd'] = explode('-', $matches[0])[3];
-      } else if(preg_match('/(?:^|\s|$)----\d{2}(?:^|\s|$)/', $value['from'], $matches)) {
-        // ----DD
-        $date_parameters['sy'] = '0';
-        $date_parameters['sm'] = '0';
-        $date_parameters['sd'] = explode('----', $matches[0])[1];
-      } else if(preg_match('/(?:^|\s|$)--\d{2}--(?:^|\s|$)/', $value['from'], $matches)) {
-        // --MM--
-        $date_parameters['sy'] = '0';
-        $date_parameters['sm'] = explode('--', $matches[0])[1];
-        $date_parameters['sd'] = '0';
-      } else {
-        // -----
-        // Invalid Dates
-        $date_parameters['sy'] = '0';
-        $date_parameters['sm'] = '0';
-        $date_parameters['sd'] = '0';
-      }
-    }
+    foreach($value as $key => $date_string) {
 
-    if($value['to']) {
-      if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-\d{2}(?:^|\s|$)/', $value['to'], $matches)) {
+      if($key === 'from') {
+        $parameter_prefix = 's';
+      } else {
+        $parameter_prefix = 'e';
+      }
+
+      if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-\d{2}(?:^|\s|$)/', $date_string, $matches)) {
         // YYYY-MM-DD
-        $date_parameters['ey'] = explode('-', $matches[0])[0];
-        $date_parameters['em'] = explode('-', $matches[0])[1];
-        $date_parameters['ed'] = explode('-', $matches[0])[2];
-      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}--(?:^|\s|$)/', $value['to'], $matches)) {
+        $date_parameters[$parameter_prefix . 'y'] = explode('-', $matches[0])[0];
+        $date_parameters[$parameter_prefix . 'm'] = explode('-', $matches[0])[1];
+        $date_parameters[$parameter_prefix . 'd'] = explode('-', $matches[0])[2];
+      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}--(?:^|\s|$)/', $date_string, $matches)) {
         // YYYY-MM--
-        $date_parameters['ey'] = explode('-', $matches[0])[0];
-        $date_parameters['em'] = explode('-', $matches[0])[1];
-        $date_parameters['ed'] = '0';
-      } else if(preg_match('/(?:^|\s|$)\d{4}----(?:^|\s|$)/', $value['to'], $matches)) {
+        $date_parameters[$parameter_prefix . 'y'] = explode('-', $matches[0])[0];
+        $date_parameters[$parameter_prefix . 'm'] = explode('-', $matches[0])[1];
+        $date_parameters[$parameter_prefix . 'd'] = '0';
+      } else if(preg_match('/(?:^|\s|$)\d{4}----(?:^|\s|$)/', $date_string, $matches)) {
         // YYYY-MM--
-        $date_parameters['ey'] = explode('-', $matches[0])[0];
-        $date_parameters['em'] = '0';
-        $date_parameters['ed'] = '0';
-      } else if(preg_match('/(?:^|\s|$)\d{4}---\d{2}(?:^|\s|$)/', $value['to'], $matches)) {
+        $date_parameters[$parameter_prefix . 'y'] = explode('-', $matches[0])[0];
+        $date_parameters[$parameter_prefix . 'm'] = '0';
+        $date_parameters[$parameter_prefix . 'd'] = '0';
+      } else if(preg_match('/(?:^|\s|$)\d{4}---\d{2}(?:^|\s|$)/', $date_string, $matches)) {
         // YYYY---DD
-        $date_parameters['ey'] = explode('-', $matches[0])[0];
-        $date_parameters['em'] = '0';
-        $date_parameters['ed'] = explode('---', $matches[0])[1];
-      } else if(preg_match('/(?:^|\s|$)--\d{2}-\d{2}(?:^|\s|$)/', $value['to'], $matches)) {
+        $date_parameters[$parameter_prefix . 'y'] = explode('-', $matches[0])[0];
+        $date_parameters[$parameter_prefix . 'm'] = '0';
+        $date_parameters[$parameter_prefix . 'd'] = explode('---', $matches[0])[1];
+      } else if(preg_match('/(?:^|\s|$)--\d{2}-\d{2}(?:^|\s|$)/', $date_string, $matches)) {
         // --MM-DD
-        $date_parameters['ey'] = '0';
-        $date_parameters['em'] = explode('-', $matches[0])[2];
-        $date_parameters['ed'] = explode('-', $matches[0])[3];
-      } else if(preg_match('/(?:^|\s|$)----\d{2}(?:^|\s|$)/', $value['to'], $matches)) {
+        $date_parameters[$parameter_prefix . 'y'] = '0';
+        $date_parameters[$parameter_prefix . 'm'] = explode('-', $matches[0])[2];
+        $date_parameters[$parameter_prefix . 'd'] = explode('-', $matches[0])[3];
+      } else if(preg_match('/(?:^|\s|$)----\d{2}(?:^|\s|$)/', $date_string, $matches)) {
         // ----DD
-        $date_parameters['ey'] = '0';
-        $date_parameters['em'] = '0';
-        $date_parameters['ed'] = explode('----', $matches[0])[1];
-      } else if(preg_match('/(?:^|\s|$)--\d{2}--(?:^|\s|$)/', $value['to'], $matches)) {
+        $date_parameters[$parameter_prefix . 'y'] = '0';
+        $date_parameters[$parameter_prefix . 'm'] = '0';
+        $date_parameters[$parameter_prefix . 'd'] = explode('----', $matches[0])[1];
+      } else if(preg_match('/(?:^|\s|$)--\d{2}--(?:^|\s|$)/', $date_string, $matches)) {
         // --MM--
-        $date_parameters['ey'] = '0';
-        $date_parameters['em'] = explode('--', $matches[0])[1];
-        $date_parameters['ed'] = '0';
+        $date_parameters[$parameter_prefix . 'y'] = '0';
+        $date_parameters[$parameter_prefix . 'm'] = explode('--', $matches[0])[1];
+        $date_parameters[$parameter_prefix . 'd'] = '0';
       } else {
         // -----
         // Invalid Dates
-        $date_parameters['ey'] = '0';
-        $date_parameters['em'] = '0';
-        $date_parameters['ed'] = '0';
+        $date_parameters[$parameter_prefix . 'y'] = '0';
+        $date_parameters[$parameter_prefix . 'm'] = '0';
+        $date_parameters[$parameter_prefix . 'd'] = '0';
       }
+
     }
 
     return $date_parameters;
