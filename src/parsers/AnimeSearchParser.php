@@ -181,7 +181,7 @@ class AnimeSearchParser extends Parser
       // The Classification name
       // <td class='borderClass ac bgColor0' width='75'>    R+  </td>
       if(trim($td_classification->innertext) !== '-') {
-        $anime->set('classification//name', (string)trim($td_classification->innertext));
+        $anime->set('classification//name', (string)strtolower(trim($td_classification->innertext)));
       }
       // The Members who have it in their list
       // <td class='borderClass ac bgColor0' width='75'>    262,866  </td>
