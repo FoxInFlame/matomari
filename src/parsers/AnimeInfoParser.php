@@ -39,6 +39,8 @@ class AnimeInfoParser extends Parser
     if(!is_object($html)) {
       throw new MatomariError('The code for MAL is not valid HTML.', 502);
     }
+   
+    // TODO: Separate each individual parse to a different function
 
     $anime = new AnimeInfoModel();
 
@@ -521,6 +523,7 @@ class AnimeInfoParser extends Parser
     $anime->set('theme_songs//endings', $endings);
 
     return $anime->info;
+    
   }
 
 }

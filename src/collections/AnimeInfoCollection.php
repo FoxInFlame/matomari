@@ -13,6 +13,7 @@ namespace Matomari\Collections;
 use GuzzleHttp\Client;
 use Matomari\Exceptions\MatomariError;
 use Matomari\Collections\Collection;
+use Matomari\Builders\DataBuilder;
 use Matomari\Parsers\AnimeInfoParser;
 
 /**
@@ -25,32 +26,52 @@ class AnimeInfoCollection extends Collection
 {
 
   /**
-   * Call request, create a parser, and store the model generated from the parser
-   * When the deepest or second deepest level of caching is required (storing HTML files
-   * or storing arrays), it should be done in this layer.
+   * Create a DataBuilder for the request, and store the result of Parsing that data
    * 
    * @param Integer $anime_id The Anime ID on MAL
    * @since 0.5
    */
   public function __construct($anime_id) {
 
-    $guzzle_client = new Client();
-    $response = $guzzle_client->request('GET', 'https://myanimelist.net/anime/' . $anime_id, ['http_errors' => false]);
+    // Set the cache key that will be used to find the cache
+    $cache_key = 'anime/' . $anime_id . '/info';
 
-    if($response->getStatusCode() === 429) {
-      throw new MatomariError('Too many frequent requests. Please wait and retry.', 429);
-    } else if($response->getStatusCode() === 404) {
-      throw new MatomariError('Anime with specified ID could not be found.', 404);
-    } else if($response->getStatusCode() !== 200) {
-      throw new MatomariError('There was an unknown error with MAL. Contact FoxInFlame.', 500);
-    }
+    // Initiate a DataBuilder.
+    $data_builder = new DataBuilder();
 
-    $body = $response->getBody();
-    if(!preg_match('/<body [a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*class="[a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*page-common/', $body)) {
-      throw new MatomariError('MAL is currently under maintenance. Please wait and retry.', 503);
-    }
+    // Retrieve the data from the cache (using $cache_key), or from MAL using the fallback.
+    $data_builder->build($cache_key, function() use ($anime_id) {
 
-    $this->array = AnimeInfoParser::parse($body);
+      $guzzle_client = new Client();
+      $response = $guzzle_client->request('GET', 'https://myanimelist.net/anime/' . $anime_id, [
+        'http_errors' => false
+      ]);
+      
+
+      if($response->getStatusCode() === 429) {
+        throw new MatomariError('Too many frequent requests. Please wait and retry.', 429);
+      } else if($response->getStatusCode() === 404) {
+        throw new MatomariError('Anime with specified ID could not be found.', 404);
+      } else if($response->getStatusCode() !== 200) {
+        throw new MatomariError('There was an unknown error with MAL. Contact FoxInFlame.', 500);
+      }
+
+      // Check if MAL is currently under maintenance (in which case the status code is 200)
+      $body = $response->getBody();
+      if(!preg_match('/<body [a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*class="[a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*page-common/', $body)) {
+        throw new MatomariError('MAL is currently under maintenance. Please wait and retry.', 503);
+      }
+
+      // Return the Data Arary and the Cache Timeout in seconds.
+      return [
+        AnimeInfoParser::parse($body),
+        3600
+      ];
+
+    });
+
+    $this->array = $data_builder->getArray();
+
   }
 
 }
