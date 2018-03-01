@@ -155,11 +155,18 @@ class AnimeSearchCollection extends Collection
         throw new MatomariError('There was an unknown error with MAL. Contact FoxInFlame.', 500);
       }
 
+      // Check if MAL is currently under maintenance (in which case the status code is 200)
+      $body = $response->getBody();
+      if(!preg_match('/<body [a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*class="[a-zA-Z0-9!@#$&()\\-`.+,\/\"= ]*page-common/', $body)) {
+        throw new MatomariError('MAL is currently under maintenance. Please wait and retry.', 503);
+      }
+
       // Return the Data Arary and the Cache Timeout in seconds.
       return [
-        AnimeSearchParser::parse($response->getBody()),
+        AnimeSearchParser::parse($body),
         3600
       ];
+      
     });
   
     $this->array = $data_builder->getArray();
