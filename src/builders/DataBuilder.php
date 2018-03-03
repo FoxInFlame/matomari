@@ -11,6 +11,7 @@
 namespace Matomari\Builders;
 
 use Stash;
+use Matomari\Exceptions\MatomariError;
 
 /**
  * Return array of data for the request.
@@ -68,6 +69,10 @@ class DataBuilder
       // Save the newly made cache item to the pool.
       $pool->save($item);
 
+    }
+
+    if(!$data) {
+      throw new MatomariError('The servers have responded with an empty data.', 500);
     }
 
     $this->array = $data;
