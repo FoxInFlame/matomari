@@ -20,10 +20,24 @@ use Matomari\Exceptions\ModelValueNotValid;
 class Model
 {
 
+  /**
+   * Retrieve the model as an array.
+   * 
+   * @return Array
+   * @since 0.5
+   */
   public function asArray() {
     return $this->info;
   }
 
+  /**
+   * Set a value in the model using the provided key.
+   * Double slashes inside the key indicate a nested key.
+   * 
+   * @param String $data The key to the data in the model
+   * @param Mixed $value The value to set for the provided key
+   * @since 0.5
+   */
   public function set($data, $value) {
     switch($data) {
       case 'air_status':
@@ -188,6 +202,14 @@ class Model
     }
   }
 
+  /**
+   * Get a value in the model using the provided key.
+   * Double slashes inside the key indicate a nested key.
+   * 
+   * @param String $data The key to the data in the model
+   * @return Mixed
+   * @since 0.5
+   */
   public function get($data) {
     $data_levels = explode('//', $data);
     $temp_arr = &$this->info; // Reference operator

@@ -41,7 +41,7 @@ class AnimeInfoModel extends Model
     ],
     'season' => null,
     'air_time' => null,
-    'premier_date' => null,
+    'premiere_date' => null,
     'producers' => [],
     'licensors' => [],
     'studios' => [],
@@ -59,7 +59,7 @@ class AnimeInfoModel extends Model
     'members_inlist' => null,
     'members_favorited' => null,
     'background' => null,
-    'relation' => [ // https://myanimelist.net/info.php?go=relationinfo
+    'relations' => [ // https://myanimelist.net/info.php?go=relationinfo
       'sequel' => [],
       'prequel' => [],
       'alternative_setting' => [],
