@@ -33,10 +33,6 @@ class Time
   public static $tz_final = 'Etc/GMT';
 
   /**
-   * Contains MAL
-   */
-
-  /**
    * Convert any kind of MAL date into absolute GMT DateTimes.
    * 
    * @param String $string The date string on MAL
@@ -107,34 +103,21 @@ class Time
     } else if(strpos($string, ', ') !== false) {
       // Jul 4, 2010
       // Apr, 2018
-      // 10, 1951
       if(strlen(explode(', ', $string)[0]) > 3) {
         $date = DateTime::createFromFormat('!M j, Y', $string, new DateTimeZone(self::$tz_mal));
+        $date->setTimeZone(new DateTimeZone(self::$tz_final));
+        return $date;
       } else if(strlen(explode(', ', $string)[0]) > 2) {
         $date = DateTime::createFromFormat('!M, Y', $string, new DateTimeZone(self::$tz_mal));
-      } else {
-        $date = DateTime::createFromFormat('!j, Y', $string, new DateTimeZone(self::$tz_mal));
+        $date->setTimeZone(new DateTimeZone(self::$tz_final));
+        return $date;
       }
-      $date->setTimeZone(new DateTimeZone(self::$tz_final));
-      return $date;
     } else if(strpos($string, '/') !== false) {
       // 09/09/2016 at 04:35
       $date = DateTime::createFromFormat('!m/d/Y at H:i', $string, new DateTimeZone(self::$tz_mal));
       $date->setTimeZone(new DateTimeZone(self::$tz_final));
       return $date;
     } else {
-      // Birthday: Jan 23
-      $date = DateTime::createFromFormat('!M j', $string, new DateTimeZone(self::$tz_mal));
-      if($date) {
-        $date->setTimeZone(new DateTimeZone(self::$tz_final));
-        return $date;
-      }
-      // Birthday: Jan
-      $date = DateTime::createFromFormat('!M', $string, new DateTimeZone(self::$tz_mal));
-      if($date) {
-        $date->setTimeZone(new DateTimeZone(self::$tz_final));
-        return $date;
-      }
       // 1951
       $date = DateTime::createFromFormat('!Y', $string, new DateTimeZone(self::$tz_mal));
       if($date) {

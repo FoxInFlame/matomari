@@ -39,7 +39,7 @@ class Matomari
     // Thus, the entire path to the namespace has to be provided.
     $class = 'Matomari\\Controllers\\' . $controller_name;
     $controller = new $class();
-    
+
     $controller->{$request->getSpecifier()}($request->getGetVariables(), $request->getPostVariables(), ...$request->getPathVariables());
 
     $response_builder = new ResponseBuilder();
