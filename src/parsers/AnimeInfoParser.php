@@ -58,8 +58,8 @@ class AnimeInfoParser extends Parser
     $anime->set('air_status', self::parseAirStatus($html));
     $air_dates = self::parseAirDates($html);
     if(gettype($air_dates) === 'array') {
-      $anime->set('air_dates//from', $air_dates['from']);
-      $anime->set('air_dates//to', $air_dates['to']);
+      $anime->set('air_dates//from', $air_dates[0]);
+      $anime->set('air_dates//to', $air_dates[1]);
     } else {
       $anime->set('premiere_date', $air_dates);
     }
@@ -240,7 +240,7 @@ class AnimeInfoParser extends Parser
   private static function parseSynopsis($html) {
 
     $element = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]', 0);
-    if($element) {
+    if($element && strpos($element->innertext, 'No synopsis has been added yet') === false) {
       return (string)htmlspecialchars_decode(html_entity_decode(trim($element->innertext), 0, 'UTF-8'));
     }
   }
@@ -254,7 +254,7 @@ class AnimeInfoParser extends Parser
    * </div>
    * 
    * @param Simple_html_dom $html
-   * @return String
+   * @return Array
    */
   private static function parseEnglishTitles($html) {
 
@@ -264,6 +264,7 @@ class AnimeInfoParser extends Parser
         return explode(', ', trim($value->find('text', 2)->innertext));
       }
     }
+    return [];
 
   }
 
@@ -276,7 +277,7 @@ class AnimeInfoParser extends Parser
    * </div>
    * 
    * @param Simple_html_dom $html
-   * @return String
+   * @return Array
    */
   private static function parseJapaneseTitles($html) {
 
@@ -286,6 +287,7 @@ class AnimeInfoParser extends Parser
         return explode(', ', trim($value->find('text', 2)->innertext));
       }
     }
+    return [];
 
   }
 
@@ -298,7 +300,7 @@ class AnimeInfoParser extends Parser
    * </div>
    * 
    * @param Simple_html_dom $html
-   * @return String
+   * @return Array
    */
   private static function parseSynonymousTitles($html) {
 
@@ -308,6 +310,7 @@ class AnimeInfoParser extends Parser
         return explode(', ', trim($value->find('text', 2)->innertext));
       }
     }
+    return [];
 
   }
 
@@ -402,10 +405,7 @@ class AnimeInfoParser extends Parser
   private static function parseAirDates($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
-    $air_dates = [
-      'from' => null,
-      'to' => null
-    ];
+    $air_dates = [];
     foreach($sidebarInformation as $value) {
       if(strpos($value->plaintext, 'Aired:') !== false) {
         if(strpos($value->plaintext, 'Unknown') === false &&
@@ -413,21 +413,14 @@ class AnimeInfoParser extends Parser
           if(strpos($value->find('text', 2)->innertext, ' to ') !== false) {
             // contains 'to'
             $exploded = array_map('trim', explode(' to ', $value->find('text', 2)->innertext));
-            if($exploded[0] !== '?') {
-              $air_date_from = Time::convert($exploded[0]);
-              if($air_date_from) {
-                $air_dates['from'] = $air_date_from->format('Y-m-d');
-              }
-            }
-            if($exploded[1] !== '?') {
-              $air_date_from = Time::convert($exploded[1]);
-              if($air_date_from) {
-                $air_dates['to'] = $air_date_from->format('Y-m-d');
-              }
-            }
+            $air_dates[0] = Time::convert($exploded[0]);
+            // Use null if the air date could not be converted, e.g. "?"
+
+            $air_dates[1] = Time::convert($exploded[1]);
+
             return $air_dates;
           } else {
-            return Time::convert($value->find('text', 2)->innertext)->format('Y-m-d');
+            return Time::convert($value->find('text', 2)->innertext);
           }
         }
       }
@@ -500,13 +493,16 @@ class AnimeInfoParser extends Parser
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
       if(strpos($value->plaintext, 'Producers:') !== false) {
+        // Define the array outside of checking none, so that it returns [] when nothing is found
         $producers_arr = [];
-        // TODO: Change below to joining the find('text') into an array and removing the first item
-        foreach($value->find('a') as $producer) {
-          $reference = new BriefReferenceModel();
-          $reference->set('id', (int)explode('/', $producer->href)[3]);
-          $reference->set('name', $producer->innertext);
-          array_push($producers_arr, $reference->info);
+        if(strpos($value->plaintext, 'None found') === false) {
+          // TODO: Change below to joining the find('text') into an array and removing the first item
+          foreach($value->find('a') as $producer) {
+            $reference = new BriefReferenceModel();
+            $reference->set('id', (int)explode('/', $producer->href)[3]);
+            $reference->set('name', $producer->innertext);
+            array_push($producers_arr, $reference->info);
+          }
         }
 
         return $producers_arr;
@@ -531,12 +527,13 @@ class AnimeInfoParser extends Parser
     foreach($sidebarInformation as $value) {
       if(strpos($value->plaintext, 'Licensors:') !== false) {
         $licensors_arr = [];
-        // TODO: Change below to joining the find('text') into an array and removing the first item
-        foreach($value->find('a') as $licensor) {
-          $reference = new BriefReferenceModel();
-          $reference->set('id', (int)explode('/', $licensor->href)[3]);
-          $reference->set('name', $licensor->innertext);
-          array_push($licensors_arr, $reference->info);
+        if(strpos($value->innertext, 'None found') === false) {
+          foreach($value->find('a') as $licensor) {
+            $reference = new BriefReferenceModel();
+            $reference->set('id', (int)explode('/', $licensor->href)[3]);
+            $reference->set('name', $licensor->innertext);
+            array_push($licensors_arr, $reference->info);
+          }
         }
 
         return $licensors_arr;
@@ -560,17 +557,17 @@ class AnimeInfoParser extends Parser
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
       if(strpos($value->plaintext, 'Studios:') !== false) {
+        $studios_arr = [];
         if(strpos($value->innertext, 'None found') === false) {
-          $studios_arr = [];
           foreach($value->find('a') as $studio) {
             $reference = new BriefReferenceModel();
             $reference->set('id', (int)explode('/', $studio->href)[3]);
             $reference->set('name', $studio->innertext);
             array_push($studios_arr, $reference->info);
           }
-
-          return $studios_arr;
         }
+
+        return $studios_arr;
       }
     }
 
@@ -709,7 +706,7 @@ class AnimeInfoParser extends Parser
         if(strpos($value->innertext, 'Unknown') === false &&
            strpos($value->innertext, 'None') === false) {
           $classification_fulltext = trim($value->find('text' , 2)->innertext);
-          return explode(' -', $classification_fulltext);
+          return array_map('trim', explode(' -', $classification_fulltext));
         }
       }
     }
@@ -815,19 +812,19 @@ class AnimeInfoParser extends Parser
   private static function parseRelations($html) {
 
     $relation_td = $html->find('div#contentWrapper .js-scrollfix-bottom-rel .anime_detail_related_anime tbody', 0);
+    $relation_sequel = $relation_prequel
+                     = $relation_alternative_setting
+                     = $relation_alternative_version
+                     = $relation_side_story
+                     = $relation_parent_story
+                     = $relation_summary
+                     = $relation_full_story
+                     = $relation_spin_off
+                     = $relation_adaptation
+                     = $relation_character
+                     = $relation_other
+                     = [];
     if($relation_td) {
-      $relation_sequel = $relation_prequel
-                       = $relation_alternative_setting
-                       = $relation_alternative_version
-                       = $relation_side_story
-                       = $relation_parent_story
-                       = $relation_summary
-                       = $relation_full_story
-                       = $relation_spin_off
-                       = $relation_adaptation
-                       = $relation_character
-                       = $relation_other
-                       = [];
       foreach($relation_td->find('tr') as $relation_row) {
         $key = 0;
         foreach($relation_row->find('td a') as $relation_item) {
@@ -877,21 +874,21 @@ class AnimeInfoParser extends Parser
           $key++;
         }
       }
-      return [
-        $relation_sequel,
-        $relation_prequel,
-        $relation_alternative_setting,
-        $relation_alternative_version,
-        $relation_side_story,
-        $relation_parent_story,
-        $relation_summary,
-        $relation_full_story,
-        $relation_spin_off,
-        $relation_adaptation,
-        $relation_character,
-        $relation_other
-      ];
     }
+    return [
+      $relation_sequel,
+      $relation_prequel,
+      $relation_alternative_setting,
+      $relation_alternative_version,
+      $relation_side_story,
+      $relation_parent_story,
+      $relation_summary,
+      $relation_full_story,
+      $relation_spin_off,
+      $relation_adaptation,
+      $relation_character,
+      $relation_other
+    ];
 
   }
 
@@ -914,7 +911,7 @@ class AnimeInfoParser extends Parser
         'name' => explode('&quot;', $opening->innertext)[1],
         // Artist cannot contain a parenthesis so we can use it to split artists
         // View more: https://myanimelist.net/dbchanges.php?aid=14131&t=theme
-        'artist' => explode(' (', explode('&quot; by ', $opening->innertext)[1])[0]
+        'artist' => explode(' (', explode('&quot; by ', preg_replace('!\s+!', ' ', $opening->innertext))[1])[0]
       ];
       $episodes_str = explode(' (ep', explode('&quot; by ', $opening->innertext)[1])[1] ?? '';
       $episodes_str = str_replace('s', '', $episodes_str);
