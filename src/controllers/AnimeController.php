@@ -44,6 +44,14 @@ class AnimeController
     $this->responsearray = $collection->getArray();
   }
 
+  /**
+   * Search for anime with optional filters.
+   * 
+   * @param Array $get_variables The associative array for additional GET variables
+   * @param Array $post_variables The associative array for POST variables
+   * @param Integer $query The main query to search for. Can be blank if filters are set.
+   * @since 0.5
+   */
   public function search($get_variables, $post_variables, $query='') {
     if($query === '') {
       $query = $get_variables['q'] ?? '';
