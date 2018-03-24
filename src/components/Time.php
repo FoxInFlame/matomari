@@ -105,12 +105,10 @@ class Time
       // Jul 4, 2010
       // Apr, 2018
       if(strlen(explode(', ', $string)[0]) > 3) {
-        $date = DateTime::createFromFormat('!M j, Y', $string, new DateTimeZone(self::$tz_mal));
-        $date->setTimeZone(new DateTimeZone(self::$tz_final));
+        $date = DateTime::createFromFormat('!M j, Y', $string);
         return $date->format('Y-m-d');
       } else if(strlen(explode(', ', $string)[0]) > 2) {
-        $date = DateTime::createFromFormat('!M, Y', $string, new DateTimeZone(self::$tz_mal));
-        $date->setTimeZone(new DateTimeZone(self::$tz_final));
+        $date = DateTime::createFromFormat('!M, Y', $string);
         return $date->format('Y-m');
       }
     } else if(strpos($string, '/') !== false) {
@@ -120,6 +118,8 @@ class Time
       return $date->format('Y-m-d\TH:iO');
     } else if(strpos($string, '-') !== false && strlen($string) === 8) {
       // Part of the response in anime/search.
+      // Unlike previous ones, these are full dates and thus do not require timezones to be specified
+      // or converted to.
 
       if(preg_match('/(?:^|\s|$)\d{2}-\d{2}-\d{2}(?:^|\s|$)/', $string, $matches)) {
         // MM-DD-YY
@@ -166,13 +166,56 @@ class Time
 
     } else {
       // 1951
-      $date = DateTime::createFromFormat('!Y', $string, new DateTimeZone(self::$tz_mal));
+      $date = DateTime::createFromFormat('!Y', $string);
       if($date) {
-        $date->setTimeZone(new DateTimeZone(self::$tz_final));
         return $date->format('Y');
       }
     }
 
     return null;
+  }
+
+  /**
+   * Convert birthdays on MAL into ISO 8601 date Strings.
+   * Unlike normal dates, birthdays can be mm-dd only without the year section.
+   * 
+   * @param String $string The birthday string on MAL
+   * @return String
+   * @since 0.5
+   */
+  public static function convertBirthday($string) {
+    $string = trim($string);
+
+    // Birthday: Jan 23, 2017
+    $date = DateTime::createFromFormat('!M j, Y', $string);
+    if($date) {
+      return $date->format('Y-m-d');
+    }
+
+    // Birthday: Feb, 2001
+    $date = DateTime::createFromFormat('!M, Y', $string);
+    if($date) {
+      return $date->format('Y-m');
+    }
+
+    // Birthday: 6, 2006
+    $date = DateTime::createFromFormat('!j, Y', $string);
+    if($date) {
+      return $date->format('Y-d');
+    }
+
+    // Birthday: Jan 5
+    $date = DateTime::createFromFormat('!M j', $string);
+    if($date) {
+      return $date->format('m-d');
+    }
+
+    // Birthday: 2001
+    $date = DateTime::createFromFormat('!Y', $string);
+    if($date) {
+      return $date->format('Y');
+    }
+
+    return false;
   }
 }
