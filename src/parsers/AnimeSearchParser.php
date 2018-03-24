@@ -133,70 +133,13 @@ class AnimeSearchParser extends Parser
     // MM-DD-YY (and ?? if unknown, - if everything is unknown)
     $mal_air_date_from = trim($td_air_date_from->innertext);
     if($mal_air_date_from !== '-') {
-      foreach(explode('-', $mal_air_date_from) as $index => $number) {
-        /* Will turn 2017-04-?? into 2017-04-- using the ISO 8601 standard on Wikipedia*/
-        if($index == 0) {
-          $month = $number;
-          if($month == '??') {
-            $month = '-';
-          }
-        }
-        if($index == 1) {
-          $day = $number;
-          if($day == '??') {
-            $day = '-';
-          }
-        }
-        if($index == 2) {
-          $year = $number;
-          if($year == '??') {
-            $year = '-';
-          } else {
-            if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
-              // Over 1940
-              $year = '19' . $year;
-            } else {
-              // Under 2040
-              $year = '20' . $year;
-            }
-          }
-        }
-      } 
-      $anime->set('air_dates//from', (string)$year . '-' . $month . '-' .$day);
+      $anime->set('air_dates//from', (string)Time::convert($mal_air_date_from));
     }
 
     // The Air-To Date
     $mal_air_date_to = trim($td_air_date_to->innertext);
     if($mal_air_date_to !== '-') {
-      foreach(explode('-', $mal_air_date_to) as $index => $number) {
-        if($index == 0) {
-          $month = $number;
-          if($month == '??') {
-            $month = '-';
-          }
-        }
-        if($index == 1) {
-          $day = $number;
-          if($day == '??') {
-            $day = '-';
-          }
-        }
-        if($index == 2) {
-          $year = $number;
-          if($year == '??') {
-            $year = '-';
-          } else {
-            if($year > 40) { // Some anime are made in 1968, so I can't use date_format from y to Y.
-              // Over 1940
-              $year = '19' . $year;
-            } else {
-              // Under 2040
-              $year = '20' . $year;
-            }
-          }
-        }
-      }
-      $anime->set('air_dates//to', (string)$year . '-' . $month . '-' . $day);
+      $anime->set('air_dates//from', (string)Time::convert($mal_air_date_to));
     }
 
     // The Classification name

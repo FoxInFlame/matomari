@@ -33,20 +33,19 @@ class Time
   public static $tz_final = 'Etc/GMT';
 
   /**
-   * Convert any kind of MAL date into absolute GMT DateTimes.
+   * Convert any kind of MAL date into ISO 8601 date Strings.
    * 
    * @param String $string The date string on MAL
-   * @param String $defaultFormat The default date DateTime format to look for.
-   * @return DateTime
+   * @return String
    * @since 0.5
    */
-  public static function convert($string, $defaultFormat = '!M j, g:i A') {
+  public static function convert($string) {
     $string = trim($string); // Super important! :)
 
     if(strpos($string, 'Now') !== false) {
       $date = new DateTime(null);
       $date->setTimeZone(new DateTimeZone(self::$tz_final));
-      return $date;
+      return $date->format('Y-m-d\TH:i:sO');
     } else if(strpos($string, 'ago') !== false) {
       /*Note: These are returning approximate values */
       $date = new DateTime(null);
@@ -59,6 +58,7 @@ class Time
           $hour = substr($string, 0, -9);
           $date->modify('-' . $hour . ' hour');
         }
+        return $date->format('Y-m-d\THO');
       }
       if(strpos($string, 'minute') !== false) {
         if(strpos($string, 'minutes') !== false) {
@@ -68,6 +68,7 @@ class Time
           $minute = substr($string, 0, -11);
           $date->modify('-' . $minute . ' minute');
         }
+        return $date->format('Y-m-d\TH:iO');
       }
       if(strpos($string, 'second') !== false) {
         if(strpos($string, 'seconds') !== false) {
@@ -77,19 +78,19 @@ class Time
           $second = substr($string, 0, -11);
           $date->modify('-' . $second . ' second');
         }
+        return $date->format('Y-m-d\TH:i:sO');
       }
-      return $date;
     } else if(strpos($string, 'Today') !== false) {
       // Today, 2:47 AM
       $date = DateTime::createFromFormat('g:i A', substr($string, 7), new DateTimeZone(self::$tz_mal));
       $date->setTimeZone(new DateTimeZone(self::$tz_final));
-      return $date;
+      return $date->format('Y-m-d\TH:iO');
     } else if(strpos($string, 'Yesterday') !== false) {
       // Yesterday, 8:47 PM
       $date = DateTime::createFromFormat('g:i A', substr($string, 11), new DateTimeZone(self::$tz_mal));
       $date->modify('-1 day');
       $date->setTimeZone(new DateTimeZone(self::$tz_final));
-      return $date;
+      return $date->format('Y-m-d\TH:iO');
     } else if(strpos($string, 'AM') !== false || strpos($string, 'PM') !== false) {
       // Feb 24, 9:29 AM
       // Dec 15, 2006 4:32 PM
@@ -99,33 +100,79 @@ class Time
         $date = DateTime::createFromFormat('!M j, Y g:i A', $string, new DateTimeZone(self::$tz_mal));
       }
       $date->setTimeZone(new DateTimeZone(self::$tz_final));
-      return $date;
+      return $date->format('Y-m-d\TH:iO');
     } else if(strpos($string, ', ') !== false) {
       // Jul 4, 2010
       // Apr, 2018
       if(strlen(explode(', ', $string)[0]) > 3) {
         $date = DateTime::createFromFormat('!M j, Y', $string, new DateTimeZone(self::$tz_mal));
         $date->setTimeZone(new DateTimeZone(self::$tz_final));
-        return $date;
+        return $date->format('Y-m-d');
       } else if(strlen(explode(', ', $string)[0]) > 2) {
         $date = DateTime::createFromFormat('!M, Y', $string, new DateTimeZone(self::$tz_mal));
         $date->setTimeZone(new DateTimeZone(self::$tz_final));
-        return $date;
+        return $date->format('Y-m');
       }
     } else if(strpos($string, '/') !== false) {
       // 09/09/2016 at 04:35
       $date = DateTime::createFromFormat('!m/d/Y at H:i', $string, new DateTimeZone(self::$tz_mal));
       $date->setTimeZone(new DateTimeZone(self::$tz_final));
-      return $date;
+      return $date->format('Y-m-d\TH:iO');
+    } else if(strpos($string, '-') !== false && strlen($string) === 8) {
+      // Part of the response in anime/search.
+
+      if(preg_match('/(?:^|\s|$)\d{2}-\d{2}-\d{2}(?:^|\s|$)/', $string, $matches)) {
+        // MM-DD-YY
+        if(substr($matches[0], 6, 2) > 30) {
+          $date = DateTime::createFromFormat('m-d-Y', substr($matches[0], 0, 6) . '19' . substr($matches[0], 6, 2));
+        } else {
+          $date = DateTime::createFromFormat('m-d-Y', substr($matches[0], 0, 6) . '20' . substr($matches[0], 6, 2));
+        }
+        return $date->format('Y-m-d');
+      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-??(?:^|\s|$)/', $string, $matches)) {
+        // MM-DD-??
+        return null;
+      } else if(preg_match('/(?:^|\s|$)\d{4}----(?:^|\s|$)/', $string, $matches)) {
+        // MM-??-YY
+        if(substr($matches[0], 0, 2) > 30) {
+          $date = DateTime::createFromFormat('m-??-Y', substr($matches[0], 0, 6) . '19' . substr($matches[0], 6, 2));
+        } else {
+          $date = DateTime::createFromFormat('m-??-Y', substr($matches[0], 0, 6) . '20' . substr($matches[0], 6, 2));
+        }
+        return $date->format('Y-m');
+      } else if(preg_match('/(?:^|\s|$)\d{4}---\d{2}(?:^|\s|$)/', $string, $matches)) {
+        // MM-??-??
+        return null;
+      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-\d{2}(?:^|\s|$)/', $string, $matches)) {
+        // ??-DD-YY
+        return null;
+      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}--(?:^|\s|$)/', $string, $matches)) {
+        // ??-DD-??
+        return null;
+      } else if(preg_match('/(?:^|\s|$)\d{4}----(?:^|\s|$)/', $string, $matches)) {
+        // ??-??-YY
+        if(substr($matches[0], 0, 2) > 30) {
+          $date = DateTime::createFromFormat('Y', '19' . substr($matches[0], 6, 2));
+        } else {
+          $date = DateTime::createFromFormat('Y', '20' . substr($matches[0], 6, 2));
+        }
+        return $date->format('Y');
+      } else if(preg_match('/(?:^|\s|$)\d{4}---\d{2}(?:^|\s|$)/', $string, $matches)) {
+        // ??-??-??
+        return null;
+      } else {
+        return null;        
+      }
+
     } else {
       // 1951
       $date = DateTime::createFromFormat('!Y', $string, new DateTimeZone(self::$tz_mal));
       if($date) {
         $date->setTimeZone(new DateTimeZone(self::$tz_final));
-        return $date;
+        return $date->format('Y');
       }
     }
 
-    return false;
+    return null;
   }
 }

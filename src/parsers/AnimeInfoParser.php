@@ -396,7 +396,7 @@ class AnimeInfoParser extends Parser
    * Parse the air dates.
    * <div>
    *   <span class='dark_text'>Aired:</span>
-   *   Dec 6th, 2014
+   *   Dec 6, 2014
    * </div>
    * 
    * @param Simple_html_dom $html
@@ -413,9 +413,8 @@ class AnimeInfoParser extends Parser
           if(strpos($value->find('text', 2)->innertext, ' to ') !== false) {
             // contains 'to'
             $exploded = array_map('trim', explode(' to ', $value->find('text', 2)->innertext));
-            $air_dates[0] = Time::convert($exploded[0]);
-            // Use null if the air date could not be converted, e.g. "?"
 
+            $air_dates[0] = Time::convert($exploded[0]);
             $air_dates[1] = Time::convert($exploded[1]);
 
             return $air_dates;
