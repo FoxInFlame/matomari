@@ -14,7 +14,8 @@ use Stash;
 use Matomari\Exceptions\MatomariError;
 
 /**
- * Return array of data for the request.
+ * Return an array of data for the request from the Stash Cache Pool.
+ * Throws an error if no cache is found for the key.
  * 
  * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>

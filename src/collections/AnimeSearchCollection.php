@@ -17,7 +17,7 @@ use Matomari\Builders\DataBuilder;
 use Matomari\Parsers\AnimeSearchParser;
 
 /**
- * Collection for anime search - grabs information from cache or URL, and creates Models.
+ * Collection for anime search - grabs information from cache or URL, and returns Models.
  * 
  * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
