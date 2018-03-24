@@ -129,35 +129,35 @@ class Time
           $date = DateTime::createFromFormat('m-d-Y', substr($matches[0], 0, 6) . '20' . substr($matches[0], 6, 2));
         }
         return $date->format('Y-m-d');
-      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-??(?:^|\s|$)/', $string, $matches)) {
+      } else if(preg_match('/(?:^|\s|$)\d{2}-\d{2}-\?\?(?:^|\s|$)/', $string, $matches)) {
         // MM-DD-??
         return null;
-      } else if(preg_match('/(?:^|\s|$)\d{4}----(?:^|\s|$)/', $string, $matches)) {
+      } else if(preg_match('/(?:^|\s|$)\d{2}-\?\?-\d{2}(?:^|\s|$)/', $string, $matches)) {
         // MM-??-YY
-        if(substr($matches[0], 0, 2) > 30) {
+        if(substr($matches[0], 6, 2) > 30) {
           $date = DateTime::createFromFormat('m-??-Y', substr($matches[0], 0, 6) . '19' . substr($matches[0], 6, 2));
         } else {
           $date = DateTime::createFromFormat('m-??-Y', substr($matches[0], 0, 6) . '20' . substr($matches[0], 6, 2));
         }
         return $date->format('Y-m');
-      } else if(preg_match('/(?:^|\s|$)\d{4}---\d{2}(?:^|\s|$)/', $string, $matches)) {
+      } else if(preg_match('/(?:^|\s|$)\d{2}-\?\?-\?\?(?:^|\s|$)/', $string, $matches)) {
         // MM-??-??
         return null;
-      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-\d{2}(?:^|\s|$)/', $string, $matches)) {
+      } else if(preg_match('/(?:^|\s|$)\?\?-\d{2}-\d{2}(?:^|\s|$)/', $string, $matches)) {
         // ??-DD-YY
         return null;
-      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}--(?:^|\s|$)/', $string, $matches)) {
+      } else if(preg_match('/(?:^|\s|$)\?\?-\d{2}-\?\?(?:^|\s|$)/', $string, $matches)) {
         // ??-DD-??
         return null;
-      } else if(preg_match('/(?:^|\s|$)\d{4}----(?:^|\s|$)/', $string, $matches)) {
+      } else if(preg_match('/(?:^|\s|$)\?\?-\?\?-\d{2}(?:^|\s|$)/', $string, $matches)) {
         // ??-??-YY
-        if(substr($matches[0], 0, 2) > 30) {
+        if(substr($matches[0], 6, 2) > 30) {
           $date = DateTime::createFromFormat('Y', '19' . substr($matches[0], 6, 2));
         } else {
           $date = DateTime::createFromFormat('Y', '20' . substr($matches[0], 6, 2));
         }
         return $date->format('Y');
-      } else if(preg_match('/(?:^|\s|$)\d{4}---\d{2}(?:^|\s|$)/', $string, $matches)) {
+      } else if(preg_match('/(?:^|\s|$)\?\?-\?\?-\?\?(?:^|\s|$)/', $string, $matches)) {
         // ??-??-??
         return null;
       } else {

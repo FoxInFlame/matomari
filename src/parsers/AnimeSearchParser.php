@@ -139,13 +139,13 @@ class AnimeSearchParser extends Parser
     // The Air-To Date
     $mal_air_date_to = trim($td_air_date_to->innertext);
     if($mal_air_date_to !== '-') {
-      $anime->set('air_dates//from', (string)Time::convert($mal_air_date_to));
+      $anime->set('air_dates//to', (string)Time::convert($mal_air_date_to));
     }
 
     // The Classification name
     // <td class='borderClass ac bgColor0' width='75'>    R+  </td>
     if(trim($td_classification->innertext) !== '-') {
-      $anime->set('classification//name', (string)strtolower(trim($td_classification->innertext)));
+      $anime->set('classification//name', (string)trim($td_classification->innertext));
     }
     
     // The Members who have it in their list
