@@ -412,14 +412,19 @@ class AnimeInfoParser extends Parser
            strpos($value->plaintext, 'Not available') === false) {
           if(strpos($value->find('text', 2)->innertext, ' to ') !== false) {
             // contains 'to'
-            $exploded = array_map('trim', explode(' to ', $value->find('text', 2)->innertext));
+            
+            $exploded = array_map('trim', explode(' to ', $value->find('text', 2)->innertext)); // Neccessasry trimming
 
             $air_dates[0] = Time::convert($exploded[0]);
             $air_dates[1] = Time::convert($exploded[1]);
 
             return $air_dates;
+            
           } else {
-            return Time::convert($value->find('text', 2)->innertext);
+
+            return Time::convert(trim($value->find('text', 2)->innertext)); // Neccessasry trimming
+            // No need to return an array here because we check if the result is a string
+            // when calling the function and we set premiere_date instead of air_dates if so.
           }
         }
       }

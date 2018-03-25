@@ -40,8 +40,7 @@ class Time
    * @since 0.5
    */
   public static function convert($string) {
-    $string = trim($string); // Super important! :)
-
+    
     if(strpos($string, 'Now') !== false) {
       $date = new DateTime(null);
       $date->setTimeZone(new DateTimeZone(self::$tz_final));
