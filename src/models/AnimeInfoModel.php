@@ -18,6 +18,7 @@ use Matomari\Models\Model;
  */
 class AnimeInfoModel extends Model
 {
+  
   public $info = [
     'id' => null,
     'name' => null,

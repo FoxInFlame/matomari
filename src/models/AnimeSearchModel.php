@@ -18,6 +18,7 @@ use Matomari\Models\Model;
  */
 class AnimeSearchModel extends Model
 {
+  
   public $info = [
     'id' => null,
     'name' => null,

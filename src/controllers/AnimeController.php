@@ -23,7 +23,7 @@ class AnimeController
 {
 
   /**
-   * Contains the response of the specifiers.
+   * Contains the response from the specifiers.
    * 
    * @var Array
    */
