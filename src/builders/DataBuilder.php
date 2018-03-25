@@ -45,6 +45,9 @@ class DataBuilder
     // Initialise the Stash Pool using the driver.
     $pool = new Stash\Pool($driver);
 
+    // Uncomment to enable debugging.
+    // $pool->clear();
+
     // Try to get an item from the pool using $cache_key.
     $item = $pool->getItem($cache_key);
     $data = $item->get();
