@@ -60,6 +60,13 @@ class AnimeSearchParser extends Parser
     return $search->results;
   }
 
+  /**
+   * Parse each invidual entry in the result list and return not the array but the model itself.
+   * 
+   * @param HtmlDomParser $result The parsed HTML for the individual entry
+   * @return Array
+   * @since 0.5 
+   */
   private static function parseResult($result) {
 
     $td_image = $result->find("td", 0);
