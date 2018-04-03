@@ -14,15 +14,15 @@ use GuzzleHttp\Client;
 use Matomari\Exceptions\MatomariError;
 use Matomari\Collections\Collection;
 use Matomari\Builders\DataBuilder;
-use Matomari\Parsers\AnimeSearchParser;
+use Matomari\Parsers\MangaSearchParser;
 
 /**
- * Collection for anime search - grabs information from cache or URL, and returns Models.
+ * Collection for manga search - grabs information from cache or URL, and returns Models.
  * 
  * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
  */
-class AnimeSearchCollection extends Collection
+class MangaSearchCollection extends Collection
 {
 
   /**
@@ -31,27 +31,19 @@ class AnimeSearchCollection extends Collection
    */
   private $mapping = [
     'type' => [
-      'tv' => '1',
-      'ova' => '2',
-      'movie' => '3',
-      'special' => '4',
-      'ona' => '5',
-      'music' => '6',
+      'manga' => '1',
+      'novel' => '2',
+      'one-shot' => '3',
+      'doujinshi' => '4',
+      'manhwa' => '5',
+      'manhua' => '6',
+      'oel' => '7',
       'default' => '0'
     ],
-    'air_status' => [
-      'currently_airing' => '1',
-      'finished_airing' => '2',
-      'not_yet_aired' => '3',
-      'default' => '0'
-    ],
-    'classification' => [
-      'g' => '1',
-      'pg' => '2',
-      'pg-13' => '3',
-      'r' => '4',
-      'r+' => '5',
-      'rx' => '6',
+    'publish_status' => [
+      'publishing' => '1',
+      'finished' => '2',
+      'not_yet_published' => '3',
       'default' => '0'
     ],
     'genres' => [
@@ -95,9 +87,11 @@ class AnimeSearchCollection extends Collection
       'military' => '38',
       'police' => '39',
       'psychological' => '40',
-      'thriller' => '41',
-      'seinen' => '42',
-      'josei' => '43',
+      'seinen' => '41',
+      'josei' => '42',
+      'doujinshi' => '43',
+      'genderbender' => '44',
+      'thriller' => '45',
       'default' => ''
     ]
   ];
@@ -113,12 +107,11 @@ class AnimeSearchCollection extends Collection
    *  $filter = [
    *    'type' => (string) Show results matching the media type
    *    'score' => (string) Show results with scores above the score
-   *    'air_status' => (string) Show results matching the airing status
-   *    'producer' => (string) TBD
-   *    'classification' => (string) Show results matching the classification name
-   *    'air_dates' => [
-   *      'from' => (string) Show results which start airing from the date
-   *      'to' => (string) Show results which end airing on the date
+   *    'publish_status' => (string) Show results matching the airing status
+   *    'magazine' => (string) TBD
+   *    'publish_dates' => [
+   *      'from' => (string) Show results which start publishing from the date
+   *      'to' => (string) Show results which end publishing on the date
    *    ]
    *    'letter' => (string) Show results that start with the alphabet letter
    *    'genres' => (array) 
@@ -141,11 +134,10 @@ class AnimeSearchCollection extends Collection
     $data_builder->build($cache_key, function() use ($parameters) {
 
       $guzzle_client = new Client();
-      $response = $guzzle_client->request('GET', 'https://myanimelist.net/anime.php', [
+      $response = $guzzle_client->request('GET', 'https://myanimelist.net/manga.php', [
         'http_errors' => false,
         'query' => $parameters
       ]);
-      
 
       if($response->getStatusCode() === 429) {
         throw new MatomariError('Too many frequent requests. Please wait and retry.', 429);
@@ -163,7 +155,7 @@ class AnimeSearchCollection extends Collection
 
       // Return the Data Arary and the Cache Timeout in seconds.
       return [
-        AnimeSearchParser::parse($body),
+        MangaSearchParser::parse($body),
         3600
       ];
       
@@ -269,18 +261,16 @@ class AnimeSearchCollection extends Collection
         $filter_parameter = $this->prepare_simple_filter_parameter('type', 'type', $filter_value);
       } else if($filter_name === 'score') {
         $filter_parameter = $this->prepare_score_filter_parameter('score', $filter_value);
-      } else if($filter_name === 'air_status') {
-        $filter_parameter = $this->prepare_simple_filter_parameter('status', 'air_status', $filter_value);
-      } else if($filter_name === 'producer') {
+      } else if($filter_name === 'publish_status') {
+        $filter_parameter = $this->prepare_simple_filter_parameter('status', 'publish_status', $filter_value);
+      } else if($filter_name === 'magazine') {
         throw new MatomariError('Not yet implemented.', 501);
-      } else if($filter_name === 'classification') {
-        $filter_parameter = $this->prepare_simple_filter_parameter('r', 'classification', $filter_value);
-      } else if($filter_name === 'air_dates') {
+      } else if($filter_name === 'publish_dates') {
         $filter_parameter = $this->prepare_dates_filter_parameter($filter_value);
       } else if($filter_name === 'letter') {
         $filter_parameter = $this->prepare_letter_filter_parameter($filter_value);
       } else if($filter_name === 'genres') {
-        $filter_parameter === $this->prepare_genre_filter_parameter($filter_value);
+        $filter_parameter = $this->prepare_genre_filter_parameter($filter_value);
       } else if($filter_name ==='exclude_genres') {
         if($filter_value) $filter_param = ['gx' => '1'];
       } else continue;
@@ -439,7 +429,7 @@ class AnimeSearchCollection extends Collection
   private function prepare_genre_filter_parameter($value) {
     
     $genre_parameters = [
-      'genre' => [] // Initiate an empty genre array inside so that only one genre still makes it an
+     // Initiate an empty genre array inside so that only one genre still makes it an
                     // arary and not a single value
     ];
 
@@ -447,7 +437,7 @@ class AnimeSearchCollection extends Collection
     foreach($value as $genre) {
       $genre_parameters = array_merge_recursive(
         $genre_parameters,
-        $this->prepare_simple_filter_parameter('genre', 'genres', $genre)
+        $this->prepare_simple_filter_parameter('genre', 'genres', $genre, true)
       );
     }
 
@@ -485,7 +475,7 @@ class AnimeSearchCollection extends Collection
 
     }
 
-    return '/anime/search' . $query . '/' . $filters . (string)(int)$page;
+    return '/manga/search' . $query . '/' . $filters . (string)(int)$page;
 
   }
 

@@ -41,7 +41,9 @@ class RequestBuilder
     '\/anime\/search' => ['GET', 'AnimeController', 'search'],
     '\/anime\/search\/(.*)' => ['GET', 'AnimeController', 'search'],
     '\/manga\/([0-9]*)' => ['GET', 'MangaController', 'info'],
-    '\/manga\/([0-9]*)\/info' => ['GET', 'MangaController', 'info']
+    '\/manga\/([0-9]*)\/info' => ['GET', 'MangaController', 'info'],
+    '\/manga\/search' => ['GET', 'MangaController', 'search'],
+    '\/manga\/search\/(.*)' => ['GET', 'MangaController', 'search']
   ];
 
   /**

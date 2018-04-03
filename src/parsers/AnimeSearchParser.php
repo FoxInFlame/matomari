@@ -16,7 +16,6 @@ use Matomari\Exceptions\MatomariError;
 use Matomari\Components\Time;
 use Matomari\Models\SearchModel;
 use Matomari\Models\AnimeSearchModel;
-use Matomari\Models\BriefReferenceModel;
 
 /**
  * Parse HTML of anime search pages into AnimeSearch Models
@@ -31,7 +30,7 @@ class AnimeSearchParser extends Parser
    * Parse the HTML of the anime search response, and return the list of generated AnimeSearches.
    * 
    * @param String $response The response HTML from MAL
-   * @return AnimeInfo
+   * @return Array
    * @since 0.5
    */
   public static function parse($response) {
