@@ -19,9 +19,6 @@ namespace Matomari\Parsers;
 class Parser
 {
   
-  public function __construct() {
-    
-  }
   /**
    * Retrieve the model.
    * 
@@ -29,7 +26,9 @@ class Parser
    * @since 0.5
    */
   public function getArray() {
+
     return $this->array;
+
   }
 
 }

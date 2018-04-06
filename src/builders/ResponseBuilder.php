@@ -32,12 +32,12 @@ class ResponseBuilder
    * Build Response.
    * 
    * @param Request $request The Request for the request.
-   * @param Array $responsearray The response associative array.
+   * @param Array $response_array The response associative array.
    * @since 0.5 
    */
-  public function build($request, $responsearray) {
+  public function build($request, $response_array) {
     
-    $response = new Response($request, $responsearray);
+    $response = new Response($request, $response_array);
     $this->response = $response;
 
   }
@@ -49,7 +49,9 @@ class ResponseBuilder
    * @since 0.5
    */
   public function getResponse() {
+
     return $this->response;
+
   }
   
 }

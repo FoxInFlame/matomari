@@ -188,8 +188,8 @@ class MangaSearchCollection extends Collection
     return [
       'c'=> ['a', 'b', 'c', 'd', 'e', 'f', 'g']
     ] + $query_parameter + $page_parameter + $sort_parameter + $filter_parameters;
-
     // ?q=' . urlencode($query) . $filter_param . '&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g' . $page_param, ['http_errors' => false]); // TODO: add sort
+    
   }
 
   /**
@@ -240,7 +240,9 @@ class MangaSearchCollection extends Collection
    * @since 0.5
    */
   private function prepare_sort_parameter($sort) {
+
     return [];
+
   }
 
   /**

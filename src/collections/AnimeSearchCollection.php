@@ -248,7 +248,9 @@ class AnimeSearchCollection extends Collection
    * @since 0.5
    */
   private function prepare_sort_parameter($sort) {
+
     return [];
+    
   }
 
   /**

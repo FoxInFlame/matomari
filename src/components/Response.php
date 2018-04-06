@@ -26,21 +26,22 @@ class Response
 
 
   /**
-   * Contains the assiciative array of the response.
+   * Contains the associative array of the response.
    * @var Array
    */
-  private $responsearray;
+  private $response_array;
 
   /**
    * Constructor to build Response.
    * 
    * @param Request $request The Request constructed from the request URL.
-   * @param Array $responsearray The response array created from Controllers.
+   * @param Array $response_array The response array created from Controllers.
    * @since 0.5
    */
-  public function __construct($request, $responsearray) {
+  public function __construct($request, $response_array) {
+
     $this->request = $request;
-    $this->responsearray = $responsearray;
+    $this->response_array = $response_array;
 
   }
 
@@ -49,7 +50,9 @@ class Response
    * @since 0.5
    */
   public function getRequest() {
+
     return $this->request;
+
   }
 
   /** 
@@ -57,7 +60,9 @@ class Response
    * @since 0.5
    */
   public function getResponseArray() {
-    return $this->responsearray;
+
+    return $this->response_array;
+
   }
 
 }

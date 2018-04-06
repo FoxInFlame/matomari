@@ -27,7 +27,7 @@ class AnimeController
    * 
    * @var Array
    */
-  private $responsearray;
+  private $response_array;
 
   /**
    * Get the overall anime information in detail.
@@ -38,10 +38,12 @@ class AnimeController
    * @since 0.5
    */
   public function info($get_variables, $post_variables, $anime_id) {
+    
     $collection = new AnimeInfoCollection(
       $anime_id
     );
-    $this->responsearray = $collection->getArray();
+    $this->response_array = $collection->getArray();
+
   }
 
   /**
@@ -49,10 +51,11 @@ class AnimeController
    * 
    * @param Array $get_variables The associative array for additional GET variables
    * @param Array $post_variables The associative array for POST variables
-   * @param Integer $query The main query to search for. Can be blank if filters are set.
+   * @param String $query The main query to search for. Can be blank if filters are set.
    * @since 0.5
    */
   public function search($get_variables, $post_variables, $query='') {
+
     if($query === '') {
       $query = $get_variables['q'] ?? '';
     }
@@ -77,7 +80,8 @@ class AnimeController
         'exclude_genres' => $get_variables['exclude_genres'] ?? ''
       ]
     );
-    $this->responsearray = $collection->getArray();
+    $this->response_array = $collection->getArray();
+
   }
 
   /**
@@ -87,7 +91,9 @@ class AnimeController
    * @since 0.5
    */
   public function getResponseArray() {
-    return $this->responsearray;
+
+    return $this->response_array;
+
   }
 
 }

@@ -33,7 +33,9 @@ class Collection
    * @since 0.5
    */
   public function getArray() {
+
     return $this->array;
+    
   }
 
 }

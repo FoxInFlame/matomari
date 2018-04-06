@@ -34,6 +34,7 @@ class AnimeSearchParser extends Parser
    * @since 0.5
    */
   public static function parse($response) {
+
     $html = HtmlDomParser::str_get_html($response);
 
     if(!is_object($html)) {
@@ -58,6 +59,7 @@ class AnimeSearchParser extends Parser
     }
 
     return $search->results;
+    
   }
 
   /**

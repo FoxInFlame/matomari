@@ -125,7 +125,9 @@ class RequestBuilder
    * @since 0.5
    */
   public function getRequest() {
+    
     return $this->request;
+
   }
   
 }

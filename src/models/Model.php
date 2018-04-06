@@ -27,7 +27,9 @@ class Model
    * @since 0.5
    */
   public function asArray() {
+
     return $this->info;
+
   }
 
   /**
@@ -39,6 +41,7 @@ class Model
    * @since 0.5
    */
   public function set($data, $value) {
+
     switch($data) {
       case 'air_status':
         switch($value) {
@@ -59,6 +62,7 @@ class Model
         }
         $this->info['air_status'] = $value;
         break;
+
       case 'watch_status':
         switch($value) {
           case $value === 1:
@@ -86,6 +90,7 @@ class Model
         }
         $this->info['watch_status'] = $value;
         break;
+
       case 'priority':
         switch($value) {
           case $value === 0:
@@ -105,6 +110,7 @@ class Model
         }
         $this->info['priority'] = $value;
         break;
+
       case 'storage':
         switch($value) {
           case $value === 0:
@@ -156,6 +162,7 @@ class Model
         }
         $this->info['storage'] = $value;
         break;
+
       case 'rewatch_value':
         switch($value) {
           case $value === 0:
@@ -187,6 +194,7 @@ class Model
         }
         $this->info['rewatch_value'] = $value;
         break;
+
       default:
         $data_levels = explode('//', $data);
         $temp_arr = &$this->info; // Reference operator
@@ -200,6 +208,7 @@ class Model
         $temp_arr = $value;
         break;
     }
+
   }
 
   /**
@@ -211,6 +220,7 @@ class Model
    * @since 0.5
    */
   public function get($data) {
+
     $data_levels = explode('//', $data);
     $temp_arr = &$this->info; // Reference operator
     foreach($data_levels as $level) {
@@ -221,5 +231,6 @@ class Model
       }
     }
     return $temp_arr;
+    
   }
 }

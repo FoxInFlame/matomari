@@ -75,12 +75,14 @@ class Request
     $get_variables,
     $post_variables
   ) {
+
     $this->type = $type;
     $this->controller_name = $controller;
     $this->specifier = $specifier;
     $this->path_variables = $path_variables;
     $this->get_variables = $get_variables;
     $this->post_variables = $post_variables;
+
   }
 
   /** 
@@ -88,7 +90,9 @@ class Request
    * @since 0.5
    */
   public function getType() {
+
     return $this->type;
+
   }
 
   /** 
@@ -96,7 +100,9 @@ class Request
    * @since 0.5
    */
   public function getControllerName() {
+
     return $this->controller_name;
+
   }
 
   /** 
@@ -104,7 +110,9 @@ class Request
    * @since 0.5
    */
   public function getSpecifier() {
+
     return $this->specifier;
+
   }
 
   /** 
@@ -112,7 +120,9 @@ class Request
    * @since 0.5
    */
   public function getPathVariables() {
+
     return $this->path_variables;
+
   }
 
   /** 
@@ -120,7 +130,9 @@ class Request
    * @since 0.5
    */
   public function getGetVariables() {
+
     return $this->get_variables;
+
   }
 
   /** 
@@ -128,7 +140,9 @@ class Request
    * @since 0.5
    */
   public function getPostVariables() {
+
     return $this->post_variables;
+    
   }
 
 }

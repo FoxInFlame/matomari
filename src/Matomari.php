@@ -64,7 +64,7 @@ class Matomari
       $final_response = ArrayToXml::convert($response->getResponseArray());
     }
 
-    // Do caching ehre.
+    // Do caching here.
 
     $this->output($final_response);
     

@@ -33,7 +33,7 @@ class DataBuilder
    * Build Array.
    * 
    * @param String $cache_key The key for retrieving/setting cache.
-   * @param Function $responsearray The response associative array.
+   * @param Function $fallback The fallback function to call when the cache doesn't exist
    * @since 0.5 
    */
   public function build($cache_key, $fallback) {
@@ -90,7 +90,9 @@ class DataBuilder
    * @since 0.5
    */
   public function getArray() {
+
     return $this->array;
+
   }
   
 }
