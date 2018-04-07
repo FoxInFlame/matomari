@@ -34,7 +34,7 @@ class MangaInfoParser extends Parser
    * @since 0.5
    */
   public static function parse($response) {
-    
+
     $html = HtmlDomParser::str_get_html($response);
 
     if(!is_object($html)) {
@@ -392,7 +392,6 @@ class MangaInfoParser extends Parser
         }
       }
     }
-
   }
 
   /**
@@ -417,7 +416,7 @@ class MangaInfoParser extends Parser
           if(strpos($date_string, ' to ') !== false) {
             // contains 'to'
 
-            $exploded = array_map('trim', explode(' to ', $date_string)); // Neccessasry trimming
+            $exploded = array_map('trim', explode(' to ', $date_string)); // Necessary trimming
 
             // Manga's info page weirdly has two spaces instead of one, so replace those
             foreach($exploded as $key => $explooooooosion) {
