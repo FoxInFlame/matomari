@@ -25,13 +25,13 @@ try {
   $matomari->handle($request);
 
 } catch (Exception $e) {
-
+  
+  http_response_code($e->getCode());
+  header('Access-Control-Allow-Origin: *');
   echo json_encode([
     'code' => $e->getCode(),
     'message' => $e->getMessage()
   ]);
-  http_response_code($e->getCode());
-  header('Access-Control-Allow-Origin: *');
   return;
   
 }
