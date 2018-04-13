@@ -27,10 +27,10 @@ class AnimeInfoParser extends Parser
 {
 
   /**
-   * Parse the HTML of the anime info response, and return the generated AnimeInfo model.
+   * Parse the HTML of the anime info response, and return the generated array model.
    * 
    * @param String $response The response HTML from MAL
-   * @return AnimeInfo
+   * @return Array
    * @since 0.5
    */
   public static function parse($response) {
@@ -99,7 +99,7 @@ class AnimeInfoParser extends Parser
     $anime->set('theme_songs//openings', self::parseOpeningThemeSongs($html));
     $anime->set('theme_songs//endings', self::parseEndingThemeSongs($html));
 
-    return $anime->info;
+    return $anime->asArray();
 
   }
 
@@ -506,10 +506,9 @@ class AnimeInfoParser extends Parser
             $reference = new BriefReferenceModel();
             $reference->set('id', (int)explode('/', $producer->href)[3]);
             $reference->set('name', $producer->innertext);
-            array_push($producers_arr, $reference->info);
+            array_push($producers_arr, $reference->asArray());
           }
         }
-
         return $producers_arr;
       }
     }
@@ -537,7 +536,7 @@ class AnimeInfoParser extends Parser
             $reference = new BriefReferenceModel();
             $reference->set('id', (int)explode('/', $licensor->href)[3]);
             $reference->set('name', $licensor->innertext);
-            array_push($licensors_arr, $reference->info);
+            array_push($licensors_arr, $reference->asArray());
           }
         }
 
@@ -568,7 +567,7 @@ class AnimeInfoParser extends Parser
             $reference = new BriefReferenceModel();
             $reference->set('id', (int)explode('/', $studio->href)[3]);
             $reference->set('name', $studio->innertext);
-            array_push($studios_arr, $reference->info);
+            array_push($studios_arr, $reference->asArray());
           }
         }
 
@@ -838,40 +837,40 @@ class AnimeInfoParser extends Parser
           $reference->set('name', (string)$relation_item->innertext);
           switch(strtolower(substr($relation_row->find('td text', 0)->innertext, 0, -1))) {
             case 'sequel':
-              array_push($relation_sequel, $reference->info);
+              array_push($relation_sequel, $reference->asArray());
               break;
             case 'prequel':
-              array_push($relation_prequel, $reference->info);
+              array_push($relation_prequel, $reference->asArray());
               break;
             case 'alternative setting':
-              array_push($relation_alternative_setting, $reference->info);
+              array_push($relation_alternative_setting, $reference->asArray());
               break;
             case 'alternative version':
-              array_push($relation_alternative_version, $reference->info);
+              array_push($relation_alternative_version, $reference->asArray());
               break;
             case 'side story':
-              array_push($relation_side_story, $reference->info);
+              array_push($relation_side_story, $reference->asArray());
               break;
             case 'parent story':
-              array_push($relation_parent_story, $reference->info);
+              array_push($relation_parent_story, $reference->asArray());
               break;
             case 'summary':
-              array_push($relation_summary, $reference->info);
+              array_push($relation_summary, $reference->asArray());
               break;
             case 'full story':
-              array_push($relation_full_story, $reference->info);
+              array_push($relation_full_story, $reference->asArray());
               break;
             case 'spin-off':
-              array_push($relation_spin_off, $reference->info);
+              array_push($relation_spin_off, $reference->asArray());
               break;
             case 'adaptation':
-              array_push($relation_adaptation, $reference->info);
+              array_push($relation_adaptation, $reference->asArray());
               break;
             case 'character':
-              array_push($relation_character, $reference->info);
+              array_push($relation_character, $reference->asArray());
               break;
             case 'other':
-              array_push($relation_other, $reference->info);
+              array_push($relation_other, $reference->asArray());
               break;
             default:
               break;

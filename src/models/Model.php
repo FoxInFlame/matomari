@@ -12,6 +12,7 @@ namespace Matomari\Models;
 
 use Matomari\Exceptions\ModelKeyDoesNotExist;
 use Matomari\Exceptions\ModelValueNotValid;
+use ReflectionClass;
 
 /** 
  * @since 0.5
@@ -28,7 +29,8 @@ class Model
    */
   public function asArray() {
 
-    return $this->info;
+    $properties = get_object_vars($this);
+    return $properties;
 
   }
 
@@ -60,7 +62,7 @@ class Model
           default:
             throw new ModelValueNotValid('The provided value is invalid.');
         }
-        $this->info['air_status'] = $value;
+        $this->{'air_status'} = $value;
         break;
 
       case 'watch_status':
@@ -88,7 +90,7 @@ class Model
           default:
             throw new ModelValueNotValid('The provided value is invalid.');
         }
-        $this->info['watch_status'] = $value;
+        $this->{'watch_status'} = $value;
         break;
 
       case 'priority':
@@ -108,7 +110,7 @@ class Model
           default:
             throw new ModelValueNotValid('The provided value is invalid.');
         }
-        $this->info['priority'] = $value;
+        $this->{'priority'} = $value;
         break;
 
       case 'storage':
@@ -160,7 +162,7 @@ class Model
           default:
             throw new ModelValueNotValid('The provided value is invalid.');
         }
-        $this->info['storage'] = $value;
+        $this->{'storage'} = $value;
         break;
 
       case 'rewatch_value':
@@ -192,12 +194,13 @@ class Model
           default:
             throw new ModelValueNotValid('The provided value is invalid.');
         }
-        $this->info['rewatch_value'] = $value;
+        $this->{'rewatch_value'} = $value;
         break;
 
       default:
         $data_levels = explode('//', $data);
-        $temp_arr = &$this->info; // Reference operator
+        $base_property = array_shift($data_levels);
+        $temp_arr = &$this->{$base_property}; // Reference operator
         foreach($data_levels as $level) {
           if(array_key_exists($level, $temp_arr)) {
             $temp_arr = &$temp_arr[$level];
@@ -222,7 +225,8 @@ class Model
   public function get($data) {
 
     $data_levels = explode('//', $data);
-    $temp_arr = &$this->info; // Reference operator
+    $base_property = array_shift($data_levels);
+    $temp_arr = &$this->{$base_property}; // Reference operator
     foreach($data_levels as $level) {
       if(array_key_exists($level, $temp_arr)) {
         $temp_arr = &$temp_arr[$level];

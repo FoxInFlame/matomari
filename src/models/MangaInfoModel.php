@@ -18,50 +18,69 @@ use Matomari\Models\Model;
  */
 class MangaInfoModel extends Model
 {
-  
-  public $info = [
-    'id' => null,
-    'name' => null,
-    'mal_url' => null,
-    'image_url' => null,
-    'score' => null,
-    'rank' => null,
-    'popularity' => null,
-    'synopsis' => null,
-    'other_titles' => [
-      'english' => [],
-      'japanese' => [],
-      'synonyms' => []
-    ],
-    'type' => null,
-    'volumes' => null,
-    'chapters' => null,
-    'publish_status' => null,
-    'publish_dates' => [
-      'from' => null,
-      'to' => null
-    ],
-    'authors' => [],
-    'serialization' => [],
-    'genres' => [],
-    'members_scored' => null,
-    'members_inlist' => null,
-    'members_favorited' => null,
-    'background' => null,
-    'relations' => [ // https://myanimelist.net/info.php?go=relationinfo
-      'sequel' => [],
-      'prequel' => [],
-      'alternative_setting' => [],
-      'alternative_version' => [],
-      'side_story' => [],
-      'parent_story' => [],
-      'summary' => [],
-      'full_story' => [],
-      'spin_off' => [],
-      'adaptation' => [],
-      'character' => [],
-      'other' => []
-    ]
+
+  public $id;
+
+  public $name;
+
+  public $mal_url;
+
+  public $image_url;
+
+  public $score;
+
+  public $rank;
+
+  public $popularity;
+
+  public $synopsis;
+
+  public $other_titles = [
+    'english' => [],
+    'japanese' => [],
+    'synonyms' => []
+  ];
+
+  public $type;
+
+  public $volumes;
+
+  public $chapters;
+
+  public $publish_status;
+
+  public $publish_dates = [
+    'from' => null,
+    'to' => null
+  ];
+
+  public $authors = [];
+
+  public $serialization = [];
+
+  public $genres = [];
+
+  public $members_scored;
+
+  public $members_inlist;
+
+  public $members_favorited;
+
+  public $background;
+
+  public $relations = [ // https://myanimelist.net/info.php?go=relationinfo
+    'sequel' => [],
+    'prequel' => [],
+    'alternative_setting' => [],
+    'alternative_version' => [],
+    'side_story' => [],
+    'parent_story' => [],
+    'summary' => [],
+    'full_story' => [],
+    'spin_off' => [],
+    'adaptation' => [],
+    'character' => [],
+    'other' => []
   ];
   
 }

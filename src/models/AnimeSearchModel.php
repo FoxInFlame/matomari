@@ -18,23 +18,30 @@ use Matomari\Models\Model;
  */
 class AnimeSearchModel extends Model
 {
-  
-  public $info = [
-    'id' => null,
-    'name' => null,
-    'mal_url' => null,
-    'image_url' => null,
-    'score' => null,
-    'type' => null,
-    'episodes' => null,
-    'air_dates' => [
-      'from' => null,
-      'to' => null
-    ],
-    'classification' => [
-      'name' => null
-    ],
-    'members_inlist' => null
+
+  public $id;
+
+  public $name;
+
+  public $mal_url;
+
+  public $image_url;
+
+  public $score;
+
+  public $type;
+
+  public $episodes;
+
+  public $air_dates = [
+    'from' => null,
+    'to' => null
   ];
+
+  public $classification = [
+    'name' => null
+  ];
+
+  public $members_inlist;
   
 }

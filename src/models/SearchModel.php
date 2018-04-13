@@ -19,8 +19,6 @@ use Matomari\Models\Model;
 class SearchModel extends Model
 {
 
-  public $results = [
-    'items' => []
-  ];
+  public $items = [];
   
 }
