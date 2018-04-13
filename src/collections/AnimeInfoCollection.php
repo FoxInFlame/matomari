@@ -62,7 +62,7 @@ class AnimeInfoCollection extends Collection
         throw new MatomariError('MAL is currently under maintenance. Please wait and retry.', 503);
       }
 
-      // Return the Data Arary and the Cache Timeout in seconds.
+      // Return the Data Array and the Cache Timeout in seconds.
       return [
         AnimeInfoParser::parse($body),
         3600

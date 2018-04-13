@@ -36,6 +36,7 @@ class RequestBuilder
    * @var Array
    */
   private $routes = [
+    '\/' => ['GET', 'ApiController', 'specs'],
     '\/anime\/([0-9]*)' => ['GET', 'AnimeController', 'info'],
     '\/anime\/([0-9]*)\/info' => ['GET', 'AnimeController', 'info'],
     '\/anime\/search' => ['GET', 'AnimeController', 'search'],
