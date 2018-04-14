@@ -207,7 +207,7 @@ class AnimeInfoParser extends Parser
   private static function parseRank($html) {
 
     $element = $html->find('div#contentWrapper div#content div.anime-detail-header-stats span.ranked strong', 0);
-    if(trim($element->plaintext) !== 'N/A') {
+    if(trim($element->plaintext) !== 'N/A' && trim($element->plaintext) !== '0') {
       // Remove the hashtag
       return (int)substr($element->plaintext, 1);
     }
@@ -224,7 +224,7 @@ class AnimeInfoParser extends Parser
   private static function parsePopularity($html) {
     
     $element = $html->find('div#contentWrapper div#content div.anime-detail-header-stats span.popularity strong', 0);
-    if($element->plaintext != 'N/A') {
+    if($element->plaintext !== 'N/A' && $element->plaintext !== '0') {
       // Remove the hashtag
       return (int)substr($element->plaintext, 1);
     }
