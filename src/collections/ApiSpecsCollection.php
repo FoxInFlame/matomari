@@ -26,12 +26,7 @@ use Matomari\Collections\Collection;
  * )
  * 
  * @OAS\Server(
- *   url="/api/{basePath}",
- *   @OAS\ServerVariable(
- *     serverVariable="basePath",
- *     enum={"0.5"},
- *     default="0.5"
- *   )
+ *   url="/api/0.5"
  * )
  * 
  * @since 0.5
