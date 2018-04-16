@@ -186,7 +186,7 @@ class AnimeController
    *     @OAS\Schema(
    *       type="string",
    *       example="2014----",
-   *       pattern="^\d{1,4}-\d{1,2}-\d{1,2}$"
+   *       pattern="^(\d{4}|-)-(\d{2}|-)-(\d{2}|-)$"
    *     )
    *   ),
    *   @OAS\Parameter(
@@ -196,7 +196,7 @@ class AnimeController
    *     @OAS\Schema(
    *       type="string",
    *       example="2015-10--",
-   *       pattern="^\d{1,4}-\d{1,2}-\d{1,2}$"
+   *       pattern="^(\d{4}|-)-(\d{2}|-)-(\d{2}|-)$"
    *     )
    *   ),
    *   @OAS\Parameter(
