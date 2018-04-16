@@ -29,7 +29,12 @@ use Matomari\Models\Model;
  *     "synopsis",
  *     "other_titles",
  *     "type",
+ *     "episodes",
  *     "air_status",
+ *     "air_dates",
+ *     "season",
+ *     "premiere_date",
+ *     "air_time",
  *     "producers",
  *     "licensors",
  *     "studios",
@@ -40,6 +45,7 @@ use Matomari\Models\Model;
  *     "members_scored",
  *     "members_inlist",
  *     "members_favorited",
+ *     "background",
  *     "relations",
  *     "theme_songs"
  *   }
@@ -54,7 +60,7 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Anime ID",
    *   description="The anime ID on MAL",
-   *   example=34675
+   *   example=36475
    * )
    * @var Integer
    */
@@ -63,7 +69,8 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Anime Name",
-   *   description="The official romaji anime name"
+   *   description="The official romaji anime name",
+   *   example="Sword Art Online Alternative: Gun Gale Online"
    * )
    * @var String
    */
@@ -72,7 +79,8 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="MAL URL",
-   *   description="The browser URL for the anime on MAL"
+   *   description="The browser URL for the anime on MAL",
+   *   example="https://myanimelist.net/anime/36475/Sword_Art_Online_Alternative__Gun_Gale_Online"
    * )
    * @var String
    */
@@ -81,7 +89,8 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Image URL",
-   *   description="The direct URL to the anime cover image on MAL"
+   *   description="The direct URL to the anime cover image on MAL",
+   *   example="https://myanimelist.cdn-dena.com/images/anime/1788/90355.jpg"
    * )
    * @var String
    */
@@ -90,7 +99,9 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Score",
-   *   description="The MAL community score to 2 decimal places"
+   *   description="The MAL community score to 2 decimal places",
+   *   nullable=true,
+   *   example=7.3
    * )
    * @var Float
    */
@@ -99,7 +110,9 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Rank",
-   *   description="The overall anime ranking on MAL"
+   *   description="The overall anime ranking on MAL",
+   *   nullable=true,
+   *   example=2437
    * )
    * @var Integer
    */
@@ -108,7 +121,9 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Popularity",
-   *   description="The anime popularity ranking on MAL"
+   *   description="The anime popularity ranking on MAL",
+   *   nullable=true,
+   *   example=743
    * )
    * @var Integer
    */
@@ -117,7 +132,9 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Synopsis",
-   *   description="The full synopsis for the anime, formatted in HTML"
+   *   description="The full synopsis for the anime, formatted in HTML",
+   *   nullable=true,
+   *   example="Karen Kohiruimaki always felt out of place in the real world. Due to her extreme height, she found it hard to make friends with other girls her age. Everything changes when she&#039;s introduced to VR and Gun Gale Online. In GGO, Karen is free to play the cute, chibi avatar of her dreams! Can Karen find friendship in this bullet-ridden MMO...?<br /> <br /> (Source: Yen Press)"
    * )
    * @var String
    */
@@ -133,6 +150,7 @@ class AnimeInfoModel extends Model
    *     type="array",
    *     title="English Titles",
    *     description="The alternative english titles on MAL",
+   *     example={},
    *     @OAS\Items(
    *       type="string"
    *     )
@@ -142,6 +160,9 @@ class AnimeInfoModel extends Model
    *     type="array",
    *     title="Japanese Titles",
    *     description="The japanese titles on MAL",
+   *     example={
+   *       "ソードアート・オンライン オルタナティブ ガンゲイル・オンライン"
+   *     },
    *     @OAS\Items(
    *       type="string"
    *     )
@@ -151,6 +172,9 @@ class AnimeInfoModel extends Model
    *     type="array",
    *     title="Synonymous Titles",
    *     description="The synonymous english titles on MAL",
+   *     example={
+   *       "SAO Alternative Gun Gale Online"
+   *     },
    *     @OAS\Items(
    *       type="string"
    *     )
@@ -168,7 +192,8 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Type",
    *   description="The anime media type",
-   *   enum={"tv","ova","movie","special","ona","music"}
+   *   enum={"tv","ova","movie","special","ona","music"},
+   *   example="tv"
    * )
    * @var String
    */
@@ -178,9 +203,8 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Episodes",
    *   description="The total number of episodes in the anime",
-   *   x={
-   *     "nullable": true
-   *   }
+   *   nullable=true,
+   *   example=12
    * )
    * @var Integer
    */
@@ -207,10 +231,8 @@ class AnimeInfoModel extends Model
    *     type="string",
    *     title="Air Start Date",
    *     description="The air start date in ISO 8601 compatible format",
-   *     example="2018-04-08",
-   *     x={
-   *       "nullable": true
-   *     }
+   *     nullable=true,
+   *     example="2018-04-08"
    *   ),
    *   @OAS\Property(
    *     property="to",
@@ -218,10 +240,8 @@ class AnimeInfoModel extends Model
    *     nullable=true,
    *     title="Air End Date",
    *     description="The air end date in ISO 8601 compatible format",
-   *     example=null,
-   *     x={
-   *       "nullable": true
-   *     }
+   *     nullable=true,
+   *     example="2019-10"
    *   )
    * )
    * @var Object
@@ -235,9 +255,8 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Season",
    *   description="The season and year of the release (null if aired in one day)",
-   *   x={
-   *     "nullable": true
-   *   }
+   *   nullable=true,
+   *   example="Spring 2018"
    * )
    * @var String
    */
@@ -247,9 +266,8 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Premiere Date",
    *   description="The premiere date of the anime (null unless aired in one day)",
-   *   x={
-   *     "nullable": true
-   *   }
+   *   nullable=true,
+   *   example="Feb 18, 2017"
    * )
    * @var String
    */
@@ -259,9 +277,8 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Air Time",
    *   description="The unparsed air time and day as it appears on MAL (null if aired in one day)",
-   *   x={
-   *     "nullable": true
-   *   }
+   *   nullable=true,
+   *   example="Sundays at 00:00 (JST)"
    * )
    * @var String
    */
@@ -271,6 +288,7 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Producers",
    *   description="The producers of the anime with IDs being Producer IDs",
+   *   example={},
    *   @OAS\Items(
    *     ref="#/components/schemas/BriefReferenceModel"
    *   )
@@ -283,6 +301,12 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Licensors",
    *   description="The licensors of the anime with IDs being Producer IDs",
+   *   example={
+   *     {
+   *       "id": 493,
+   *       "name": "Aniplex of America"
+   *     }
+   *   },
    *   @OAS\Items(
    *     ref="#/components/schemas/BriefReferenceModel"
    *   )
@@ -295,6 +319,12 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Studios",
    *   description="The studios of the anime with IDs being Producer IDs",
+   *   example={
+   *     {
+   *       "id": 1127,
+   *       "name": "Studio 3Hz"
+   *     }
+   *   },
    *   @OAS\Items(
    *     ref="#/components/schemas/BriefReferenceModel"
    *   )
@@ -306,7 +336,8 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Source",
-   *   description="The original source for the anime"
+   *   description="The original source for the anime",
+   *   example="Light novel"
    * )
    * @var String
    */
@@ -316,6 +347,13 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Genres",
    *   description="The genres of the anime on MAL",
+   *   example={
+   *     "action",
+   *     "game",
+   *     "military",
+   *     "sci-fi",
+   *     "fantasy"
+   *   },
    *   @OAS\Items(
    *     type="string"
    *   )
@@ -333,9 +371,7 @@ class AnimeInfoModel extends Model
    *     type="integer",
    *     title="Total Duration",
    *     description="The estimated total length of the anime in minutes (null if episodes or per_episode is null)",
-   *     x={
-   *       "nullable": true
-   *     },
+   *     nullable=true,
    *     example=576
    *   ),
    *   @OAS\Property(
@@ -343,9 +379,7 @@ class AnimeInfoModel extends Model
    *     type="integer",
    *     title="Per Episode Duration",
    *     description="The length of one episode of the anime in minutes",
-   *     x={
-   *       "nullable": true
-   *     },
+   *     nullable=true,
    *     example=24
    *   )
    * )
@@ -386,7 +420,8 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Members Scored",
-   *   description="The number of people who set a score on MAL"
+   *   description="The number of people who set a score on MAL",
+   *   example=9676
    * )
    * @var Integer
    */
@@ -395,7 +430,8 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Members In List",
-   *   description="The number of people who have the anime in their animelist"
+   *   description="The number of people who have the anime in their animelist",
+   *   example=114512
    * )
    * @var Integer
    */
@@ -404,7 +440,8 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Members In Favorites",
-   *   description="The number of people who have the anime in their favorites"
+   *   description="The number of people who have the anime in their favorites",
+   *   example=271
    * )
    * @var Integer
    */
@@ -414,9 +451,8 @@ class AnimeInfoModel extends Model
    * @OAS\Property(
    *   title="Background",
    *   description="The backgroud information for the anime on MAL",
-   *   x={
-   *     "nullable": true
-   *   }
+   *   nullable=true,
+   *   example="<i>Sword Art Online II</i> adapts novels 5 to 8 of Reki Kawahara's light novel series of the same title.<br><br>The first episode was screened at various special events held in the United States, France, Germany, Hong Kong, Taiwan, Korea and Japan before its television premiere."
    * )
    * @var String
    */
