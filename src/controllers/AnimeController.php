@@ -38,7 +38,7 @@ class AnimeController
    * @OAS\Get(
    *   path="/anime/{animeId}/info",
    *   tags={"Anime"},
-   *   summary="Get information about a specific anime using the anime ID",
+   *   summary="Get anime information",
    *   @OAS\Parameter(
    *     name="animeId",
    *     in="path",
@@ -109,18 +109,151 @@ class AnimeController
    * @OAS\Get(
    *   path="/anime/search/{searchQuery}",
    *   tags={"Anime"},
-   *   summary="Search for anime by query and optional filters",
+   *   summary="Search for anime",
    *   @OAS\Parameter(
    *     name="searchQuery",
    *     in="path",
-   *     description="The main query to search for. Can be blank if filters are set.",
+   *     description="The main query to search for. Can be blank if filters are set",
    *     @OAS\Schema(
    *       type="string"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="page",
+   *     in="query",
+   *     description="The results page",
+   *     @OAS\Schema(
+   *       type="integer"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="sort",
+   *     in="query",
+   *     description="The sorting algorithm to use (TBD)",
+   *     @OAS\Schema(
+   *       type="string"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="type",
+   *     in="query",
+   *     description="The media types of anime to filter for",
+   *     @OAS\Schema(
+   *       type="string",
+   *       enum={"tv", "ova", "movie", "special", "ona", "music"}
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="score",
+   *     in="query",
+   *     description="The base integer of the community score of anime to filter for",
+   *     @OAS\Schema(
+   *       type="integer",
+   *       minimum="1",
+   *       maximum="10"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="air_status",
+   *     in="query",
+   *     description="The airing status of anime to filter for",
+   *     @OAS\Schema(
+   *       type="string",
+   *       enum={"currently_airing", "finished_airing", "not_yet_aired"}
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="producer",
+   *     in="query",
+   *     description="The producer company of anime to filter for (TBD)",
+   *     @OAS\Schema(
+   *       type="string"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="classification",
+   *     in="query",
+   *     description="The classification of anime to filter for",
+   *     @OAS\Schema(
+   *       type="string",
+   *       enum={"g", "pg", "pg-13", "r", "r+", "rx"}
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="air_dates.from",
+   *     in="query",
+   *     description="The air start date to filter for (YYYY-MM-DD), with unspecified parts represented as '-' (hyphen)",
+   *     @OAS\Schema(
+   *       type="string",
+   *       example="2014----",
+   *       pattern="^\d{1,4}-\d{1,2}-\d{1,2}$"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="air_dates.to",
+   *     in="query",
+   *     description="The air end date to filter for (YYYY-MM-DD), with unspecified parts represented as '-' (hyphen)",
+   *     @OAS\Schema(
+   *       type="string",
+   *       example="2015-10--",
+   *       pattern="^\d{1,4}-\d{1,2}-\d{1,2}$"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="letter",
+   *     in="query",
+   *     description="An alphabetical letter to filter anime starting with it",
+   *     @OAS\Schema(
+   *       type="string",
+   *       example="b",
+   *       pattern="^[A-z]$"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="genres",
+   *     in="query",
+   *     description="Comma separated genres to include or exclude from filters",
+   *     @OAS\Schema(
+   *       type="string",
+   *       enum={"action","adventure","cars","comedy","dementia","demons","mystery","drama","ecchi","fantasy","game","hentai","historical","horror","kids","magic","martialarts","mecha","music","parody","samurai","romance","school","scifi","shoujo","shoujoai","shounen","shounenai","space","sports","superpower","vampire","yaoi","yuri","harem","sliceoflife","supernatural","military","police","psychological","thriller","seinen","josei","default"},
+   *       example="fantasy,action,mecha"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="exclude_genres",
+   *     in="query",
+   *     description="Include (1) or exclude (0) the specified genres in the filter",
+   *     @OAS\Schema(
+   *       type="integer",
+   *       minimum="0",
+   *       maximum="1"
    *     )
    *   ),
    *   @OAS\Response(
    *     response=200,
    *     description="Detailed list of anime returned by MAL",
+   *     @OAS\MediaType(
+   *       mediaType="application/json",
+   *       @OAS\Schema(
+   *         type="object",
+   *         description="Array of results",
+   *         @OAS\Property(
+   *           property="items",
+   *           ref="#/components/schemas/AnimeSearchModel"
+   *         )
+   *       )
+   *     ),
+   *     @OAS\MediaType(
+   *       mediaType="application/xml",
+   *       @OAS\Schema(
+   *         type="object",
+   *         description="Array of results",
+   *         @OAS\Property(
+   *           property="items",
+   *           ref="#/components/schemas/AnimeSearchModel"
+   *         )
+   *       )
+   *     )
    *   ),
    *   @OAS\Response(
    *     response=404,
@@ -151,9 +284,10 @@ class AnimeController
    */
   public function search($get_variables, $post_variables, $query='') {
 
-    if($query === '') {
-      $query = $get_variables['q'] ?? '';
-    }
+    // Use the 'q' URL parameter if that's present
+    // This will allow some clients to construct queries easier from arrays of parameters 
+    $query = $get_variables['q'] ?? $query;
+
     // Collection gets the data from cache, or calls a Request,
     // then builds a Model out of it, and finally returns that Model
     $collection = new AnimeSearchCollection(
