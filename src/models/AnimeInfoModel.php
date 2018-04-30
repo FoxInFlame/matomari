@@ -346,7 +346,7 @@ class AnimeInfoModel extends Model
   /**
    * @OAS\Property(
    *   title="Genres",
-   *   description="The genres of the anime on MAL",
+   *   description="The genres of the anime on MAL (spaces omitted)",
    *   example={
    *     "action",
    *     "game",
@@ -583,7 +583,7 @@ class AnimeInfoModel extends Model
    *     property="adaptation",
    *     type="array",
    *     title="Adaptations",
-   *     description="The manga that are considered originals that were adapted upon with IDs being Anime IDs",
+   *     description="The manga or anime that are considered originals that were adapted upon with IDs being Manga or Anime IDs",
    *     example={
    *       {
    *         "id": 82795,
