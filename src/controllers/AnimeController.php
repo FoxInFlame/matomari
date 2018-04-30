@@ -275,11 +275,14 @@ class AnimeController
    *     @OAS\MediaType(
    *       mediaType="application/json",
    *       @OAS\Schema(
-   *         type="object",
-   *         description="Array of results",
+   *         title="Results",
    *         @OAS\Property(
    *           property="items",
-   *           ref="#/components/schemas/AnimeSearchModel"
+   *           description="Array of results",
+   *           @OAS\Items(
+   *             ref="#/components/schemas/AnimeSearchModel"
+   *           ),
+   *           type="array"
    *         )
    *       )
    *     ),

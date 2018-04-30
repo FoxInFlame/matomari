@@ -15,6 +15,7 @@ use Matomari\Models\Model;
 /** 
  * @OAS\Schema(
  *   title="Anime Search Result",
+ *   type="object",
  *   xml={
  *     "name": "root"
  *   },

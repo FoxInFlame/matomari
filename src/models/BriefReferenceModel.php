@@ -15,6 +15,7 @@ use Matomari\Models\Model;
 /** 
  * @OAS\Schema(
  *   title="Brief Reference",
+ *   type="object",
  *   required={"id","name"}
  * )
  * @since 0.5
@@ -26,7 +27,7 @@ class BriefReferenceModel extends Model
   /**
    * @OAS\Property(
    *   title="ID",
-   *   description="The reference ID"
+   *   description="The ID of the reference target"
    * )
    * @var Integer
    */
@@ -35,7 +36,7 @@ class BriefReferenceModel extends Model
   /**
    * @OAS\Property(
    *   title="Name",
-   *   description="The reference name"
+   *   description="The name of the reference target"
    * )
    * @var String
    */
