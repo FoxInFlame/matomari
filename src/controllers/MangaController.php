@@ -36,6 +36,60 @@ class MangaController
    * @param Array $get_variables The associative array for additional GET variables
    * @param Array $post_variables The associative array for POST variables
    * @param Integer $manga_id The Manga ID on MAL
+   * @OAS\Get(
+   *   path="/manga/{mangaId}/info",
+   *   tags={"Manga"},
+   *   summary="Get manga information",
+   *   @OAS\Parameter(
+   *     name="mangaId",
+   *     in="path",
+   *     description="The database ID of the manga. This is the ID that is displayed in the URL when you visit the manga page.",
+   *     required=true,
+   *     @OAS\Schema(
+   *       type="integer"
+   *     )
+   *   ),
+   *   @OAS\Response(
+   *     response=200,
+   *     description="Detailed information about the manga found with the provided ID",
+   *     @OAS\MediaType(
+   *       mediaType="application/json",
+   *       @OAS\Schema(
+   *         ref="#/components/schemas/MangaInfoModel"
+   *       )
+   *     ),
+   *     @OAS\MediaType(
+   *       mediaType="application/xml",
+   *       @OAS\Schema(
+   *         ref="#/components/schemas/MangaInfoModel"
+   *       )
+   *     )
+   *   ),
+   *   @OAS\Response(
+   *     response=400,
+   *     description="Invalid manga ID"
+   *   ),
+   *   @OAS\Response(
+   *     response=404,
+   *     description="No matching manga found"
+   *   ),
+   *   @OAS\Response(
+   *     response=429,
+   *     description="Too many requests"
+   *   ),
+   *   @OAS\Response(
+   *     response=500,
+   *     description="Unknown error fetching the data"
+   *   ),
+   *   @OAS\Response(
+   *     response=502,
+   *     description="Invalid markup on the MyAnimeList server"
+   *   ),
+   *   @OAS\Response(
+   *     response=503,
+   *     description="MyAnimeList is currently under maintenance"
+   *   )
+   * )
    * @since 0.5
    */
   public function info($get_variables, $post_variables, $manga_id) {
@@ -72,8 +126,15 @@ class MangaController
         'publish_status' => $get_variables['publish_status'] ?? '',
         'magazine' => $get_variables['producer'] ?? '',
         'publish_dates' => [
-          'from' => $get_variables['publish_dates_from'] ?? '', // PHP converts variables with dots to underscores
-          'to' => $get_variables['publish_dates_to'] ?? ''
+          'from' => [
+            'year' => $get_variables['publish_dates_from_year'] ?? '', // PHP converts variables with dots to underscores
+            'month' => $get_variables['publish_dates_from_month'] ?? '',
+            'date' => $get_variables['publish_dates_from_date'] ?? ''
+          ],
+          'to' => [
+            'year' => $get_variables['publish_dates_to_year'] ?? '',
+            'month' => $get_variables['publish_dates_to_month'] ?? '',
+            'date' => $get_variables['publish_dates_to_date'] ?? ''
         ],
         'letter' => $get_variables['letter'] ?? '',
         'genres' => explode(',', ($get_variables['genres'] ?? '')),
