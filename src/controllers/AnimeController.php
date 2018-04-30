@@ -180,23 +180,63 @@ class AnimeController
    *     )
    *   ),
    *   @OAS\Parameter(
-   *     name="air_dates.from",
+   *     name="air_dates.from.year",
    *     in="query",
-   *     description="The air start date to filter for (YYYY-MM-DD), with unspecified parts represented as '-' (hyphen)",
+   *     description="The air start year to filter out for",
    *     @OAS\Schema(
    *       type="string",
-   *       example="2014----",
-   *       pattern="^(\d{4}|-)-(\d{2}|-)-(\d{2}|-)$"
+   *       example="2014",
+   *       pattern="^\d$"
    *     )
    *   ),
    *   @OAS\Parameter(
-   *     name="air_dates.to",
+   *     name="air_dates.from.month",
    *     in="query",
-   *     description="The air end date to filter for (YYYY-MM-DD), with unspecified parts represented as '-' (hyphen)",
+   *     description="The air start month to filter out for",
    *     @OAS\Schema(
    *       type="string",
-   *       example="2015-10--",
-   *       pattern="^(\d{4}|-)-(\d{2}|-)-(\d{2}|-)$"
+   *       example="8",
+   *       pattern="^\d$"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="air_dates.from.date",
+   *     in="query",
+   *     description="The air start date to filter out for",
+   *     @OAS\Schema(
+   *       type="string",
+   *       example="31",
+   *       pattern="^\d$"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="air_dates.to.year",
+   *     in="query",
+   *     description="The air end year to filter out for",
+   *     @OAS\Schema(
+   *       type="string",
+   *       example="2014",
+   *       pattern="^\d$"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="air_dates.to.month",
+   *     in="query",
+   *     description="The air end month to filter out for",
+   *     @OAS\Schema(
+   *       type="string",
+   *       example="8",
+   *       pattern="^\d$"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="air_dates.to.date",
+   *     in="query",
+   *     description="The air end date to filter out for",
+   *     @OAS\Schema(
+   *       type="string",
+   *       example="31",
+   *       pattern="^\d$"
    *     )
    *   ),
    *   @OAS\Parameter(
@@ -301,8 +341,15 @@ class AnimeController
         'producer' => $get_variables['producer'] ?? '',
         'classification' => $get_variables['classification'] ?? '',
         'air_dates' => [
-          'from' => $get_variables['air_dates_from'] ?? '', // PHP converts variables with dots to underscores
-          'to' => $get_variables['air_dates_to'] ?? ''
+          'from' => [
+            'year' => $get_variables['air_dates_from_year'] ?? '', // PHP converts variables with dots to underscores
+            'month' => $get_variables['air_dates_from_month'] ?? '',
+            'date' => $get_variables['air_dates_from_date'] ?? ''
+          ],
+          'to' => [
+            'year' => $get_variables['air_dates_to_year'] ?? '',
+            'month' => $get_variables['air_dates_to_month'] ?? '',
+            'date' => $get_variables['air_dates_to_date'] ?? ''
         ],
         'letter' => $get_variables['letter'] ?? '',
         'genres' => explode(',', ($get_variables['genres'] ?? '')),
