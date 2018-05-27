@@ -28,7 +28,8 @@ use Matomari\Models\Model;
  *     "type",
  *     "episodes",
  *     "air_dates",
- *     "classification"
+ *     "classification",
+ *     "members_inlist"
  *   }
  * )
  * @since 0.5

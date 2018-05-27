@@ -380,8 +380,6 @@ class AnimeSearchCollection extends Collection
 
     }
 
-    print_r($date_parameters);
-
     return $date_parameters;
 
   }
@@ -464,7 +462,7 @@ class AnimeSearchCollection extends Collection
 
     }
 
-    return '/anime/search' . $query . '/' . $filters . (string)(int)$page;
+    return '/anime/search/' . $query . '/' . $filters . (string)(int)$page;
 
   }
 

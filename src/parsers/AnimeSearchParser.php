@@ -55,7 +55,7 @@ class AnimeSearchParser extends Parser
 
     // Loop through and parse each result
     foreach($tr as $result) {
-      array_push($search->results['items'], self::parseResult($result)->info);
+      array_push($search->results['items'], self::parseResult($result)->asArray());
     }
 
     return $search->results;
@@ -63,7 +63,7 @@ class AnimeSearchParser extends Parser
   }
 
   /**
-   * Parse each invidual entry in the result list and return not the array but the model itself.
+   * Parse each individual entry in the result list and return not the array but the model itself.
    * 
    * @param HtmlDomParser $result The parsed HTML for the individual entry
    * @return Array
@@ -71,15 +71,15 @@ class AnimeSearchParser extends Parser
    */
   private static function parseResult($result) {
 
-    $td_image = $result->find("td", 0);
-    $td_name = $result->find("td", 1);
-    $td_type = $result->find("td", 2);
-    $td_episodes = $result->find("td", 3);
-    $td_score = $result->find("td", 4);
-    $td_air_date_from = $result->find("td", 5);
-    $td_air_date_to = $result->find("td", 6);
-    $td_members_inlist = $result->find("td", 7);
-    $td_classification = $result->find("td", 8);
+    $td_image = $result->find('td', 0);
+    $td_name = $result->find('td', 1);
+    $td_type = $result->find('td', 2);
+    $td_episodes = $result->find('td', 3);
+    $td_score = $result->find('td', 4);
+    $td_air_date_from = $result->find('td', 5);
+    $td_air_date_to = $result->find('td', 6);
+    $td_members_inlist = $result->find('td', 7);
+    $td_classification = $result->find('td', 8);
   
     $anime = new AnimeSearchModel();
    
