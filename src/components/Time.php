@@ -12,7 +12,6 @@ namespace Matomari\Components;
 
 use DateTime;
 use DateTimeZone;
-use Matomari\Exceptions\InvalidDateFormat;
 
 /** 
  * @since 0.5
