@@ -58,7 +58,7 @@ class AnimeInfoParser extends Parser
     $anime->set('episodes', self::parseEpisodes($html));
     $anime->set('air_status', self::parseAirStatus($html));
     $air_dates = self::parseAirDates($html);
-    if(gettype($air_dates) === 'array') {
+    if(count($air_dates) === 2) {
       $anime->set('air_dates//from', $air_dates[0]);
       $anime->set('air_dates//to', $air_dates[1]);
     } else {
@@ -414,7 +414,7 @@ class AnimeInfoParser extends Parser
           if(strpos($value->find('text', 2)->innertext, ' to ') !== false) {
             // contains 'to'
             
-            $exploded = array_map('trim', explode(' to ', $value->find('text', 2)->innertext)); // Neccessasry trimming
+            $exploded = array_map('trim', explode(' to ', $value->find('text', 2)->innertext)); // Necessary trimming
 
             $air_dates[0] = Time::convert($exploded[0]);
             $air_dates[1] = Time::convert($exploded[1]);
@@ -423,7 +423,7 @@ class AnimeInfoParser extends Parser
             
           } else {
 
-            return Time::convert(trim($value->find('text', 2)->innertext)); // Neccessasry trimming
+            return Time::convert(trim($value->find('text', 2)->innertext)); // Necessary trimming
             // No need to return an array here because we check if the result is a string
             // when calling the function and we set premiere_date instead of air_dates if so.
           }
