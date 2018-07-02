@@ -47,7 +47,8 @@ use Matomari\Models\Model;
  *     "members_favorited",
  *     "background",
  *     "relations",
- *     "theme_songs"
+ *     "theme_songs",
+ *     "external"
  *   }
  * )
  * @since 0.5
@@ -212,18 +213,36 @@ class AnimeInfoModel extends Model
    *   required={"from","to"},
    *   @OAS\Property(
    *     property="from",
-   *     type="string",
-   *     description="The air start date in ISO 8601 compatible format",
+   *     type="object",
    *     nullable=true,
-   *     example="2018-04-08"
+   *     description="The air start date in ISO 8601 compatible format",
+   *     ref="#/components/schemas/MatomariDate"
    *   ),
    *   @OAS\Property(
    *     property="to",
-   *     type="string",
+   *     type="object",
    *     nullable=true,
    *     description="The air end date in ISO 8601 compatible format",
-   *     nullable=true,
-   *     example="2019-10"
+   *     required={"iso8601"},
+   *     @OAS\Property(
+   *       property="year",
+   *       type="integer",
+   *       example=2019
+   *     ),
+   *     @OAS\Property(
+   *       property="month",
+   *       type="integer",
+   *       example=10
+   *     ),
+   *     @OAS\Property(
+   *       property="date",
+   *       type="integer"
+   *     ),
+   *     @OAS\Property(
+   *       property="iso8601",
+   *       type="string",
+   *       example="2019-10"
+   *     )
    *   )
    * )
    * @var Object
@@ -673,6 +692,29 @@ class AnimeInfoModel extends Model
   public $theme_songs = [
     'openings' => [],
     'endings' => []
+  ];
+
+  /**
+   * @OAS\Property(
+   *   description="Links to the anime on external services",
+   *   @OAS\Property(
+   *     property="anidb",
+   *     type="string",
+   *     description="The browser URL for the anime on AniDB.net",
+   *     example="https://anidb.net/a3320"
+   *   ),
+   *   @OAS\Property(
+   *     property="ann",
+   *     type="string",
+   *     description="The browser URL for the anime on AnimeNewsNetwork.com",
+   *     example="https://animenewsnetwork.com/encyclopedia/anime.php?id=5334"
+   *   )
+   * )
+   * @var Object
+   */
+  public $external   = [ // https://myanimelist.net/info.php?go=relationinfo
+    'anidb' => null,
+    'ann' => null
   ];
   
 }

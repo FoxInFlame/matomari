@@ -157,7 +157,6 @@ class AnimeRankingParser extends Parser
     ));
     
     // The Members who have it in their list
-    // <td class='borderClass ac bgColor0' width='75'>    262,866  </td>
     $anime->set('members_inlist', (int)str_replace(',', '', 
       explode(' members', trim($td_mostinformationhere->find('.information text', 2)->innertext))[0]
     ));

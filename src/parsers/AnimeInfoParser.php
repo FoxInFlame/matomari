@@ -98,6 +98,7 @@ class AnimeInfoParser extends Parser
     $anime->set('relations//other', $relations[11]);
     $anime->set('theme_songs//openings', self::parseOpeningThemeSongs($html));
     $anime->set('theme_songs//endings', self::parseEndingThemeSongs($html));
+    $anime->set('external', self::grabExternalLinks($anime->get('mal_url')));
 
     return $anime->asArray();
 
@@ -988,6 +989,57 @@ class AnimeInfoParser extends Parser
     }
     return $endings;
     
+  }
+
+  /**
+   * Grab data about external links.
+   * 
+   * @param String $mal_url
+   * @return Array
+   */
+  private static function grabExternalLinks($mal_url) {
+
+    // Remove the slug after the slash (because that's how it is in the database)
+    $mal_url = explode('/', $mal_url);
+    array_pop($mal_url);
+    $mal_url = implode('/', $mal_url);
+
+    // Get the database, and load it into a JSON
+    $filename = dirname(__FILE__) . '/../data/anime-offline-database/anime-offline-database.json';
+
+    $mapping_database = json_decode(file_get_contents($filename), true);
+
+    // Loop through all database entries
+    foreach($mapping_database['data'] as $mapping) {
+
+      // If the MAL url (without the slug) is in a source for the entry
+      if(in_array($mal_url, $mapping['sources'])) {
+
+        // Prepare a final array to return
+        $external_links = [];
+
+        // Remove the MAL link from the list of sources
+        if (($key = array_search($mal_url, $mapping['sources'])) !== false) {
+          unset($mapping['sources'][$key]);
+        }
+
+        // Reassign each one into their individual keys
+        foreach($mapping['sources'] as $source) {
+          if(strpos($source, 'anidb') !== false) {
+            $external_links['anidb'] = $source;
+          } else if(strpos($source, 'animenewsnetwork') !== false) {
+            $external_links['ann'] = $source;
+          }
+        }
+        
+        return $external_links;
+
+      }
+
+    }
+
+    return [];
+
   }
 
 }
