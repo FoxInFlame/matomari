@@ -104,15 +104,15 @@ class AnimeInfoParser extends Parser
   }
 
   /**
-   * Parse the MAL database id of the anime.
-   * <input type='hidden' name='aid' value='16870'>
+   * Parse the MAL database id of the anime. Exists even when not logged in.
+   * <input type="hidden" id="myinfo_anime_id" value="36475">
    * 
    * @param Simple_html_dom $html
    * @return Integer
    */
   private static function parseId($html) {
 
-    return (int)$html->find('div#contentWrapper #editdiv input[name="aid"]', 0)->value;
+    return (int)$html->find('div#contentWrapper #addtolist #myinfo_anime_id', 0)->value;
   
   }
 
@@ -412,8 +412,8 @@ class AnimeInfoParser extends Parser
         if(strpos($value->plaintext, 'Unknown') === false &&
            strpos($value->plaintext, 'Not available') === false) {
           if(strpos($value->find('text', 2)->innertext, ' to ') !== false) {
+
             // contains 'to'
-            
             $exploded = array_map('trim', explode(' to ', $value->find('text', 2)->innertext)); // Necessary trimming
 
             $air_dates[0] = Time::convert($exploded[0]);
@@ -423,9 +423,8 @@ class AnimeInfoParser extends Parser
             
           } else {
 
-            return Time::convert(trim($value->find('text', 2)->innertext)); // Necessary trimming
-            // No need to return an array here because we check if the result is a string
-            // when calling the function and we set premiere_date instead of air_dates if so.
+            return [Time::convert(trim($value->find('text', 2)->innertext))]; // Necessary trimming
+
           }
         }
       }
