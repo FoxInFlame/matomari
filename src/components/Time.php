@@ -277,7 +277,7 @@ class Time
       // MM-??-??
       $date = DateTime::createFromFormat('m', substr($matches[0], 0, 2));
 
-      return [$date, 'Y-m-d', [
+      return [$date, '', [
         'Y' => null,
         'd' => null
       ]];
@@ -291,7 +291,7 @@ class Time
         $date = DateTime::createFromFormat('dY', substr($matches[0], 3, 2) . '20' . substr($matches[0], 6, 2));
       }
       
-      return [$date, 'Y-m-d', [
+      return [$date, 'Y', [
         'm' => null
       ]];
 
@@ -300,7 +300,7 @@ class Time
       // ??-DD-??
       $date = DateTime::createFromFormat('d', substr($matches[0], 3, 2));
 
-      return [$date, 'Y-m-d', [
+      return [$date, '', [
         'Y' => null,
         'm' => null
       ]];
@@ -322,11 +322,7 @@ class Time
     } else if(preg_match('/(?:^|\s|$)\?\?-\?\?-\?\?(?:^|\s|$)/', $string, $matches)) {
 
       // ??-??-??
-      return [null, 'Y-m-d', [
-        'Y' => null,
-        'm' => null,
-        'd' => null
-      ]];
+      return [null, null, []];
 
     }
 

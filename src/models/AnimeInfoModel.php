@@ -223,26 +223,7 @@ class AnimeInfoModel extends Model
    *     type="object",
    *     nullable=true,
    *     description="The air end date in ISO 8601 compatible format",
-   *     required={"iso8601"},
-   *     @OAS\Property(
-   *       property="year",
-   *       type="integer",
-   *       example=2019
-   *     ),
-   *     @OAS\Property(
-   *       property="month",
-   *       type="integer",
-   *       example=10
-   *     ),
-   *     @OAS\Property(
-   *       property="date",
-   *       type="integer"
-   *     ),
-   *     @OAS\Property(
-   *       property="iso8601",
-   *       type="string",
-   *       example="2019-10"
-   *     )
+   *     ref="#/components/schemas/MatomariDate"
    *   )
    * )
    * @var Object
