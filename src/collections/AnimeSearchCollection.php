@@ -372,8 +372,8 @@ class AnimeSearchCollection extends Collection
         $date_parameters[$parameter_prefix . 'm'] = '0';
       }
 
-      if(is_int($date_array['date'])) {
-        $date_parameters[$parameter_prefix . 'd'] = $date_array['date'];
+      if(is_int($date_array['day'])) {
+        $date_parameters[$parameter_prefix . 'd'] = $date_array['day'];
       } else {
         $date_parameters[$parameter_prefix . 'd'] = '0';
       }

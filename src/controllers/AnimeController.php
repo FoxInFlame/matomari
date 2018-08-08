@@ -201,9 +201,9 @@ class AnimeController
    *     )
    *   ),
    *   @OAS\Parameter(
-   *     name="air_dates.from.date",
+   *     name="air_dates.from.day",
    *     in="query",
-   *     description="The air start date to filter out for",
+   *     description="The air start day to filter out for",
    *     @OAS\Schema(
    *       type="string",
    *       example="31",
@@ -231,9 +231,9 @@ class AnimeController
    *     )
    *   ),
    *   @OAS\Parameter(
-   *     name="air_dates.to.date",
+   *     name="air_dates.to.day",
    *     in="query",
-   *     description="The air end date to filter out for",
+   *     description="The air end day to filter out for",
    *     @OAS\Schema(
    *       type="string",
    *       example="31",
@@ -351,12 +351,12 @@ class AnimeController
           'from' => [
             'year' => $get_variables['air_dates_from_year'] ?? '', // PHP converts variables with dots to underscores
             'month' => $get_variables['air_dates_from_month'] ?? '',
-            'date' => $get_variables['air_dates_from_date'] ?? ''
+            'day' => $get_variables['air_dates_from_day'] ?? ''
           ],
           'to' => [
             'year' => $get_variables['air_dates_to_year'] ?? '',
             'month' => $get_variables['air_dates_to_month'] ?? '',
-            'date' => $get_variables['air_dates_to_date'] ?? ''
+            'day' => $get_variables['air_dates_to_day'] ?? ''
           ]
         ],
         'letter' => $get_variables['letter'] ?? '',
