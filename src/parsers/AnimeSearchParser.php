@@ -141,13 +141,13 @@ class AnimeSearchParser extends Parser
     // MM-DD-YY (and ?? if unknown, - if everything is unknown)
     $mal_air_date_from = trim($td_air_date_from->innertext);
     if($mal_air_date_from !== '-') {
-      $anime->set('air_dates//from', (string)Time::convert($mal_air_date_from));
+      $anime->set('air_dates//from', (array)Time::convert($mal_air_date_from));
     }
 
     // The Air-To Date
     $mal_air_date_to = trim($td_air_date_to->innertext);
     if($mal_air_date_to !== '-') {
-      $anime->set('air_dates//to', (string)Time::convert($mal_air_date_to));
+      $anime->set('air_dates//to', (array)Time::convert($mal_air_date_to));
     }
 
     // The Classification name

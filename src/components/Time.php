@@ -58,7 +58,7 @@ class Time
     
     $date = DateTime::createFromFormat('g:i A', substr($string, 7), new DateTimeZone(self::$tz_mal));
 
-    return [$date, 'Y-m-d\TH:iO'];
+    return [$date, 'Y-m-d\TH:iO', []];
     // return $date->format('Y-m-d\TH:iO');
 
   }
@@ -75,7 +75,7 @@ class Time
     $date = DateTime::createFromFormat('g:i A', substr($string, 11), new DateTimeZone(self::$tz_mal));
     $date->modify('-1 day');
 
-    return [$date, 'Y-m-d\TH:iO'];
+    return [$date, 'Y-m-d\TH:iO', []];
 
     // return $date->format('Y-m-d\TH:iO');
 
@@ -107,7 +107,7 @@ class Time
       
       }
 
-      return [$date, 'Y-m-d\THO'];
+      return [$date, 'Y-m-d\THO', []];
       // return $date->format('Y-m-d\THO');
 
     }
@@ -126,7 +126,7 @@ class Time
 
       }
 
-      return [$date, 'Y-m-d\TH:iO'];
+      return [$date, 'Y-m-d\TH:iO', []];
 
       // return $date->format('Y-m-d\TH:iO');
 
@@ -146,7 +146,7 @@ class Time
       
       }
 
-      return [$date, 'Y-m-d\TH:i:sO'];
+      return [$date, 'Y-m-d\TH:i:sO', []];
 
       // return $date->format('Y-m-d\TH:i:sO');
 
@@ -177,7 +177,7 @@ class Time
 
     }
 
-    return [$date, 'Y-m-d\TH:iO'];
+    return [$date, 'Y-m-d\TH:iO', []];
 
     // return $date->format('Y-m-d\TH:iO');
     
@@ -199,13 +199,13 @@ class Time
 
       $date = DateTime::createFromFormat('!M j, Y', $string);
       
-      return [$date, 'Y-m-d'];
+      return [$date, 'Y-m-d', []];
 
     } else if(strlen(explode(', ', $string)[0]) > 2) {
 
       $date = DateTime::createFromFormat('!M, Y', $string);
       
-      return [$date, 'Y-m'];
+      return [$date, 'Y-m', []];
 
     }
 
@@ -223,7 +223,7 @@ class Time
 
     $date = DateTime::createFromFormat('!m/d/Y at H:i', $string, new DateTimeZone(self::$tz_mal));
     
-    return [$date, 'Y-m-d\TH:iO'];
+    return [$date, 'Y-m-d\TH:iO', []];
     // return $date->format('Y-m-d\TH:iO');
 
   }
@@ -247,71 +247,74 @@ class Time
         $date = DateTime::createFromFormat('m-d-Y', substr($matches[0], 0, 6) . '20' . substr($matches[0], 6, 2));
       }
 
-      return [$date, 'Y-m-d'];
+      return [$date, 'Y-m-d', []];
       // return $date->format('Y-m-d');
 
     } else if(preg_match('/(?:^|\s|$)\d{2}-\d{2}-\?\?(?:^|\s|$)/', $string, $matches)) {
 
       // MM-DD-??
-      return [null, 'Y-m-d', [
-        'Y' => null,
-        'm' => null,
-        'd' => null
+      $date = DateTime::createFromFormat('m-d', substr($matches[0], 0, 5));
+
+      return [$date, 'Y-m-d', [
+        'Y' => null
       ]];
 
     } else if(preg_match('/(?:^|\s|$)\d{2}-\?\?-\d{2}(?:^|\s|$)/', $string, $matches)) {
 
       // MM-??-YY
       if(substr($matches[0], 6, 2) > 30) {
-        $date = DateTime::createFromFormat('m-??-Y', substr($matches[0], 0, 6) . '19' . substr($matches[0], 6, 2));
+        $date = DateTime::createFromFormat('mY', substr($matches[0], 0, 2) . '19' . substr($matches[0], 6, 2));
       } else {
-        $date = DateTime::createFromFormat('m-??-Y', substr($matches[0], 0, 6) . '20' . substr($matches[0], 6, 2));
+        $date = DateTime::createFromFormat('mY', substr($matches[0], 0, 2) . '20' . substr($matches[0], 6, 2));
       }
 
-      return [null, 'Y-m-d', [
-        'Y' => null,
-        'm' => null,
+      return [$date, 'Y-m-d', [
         'd' => null
       ]];
 
     } else if(preg_match('/(?:^|\s|$)\d{2}-\?\?-\?\?(?:^|\s|$)/', $string, $matches)) {
 
       // MM-??-??
-      return [null, 'Y-m-d', [
+      $date = DateTime::createFromFormat('m', substr($matches[0], 0, 2));
+
+      return [$date, 'Y-m-d', [
         'Y' => null,
-        'm' => null,
         'd' => null
       ]];
 
     } else if(preg_match('/(?:^|\s|$)\?\?-\d{2}-\d{2}(?:^|\s|$)/', $string, $matches)) {
 
       // ??-DD-YY
-      return [null, 'Y-m-d', [
-        'Y' => null,
-        'm' => null,
-        'd' => null
+      if(substr($matches[0], 6, 2) > 30) { 
+        $date = DateTime::createFromFormat('dY', substr($matches[0], 3, 2) . '19' . substr($matches[0], 6, 2));
+      } else {
+        $date = DateTime::createFromFormat('dY', substr($matches[0], 3, 2) . '20' . substr($matches[0], 6, 2));
+      }
+      
+      return [$date, 'Y-m-d', [
+        'm' => null
       ]];
 
     } else if(preg_match('/(?:^|\s|$)\?\?-\d{2}-\?\?(?:^|\s|$)/', $string, $matches)) {
 
       // ??-DD-??
-      return [null, 'Y-m-d', [
+      $date = DateTime::createFromFormat('d', substr($matches[0], 3, 2));
+
+      return [$date, 'Y-m-d', [
         'Y' => null,
-        'm' => null,
-        'd' => null
+        'm' => null
       ]];
 
     } else if(preg_match('/(?:^|\s|$)\?\?-\?\?-\d{2}(?:^|\s|$)/', $string, $matches)) {
 
       // ??-??-YY
-      // if(substr($matches[0], 6, 2) > 30) {
-      //   $date = DateTime::createFromFormat('Y', '19' . substr($matches[0], 6, 2));
-      // } else {
-      //   $date = DateTime::createFromFormat('Y', '20' . substr($matches[0], 6, 2));
-      // }
+      if(substr($matches[0], 6, 2) > 30) {
+        $date = DateTime::createFromFormat('Y', '19' . substr($matches[0], 6, 2));
+      } else {
+        $date = DateTime::createFromFormat('Y', '20' . substr($matches[0], 6, 2));
+      }
 
-      return [null, 'Y-m-d', [
-        'Y' => null,
+      return [$date, 'Y', [
         'm' => null,
         'd' => null
       ]];
@@ -327,7 +330,7 @@ class Time
 
     }
 
-    return [null, null];
+    return [null, null, []];
   
   }
 
@@ -343,7 +346,7 @@ class Time
 
     $date = DateTime::createFromFormat('!Y', $string);
 
-    return [$date, 'Y'];
+    return [$date, 'Y', []];
     // return $date
 
   }
@@ -359,40 +362,40 @@ class Time
     
     if(strpos($string, 'Now') !== false) {
 
-      list($date, $format) = self::convert_now_string($string);
+      list($date, $format, $exceptions) = self::convert_now_string($string);
 
     } else if(strpos($string, 'Today') !== false) {
 
-      list($date, $format) = self::convert_today_string($string);
+      list($date, $format, $exceptions) = self::convert_today_string($string);
 
     } else if(strpos($string, 'Yesterday') !== false) {
 
-      list($date, $format) = self::convert_yesterday_string($string);
+      list($date, $format, $exceptions) = self::convert_yesterday_string($string);
 
     } else if(strpos($string, 'ago') !== false) {
 
       // Note that these are returning approximate values.
-      list($date, $format) = self::convert_ago_string($string);
+      list($date, $format, $exceptions) = self::convert_ago_string($string);
 
     } else if(strpos($string, 'AM') !== false ||strpos($string, 'PM') !== false) {
 
-      list($date, $format) = self::convert_exact_date_string($string);
+      list($date, $format, $exceptions) = self::convert_exact_date_string($string);
 
     } else if(strpos($string, ', ') !== false) {
 
-      list($date, $format) = self::convert_date_no_time_string($string);
+      list($date, $format, $exceptions) = self::convert_date_no_time_string($string);
 
     } else if(strpos($string, '/') !== false) {
 
-      list($date, $format) = self::convert_slash_date_string($string);
+      list($date, $format, $exceptions) = self::convert_slash_date_string($string);
 
     } else if(strpos($string, '-') !== false && strlen($string) === 8) {
 
-      list($date, $format) = self::convert_search_date_string($string);
+      list($date, $format, $exceptions) = self::convert_search_date_string($string);
 
     } else {
       
-      list($date, $format) = self::convert_year_string($string);
+      list($date, $format, $exceptions) = self::convert_year_string($string);
 
     }
 
@@ -402,48 +405,46 @@ class Time
 
     $date->setTimeZone(new DateTimeZone(self::$tz_final));
     
-    return self::convert_datetime_array($date, $format);
+    return self::convert_datetime_array($date, $format, $exceptions);
     
   }
 
   /**
    * Convert DateTimes to API-friendly associative arrays using the format provided.
+   * Only the provided fields in the format are going to be present in the assoc. array,
+   * and there can be nulls or preset exceptions in value through $exceptions.
    * 
    * @param DateTime $date
    * @param String $format
    * @return Array
    * @since 0.5
    */
-  private static function convert_datetime_array($date, $format) {
+  private static function convert_datetime_array($date, $format, $exceptions) {
 
     $date_array = [];
 
-    if(strpos($format, 'Y') !== false) {
-      $date_array['year'] = (int)$date->format('Y');
-    }
+    $map = [
+      'Y' => 'year',
+      'm' => 'month',
+      'd' => 'day',
+      'H' => 'hour',
+      'i' => 'minute',
+      's' => 'second',
+      'O' => 'offset'
+    ];
 
-    if(strpos($format, 'm') !== false) {
-      $date_array['month'] = (int)$date->format('m');
-    }
-
-    if(strpos($format, 'd') !== false) {
-      $date_array['day'] = (int)$date->format('d');
-    }
-
-    if(strpos($format, 'H') !== false) {
-      $date_array['hour'] = (int)$date->format('H');
-    }
-
-    if(strpos($format, 'i') !== false) {
-      $date_array['minute'] = (int)$date->format('i');
-    }
-
-    if(strpos($format, 's') !== false) {
-      $date_array['second'] = (int)$date->format('s');
-    }
-
-    if(strpos($format, 'O') !== false) {
-      $date_array['offset'] = $date->format('O');
+    foreach($map as $date_part_key => $date_part_name) {
+      if(array_key_exists($date_part_key, $exceptions)) {
+        // Use the exception value if it exists, and continue to stop further execution
+        $date_array[$date_part_name] = $exceptions[$date_part_key];
+        continue;
+      }
+      // No exception was provided for this date_part_key, check if it is required for the format
+      if(strpos($format, $date_part_key) !== false) {
+        $date_array[$date_part_name] = $date->format($date_part_key);
+        // Offset can be string, but others are all integers
+        if($date_part_key !== 'O') $date_array[$date_part_name] = (int)$date_array[$date_part_name]; 
+      }
     }
 
     $date_array['iso8601'] = $date->format($format);
