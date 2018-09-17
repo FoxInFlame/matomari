@@ -255,7 +255,7 @@ class Time
       // MM-DD-??
       $date = DateTime::createFromFormat('m-d', substr($matches[0], 0, 5));
 
-      return [$date, 'Y-m-d', [
+      return [$date, '', [
         'Y' => null
       ]];
 
@@ -268,7 +268,7 @@ class Time
         $date = DateTime::createFromFormat('mY', substr($matches[0], 0, 2) . '20' . substr($matches[0], 6, 2));
       }
 
-      return [$date, 'Y-m-d', [
+      return [$date, 'Y-m', [
         'd' => null
       ]];
 
