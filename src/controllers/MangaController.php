@@ -40,6 +40,8 @@ class MangaController
    *   path="/manga/{mangaId}/info",
    *   tags={"Manga"},
    *   summary="Get manga information",
+   *   description="Returns the overall general data for an manga.",
+   *   operationId="getMangaInfo",
    *   @OAS\Parameter(
    *     name="mangaId",
    *     in="path",
@@ -129,12 +131,13 @@ class MangaController
           'from' => [
             'year' => $get_variables['publish_dates_from_year'] ?? '', // PHP converts variables with dots to underscores
             'month' => $get_variables['publish_dates_from_month'] ?? '',
-            'date' => $get_variables['publish_dates_from_date'] ?? ''
+            'day' => $get_variables['publish_dates_from_date'] ?? ''
           ],
           'to' => [
             'year' => $get_variables['publish_dates_to_year'] ?? '',
             'month' => $get_variables['publish_dates_to_month'] ?? '',
-            'date' => $get_variables['publish_dates_to_date'] ?? ''
+            'day' => $get_variables['publish_dates_to_date'] ?? ''
+          ]
         ],
         'letter' => $get_variables['letter'] ?? '',
         'genres' => explode(',', ($get_variables['genres'] ?? '')),

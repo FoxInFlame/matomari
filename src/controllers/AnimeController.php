@@ -40,6 +40,8 @@ class AnimeController
    *   path="/anime/{animeId}/info",
    *   tags={"Anime"},
    *   summary="Get anime information",
+   *   description="Returns the overall general data for an anime, from theme songs, image urls, to relationships on other sites.",
+   *   operationId="getAnimeInfo",
    *   @OAS\Parameter(
    *     name="animeId",
    *     in="path",
@@ -111,6 +113,8 @@ class AnimeController
    *   path="/anime/search/{searchQuery}",
    *   tags={"Anime"},
    *   summary="Search for anime",
+   *   description="Returns the top results for a general search for anime. It uses the anime.php page.",
+   *   operationId="searchAnime",
    *   @OAS\Parameter(
    *     name="searchQuery",
    *     in="path",
@@ -377,6 +381,8 @@ class AnimeController
    *   path="/anime/ranking",
    *   tags={"Anime"},
    *   summary="Get the top ranking list for anime",
+   *   description="Returns 50 anime according to the ranking list provided by MyAnimeList, which depends on the weighted community score.",
+   *   operationId="getAnimeRanking",
    *   @OAS\Parameter(
    *     name="sort",
    *     in="query",

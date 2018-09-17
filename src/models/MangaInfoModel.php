@@ -307,7 +307,7 @@ class MangaInfoModel extends Model
 
   /**
    * @OAS\Property(
-   *   description="The backgroud information for the manga on MAL",
+   *   description="The background information for the manga on MAL",
    *   nullable=true,
    *   example="<i>Chihayafuru</i> won the second Manga Taisho award in 2009 and the 35th Kodansha Manga Award in the shoujo manga category in 2011.<br /> <br /> Kodansha published the first three volumes of <i>Chihayafuru</i>, consisting of the first seventeen chapters, in two English/Japanese volumes under their Kodansha Bilingual Comics line, on December 21, 2011 and February 23, 2012 respectively. Kodansha Comics USA has been digitally publishing the series in English since February 14, 2017.<br /> <br /> Two live-action films were released in 2016. The first, titled <i>Chihayafuru Kaminoku</i>, opened in Japanese cinemas on March 19, followed by a second film, titled <i>Shimonoku</i>, on April 29, 2016. During a stage greeting event for the second film, a surprise announcement was made that a sequel would be produced, although details for a production schedule or release date were not revealed."
    * )

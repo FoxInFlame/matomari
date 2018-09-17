@@ -139,7 +139,7 @@ class AnimeSearchCollection extends Collection
 
     // Retrieve the data from the cache (using $cache_key), or from MAL using the fallback.
     $data_builder->build($cache_key, function() use ($parameters) {
-
+      
       $guzzle_client = new Client();
       $response = $guzzle_client->request('GET', 'https://myanimelist.net/anime.php', [
         'http_errors' => false,
@@ -417,7 +417,7 @@ class AnimeSearchCollection extends Collection
     
     $genre_parameters = [
       'genre' => [] // Initiate an empty genre array inside so that only one genre still makes it an
-                    // arary and not a single value
+                    // array and not a single value
     ];
 
     // Loop through each genre and create a simple filter.
