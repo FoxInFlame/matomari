@@ -110,18 +110,17 @@ class AnimeSearchModel extends Model
    *   required={"from","to"},
    *   @OAS\Property(
    *     property="from",
-   *     type="string",
-   *     description="The air start date in ISO 8601 compatible format",
+   *     type="object",
    *     nullable=true,
-   *     example="2018-04-08"
+   *     description="The air start date in ISO 8601 compatible format",
+   *     ref="#/components/schemas/MatomariDate"
    *   ),
    *   @OAS\Property(
    *     property="to",
-   *     type="string",
+   *     type="object",
    *     nullable=true,
    *     description="The air end date in ISO 8601 compatible format",
-   *     nullable=true,
-   *     example="2019-10"
+   *     ref="#/components/schemas/MatomariDate"
    *   )
    * )
    * @var Object

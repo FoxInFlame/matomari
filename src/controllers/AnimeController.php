@@ -260,7 +260,7 @@ class AnimeController
    *     description="Comma separated genres to include or exclude from filters",
    *     @OAS\Schema(
    *       type="string",
-   *       enum={"action","adventure","cars","comedy","dementia","demons","mystery","drama","ecchi","fantasy","game","hentai","historical","horror","kids","magic","martialarts","mecha","music","parody","samurai","romance","school","scifi","shoujo","shoujoai","shounen","shounenai","space","sports","superpower","vampire","yaoi","yuri","harem","sliceoflife","supernatural","military","police","psychological","thriller","seinen","josei","default"},
+   *       enum={"action","adventure","cars","comedy","dementia","demons","mystery","drama","ecchi","fantasy","game","hentai","historical","horror","kids","magic","martialarts","mecha","music","parody","samurai","romance","school","scifi","shoujo","shoujoai","shounen","shounenai","space","sports","superpower","vampire","yaoi","yuri","harem","sliceoflife","supernatural","military","police","psychological","thriller","seinen","josei"},
    *       example="fantasy,action,mecha"
    *     )
    *   ),
