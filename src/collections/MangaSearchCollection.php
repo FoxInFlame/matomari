@@ -290,7 +290,7 @@ class MangaSearchCollection extends Collection
    * @param String $url_key The key for the URL segment to be generated
    * @param String $mapping_key The key to find the key=>value mappings for the URL segment
    * @param String $value The value of the filter that is to be searched in the mapping.
-   * @param Boolean $arary Return the value as an array, used for genres
+   * @param Boolean $array Return the value as an array, used for genres
    * @return Array
    * @since 0.5
    */
