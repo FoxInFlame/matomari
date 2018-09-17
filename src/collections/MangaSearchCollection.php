@@ -153,7 +153,7 @@ class MangaSearchCollection extends Collection
         throw new MatomariError('MAL is currently under maintenance. Please wait and retry.', 503);
       }
 
-      // Return the Data Arary and the Cache Timeout in seconds.
+      // Return the Data Array and the Cache Timeout in seconds.
       return [
         MangaSearchParser::parse($body),
         3600
@@ -188,6 +188,7 @@ class MangaSearchCollection extends Collection
     return [
       'c'=> ['a', 'b', 'c', 'd', 'e', 'f', 'g']
     ] + $query_parameter + $page_parameter + $sort_parameter + $filter_parameters;
+
     // ?q=' . urlencode($query) . $filter_param . '&c[]=a&c[]=b&c[]=c&c[]=d&c[]=e&c[]=f&c[]=g' . $page_param, ['http_errors' => false]); // TODO: add sort
     
   }
@@ -342,7 +343,7 @@ class MangaSearchCollection extends Collection
     // This is the array that will be returned at the end of this function
     $date_parameters = [];
 
-    foreach($value as $key => $date_string) {
+    foreach($value as $key => $date_array) {
 
       if($key === 'from') {
         $parameter_prefix = 's';
@@ -350,46 +351,21 @@ class MangaSearchCollection extends Collection
         $parameter_prefix = 'e';
       }
 
-      if(preg_match('/(?:^|\s|$)\d{4}-\d{2}-\d{2}(?:^|\s|$)/', $date_string, $matches)) {
-        // YYYY-MM-DD
-        $date_parameters[$parameter_prefix . 'y'] = explode('-', $matches[0])[0];
-        $date_parameters[$parameter_prefix . 'm'] = explode('-', $matches[0])[1];
-        $date_parameters[$parameter_prefix . 'd'] = explode('-', $matches[0])[2];
-      } else if(preg_match('/(?:^|\s|$)\d{4}-\d{2}--(?:^|\s|$)/', $date_string, $matches)) {
-        // YYYY-MM--
-        $date_parameters[$parameter_prefix . 'y'] = explode('-', $matches[0])[0];
-        $date_parameters[$parameter_prefix . 'm'] = explode('-', $matches[0])[1];
-        $date_parameters[$parameter_prefix . 'd'] = '0';
-      } else if(preg_match('/(?:^|\s|$)\d{4}----(?:^|\s|$)/', $date_string, $matches)) {
-        // YYYY-MM--
-        $date_parameters[$parameter_prefix . 'y'] = explode('-', $matches[0])[0];
-        $date_parameters[$parameter_prefix . 'm'] = '0';
-        $date_parameters[$parameter_prefix . 'd'] = '0';
-      } else if(preg_match('/(?:^|\s|$)\d{4}---\d{2}(?:^|\s|$)/', $date_string, $matches)) {
-        // YYYY---DD
-        $date_parameters[$parameter_prefix . 'y'] = explode('-', $matches[0])[0];
-        $date_parameters[$parameter_prefix . 'm'] = '0';
-        $date_parameters[$parameter_prefix . 'd'] = explode('---', $matches[0])[1];
-      } else if(preg_match('/(?:^|\s|$)--\d{2}-\d{2}(?:^|\s|$)/', $date_string, $matches)) {
-        // --MM-DD
-        $date_parameters[$parameter_prefix . 'y'] = '0';
-        $date_parameters[$parameter_prefix . 'm'] = explode('-', $matches[0])[2];
-        $date_parameters[$parameter_prefix . 'd'] = explode('-', $matches[0])[3];
-      } else if(preg_match('/(?:^|\s|$)----\d{2}(?:^|\s|$)/', $date_string, $matches)) {
-        // ----DD
-        $date_parameters[$parameter_prefix . 'y'] = '0';
-        $date_parameters[$parameter_prefix . 'm'] = '0';
-        $date_parameters[$parameter_prefix . 'd'] = explode('----', $matches[0])[1];
-      } else if(preg_match('/(?:^|\s|$)--\d{2}--(?:^|\s|$)/', $date_string, $matches)) {
-        // --MM--
-        $date_parameters[$parameter_prefix . 'y'] = '0';
-        $date_parameters[$parameter_prefix . 'm'] = explode('--', $matches[0])[1];
-        $date_parameters[$parameter_prefix . 'd'] = '0';
+      if(is_int($date_array['year'])) {
+        $date_parameters[$parameter_prefix . 'y'] = $date_array['year'];
       } else {
-        // -----
-        // Invalid Dates
         $date_parameters[$parameter_prefix . 'y'] = '0';
+      }
+
+      if(is_int($date_array['month'])) {
+        $date_parameters[$parameter_prefix . 'm'] = $date_array['month'];
+      } else {
         $date_parameters[$parameter_prefix . 'm'] = '0';
+      }
+
+      if(is_int($date_array['day'])) {
+        $date_parameters[$parameter_prefix . 'd'] = $date_array['day'];
+      } else {
         $date_parameters[$parameter_prefix . 'd'] = '0';
       }
 
@@ -430,16 +406,14 @@ class MangaSearchCollection extends Collection
    */
   private function prepare_genre_filter_parameter($value) {
     
-    $genre_parameters = [
-     // Initiate an empty genre array inside so that only one genre still makes it an
-                    // arary and not a single value
-    ];
+    // Don't initiate anything here unlike AnimeSearchCollection because for some reason,
+    // manga.php doesn't accept genre as an empty array, and only accepts genre as "unprovided".
 
     // Loop through each genre and create a simple filter.
     foreach($value as $genre) {
       $genre_parameters = array_merge_recursive(
-        $genre_parameters,
-        $this->prepare_simple_filter_parameter('genre', 'genres', $genre, true)
+        $genre_parameters ?? [],
+        $this->prepare_simple_filter_parameter('genre', 'genres', $genre)
       );
     }
 

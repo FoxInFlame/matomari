@@ -44,7 +44,7 @@ class MangaSearchParser extends Parser
     $search = new SearchModel();
 
     // The results list
-    $tr = $html->find("#contentWrapper #content div.list table tbody tr");
+    $tr = $html->find('#contentWrapper #content div.list table tbody tr');
     if(count($tr) == 0) {
       // No results
       return $search->results;
@@ -55,7 +55,7 @@ class MangaSearchParser extends Parser
 
     // Loop through and parse each result
     foreach($tr as $result) {
-      array_push($search->results['items'], self::parseResult($result)->info);
+      array_push($search->results['items'], self::parseResult($result)->asArray());
     }
 
     return $search->results;
@@ -63,7 +63,7 @@ class MangaSearchParser extends Parser
   }
 
   /**
-   * Parse each invidual entry in the result list and return not the array but the model itself.
+   * Parse each individual entry in the result list and return not the array but the model itself.
    * 
    * @param HtmlDomParser $result The parsed HTML for the individual entry
    * @return Array
@@ -71,15 +71,15 @@ class MangaSearchParser extends Parser
    */
   private static function parseResult($result) {
 
-    $td_image = $result->find("td", 0);
-    $td_name = $result->find("td", 1);
-    $td_type = $result->find("td", 2);
-    $td_volumes = $result->find("td", 3);
-    $td_chapters = $result->find("td", 4);
-    $td_score = $result->find("td", 5);
-    $td_publish_date_from = $result->find("td", 6);
-    $td_publish_date_to = $result->find("td", 7);
-    $td_members_inlist = $result->find("td", 8);
+    $td_image = $result->find('td', 0);
+    $td_name = $result->find('td', 1);
+    $td_type = $result->find('td', 2);
+    $td_volumes = $result->find('td', 3);
+    $td_chapters = $result->find('td', 4);
+    $td_score = $result->find('td', 5);
+    $td_publish_date_from = $result->find('td', 6);
+    $td_publish_date_to = $result->find('td', 7);
+    $td_members_inlist = $result->find('td', 8);
   
     $manga = new MangaSearchModel();
    
@@ -147,13 +147,13 @@ class MangaSearchParser extends Parser
     // MM-DD-YY (and ?? if unknown, - if everything is unknown)
     $mal_publish_date_from = trim($td_publish_date_from->innertext);
     if($mal_publish_date_from !== '-') {
-      $manga->set('publish_dates//from', (string)Time::convert($mal_publish_date_from));
+      $manga->set('publish_dates//from', (array)Time::convert($mal_publish_date_from));
     }
 
     // The Publish-To Date
     $mal_publish_date_to = trim($td_publish_date_to->innertext);
     if($mal_publish_date_to !== '-') {
-      $manga->set('publish_dates//to', (string)Time::convert($mal_publish_date_to));
+      $manga->set('publish_dates//to', (array)Time::convert($mal_publish_date_to));
     }
     
     // The Members who have it in their list

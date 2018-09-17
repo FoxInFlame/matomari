@@ -40,10 +40,6 @@ class MangaSearchModel extends Model
     'to' => null
   ];
 
-  public $classification = [
-    'name' => null
-  ];
-
   public $members_inlist;
   
 }
