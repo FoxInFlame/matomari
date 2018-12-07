@@ -106,7 +106,7 @@ class MangaSearchModel extends Model
 
   /**
    * @OAS\Property(
-   *   description="The publish dates of the manga",
+   *   description="The publish dates of the anime",
    *   required={"from","to"},
    *   @OAS\Property(
    *     property="from",
