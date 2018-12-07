@@ -13,6 +13,7 @@ namespace Matomari\Controllers;
 
 use Matomari\Collections\MangaInfoCollection;
 use Matomari\Collections\MangaSearchCollection;
+use Matomari\Collections\MangaRankingCollection;
 
 /**
  * Controller for manga details. 
@@ -356,6 +357,104 @@ class MangaController
         'genres' => explode(',', ($get_variables['genres'] ?? '')),
         'exclude_genres' => $get_variables['exclude_genres'] ?? ''
       ]
+    );
+    $this->response_array = $collection->getArray();
+
+  }
+
+  /**
+   * Get the top ranking list for manga with optional sort parameters.
+   * 
+   * @param Array $get_variables The associative array for additional GET variables
+   * @param Array $post_variables The associative array for POST variables
+   * @OAS\Get(
+   *   path="/manga/ranking",
+   *   tags={"Manga"},
+   *   summary="Get the top ranking list for manga",
+   *   description="Returns 50 manga according to the ranking list provided by MyAnimeList, which depends on the weighted community score.",
+   *   operationId="getMangaRanking",
+   *   @OAS\Parameter(
+   *     name="sort",
+   *     in="query",
+   *     description="The main query to search for. Can be blank if filters are set",
+   *     @OAS\Schema(
+   *       type="string",
+   *       enum={"all","manga","novels","one-shots","doujinshi","manhwa","manhua","bypopularity","byfavorites"},
+   *       example="bypopularity"
+   *     )
+   *   ),
+   *   @OAS\Parameter(
+   *     name="page",
+   *     in="query",
+   *     description="The results page",
+   *     @OAS\Schema(
+   *       type="integer"
+   *     )
+   *   ),
+   *   @OAS\Response(
+   *     response=200,
+   *     description="Detailed list of manga returned by MAL",
+   *     @OAS\MediaType(
+   *       mediaType="application/json",
+   *       @OAS\Schema(
+   *         title="Ranking",
+   *         @OAS\Property(
+   *           property="items",
+   *           type="array",
+   *           description="Array of ranking results",
+   *           @OAS\Items(
+   *             ref="#/components/schemas/MangaRankingModel"
+   *           )
+   *         )
+   *       )
+   *     ),
+   *     @OAS\MediaType(
+   *       mediaType="application/xml",
+   *       @OAS\Schema(
+   *         title="Ranking",
+   *         @OAS\Property(
+   *           property="items",
+   *           type="array",
+   *           description="Array of ranking results",
+   *           @OAS\Items(
+   *             ref="#/components/schemas/MangaRankingModel"
+   *           )
+   *         )
+   *       )
+   *     )
+   *   ),
+   *   @OAS\Response(
+   *     response=404,
+   *     description="The search page could not be found"
+   *   ),
+   *   @OAS\Response(
+   *     response=429,
+   *     description="Too many requests"
+   *   ),
+   *   @OAS\Response(
+   *     response=500,
+   *     description="Unknown error fetching the data"
+   *   ),
+   *   @OAS\Response(
+   *     response=501,
+   *     description="Not yet implemented"
+   *   ),
+   *   @OAS\Response(
+   *     response=502,
+   *     description="Invalid markup on the MyAnimeList server"
+   *   ),
+   *   @OAS\Response(
+   *     response=503,
+   *     description="MyAnimeList is currently under maintenance"
+   *   )
+   * )
+   * @since 0.5
+   */
+  public function ranking($get_variables, $post_variables) {
+
+    $collection = new MangaRankingCollection(
+      $get_variables['page'] ?? '1',
+      $get_variables['sort'] ?? ''
     );
     $this->response_array = $collection->getArray();
 
