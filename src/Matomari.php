@@ -18,7 +18,7 @@ use Spatie\ArrayToXml\ArrayToXml;
 
 /**
  * App core class for matomari.
- * The Swagger documentation for the overall API is located inside ApiSpecsController.
+ * The Swagger documentation for the overall API is located inside ApiSpecsCollection.
  * 
  * @since 0.5
  * @author FoxInFlame <burningfoxinflame@gmail.com>
