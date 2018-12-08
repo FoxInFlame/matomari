@@ -13,7 +13,7 @@ namespace Matomari\Models;
 use Matomari\Models\Model;
 
 /** 
- * @OAS\Schema(
+ * @OA\Schema(
  *   title="Anime Info",
  *   type="object",
  *   xml={
@@ -51,7 +51,7 @@ class MangaInfoModel extends Model
 {
 
   /** 
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The manga ID on MAL",
    *   example=13245
    * )
@@ -60,7 +60,7 @@ class MangaInfoModel extends Model
   public $id;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The official romaji manga name",
    *   example="Chihayafuru"
    * )
@@ -69,7 +69,7 @@ class MangaInfoModel extends Model
   public $name;
   
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The browser URL for the manga on MAL",
    *   example="https://myanimelist.net/manga/13245/Chihayafuru"
    * )
@@ -78,7 +78,7 @@ class MangaInfoModel extends Model
   public $mal_url;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The direct URL to the manga cover image on MAL",
    *   example="https://myanimelist.cdn-dena.com/images/manga/2/135341.jpg"
    * )
@@ -87,7 +87,7 @@ class MangaInfoModel extends Model
   public $image_url;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The MAL community score to 2 decimal places",
    *   nullable=true,
    *   example=8.55
@@ -97,7 +97,7 @@ class MangaInfoModel extends Model
   public $score;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The overall manga ranking on MAL",
    *   nullable=true,
    *   example=106
@@ -107,7 +107,7 @@ class MangaInfoModel extends Model
   public $rank;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The manga popularity ranking on MAL",
    *   nullable=true,
    *   example=340
@@ -117,7 +117,7 @@ class MangaInfoModel extends Model
   public $popularity;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The full synopsis for the anime, formatted in HTML",
    *   nullable=true,
    *   example="Chihaya is a girl in the sixth grade, still not old enough to even know the meaning of the word zeal. But one day, she meets Arata, a transfer student from rural Fukui prefecture. Though docile and quiet, he has an unexpected skill: his ability to play competitive karuta, a traditional Japanese card game.<br /> <br /> Chihaya is struck by his obsession with the game, along with his ability to pick out the right card and swipe it away before any of his opponents. However, Arata is transfixed by her as well, all because of her unbelievable natural talent for the game. Don&#039;t miss this story of adolescent lives and emotions playing out in the most dramatic of ways!<br /> <br /> (Source: Kodansha Comics USA)"
@@ -127,37 +127,37 @@ class MangaInfoModel extends Model
   public $synopsis;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The alternative titles for the manga registered on MAL",
    *   required={"english","japanese","synonyms"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="english",
    *     type="array",
    *     description="The alternative english titles on MAL",
    *     example={
    *       "Chihayafuru"
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       type="string"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="japanese",
    *     type="array",
    *     description="The japanese titles on MAL",
    *     example={
    *       "ちはやふる"
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       type="string"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="synonyms",
    *     type="array",
    *     description="The synonymous english titles on MAL",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       type="string"
    *     )
    *   )
@@ -171,7 +171,7 @@ class MangaInfoModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The manga media type",
    *   enum={"manga","novel","one-shot","doujinshi","manhwa","manhua","oel"},
    *   example="tv"
@@ -181,7 +181,7 @@ class MangaInfoModel extends Model
   public $type;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The total number of volumes published for the manga",
    *   nullable=true,
    *   example=8
@@ -191,7 +191,7 @@ class MangaInfoModel extends Model
   public $volumes;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The total number of chapters for the manga",
    *   nullable=true,
    *   example=88
@@ -201,7 +201,7 @@ class MangaInfoModel extends Model
   public $chapters;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The publishing status of the manga",
    *   enum={"finished","publishing","not_yet_published"},
    *   example="publishing"
@@ -211,17 +211,17 @@ class MangaInfoModel extends Model
   public $publish_status;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The publish dates of the manga",
    *   required={"from","to"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="from",
    *     type="object",
    *     nullable=true,
    *     description="The publish start date in ISO 8601 compatible format",
    *     ref="#/components/schemas/MatomariDate"
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="to",
    *     type="object",
    *     nullable=true,
@@ -237,10 +237,10 @@ class MangaInfoModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The authors of the manga with IDs being People IDs",
    *   example={},
-   *   @OAS\Items(
+   *   @OA\Items(
    *     ref="#/components/schemas/BriefReferenceModel"
    *   )
    * )
@@ -249,10 +249,10 @@ class MangaInfoModel extends Model
   public $authors = [];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The serialization of the manga with IDs being Magazine IDs",
    *   example={},
-   *   @OAS\Items(
+   *   @OA\Items(
    *     ref="#/components/schemas/BriefReferenceModel"
    *   )
    * )
@@ -261,7 +261,7 @@ class MangaInfoModel extends Model
   public $serialization = [];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The genres of the manga on MAL (spaces omitted)",
    *   example={
    *     "drama",
@@ -269,7 +269,7 @@ class MangaInfoModel extends Model
    *     "sports",
    *     "game"
    *   },
-   *   @OAS\Items(
+   *   @OA\Items(
    *     type="string"
    *   )
    * )
@@ -278,7 +278,7 @@ class MangaInfoModel extends Model
   public $genres = [];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The number of people who set a score on MAL",
    *   example=6074
    * )
@@ -287,7 +287,7 @@ class MangaInfoModel extends Model
   public $members_scored;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The number of people who have the manga in their mangalist",
    *   example=18739
    * )
@@ -296,7 +296,7 @@ class MangaInfoModel extends Model
   public $members_inlist;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The number of people who have the manga in their favorites",
    *   example=1282
    * )
@@ -305,7 +305,7 @@ class MangaInfoModel extends Model
   public $members_favorited;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The background information for the manga on MAL",
    *   nullable=true,
    *   example="<i>Chihayafuru</i> won the second Manga Taisho award in 2009 and the 35th Kodansha Manga Award in the shoujo manga category in 2011.<br /> <br /> Kodansha published the first three volumes of <i>Chihayafuru</i>, consisting of the first seventeen chapters, in two English/Japanese volumes under their Kodansha Bilingual Comics line, on December 21, 2011 and February 23, 2012 respectively. Kodansha Comics USA has been digitally publishing the series in English since February 14, 2017.<br /> <br /> Two live-action films were released in 2016. The first, titled <i>Chihayafuru Kaminoku</i>, opened in Japanese cinemas on March 19, followed by a second film, titled <i>Shimonoku</i>, on April 29, 2016. During a stage greeting event for the second film, a surprise announcement was made that a sequel would be produced, although details for a production schedule or release date were not revealed."
@@ -315,7 +315,7 @@ class MangaInfoModel extends Model
   public $background;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The various media related to the anime",
    *   required={
    *     "sequel",
@@ -331,34 +331,34 @@ class MangaInfoModel extends Model
    *     "character",
    *     "other"
    *   },
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="sequel",
    *     type="array",
    *     description="The manga that are considered sequels with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="prequel",
    *     type="array",
    *     description="The manga that are considered prequels with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="alternative_setting",
    *     type="array",
    *     description="The manga that are considered based on an alternative setting with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="alternative_version",
    *     type="array",
    *     description="The manga that are considered an alternative version with IDs being Manga IDs",
@@ -368,57 +368,57 @@ class MangaInfoModel extends Model
    *         "name": "Chihayafuru: Chuugakusei-hen"
    *       }
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="side_story",
    *     type="array",
    *     description="The manga that are considered side stories with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="parent_story",
    *     type="array",
    *     description="The manga that are considered parent stories with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="summary",
    *     type="array",
    *     description="The manga that are considered summarised versions with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="full_story",
    *     type="array",
    *     description="The manga that are considered full story versions with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="spin_off",
    *     type="array",
    *     title="Spin Offs",
    *     description="The manga that are considered spin offs with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="adaptation",
    *     type="array",
    *     description="The manga or anime that are considered ones that were adapted upon with IDs being Manga or Anime IDs",
@@ -436,25 +436,25 @@ class MangaInfoModel extends Model
    *         "name": "Chihayafuru 3"
    *       }
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="character",
    *     type="array",
    *     description="The manga that are considered sharing same characters with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="other",
    *     type="array",
    *     description="The manga that are considered related in another way with IDs being Manga IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   )

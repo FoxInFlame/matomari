@@ -13,7 +13,7 @@ namespace Matomari\Models;
 use Matomari\Models\Model;
 
 /** 
- * @OAS\Schema(
+ * @OA\Schema(
  *   title="Manga Ranking Entry",
  *   type="object",
  *   xml={
@@ -38,7 +38,7 @@ class MangaRankingModel extends Model
 {
 
   /** 
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The manga ID on MAL",
    *   example=13245
    * )
@@ -47,7 +47,7 @@ class MangaRankingModel extends Model
   public $id;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The official romaji manga name",
    *   example="Chihayafuru"
    * )
@@ -56,7 +56,7 @@ class MangaRankingModel extends Model
   public $name;
   
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The browser URL for the manga on MAL",
    *   example="https://myanimelist.net/manga/13245/Chihayafuru"
    * )
@@ -65,7 +65,7 @@ class MangaRankingModel extends Model
   public $mal_url;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The direct URL to the manga cover image on MAL",
    *   example="https://myanimelist.cdn-dena.com/images/manga/2/135341.jpg"
    * )
@@ -74,7 +74,7 @@ class MangaRankingModel extends Model
   public $image_url;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The MAL community score to 2 decimal places",
    *   nullable=true,
    *   example=8.55
@@ -84,7 +84,7 @@ class MangaRankingModel extends Model
   public $score;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The overall manga ranking on MAL",
    *   nullable=true,
    *   example=106
@@ -94,7 +94,7 @@ class MangaRankingModel extends Model
   public $rank;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The manga media type",
    *   enum={"manga","novel","one-shot","doujinshi","manhwa","manhua","oel"},
    *   example="tv"
@@ -104,7 +104,7 @@ class MangaRankingModel extends Model
   public $type;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The total number of volumes published for the manga",
    *   nullable=true,
    *   example=8
@@ -114,17 +114,17 @@ class MangaRankingModel extends Model
   public $volumes;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The publish dates of the anime",
    *   required={"from","to"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="from",
    *     type="object",
    *     nullable=true,
    *     description="The publish start date in ISO 8601 compatible format",
    *     ref="#/components/schemas/MatomariDate"
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="to",
    *     type="object",
    *     nullable=true,
@@ -140,7 +140,7 @@ class MangaRankingModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The number of people who have the manga in their mangalist",
    *   example=18739
    * )

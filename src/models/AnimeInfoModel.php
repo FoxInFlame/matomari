@@ -13,7 +13,7 @@ namespace Matomari\Models;
 use Matomari\Models\Model;
 
 /** 
- * @OAS\Schema(
+ * @OA\Schema(
  *   title="Anime Info",
  *   xml={
  *     "name": "root"
@@ -58,7 +58,7 @@ class AnimeInfoModel extends Model
 {
 
   /** 
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The anime ID on MAL",
    *   example=36475
    * )
@@ -67,7 +67,7 @@ class AnimeInfoModel extends Model
   public $id;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The official romaji anime name",
    *   example="Sword Art Online Alternative: Gun Gale Online"
    * )
@@ -76,7 +76,7 @@ class AnimeInfoModel extends Model
   public $name;
   
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The browser URL for the anime on MAL",
    *   example="https://myanimelist.net/anime/36475/Sword_Art_Online_Alternative__Gun_Gale_Online"
    * )
@@ -85,7 +85,7 @@ class AnimeInfoModel extends Model
   public $mal_url;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The direct URL to the anime cover image on MAL",
    *   example="https://myanimelist.cdn-dena.com/images/anime/1788/90355.jpg"
    * )
@@ -94,7 +94,7 @@ class AnimeInfoModel extends Model
   public $image_url;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The MAL community score to 2 decimal places",
    *   nullable=true,
    *   example=7.3
@@ -104,7 +104,7 @@ class AnimeInfoModel extends Model
   public $score;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The overall anime ranking on MAL",
    *   nullable=true,
    *   example=2437
@@ -114,7 +114,7 @@ class AnimeInfoModel extends Model
   public $rank;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The anime popularity ranking on MAL",
    *   nullable=true,
    *   example=743
@@ -124,7 +124,7 @@ class AnimeInfoModel extends Model
   public $popularity;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The full synopsis for the anime, formatted in HTML",
    *   nullable=true,
    *   example="Karen Kohiruimaki always felt out of place in the real world. Due to her extreme height, she found it hard to make friends with other girls her age. Everything changes when she&#039;s introduced to VR and Gun Gale Online. In GGO, Karen is free to play the cute, chibi avatar of her dreams! Can Karen find friendship in this bullet-ridden MMO...?<br /> <br /> (Source: Yen Press)"
@@ -134,37 +134,37 @@ class AnimeInfoModel extends Model
   public $synopsis;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The alternative titles for the anime registered on MAL",
    *   required={"english","japanese","synonyms"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="english",
    *     type="array",
    *     description="The alternative english titles on MAL",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       type="string"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="japanese",
    *     type="array",
    *     description="The japanese titles on MAL",
    *     example={
    *       "ソードアート・オンライン オルタナティブ ガンゲイル・オンライン"
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       type="string"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="synonyms",
    *     type="array",
    *     description="The synonymous english titles on MAL",
    *     example={
    *       "SAO Alternative Gun Gale Online"
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       type="string"
    *     )
    *   )
@@ -178,7 +178,7 @@ class AnimeInfoModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The anime media type",
    *   enum={"tv","ova","movie","special","ona","music"},
    *   example="tv"
@@ -188,7 +188,7 @@ class AnimeInfoModel extends Model
   public $type;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The total number of episodes in the anime",
    *   nullable=true,
    *   example=12
@@ -198,7 +198,7 @@ class AnimeInfoModel extends Model
   public $episodes;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The airing status of the anime",
    *   enum={"finished_airing","currently_airing","not_yet_aired"},
    *   example="currently_airing"
@@ -208,17 +208,17 @@ class AnimeInfoModel extends Model
   public $air_status;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The air dates of the anime",
    *   required={"from","to"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="from",
    *     type="object",
    *     nullable=true,
    *     description="The air start date in ISO 8601 compatible format",
    *     ref="#/components/schemas/MatomariDate"
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="to",
    *     type="object",
    *     nullable=true,
@@ -234,7 +234,7 @@ class AnimeInfoModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The season and year of the release (null if aired in one day)",
    *   nullable=true,
    *   example="Spring 2018"
@@ -244,7 +244,7 @@ class AnimeInfoModel extends Model
   public $season;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The premiere date of the anime (null unless aired in one day)",
    *   nullable=true,
    *   example="Feb 18, 2017"
@@ -254,7 +254,7 @@ class AnimeInfoModel extends Model
   public $premiere_date;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The unparsed air time and day as it appears on MAL (null if aired in one day)",
    *   nullable=true,
    *   example="Sundays at 00:00 (JST)"
@@ -264,10 +264,10 @@ class AnimeInfoModel extends Model
   public $air_time;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The producers of the anime with IDs being Producer IDs",
    *   example={},
-   *   @OAS\Items(
+   *   @OA\Items(
    *     ref="#/components/schemas/BriefReferenceModel"
    *   )
    * )
@@ -276,7 +276,7 @@ class AnimeInfoModel extends Model
   public $producers = [];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The licensors of the anime with IDs being Producer IDs",
    *   example={
    *     {
@@ -284,7 +284,7 @@ class AnimeInfoModel extends Model
    *       "name": "Aniplex of America"
    *     }
    *   },
-   *   @OAS\Items(
+   *   @OA\Items(
    *     ref="#/components/schemas/BriefReferenceModel"
    *   )
    * )
@@ -293,7 +293,7 @@ class AnimeInfoModel extends Model
   public $licensors = [];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The studios of the anime with IDs being Producer IDs",
    *   example={
    *     {
@@ -301,7 +301,7 @@ class AnimeInfoModel extends Model
    *       "name": "Studio 3Hz"
    *     }
    *   },
-   *   @OAS\Items(
+   *   @OA\Items(
    *     ref="#/components/schemas/BriefReferenceModel"
    *   )
    * )
@@ -310,7 +310,7 @@ class AnimeInfoModel extends Model
   public $studios = [];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The original source for the anime",
    *   example="Light novel"
    * )
@@ -319,7 +319,7 @@ class AnimeInfoModel extends Model
   public $source;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The genres of the anime on MAL (spaces omitted)",
    *   example={
    *     "action",
@@ -328,7 +328,7 @@ class AnimeInfoModel extends Model
    *     "sci-fi",
    *     "fantasy"
    *   },
-   *   @OAS\Items(
+   *   @OA\Items(
    *     type="string"
    *   )
    * )
@@ -337,16 +337,16 @@ class AnimeInfoModel extends Model
   public $genres = [];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The estimated duration of the anime",
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="total",
    *     type="integer",
    *     description="The estimated total length of the anime in minutes (null if `episodes` or `duration.per_episode` is null)",
    *     nullable=true,
    *     example=576
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="per_episode",
    *     type="integer",
    *     description="The length of one episode of the anime in minutes",
@@ -362,16 +362,16 @@ class AnimeInfoModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The classification of the anime on MAL",
    *   required={"name","description"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="name",
    *     type="string",
    *     description="The symbol name for the classification of the anime",
    *     example="PG-13"
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="description",
    *     type="string",
    *     description="The short description for the classification of the anime",
@@ -386,7 +386,7 @@ class AnimeInfoModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The number of people who set a score on MAL",
    *   example=9676
    * )
@@ -395,7 +395,7 @@ class AnimeInfoModel extends Model
   public $members_scored;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The number of people who have the anime in their animelist",
    *   example=114512
    * )
@@ -404,7 +404,7 @@ class AnimeInfoModel extends Model
   public $members_inlist;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The number of people who have the anime in their favorites",
    *   example=271
    * )
@@ -413,7 +413,7 @@ class AnimeInfoModel extends Model
   public $members_favorited;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The backgroud information for the anime on MAL",
    *   nullable=true,
    *   example="<i>Sword Art Online II</i> adapts novels 5 to 8 of Reki Kawahara's light novel series of the same title.<br><br>The first episode was screened at various special events held in the United States, France, Germany, Hong Kong, Taiwan, Korea and Japan before its television premiere."
@@ -423,7 +423,7 @@ class AnimeInfoModel extends Model
   public $background;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The various media related to the anime",
    *   required={
    *     "sequel",
@@ -439,25 +439,25 @@ class AnimeInfoModel extends Model
    *     "character",
    *     "other"
    *   },
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="sequel",
    *     type="array",
    *     description="The anime that are considered sequels with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="prequel",
    *     type="array",
    *     description="The anime that are considered prequels with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="alternative_setting",
    *     type="array",
    *     description="The anime that are considered based on an alternative setting with IDs being Anime IDs",
@@ -475,65 +475,65 @@ class AnimeInfoModel extends Model
    *         "name": "Swword Art Online Fatal Bullet: The Third Episode"
    *       }
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="alternative_version",
    *     type="array",
    *     description="The anime that are considered an alternative version with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="side_story",
    *     type="array",
    *     description="The anime that are considered side stories with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="parent_story",
    *     type="array",
    *     description="The anime that are considered parent stories with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="summary",
    *     type="array",
    *     description="The anime that are considered summarised versions with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="full_story",
    *     type="array",
    *     description="The anime that are considered full story versions with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="spin_off",
    *     type="array",
    *     description="The anime that are considered spin offs with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="adaptation",
    *     type="array",
    *     description="The manga or anime that are considered originals that were adapted upon with IDs being Manga or Anime IDs",
@@ -555,20 +555,20 @@ class AnimeInfoModel extends Model
    *         "name": "Sword Art Online Fatal Bullet: The Third Episode"
    *       },
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="character",
    *     type="array",
    *     description="The anime that are considered sharing same characters with IDs being Anime IDs",
    *     example={},
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="other",
    *     type="array",
    *     description="The anime that are considered related in another way with IDs being Anime IDs",
@@ -582,7 +582,7 @@ class AnimeInfoModel extends Model
    *         "name": "Sword Art Online Fatal Bullet: The Third Episode"
    *       }
    *     },
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/BriefReferenceModel"
    *     )
    *   )
@@ -605,38 +605,38 @@ class AnimeInfoModel extends Model
   ];
 
   /**
-   * @OAS\Schema(
+   * @OA\Schema(
    *   schema="ThemeSong",
    *   title="Theme Song",
    *   type="object",
    *   required={"name","artist","episodes"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="name",
    *     type="string",
    *     description="The name of the opening theme song",
    *     example="Platinum Jet (プラチナジェット)"
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="artist",
    *     type="string",
    *     description="The artist who sang the theme song",
    *     example="Doughnut◎Quintet"
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="episodes",
    *     type="array",
    *     description="The episodes where the theme song was used",
-   *     @OAS\Items(
+   *     @OA\Items(
    *       title="Theme Song Usage Episodes",
    *       type="object",
    *       required={"from","to"},
-   *       @OAS\Property(
+   *       @OA\Property(
    *         property="from",
    *         type="integer",
    *         description="The episode from which the theme song started being used",
    *         example=15
    *       ),
-   *       @OAS\Property(
+   *       @OA\Property(
    *         property="to",
    *         type="integer",
    *         description="The episode from which the theme song stopped being used",
@@ -648,22 +648,22 @@ class AnimeInfoModel extends Model
    */
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The opening and ending theme songs for the anime",
    *   required={"openings","endings"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="openings",
    *     type="array",
    *     description="The opening theme songs used within the anime",
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/ThemeSong"
    *     )
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="endings",
    *     type="array",
    *     description="The ending theme songs used within the anime",
-   *     @OAS\Items(
+   *     @OA\Items(
    *       ref="#/components/schemas/ThemeSong"
    *     )
    *   )
@@ -676,15 +676,15 @@ class AnimeInfoModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="Links to the anime on external services",
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="anidb",
    *     type="string",
    *     description="The browser URL for the anime on AniDB.net",
    *     example="https://anidb.net/a3320"
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="ann",
    *     type="string",
    *     description="The browser URL for the anime on AnimeNewsNetwork.com",

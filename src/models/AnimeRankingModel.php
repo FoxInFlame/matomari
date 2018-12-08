@@ -13,7 +13,7 @@ namespace Matomari\Models;
 use Matomari\Models\Model;
 
 /** 
- * @OAS\Schema(
+ * @OA\Schema(
  *   title="Anime Ranking Entry",
  *   type="object",
  *   xml={
@@ -38,7 +38,7 @@ class AnimeRankingModel extends Model
 {
 
   /** 
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The anime ID on MAL",
    *   example=36475
    * )
@@ -47,7 +47,7 @@ class AnimeRankingModel extends Model
   public $id;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The official romaji anime name",
    *   example="Sword Art Online Alternative: Gun Gale Online"
    * )
@@ -56,7 +56,7 @@ class AnimeRankingModel extends Model
   public $name;
   
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The browser URL for the anime on MAL",
    *   example="https://myanimelist.net/anime/36475/Sword_Art_Online_Alternative__Gun_Gale_Online"
    * )
@@ -65,7 +65,7 @@ class AnimeRankingModel extends Model
   public $mal_url;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The direct URL to the anime cover image on MAL",
    *   example="https://myanimelist.cdn-dena.com/images/anime/1788/90355.jpg"
    * )
@@ -74,7 +74,7 @@ class AnimeRankingModel extends Model
   public $image_url;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The MAL community score to 2 decimal places",
    *   nullable=true,
    *   example=7.3
@@ -84,7 +84,7 @@ class AnimeRankingModel extends Model
   public $score;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The overall anime ranking on MAL",
    *   nullable=true,
    *   example=2437
@@ -94,7 +94,7 @@ class AnimeRankingModel extends Model
   public $rank;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The anime media type",
    *   enum={"tv","ova","movie","special","ona","music"},
    *   example="tv"
@@ -104,7 +104,7 @@ class AnimeRankingModel extends Model
   public $type;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The total number of episodes in the anime",
    *   nullable=true,
    *   example=12
@@ -114,17 +114,17 @@ class AnimeRankingModel extends Model
   public $episodes;
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The air dates of the anime",
    *   required={"from","to"},
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="from",
    *     type="object",
    *     nullable=true,
    *     description="The air start date in ISO 8601 compatible format",
    *     ref="#/components/schemas/MatomariDate"
    *   ),
-   *   @OAS\Property(
+   *   @OA\Property(
    *     property="to",
    *     type="object",
    *     nullable=true,
@@ -140,7 +140,7 @@ class AnimeRankingModel extends Model
   ];
 
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   description="The number of people who have the anime in their animelist",
    *   example=114512
    * )

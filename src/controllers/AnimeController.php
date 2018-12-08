@@ -36,58 +36,58 @@ class AnimeController
    * @param Array $unusedget_variables The associative array for additional GET variables
    * @param Array $unused_post_variables The associative array for POST variables
    * @param Integer $anime_id The Anime ID on MAL
-   * @OAS\Get(
+   * @OA\Get(
    *   path="/anime/{animeId}/info",
    *   tags={"Anime"},
    *   summary="Get anime information",
    *   description="Returns the overall general data for an anime, from theme songs, image urls, to relationships on other sites.",
    *   operationId="getAnimeInfo",
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="animeId",
    *     in="path",
    *     description="The database ID of the anime. This is the ID that is displayed in the URL when you visit the anime page.",
    *     required=true,
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="integer"
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=200,
    *     description="Detailed information about the anime found with the provided ID",
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/json",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         ref="#/components/schemas/AnimeInfoModel"
    *       )
    *     ),
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/xml",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         ref="#/components/schemas/AnimeInfoModel"
    *       )
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=400,
    *     description="Invalid anime ID"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=404,
    *     description="No matching anime found"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=429,
    *     description="Too many requests"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=500,
    *     description="Unknown error fetching the data"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=502,
    *     description="Invalid markup on the MyAnimeList server"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=503,
    *     description="MyAnimeList is currently under maintenance"
    *   )
@@ -109,224 +109,224 @@ class AnimeController
    * @param Array $get_variables The associative array for additional GET variables
    * @param Array $unused_post_variables The associative array for POST variables
    * @param String $query The main query to search for. Can be blank if filters are set.
-   * @OAS\Get(
+   * @OA\Get(
    *   path="/anime/search/{searchQuery}",
    *   tags={"Anime"},
    *   summary="Search for anime",
    *   description="Returns the top results for a general search for anime. It uses the anime.php page.",
    *   operationId="searchAnime",
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="searchQuery",
    *     in="path",
    *     description="The main query to search for. Can be blank if filters are set",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="page",
    *     in="query",
    *     description="The results page",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="integer"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="sort",
    *     in="query",
    *     description="The sorting algorithm to use (TBD)",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="type",
    *     in="query",
    *     description="The media types of anime to filter for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       enum={"tv", "ova", "movie", "special", "ona", "music"}
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="score",
    *     in="query",
    *     description="The base integer of the community score of anime to filter for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="integer",
    *       minimum="1",
    *       maximum="10"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="air_status",
    *     in="query",
    *     description="The airing status of anime to filter for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       enum={"currently_airing", "finished_airing", "not_yet_aired"}
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="producer",
    *     in="query",
    *     description="The producer company of anime to filter for (TBD)",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="classification",
    *     in="query",
    *     description="The classification of anime to filter for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       enum={"g", "pg", "pg-13", "r", "r+", "rx"}
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="air_dates.from.year",
    *     in="query",
    *     description="The air start year to filter out for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       example="2014",
    *       pattern="^\d$"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="air_dates.from.month",
    *     in="query",
    *     description="The air start month to filter out for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       example="8",
    *       pattern="^\d$"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="air_dates.from.day",
    *     in="query",
    *     description="The air start day to filter out for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       example="31",
    *       pattern="^\d$"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="air_dates.to.year",
    *     in="query",
    *     description="The air end year to filter out for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       example="2014",
    *       pattern="^\d$"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="air_dates.to.month",
    *     in="query",
    *     description="The air end month to filter out for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       example="8",
    *       pattern="^\d$"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="air_dates.to.day",
    *     in="query",
    *     description="The air end day to filter out for",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       example="31",
    *       pattern="^\d$"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="letter",
    *     in="query",
    *     description="An alphabetical letter to filter anime starting with it",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       example="b",
    *       pattern="^[A-z]$"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="genres",
    *     in="query",
    *     description="Comma separated genres to include or exclude from filters",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       enum={"action","adventure","cars","comedy","dementia","demons","mystery","drama","ecchi","fantasy","game","hentai","historical","horror","kids","magic","martialarts","mecha","music","parody","samurai","romance","school","scifi","shoujo","shoujoai","shounen","shounenai","space","sports","superpower","vampire","yaoi","yuri","harem","sliceoflife","supernatural","military","police","psychological","thriller","seinen","josei"},
    *       example="fantasy,action,mecha"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="exclude_genres",
    *     in="query",
    *     description="Include (1) or exclude (0) the specified genres in the filter",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="integer",
    *       minimum="0",
    *       maximum="1"
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=200,
    *     description="Detailed list of anime returned by MAL",
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/json",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         title="Results",
-   *         @OAS\Property(
+   *         @OA\Property(
    *           property="items",
    *           type="array",
    *           description="Array of results",
-   *           @OAS\Items(
+   *           @OA\Items(
    *             ref="#/components/schemas/AnimeSearchModel"
    *           )
    *         )
    *       )
    *     ),
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/xml",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         title="Results",
-   *         @OAS\Property(
+   *         @OA\Property(
    *           property="items",
    *           type="array",
    *           description="Array of results",
-   *           @OAS\Items(
+   *           @OA\Items(
    *             ref="#/components/schemas/AnimeSearchModel"
    *           )
    *         )
    *       )
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=404,
    *     description="The search page could not be found"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=429,
    *     description="Too many requests"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=500,
    *     description="Unknown error fetching the data"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=501,
    *     description="Not yet implemented"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=502,
    *     description="Invalid markup on the MyAnimeList server"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=503,
    *     description="MyAnimeList is currently under maintenance"
    *   )
@@ -376,83 +376,83 @@ class AnimeController
    * Get the top ranking list for anime with optional sort parameters.
    * 
    * @param Array $get_variables The associative array for additional GET variables
-   * @OAS\Get(
+   * @OA\Get(
    *   path="/anime/ranking",
    *   tags={"Anime"},
    *   summary="Get the top ranking list for anime",
    *   description="Returns 50 anime according to the ranking list provided by MyAnimeList, which depends on the weighted community score.",
    *   operationId="getAnimeRanking",
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="sort",
    *     in="query",
    *     description="The main query to search for. Can be blank if filters are set",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       enum={"all","airing","upcoming","tv","movie","ova","special","bypopularity","byfavorites"},
    *       example="bypopularity"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="page",
    *     in="query",
    *     description="The results page",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="integer"
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=200,
    *     description="Detailed list of anime returned by MAL",
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/json",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         title="Ranking",
-   *         @OAS\Property(
+   *         @OA\Property(
    *           property="items",
    *           type="array",
    *           description="Array of ranking results",
-   *           @OAS\Items(
+   *           @OA\Items(
    *             ref="#/components/schemas/AnimeRankingModel"
    *           )
    *         )
    *       )
    *     ),
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/xml",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         title="Ranking",
-   *         @OAS\Property(
+   *         @OA\Property(
    *           property="items",
    *           type="array",
    *           description="Array of ranking results",
-   *           @OAS\Items(
+   *           @OA\Items(
    *             ref="#/components/schemas/AnimeRankingModel"
    *           )
    *         )
    *       )
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=404,
    *     description="The search page could not be found"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=429,
    *     description="Too many requests"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=500,
    *     description="Unknown error fetching the data"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=501,
    *     description="Not yet implemented"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=502,
    *     description="Invalid markup on the MyAnimeList server"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=503,
    *     description="MyAnimeList is currently under maintenance"
    *   )

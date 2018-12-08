@@ -13,7 +13,7 @@ namespace Matomari\Models;
 use Matomari\Models\Model;
 
 /** 
- * @OAS\Schema(
+ * @OA\Schema(
  *   title="Brief Reference",
  *   type="object",
  *   required={"id","name"}
@@ -25,7 +25,7 @@ class BriefReferenceModel extends Model
 {
   
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   title="ID",
    *   description="The ID of the reference target"
    * )
@@ -34,7 +34,7 @@ class BriefReferenceModel extends Model
   public $id;
   
   /**
-   * @OAS\Property(
+   * @OA\Property(
    *   title="Name",
    *   description="The name of the reference target"
    * )

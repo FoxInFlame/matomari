@@ -37,58 +37,58 @@ class MangaController
    * @param Array $unused_get_variables The associative array for additional GET variables
    * @param Array $unused_post_variables The associative array for POST variables
    * @param Integer $manga_id The Manga ID on MAL
-   * @OAS\Get(
+   * @OA\Get(
    *   path="/manga/{mangaId}/info",
    *   tags={"Manga"},
    *   summary="Get manga information",
    *   description="Returns the overall general data for an manga.",
    *   operationId="getMangaInfo",
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="mangaId",
    *     in="path",
    *     description="The database ID of the manga. This is the ID that is displayed in the URL when you visit the manga page.",
    *     required=true,
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="integer"
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=200,
    *     description="Detailed information about the manga found with the provided ID",
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/json",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         ref="#/components/schemas/MangaInfoModel"
    *       )
    *     ),
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/xml",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         ref="#/components/schemas/MangaInfoModel"
    *       )
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=400,
    *     description="Invalid manga ID"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=404,
    *     description="No matching manga found"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=429,
    *     description="Too many requests"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=500,
    *     description="Unknown error fetching the data"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=502,
    *     description="Invalid markup on the MyAnimeList server"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=503,
    *     description="MyAnimeList is currently under maintenance"
    *   )
@@ -110,215 +110,215 @@ class MangaController
  * @param Array $get_variables The associative array for additional GET variables
  * @param Array $unused_post_variables The associative array for POST variables
  * @param String $query The main query to search for. Can be blank if filters are set.
- * @OAS\Get(
+ * @OA\Get(
  *   path="/manga/search/{searchQuery}",
  *   tags={"Manga"},
  *   summary="Search for manga",
  *   description="Returns the top results for a general search for manga. It uses the manga.php page.",
  *   operationId="searchManga",
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="searchQuery",
  *     in="path",
  *     description="The main query to search for. Can be blank if filters are set",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="page",
  *     in="query",
  *     description="The results page",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="integer"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="sort",
  *     in="query",
  *     description="The sorting algorithm to use (TBD)",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="type",
  *     in="query",
  *     description="The media types of manga to filter for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       enum={"manga", "novel", "one-shot", "doujinshi", "manhwa", "manhua", "oel"}
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="score",
  *     in="query",
  *     description="The base integer of the community score of manga to filter for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="integer",
  *       minimum="1",
  *       maximum="10"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="air_status",
  *     in="query",
  *     description="The publishing status of manga to filter for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       enum={"publishing", "finished", "not_yet_publishing"}
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="magazine",
  *     in="query",
  *     description="The owner magazine of manga to filter for (TBD)",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="publish_dates.from.year",
  *     in="query",
  *     description="The publish start year to filter out for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       example="2014",
  *       pattern="^\d$"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="publish_dates.from.month",
  *     in="query",
  *     description="The publish start month to filter out for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       example="8",
  *       pattern="^\d$"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="publish_dates.from.day",
  *     in="query",
  *     description="The publish start day to filter out for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       example="31",
  *       pattern="^\d$"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="publish_dates.to.year",
  *     in="query",
  *     description="The publish end year to filter out for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       example="2014",
  *       pattern="^\d$"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="publish_dates.to.month",
  *     in="query",
  *     description="The publish end month to filter out for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       example="8",
  *       pattern="^\d$"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="publish_dates.to.day",
  *     in="query",
  *     description="The publish end day to filter out for",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       example="31",
  *       pattern="^\d$"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="letter",
  *     in="query",
  *     description="An alphabetical letter to filter manga starting with it",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       example="b",
  *       pattern="^[A-z]$"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="genres",
  *     in="query",
  *     description="Comma separated genres to include or exclude from filters",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="string",
  *       enum={"action", "adventure", "cars", "comedy", "dementia", "demons", "mystery", "drama", "ecchi", "fantasy", "game", "hentai", "historical", "horror", "kids", "magic", "martialarts", "mecha", "music", "parody", "samurai", "romance", "school", "scifi", "shoujo", "shoujoai", "shounen", "shounenai", "space", "sports", "superpower", "vampire", "yaoi", "yuri", "harem", "sliceoflife", "supernatural", "military", "police", "psychological", "seinen", "josei", "doujinshi", "genderbender", "thriller"},
  *       example="fantasy,action,mecha"
  *     )
  *   ),
- *   @OAS\Parameter(
+ *   @OA\Parameter(
  *     name="exclude_genres",
  *     in="query",
  *     description="Include (1) or exclude (0) the specified genres in the filter",
- *     @OAS\Schema(
+ *     @OA\Schema(
  *       type="integer",
  *       minimum="0",
  *       maximum="1"
  *     )
  *   ),
- *   @OAS\Response(
+ *   @OA\Response(
  *     response=200,
  *     description="Detailed list of manga returned by MAL",
- *     @OAS\MediaType(
+ *     @OA\MediaType(
  *       mediaType="application/json",
- *       @OAS\Schema(
+ *       @OA\Schema(
  *         title="Results",
- *         @OAS\Property(
+ *         @OA\Property(
  *           property="items",
  *           type="array",
  *           description="Array of results",
- *           @OAS\Items(
+ *           @OA\Items(
  *             ref="#/components/schemas/MangaSearchModel"
  *           )
  *         )
  *       )
  *     ),
- *     @OAS\MediaType(
+ *     @OA\MediaType(
  *       mediaType="application/xml",
- *       @OAS\Schema(
+ *       @OA\Schema(
  *         title="Results",
- *         @OAS\Property(
+ *         @OA\Property(
  *           property="items",
  *           type="array",
  *           description="Array of results",
- *           @OAS\Items(
+ *           @OA\Items(
  *             ref="#/components/schemas/MangaSearchModel"
  *           )
  *         )
  *       )
  *     )
  *   ),
- *   @OAS\Response(
+ *   @OA\Response(
  *     response=404,
  *     description="The search page could not be found"
  *   ),
- *   @OAS\Response(
+ *   @OA\Response(
  *     response=429,
  *     description="Too many requests"
  *   ),
- *   @OAS\Response(
+ *   @OA\Response(
  *     response=500,
  *     description="Unknown error fetching the data"
  *   ),
- *   @OAS\Response(
+ *   @OA\Response(
  *     response=501,
  *     description="Not yet implemented"
  *   ),
- *   @OAS\Response(
+ *   @OA\Response(
  *     response=502,
  *     description="Invalid markup on the MyAnimeList server"
  *   ),
- *   @OAS\Response(
+ *   @OA\Response(
  *     response=503,
  *     description="MyAnimeList is currently under maintenance"
  *   )
@@ -367,83 +367,83 @@ class MangaController
    * 
    * @param Array $get_variables The associative array for additional GET variables
    * @param Array $unused_post_variables The associative array for POST variables
-   * @OAS\Get(
+   * @OA\Get(
    *   path="/manga/ranking",
    *   tags={"Manga"},
    *   summary="Get the top ranking list for manga",
    *   description="Returns 50 manga according to the ranking list provided by MyAnimeList, which depends on the weighted community score.",
    *   operationId="getMangaRanking",
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="sort",
    *     in="query",
    *     description="The main query to search for. Can be blank if filters are set",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="string",
    *       enum={"all","manga","novels","one-shots","doujinshi","manhwa","manhua","bypopularity","byfavorites"},
    *       example="bypopularity"
    *     )
    *   ),
-   *   @OAS\Parameter(
+   *   @OA\Parameter(
    *     name="page",
    *     in="query",
    *     description="The results page",
-   *     @OAS\Schema(
+   *     @OA\Schema(
    *       type="integer"
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=200,
    *     description="Detailed list of manga returned by MAL",
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/json",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         title="Ranking",
-   *         @OAS\Property(
+   *         @OA\Property(
    *           property="items",
    *           type="array",
    *           description="Array of ranking results",
-   *           @OAS\Items(
+   *           @OA\Items(
    *             ref="#/components/schemas/MangaRankingModel"
    *           )
    *         )
    *       )
    *     ),
-   *     @OAS\MediaType(
+   *     @OA\MediaType(
    *       mediaType="application/xml",
-   *       @OAS\Schema(
+   *       @OA\Schema(
    *         title="Ranking",
-   *         @OAS\Property(
+   *         @OA\Property(
    *           property="items",
    *           type="array",
    *           description="Array of ranking results",
-   *           @OAS\Items(
+   *           @OA\Items(
    *             ref="#/components/schemas/MangaRankingModel"
    *           )
    *         )
    *       )
    *     )
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=404,
    *     description="The search page could not be found"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=429,
    *     description="Too many requests"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=500,
    *     description="Unknown error fetching the data"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=501,
    *     description="Not yet implemented"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=502,
    *     description="Invalid markup on the MyAnimeList server"
    *   ),
-   *   @OAS\Response(
+   *   @OA\Response(
    *     response=503,
    *     description="MyAnimeList is currently under maintenance"
    *   )
