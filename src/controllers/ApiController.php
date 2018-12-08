@@ -31,11 +31,11 @@ class ApiController
   /**
    * Get the OpenAPI api specs for matomari.
    * 
-   * @param Array $unused_get_variables The associative array for additional GET variables
-   * @param Array $unused_post_variables The associative array for POST variables 
+   * @param Array $get_variables The associative array for additional GET variables
+   * @param Array $post_variables The associative array for POST variables 
    * @since 0.5
    */
-  public function specs($unused_get_variables, $unused_post_variables) {
+  public function specs($get_variables, $post_variables) {
     
     $collection = new ApiSpecsCollection();
     $this->response_array = $collection->getArray();
