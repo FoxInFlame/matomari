@@ -33,8 +33,8 @@ class AnimeController
   /**
    * Get the overall anime information in detail.
    * 
-   * @param Array $get_variables The associative array for additional GET variables
-   * @param Array $post_variables The associative array for POST variables
+   * @param Array $unusedget_variables The associative array for additional GET variables
+   * @param Array $unused_post_variables The associative array for POST variables
    * @param Integer $anime_id The Anime ID on MAL
    * @OAS\Get(
    *   path="/anime/{animeId}/info",
@@ -94,7 +94,7 @@ class AnimeController
    * )
    * @since 0.5
    */
-  public function info($get_variables, $post_variables, $anime_id) {
+  public function info($unused_get_variables, $unused_post_variables, $anime_id) {
     
     $collection = new AnimeInfoCollection(
       $anime_id
@@ -107,7 +107,7 @@ class AnimeController
    * Search for anime with optional filters.
    * 
    * @param Array $get_variables The associative array for additional GET variables
-   * @param Array $post_variables The associative array for POST variables
+   * @param Array $unused_post_variables The associative array for POST variables
    * @param String $query The main query to search for. Can be blank if filters are set.
    * @OAS\Get(
    *   path="/anime/search/{searchQuery}",
@@ -333,7 +333,7 @@ class AnimeController
    * )
    * @since 0.5
    */
-  public function search($get_variables, $post_variables, $query='') {
+  public function search($get_variables, $unused_post_variables, $query='') {
 
     // Use the 'q' URL parameter if that's present
     // This will allow some clients to construct queries easier from arrays of parameters 
@@ -376,7 +376,6 @@ class AnimeController
    * Get the top ranking list for anime with optional sort parameters.
    * 
    * @param Array $get_variables The associative array for additional GET variables
-   * @param Array $post_variables The associative array for POST variables
    * @OAS\Get(
    *   path="/anime/ranking",
    *   tags={"Anime"},
@@ -460,7 +459,7 @@ class AnimeController
    * )
    * @since 0.5
    */
-  public function ranking($get_variables, $post_variables) {
+  public function ranking($get_variables) {
 
     $collection = new AnimeRankingCollection(
       $get_variables['page'] ?? '1',

@@ -34,8 +34,8 @@ class MangaController
   /**
    * Get the overall manga information in detail.
    * 
-   * @param Array $get_variables The associative array for additional GET variables
-   * @param Array $post_variables The associative array for POST variables
+   * @param Array $unused_get_variables The associative array for additional GET variables
+   * @param Array $unused_post_variables The associative array for POST variables
    * @param Integer $manga_id The Manga ID on MAL
    * @OAS\Get(
    *   path="/manga/{mangaId}/info",
@@ -95,7 +95,7 @@ class MangaController
    * )
    * @since 0.5
    */
-  public function info($get_variables, $post_variables, $manga_id) {
+  public function info($unused_get_variables, $unused_post_variables, $manga_id) {
 
     $collection = new MangaInfoCollection(
       $manga_id
@@ -108,7 +108,7 @@ class MangaController
  * Search for manga with optional filters.
  *
  * @param Array $get_variables The associative array for additional GET variables
- * @param Array $post_variables The associative array for POST variables
+ * @param Array $unused_post_variables The associative array for POST variables
  * @param String $query The main query to search for. Can be blank if filters are set.
  * @OAS\Get(
  *   path="/manga/search/{searchQuery}",
@@ -325,7 +325,7 @@ class MangaController
  * )
  * @since 0.5
  */
-  public function search($get_variables, $post_variables, $query='') {
+  public function search($get_variables, $unused_post_variables, $query='') {
 
     if($query === '') {
       $query = $get_variables['q'] ?? '';
@@ -366,7 +366,7 @@ class MangaController
    * Get the top ranking list for manga with optional sort parameters.
    * 
    * @param Array $get_variables The associative array for additional GET variables
-   * @param Array $post_variables The associative array for POST variables
+   * @param Array $unused_post_variables The associative array for POST variables
    * @OAS\Get(
    *   path="/manga/ranking",
    *   tags={"Manga"},
@@ -450,7 +450,7 @@ class MangaController
    * )
    * @since 0.5
    */
-  public function ranking($get_variables, $post_variables) {
+  public function ranking($get_variables, $unused_post_variables) {
 
     $collection = new MangaRankingCollection(
       $get_variables['page'] ?? '1',
