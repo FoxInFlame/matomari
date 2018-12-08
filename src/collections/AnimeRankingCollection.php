@@ -53,7 +53,7 @@ class AnimeRankingCollection extends Collection
   public function __construct($page, $sort) {
 
     // Set the cache key that will be used to find the cache
-    $cache_key = 'anime/ranking/' . ($mapping['sort'][$sort] ?? 'all') . '/' . (string)(int)$page;
+    $cache_key = 'anime/ranking/' . ($this->mapping['sort'][$sort] ?? 'all') . '/' . (string)(int)$page;
 
     // Initiate a DataBuilder.
     $data_builder = new DataBuilder();
@@ -140,10 +140,10 @@ class AnimeRankingCollection extends Collection
    */
   private function prepare_sort_parameter($sort) {
 
-    $sort = $mapping['sort'][$sort] ?? 'all';
+    $sort = $this->mapping['sort'][$sort] ?? 'all';
    
     return [
-      'sort' => $sort
+      'type' => $sort
     ];
     
   }
