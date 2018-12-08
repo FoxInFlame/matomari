@@ -10,6 +10,7 @@
 
 namespace Matomari\Collections;
 
+use Sunra\PhpSimple\HtmlDomParser;
 use GuzzleHttp\Client;
 use Matomari\Exceptions\MatomariError;
 use Matomari\Collections\Collection;
@@ -62,9 +63,12 @@ class MangaInfoCollection extends Collection
         throw new MatomariError('MAL is currently under maintenance. Please wait and retry.', 503);
       }
 
-      // Return the Data Arary and the Cache Timeout in seconds.
+      // Parse the body data.
+      $body_array = (new MangaInfoParser(new HtmlDomParser()))->parse($body);
+
+      // Return the Data Array and the Cache Timeout in seconds.
       return [
-        MangaInfoParser::parse($body),
+        $body_array,
         3600
       ];
 

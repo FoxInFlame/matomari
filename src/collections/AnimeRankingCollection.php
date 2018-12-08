@@ -10,6 +10,7 @@
 
 namespace Matomari\Collections;
 
+use Sunra\PhpSimple\HtmlDomParser;
 use GuzzleHttp\Client;
 use Matomari\Exceptions\MatomariError;
 use Matomari\Collections\Collection;
@@ -82,9 +83,12 @@ class AnimeRankingCollection extends Collection
         throw new MatomariError('MAL is currently under maintenance. Please wait and retry.', 503);
       }
 
+      // Parse the body data.
+      $body_array = (new AnimeRankingParser(new HtmlDomParser()))->parse($body);
+
       // Return the Data Array and the Cache Timeout in seconds.
       return [
-        AnimeRankingParser::parse($body),
+        $body_array,
         3600
       ];
 

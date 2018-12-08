@@ -10,6 +10,8 @@
 
 namespace Matomari\Parsers;
 
+use Sunra\PhpSimple\HtmlDomParser;
+
 /**
  * The base class for all parsers.
  * 
@@ -18,6 +20,22 @@ namespace Matomari\Parsers;
  */
 class Parser
 {
+
+  /**
+   * Parser class to be used for parsing HTML data.
+   * @var HtmlDomParser
+   */
+  protected $parser;
+
+  /**
+   * @param HtmlDomParser Parser class to be used
+   * @since 0.5
+   */
+  public function __construct(HtmlDomParser $parser) {
+
+    $this->parser = $parser;
+
+  }
   
   /**
    * Retrieve the model.

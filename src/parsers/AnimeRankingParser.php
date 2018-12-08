@@ -10,7 +10,6 @@
 
 namespace Matomari\Parsers;
 
-use Sunra\PhpSimple\HtmlDomParser;
 use Matomari\Parsers\Parser;
 use Matomari\Exceptions\MatomariError;
 use Matomari\Components\Time;
@@ -33,9 +32,9 @@ class AnimeRankingParser extends Parser
    * @return Array
    * @since 0.5
    */
-  public static function parse($response) {
+  public function parse($response) {
 
-    $html = HtmlDomParser::str_get_html($response);
+    $html = $this->parser->str_get_html($response);
 
     if(!is_object($html)) {
       throw new MatomariError('The code for MAL is not valid HTML.', 502);
@@ -66,7 +65,7 @@ class AnimeRankingParser extends Parser
    * @return Array
    * @since 0.5 
    */
-  private static function parseResult($result) {
+  private function parseResult($result) {
 
     $td_rank = $result->find('td', 0);
     $td_mostinformationhere = $result->find('td', 1);

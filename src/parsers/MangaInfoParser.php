@@ -10,7 +10,6 @@
 
 namespace Matomari\Parsers;
 
-use Sunra\PhpSimple\HtmlDomParser;
 use Matomari\Parsers\Parser;
 use Matomari\Exceptions\MatomariError;
 use Matomari\Components\Time;
@@ -33,9 +32,9 @@ class MangaInfoParser extends Parser
    * @return MangaInfo
    * @since 0.5
    */
-  public static function parse($response) {
+  public function parse($response) {
 
-    $html = HtmlDomParser::str_get_html($response);
+    $html = $this->parser->str_get_html($response);
 
     if(!is_object($html)) {
       throw new MatomariError('The code for MAL is not valid HTML.', 502);
@@ -93,7 +92,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Integer
    */
-  private static function parseId($html) {
+  private function parseId($html) {
 
     return (int)$html->find('div#contentWrapper #editdiv input[name="mid"]', 0)->value;
   
@@ -106,7 +105,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return String
    */
-  private static function parseName($html) {
+  private function parseName($html) {
 
     return $html->find('div#contentWrapper div h1.h1 span', 0)->innertext;
   
@@ -120,7 +119,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return String
    */
-  private static function parseMalUrl($html) {
+  private function parseMalUrl($html) {
 
     return 'https://myanimelist.net' . 
     $html->find('div#contentWrapper #content #horiznav_nav ul li a', 0)->href;
@@ -135,7 +134,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return String
    */
-  private static function parseImageUrl($html) {
+  private function parseImageUrl($html) {
 
     // Only when an image exists can we start parsing.
     if($html->find('div#contentWrapper div#content table div a img.ac', 0)) {
@@ -171,7 +170,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Float
    */
-  private static function parseScore($html) {
+  private function parseScore($html) {
 
     $element = $html->find('div#contentWrapper div#content div.anime-detail-header-stats .score', 0);
     if(trim($element->plaintext) !== 'N/A') {
@@ -188,7 +187,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Integer
    */
-  private static function parseRank($html) {
+  private function parseRank($html) {
 
     $element = $html->find('div#contentWrapper div#content div.anime-detail-header-stats span.ranked strong', 0);
     if(trim($element->plaintext) !== 'N/A') {
@@ -205,7 +204,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Integer
    */
-  private static function parsePopularity($html) {
+  private function parsePopularity($html) {
     
     $element = $html->find('div#contentWrapper div#content div.anime-detail-header-stats span.popularity strong', 0);
     if($element->plaintext != 'N/A') {
@@ -222,7 +221,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return String
    */
-  private static function parseSynopsis($html) {
+  private function parseSynopsis($html) {
 
     $element = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]', 0);
     if($element && strpos($element->innertext, 'No synopsis has been added yet') === false) {
@@ -241,7 +240,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Array
    */
-  private static function parseEnglishTitles($html) {
+  private function parseEnglishTitles($html) {
 
     $alternativeTitleGroups = $html->find('div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad');
     foreach($alternativeTitleGroups as $value) {
@@ -264,7 +263,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Array
    */
-  private static function parseJapaneseTitles($html) {
+  private function parseJapaneseTitles($html) {
 
     $alternativeTitleGroups = $html->find('div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad');
     foreach($alternativeTitleGroups as $value) {
@@ -287,7 +286,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Array
    */
-  private static function parseSynonymousTitles($html) {
+  private function parseSynonymousTitles($html) {
 
     $alternativeTitleGroups = $html->find('div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad');
     foreach($alternativeTitleGroups as $value) {
@@ -309,7 +308,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return String
    */
-  private static function parseType($html) {
+  private function parseType($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -332,7 +331,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Integer
    */
-  private static function parseVolumes($html) {
+  private function parseVolumes($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -355,7 +354,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Integer
    */
-  private static function parseChapters($html) {
+  private function parseChapters($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -378,7 +377,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return String
    */
-  private static function parsePublishStatus($html) {
+  private function parsePublishStatus($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -404,7 +403,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Array\String
    */
-  private static function parsePublishDates($html) {
+  private function parsePublishDates($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     $publish_dates = [];
@@ -450,7 +449,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Array
    */
-  private static function parseAuthors($html) {
+  private function parseAuthors($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -483,7 +482,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Array
    */
-  private static function parseSerialization($html) {
+  private function parseSerialization($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -517,7 +516,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return String
    */
-  private static function parseGenres($html) {
+  private function parseGenres($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -554,7 +553,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Integer
    */
-  private static function parseMembersScored($html) {
+  private function parseMembersScored($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -577,7 +576,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Integer
    */
-  private static function parseMembersInList($html) {
+  private function parseMembersInList($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -598,7 +597,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Integer
    */
-  private static function parseMembersFavorited($html) {
+  private function parseMembersFavorited($html) {
 
     $sidebarInformation = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom div');
     foreach($sidebarInformation as $value) {
@@ -616,7 +615,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return String
    */
-  private static function parseBackground($html) {
+  private function parseBackground($html) {
 
     $background_td = $html->find('div#contentWrapper div#content .js-scrollfix-bottom-rel table td', 0);
     $background_td_section = explode('</h2>', $background_td->innertext)[2];
@@ -634,7 +633,7 @@ class MangaInfoParser extends Parser
    * @param Simple_html_dom $html
    * @return Array
    */
-  private static function parseRelations($html) {
+  private function parseRelations($html) {
 
     $relation_td = $html->find('div#contentWrapper .js-scrollfix-bottom-rel .anime_detail_related_anime tbody', 0);
     $relation_sequel = $relation_prequel
