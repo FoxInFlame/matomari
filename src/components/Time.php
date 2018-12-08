@@ -35,14 +35,13 @@ class Time
   /**
    * Convert 'Now' to the current time.
    * 
-   * @param String $string The string... which is literally just 'Now'...
-   * @return Array(DateTime, String)
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5 
    */
-  private static function convert_now_string($string) {
+  private static function convert_now_string() {
 
     $date = new DateTime(null);
-    return [$date, 'Y-m-d\TH:i:sO'];
+    return [$date, 'Y-m-d\TH:i:sO', []];
     // return $date->format('Y-m-d\TH:i:sO');
 
   }
@@ -51,7 +50,7 @@ class Time
    * Convert 'Today, 2:48 AM' into the correct DateTime.
    * 
    * @param String $string
-   * @return DateTime
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
   private static function convert_today_string($string) {
@@ -67,7 +66,7 @@ class Time
    * Convert 'Yesterday, 4:47 PM' into correct DateTime.
    * 
    * @param String $string
-   * @return DateTime
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5 
    */
   private static function convert_yesterday_string($string) {
@@ -85,7 +84,7 @@ class Time
    * Convert 'something units ago' to its DateTime.
    * 
    * @param String $string
-   * @return DateTime
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
   private static function convert_ago_string($string) {
@@ -160,7 +159,7 @@ class Time
    *      Feb 24, 9:29 AM
    * 
    * @param String $string
-   * @return DateTime
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
   private static function convert_exact_date_string($string) {
@@ -190,7 +189,7 @@ class Time
    *      April, 2018
    * 
    * @param String $string
-   * @return DateTime
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
   private static function convert_date_no_time_string($string) {
@@ -216,7 +215,7 @@ class Time
    * e.g. 09/09/2016 at 04:35
    * 
    * @param String $string
-   * @return DateTime
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
   private static function convert_slash_date_string($string) {
@@ -233,7 +232,7 @@ class Time
    * e.g. 09-??-15
    * 
    * @param String $string
-   * @return DateTime
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
   private static function convert_search_date_string($string) {
@@ -335,7 +334,7 @@ class Time
    * e.g. 2018
    * 
    * @param String $string
-   * @return DateTime
+   * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
   private static function convert_year_string($string) {
