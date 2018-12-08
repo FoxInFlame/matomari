@@ -111,7 +111,7 @@ class MangaRankingParser extends Parser
 
     // The Score
     // <span class="text on">9.31</span>
-    if(trim($td_score->innertext) !== 'N/A') {
+    if(trim($td_score->find('span', 0)->innertext) !== 'N/A') {
       $manga->set('score', (float)trim($td_score->find('span', 0)->innertext));
     }
 
@@ -133,27 +133,31 @@ class MangaRankingParser extends Parser
     }
 
     // The Volumes
-    if(trim($td_mostinformationhere->find('.information text', 0)->innertext) !== '-') {
+    if(trim($td_mostinformationhere->find('.information text', 0)->innertext) !== '?') {
       preg_match_all('/\((.*) vols\)/',
         $td_mostinformationhere->find('.information text', 0)->innertext, $matches);
 
       $manga->set('volumes', (int)strtolower(trim($matches[1][0])));
     }
 
+    $mal_publish_dates = $td_mostinformationhere->find('.information text', 1)->innertext;
+
     // The Publish-From Date
-    $manga->set('publish_dates//from', (array)Time::convert(
-      str_replace(' ', ', ', trim(
+    $mal_publish_dates_from = trim(explode(' - ', $mal_publish_dates)[0]);
+    if($mal_publish_dates_from !== '') {
+      $manga->set('publish_dates//from', (array)Time::convert(
         // Time::convert only converts ones with comma between month and year
-        explode(' - ', $td_mostinformationhere->find('.information text', 1)->innertext)[0]
-      ))
-    ));
+        str_replace(' ', ', ', $mal_publish_dates_from)
+      ));
+    }
     
     // The Publish-To Date
-    $manga->set('publish_dates//to', (array)Time::convert(
-      str_replace(' ', ', ', trim(
-        explode(' - ', $td_mostinformationhere->find('.information text', 1)->innertext)[1]
-      ))
-    ));
+    $mal_publish_dates_to = trim(explode(' - ', $mal_publish_dates)[1]);
+    if($mal_publish_dates_to !== '') {
+      $manga->set('publish_dates//to', (array)Time::convert(
+        str_replace(' ', ', ', $mal_publish_dates_to)
+      ));
+    }
     
     // The Members who have it in their list
     $manga->set('members_inlist', (int)str_replace(',', '', 

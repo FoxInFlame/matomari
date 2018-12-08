@@ -111,7 +111,7 @@ class AnimeRankingParser extends Parser
 
     // The Score
     // <span class="text on">9.25</span>
-    if(trim($td_score->innertext) !== 'N/A') {
+    if(trim($td_score->find('span', 0)->innertext) !== 'N/A') {
       $anime->set('score', (float)trim($td_score->find('span', 0)->innertext));
     }
 
@@ -133,27 +133,31 @@ class AnimeRankingParser extends Parser
     }
 
     // The Episodes
-    if(trim($td_mostinformationhere->find('.information text', 0)->innertext) !== '-') {
+    if(trim($td_mostinformationhere->find('.information text', 0)->innertext) !== '?') {
       preg_match_all('/\((.*) eps\)/',
         $td_mostinformationhere->find('.information text', 0)->innertext, $matches);
 
       $anime->set('episodes', (int)strtolower(trim($matches[1][0])));
     }
 
+    $mal_air_dates = $td_mostinformationhere->find('.information text', 1)->innertext;
+    
     // The Air-From Date
-    $anime->set('air_dates//from', (array)Time::convert(
-      str_replace(' ', ', ', trim(
+    $mal_air_date_from = trim(explode(' - ', $mal_air_dates)[0]);
+    if($mal_air_date_from !== '') {
+      $anime->set('air_dates//from', (array)Time::convert(
         // Time::convert only converts ones with comma between month and year
-        explode(' - ', $td_mostinformationhere->find('.information text', 1)->innertext)[0]
-      ))
-    ));
+        str_replace(' ', ', ', $mal_air_date_from)
+      ));
+    }
     
     // The Air-To Date
-    $anime->set('air_dates//to', (array)Time::convert(
-      str_replace(' ', ', ', trim(
-        explode(' - ', $td_mostinformationhere->find('.information text', 1)->innertext)[1]
-      ))
-    ));
+    $mal_air_date_to = trim(explode(' - ', $mal_air_dates)[1]);
+    if($mal_air_date_to !== '') {
+      $anime->set('air_dates//to', (array)Time::convert(
+        str_replace(' ', ', ', $mal_air_date_to)
+      ));
+    }
     
     // The Members who have it in their list
     $anime->set('members_inlist', (int)str_replace(',', '', 
