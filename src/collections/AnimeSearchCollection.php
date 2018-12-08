@@ -288,7 +288,7 @@ class AnimeSearchCollection extends Collection
       } else if($filter_name === 'genres') {
         $filter_parameter === $this->prepare_genre_filter_parameter($filter_value);
       } else if($filter_name ==='exclude_genres') {
-        if($filter_value) $filter_param = ['gx' => '1'];
+        if($filter_value) $filter_parameter = ['gx' => '1'];
       } else continue;
 
       $filter_parameters = $filter_parameters + $filter_parameter;
@@ -310,11 +310,11 @@ class AnimeSearchCollection extends Collection
   private function prepare_simple_filter_parameter($url_key, $mapping_key, $value, $array = false) {
 
     // If the URL mapping for the segment key exists, use it, if not use the 'default' key.
+    $mapping_value = 'default';
     if(isset($this->mapping[$mapping_key][strtolower($value)])) {
-      $url_value = $this->mapping[$mapping_key][strtolower($value)];
-    } else {
-      $url_value = $this->mapping[$mapping_key]['default'];
+      $mapping_value = strtolower($value);
     }
+    $url_value = $this->mapping[$mapping_key][$mapping_value];
 
     return [
       $url_key => ($array ? [$url_value] : $url_value)
