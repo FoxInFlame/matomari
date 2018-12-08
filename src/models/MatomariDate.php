@@ -14,6 +14,7 @@ namespace Matomari\Models;
  * @OAS\Schema(
  *   title="Matomari Date",
  *   schema="MatomariDate",
+ *   description="(Keys that are not present indicate that the data is not available in the particular endpoint. Values that are null indicate an unknown value)",
  *   type="object",
  *   nullable=true,
  *   required={"iso8601"},
