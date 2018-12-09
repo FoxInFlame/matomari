@@ -925,6 +925,7 @@ class AnimeInfoParser extends Parser
       $episodes = [];
       if($episodes_str !== '') {
         foreach(explode(', ', $episodes_str) as $episode) {
+          // TODO: Theme songs with no end yet (currently airing) has 0 as the value of "to". Should fix.
           if(strpos($episode, '-') !== false) {
             // Is a range
             array_push($episodes, [
