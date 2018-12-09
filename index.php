@@ -95,7 +95,7 @@
         </g>
       </svg>
       </div>
-      <a href="/docs/0.4/" id="cta_main">Start using the matomari API</a>
+      <a href="/docs/" id="cta_main">Go to the docs</a>
     </div>
     <!--<script>
     window.setTimeout(function() {

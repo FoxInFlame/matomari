@@ -30,8 +30,9 @@ body {
   margin-left: auto;
   width: 206px;
   height: 159px;
-  opacity: 0;
+  opacity: 1; /* was 0 */
   transition: margin-top 1000ms ease-in-out;
+  margin-top: calc(-3rem - 50px); /* was nothing */
 }
 
 #logo.animateSVG {
@@ -255,19 +256,12 @@ body {
   text-decoration: none;
   outline: none;
   color: black;
-  opacity: 0;
+  opacity: 1; /* was 0 */
   box-shadow: none;
   transition: background 200ms ease-out, box-shadow 200ms ease-out, padding 200ms ease-out, opacity 0.3s ease-in;
 }
 
 #cta_main:hover {
-  padding: 1rem 2rem;
-  background: -ms-linear-gradient(bottom left, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* ie10+ */
-  background: -moz-linear-gradient(bottom left, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* ff3.6+ */
-  background: -o-linear-gradient(bottom left, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* opera 11.10+ */
-  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(229, 229, 229, 1)), color-stop(100%, rgba(255, 255, 255, 1))); /* safari4+,chrome 10 */
-  background: -webkit-linear-gradient(bottom left, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* safari5.1+,chrome11+ */
-  background: linear-gradient(to top right, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%); /* w3c */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#e5e5e5',GradientType=1 ); /* ie6-9 */
+  background: rgba(255,255,255,1);
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
 }
