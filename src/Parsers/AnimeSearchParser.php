@@ -90,7 +90,8 @@ class AnimeSearchParser extends Parser
 
     // The Name
     // <strong>Neon Genesis Evangelion: The End of Evangelion</strong>
-    $anime->set('name', (string)$td_name->find('a.hoverinfo_trigger strong', 0)->innertext);
+    $anime->set('name', (string)html_entity_decode(
+      $td_name->find('a.hoverinfo_trigger strong', 0)->innertext, ENT_QUOTES));
 
     // The MAL URL
     // <a class='hoverinfo_trigger fw-b fl-l' href='https://myanimelist.net/anime/32/Neon_Genesis_Evangelion__The_End_of_Evangelion' id='sinfo32' rel='#sinfo32' style='display: inline-block;'>

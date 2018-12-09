@@ -125,7 +125,8 @@ class AnimeInfoParser extends Parser
    */
   private function parseName($html) {
 
-    return $html->find('div#contentWrapper div h1.h1 span', 0)->innertext;
+    return html_entity_decode(
+      $html->find('div#contentWrapper div h1.h1 span', 0)->innertext, ENT_QUOTES);
   
   }
 
@@ -242,7 +243,7 @@ class AnimeInfoParser extends Parser
 
     $element = $html->find('div#contentWrapper div#content div.js-scrollfix-bottom-rel table td span[itemprop=description]', 0);
     if($element && strpos($element->innertext, 'No synopsis has been added yet') === false) {
-      return (string)htmlspecialchars_decode(html_entity_decode(trim($element->innertext), 0, 'UTF-8'));
+      return (string)htmlspecialchars_decode(html_entity_decode(trim($element->innertext), ENT_QUOTES));
     }
   }
 
@@ -262,7 +263,8 @@ class AnimeInfoParser extends Parser
     $alternativeTitleGroups = $html->find('div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad');
     foreach($alternativeTitleGroups as $value) {
       if(strpos($value->plaintext, 'English:') !== false) {
-        return explode(', ', trim($value->find('text', 2)->innertext));
+        return explode(', ', html_entity_decode(
+          trim($value->find('text', 2)->innertext), ENT_QUOTES));
       }
     }
     return [];
@@ -285,7 +287,8 @@ class AnimeInfoParser extends Parser
     $alternativeTitleGroups = $html->find('div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad');
     foreach($alternativeTitleGroups as $value) {
       if(strpos($value->plaintext, 'Japanese:') !== false) {
-        return explode(', ', trim($value->find('text', 2)->innertext));
+        return explode(', ', html_entity_decode(
+          trim($value->find('text', 2)->innertext), ENT_QUOTES));
       }
     }
     return [];
@@ -308,7 +311,8 @@ class AnimeInfoParser extends Parser
     $alternativeTitleGroups = $html->find('div#contentWrapper div#content table div.js-scrollfix-bottom .spaceit_pad');
     foreach($alternativeTitleGroups as $value) {
       if(strpos($value->plaintext, 'Synonyms:') !== false) {
-        return explode(', ', trim($value->find('text', 2)->innertext));
+        return explode(', ', html_entity_decode(
+          trim($value->find('text', 2)->innertext), ENT_QUOTES));
       }
     }
     return [];
@@ -504,7 +508,7 @@ class AnimeInfoParser extends Parser
           foreach($value->find('a') as $producer) {
             $reference = new BriefReferenceModel();
             $reference->set('id', (int)explode('/', $producer->href)[3]);
-            $reference->set('name', $producer->innertext);
+            $reference->set('name', html_entity_decode($producer->innertext, ENT_QUOTES));
             array_push($producers_arr, $reference->asArray());
           }
         }
@@ -534,7 +538,7 @@ class AnimeInfoParser extends Parser
           foreach($value->find('a') as $licensor) {
             $reference = new BriefReferenceModel();
             $reference->set('id', (int)explode('/', $licensor->href)[3]);
-            $reference->set('name', $licensor->innertext);
+            $reference->set('name', html_entity_decode($licensor->innertext, ENT_QUOTES));
             array_push($licensors_arr, $reference->asArray());
           }
         }
@@ -565,7 +569,7 @@ class AnimeInfoParser extends Parser
           foreach($value->find('a') as $studio) {
             $reference = new BriefReferenceModel();
             $reference->set('id', (int)explode('/', $studio->href)[3]);
-            $reference->set('name', $studio->innertext);
+            $reference->set('name', html_entity_decode($studio->innertext, ENT_QUOTES));
             array_push($studios_arr, $reference->asArray());
           }
         }
@@ -800,7 +804,7 @@ class AnimeInfoParser extends Parser
     $background_td_section = explode('</h2>', $background_td->innertext)[2];
     $background = explode('<h2', explode('<div', $background_td_section)[0])[0];
     if(strpos($background, 'No background information has been added to this title') === false) {
-      return trim($background);
+      return html_entity_decode(trim($background), ENT_QUOTES);
     }
 
   }
@@ -833,7 +837,7 @@ class AnimeInfoParser extends Parser
         foreach($relation_row->find('td a') as $relation_item) {
           $reference = new BriefReferenceModel();
           $reference->set('id', (int)explode('/', $relation_item->href)[2]);
-          $reference->set('name', (string)$relation_item->innertext);
+          $reference->set('name', (string)html_entity_decode($relation_item->innertext, ENT_QUOTES));
           switch(strtolower(substr($relation_row->find('td text', 0)->innertext, 0, -1))) {
             case 'sequel':
               array_push($relation_sequel, $reference->asArray());
@@ -911,7 +915,7 @@ class AnimeInfoParser extends Parser
       $theme_song = [
         // TODO: Maybe change this to explode by '&quot; by' and then explode again
         // But will do only if there are bug reports
-        'name' => explode('&quot;', $opening->innertext)[1],
+        'name' => html_entity_decode(explode('&quot;', $opening->innertext)[1], ENT_QUOTES),
         // Artist cannot contain a parenthesis so we can use it to split artists
         // View more: https://myanimelist.net/dbchanges.php?aid=14131&t=theme
         'artist' => explode(' (', explode('&quot; by ', preg_replace('!\s+!', ' ', $opening->innertext))[1])[0]
@@ -958,7 +962,7 @@ class AnimeInfoParser extends Parser
       $theme_song = [
         // TODO: Maybe change this to explode by '&quot; by' and then explode again
         // But will do only if there are bug reports
-        'name' => explode('&quot;', $ending->innertext)[1],
+        'name' => html_entity_decode(explode('&quot;', $ending->innertext)[1], ENT_QUOTES),
         // Artist cannot contain a parenthesis so we can use it to split artists
         // View more: https://myanimelist.net/dbchanges.php?aid=14131&t=theme
         'artist' => explode(' (', explode('&quot; by ', $ending->innertext)[1])[0]

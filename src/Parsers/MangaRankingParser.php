@@ -81,7 +81,8 @@ class MangaRankingParser extends Parser
 
     // The Name
     // <a class="hoverinfo_trigger fs14 fw-b" href="https://myanimelist.net/manga/2/Berserk" id="#area2" rel="#info2" style="display: inline-block;">Berserk</a>
-    $manga->set('name', (string)$td_mostinformationhere->find('.detail a', 0)->innertext);
+    $manga->set('name', (string)html_entity_decode(
+      $td_mostinformationhere->find('.detail a', 0)->innertext, ENT_QUOTES));
 
     // The MAL URL
     // <a class="hoverinfo_trigger fs14 fw-b" href="https://myanimelist.net/manga/2/Berserk" id="#area2" rel="#info2" style="display: inline-block;">Berserk</a>

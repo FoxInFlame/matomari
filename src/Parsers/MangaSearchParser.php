@@ -90,7 +90,8 @@ class MangaSearchParser extends Parser
 
     // The Name
     // <strong>Loveless</strong>
-    $manga->set('name', (string)$td_name->find('a.hoverinfo_trigger strong', 0)->innertext);
+    $manga->set('name', (string)html_entity_decode(
+      $td_name->find('a.hoverinfo_trigger strong', 0)->innertext, ENT_QUOTES));
 
     // The MAL URL
     // <a class='hoverinfo_trigger fw-b' href='https://myanimelist.net/manga/90/Loveless' id='sinfo90' rel='#sinfo90' style='display: inline-block;'>

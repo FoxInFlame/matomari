@@ -81,7 +81,8 @@ class AnimeRankingParser extends Parser
 
     // The Name
     // <a href="https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood" class="hovertitle">Fullmetal Alchemist: Brotherhood (2009)</a>
-    $anime->set('name', (string)$td_mostinformationhere->find('.detail a', 0)->innertext);
+    $anime->set('name', (string)html_entity_decode(
+      $td_mostinformationhere->find('.detail a', 0)->innertext, ENT_QUOTES));
 
     // The MAL URL
     // <a href="https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood" class="hovertitle">Fullmetal Alchemist: Brotherhood (2009)</a>
