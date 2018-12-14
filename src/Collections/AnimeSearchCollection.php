@@ -146,6 +146,8 @@ class AnimeSearchCollection extends Collection
         'http_errors' => false,
         'query' => $parameters
       ]);
+
+      print_r($parameters);
       
 
       if($response->getStatusCode() === 429) {
@@ -286,7 +288,7 @@ class AnimeSearchCollection extends Collection
       } else if($filter_name === 'letter') {
         $filter_parameter = $this->prepare_letter_filter_parameter($filter_value);
       } else if($filter_name === 'genres') {
-        $filter_parameter === $this->prepare_genre_filter_parameter($filter_value);
+        $filter_parameter = $this->prepare_genre_filter_parameter($filter_value);
       } else if($filter_name ==='exclude_genres') {
         if($filter_value) $filter_parameter = ['gx' => '1'];
       } else continue;
@@ -303,7 +305,7 @@ class AnimeSearchCollection extends Collection
    * @param String $url_key The key for the URL segment to be generated
    * @param String $mapping_key The key to find the key=>value mappings for the URL segment
    * @param String $value The value of the filter that is to be searched in the mapping.
-   * @param Boolean $arary Return the value as an array, used for genres
+   * @param Boolean $array Return the value as an array, used for genres
    * @return Array
    * @since 0.5
    */
@@ -419,6 +421,8 @@ class AnimeSearchCollection extends Collection
    */
   private function prepare_genre_filter_parameter($value) {
     
+    print_r($value);
+
     $genre_parameters = [
       'genre' => [] // Initiate an empty genre array inside so that only one genre still makes it an
                     // array and not a single value
