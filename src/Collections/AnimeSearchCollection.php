@@ -147,9 +147,6 @@ class AnimeSearchCollection extends Collection
         'query' => $parameters
       ]);
 
-      print_r($parameters);
-      
-
       if($response->getStatusCode() === 429) {
         throw new MatomariError('Too many frequent requests. Please wait and retry.', 429);
       } else if($response->getStatusCode() === 404) {
@@ -420,8 +417,6 @@ class AnimeSearchCollection extends Collection
    * @since 0.5
    */
   private function prepare_genre_filter_parameter($value) {
-    
-    print_r($value);
 
     $genre_parameters = [
       'genre' => [] // Initiate an empty genre array inside so that only one genre still makes it an
