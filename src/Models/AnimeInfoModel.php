@@ -689,13 +689,22 @@ class AnimeInfoModel extends Model
    *     type="string",
    *     description="The browser URL for the anime on AnimeNewsNetwork.com",
    *     example="https://animenewsnetwork.com/encyclopedia/anime.php?id=5334"
+   *   ),
+   *   @OA\Property(
+   *     property="anilist",
+   *     type="string",
+   *     description="The browser URL for the anime on AniList.co",
+   *     example="https://anilist.co/anime/20812"
+   *   ),
+   *   @OA\Property(
+   *     property="kitsu",
+   *     type="string",
+   *     description="The browser URL for the anime on Kitsu.io",
+   *     example="https://kitsu.io/anime/8698"
    *   )
    * )
    * @var Object
    */
-  public $external   = [ // https://myanimelist.net/info.php?go=relationinfo
-    'anidb' => null,
-    'ann' => null
-  ];
+  public $external   = [];
   
 }
