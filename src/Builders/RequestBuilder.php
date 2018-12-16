@@ -58,6 +58,51 @@ class RequestBuilder
   private $accepted_methods = [];
 
   /**
+   * Turn query string into variable array, and return an empty array if no query.
+   * 
+   * @param String $query The part after '?'
+   * @since 0.5
+   */
+  private function queryToGetVariables($query) {
+    if($query) {
+      parse_str($query, $get_variables);
+      return $get_variables;
+    }
+    return [];
+  }
+
+  /**
+   * Turn POST input JSON into variable array, and return an empty array if no query.
+   * 
+   * @param String $post_data Direct content of php://input
+   * @since 0.5
+   */
+  private function inputToPostVariables($post_data) {
+    if($post_data) {
+      return json_decode($post_data, true);
+    }
+    return [];
+  }
+
+  /**
+   * Parse the SERVER variable for Accept headers, and return the type. This will be used for
+   * determining which type of data to respond with.
+   * 
+   * @param Array $server The raw dump of $_SERVER
+   * @since 0.5
+   */
+  private function parseAcceptHeaders($server) {
+    if($server['HTTP_ACCEPT'] === 'application/json') {
+      return 'json';
+    }
+    if($server['HTTP_ACCEPT'] === 'application/xml') {
+      return 'xml';
+    }
+    return 'json';
+  }
+
+
+  /**
    * Build Request, only if the request format fits into one of the predefined $routes
    * 
    * @param Array $server The raw dump of $_SERVER.
@@ -67,19 +112,13 @@ class RequestBuilder
 
     $request_uri = $server['REQUEST_URI'];
     $path = str_replace('/api/0.5', '', explode('?', $request_uri)[0]);
-    $query = explode('?', $request_uri)[1] ?? [];
-    if($query) {
-      parse_str($query, $get_variables);
-    } else {
-      $get_variables = [];
-    }
+    $query = explode('?', $request_uri)[1] ?? ''; // Set to empty string even if ? doesn't exist
+    $get_variables = $this->queryToGetVariables($query);
 
     $post_data = file_get_contents('php://input');
-    if($post_data) {
-      $post_variables = json_decode($post_data, true);
-    } else {
-      $post_variables = [];
-    }
+    $post_variables = $this->inputToPostVariables($post_data);
+
+    $type = $this->parseAcceptHeaders($server);
 
     foreach($this->routes as $key => $route) {
       // Only match exact matches (so not first match)
@@ -90,16 +129,9 @@ class RequestBuilder
         continue;
       }
 
-      if($server['HTTP_ACCEPT'] === 'application/json') {
-        $type = 'json';
-      } else if($server['HTTP_ACCEPT'] === 'application/xml') {
-        $type = 'xml';
-      } else {
-        $type = 'json';
-      }
-
-      // Check requets method.
+      // Check requests method.
       if($server['REQUEST_METHOD'] !== $route[0]) {
+        // The route existed, but the method was different, so tell user with Allow Header.
         array_push($this->accepted_methods, $route[0]);
         continue;
       }

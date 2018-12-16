@@ -264,23 +264,34 @@ class MangaSearchCollection extends Collection
 
       if($filter_value === '') continue;
 
-      if($filter_name === 'type') {
-        $filter_parameter = $this->prepare_simple_filter_parameter('type', 'type', $filter_value);
-      } else if($filter_name === 'score') {
-        $filter_parameter = $this->prepare_score_filter_parameter('score', $filter_value);
-      } else if($filter_name === 'publish_status') {
-        $filter_parameter = $this->prepare_simple_filter_parameter('status', 'publish_status', $filter_value);
-      } else if($filter_name === 'magazine') {
-        throw new MatomariError('Not yet implemented.', 501);
-      } else if($filter_name === 'publish_dates') {
-        $filter_parameter = $this->prepare_dates_filter_parameter($filter_value);
-      } else if($filter_name === 'letter') {
-        $filter_parameter = $this->prepare_letter_filter_parameter($filter_value);
-      } else if($filter_name === 'genres') {
-        $filter_parameter = $this->prepare_genre_filter_parameter($filter_value);
-      } else if($filter_name ==='exclude_genres') {
-        if($filter_value) $filter_parameter = ['gx' => '1'];
-      } else continue;
+      switch($filter_name) {
+        case 'type':
+          $filter_parameter = $this->prepare_simple_filter_parameter('type', 'type', $filter_value);
+          break;
+        case 'score':
+          $filter_parameter = $this->prepare_score_filter_parameter('score', $filter_value);
+          break;
+        case 'publish_status':
+          $filter_parameter = $this->prepare_simple_filter_parameter('status', 'publish_status', $filter_value);
+          break;
+        case 'magazine':
+          throw new MatomariError('Not yet implemented.', 501);
+          break;
+        case 'publish_dates':
+          $filter_parameter = $this->prepare_dates_filter_parameter($filter_value);
+          break;
+        case 'letter':
+          $filter_parameter = $this->prepare_letter_filter_parameter($filter_value);
+          break;
+        case 'genres':
+          $filter_parameter = $this->prepare_genre_filter_parameter($filter_value);
+          break;
+        case 'exclude_genres':
+          if($filter_value) $filter_parameter = ['gx' => '1'];
+          break;
+        default:
+          continue 2;
+      }
 
       $filter_parameters = $filter_parameters + $filter_parameter;
       

@@ -202,11 +202,10 @@ class Model
         $base_property = array_shift($data_levels);
         $temp_arr = &$this->{$base_property}; // Reference operator
         foreach($data_levels as $level) {
-          if(array_key_exists($level, $temp_arr)) {
-            $temp_arr = &$temp_arr[$level];
-          } else {  
+          if(!array_key_exists($level, $temp_arr)) {
             throw new ModelKeyDoesNotExist('Nonexistent set key.');
           }
+          $temp_arr = &$temp_arr[$level];
         }
         $temp_arr = $value;
         break;
