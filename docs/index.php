@@ -10,9 +10,11 @@
     <meta name="twitter:title" content="matomari API - Unofficial MAL API - Documentation">
     <meta name="twitter:description" content="The matomari API is an unofficial MyAnimeList API designed to offer features no other MAL API does!">
     <meta name="twitter:site" content="@FoxInFlame">
+    <link rel="canonical" href="https://www.matomari.tk/docs/">
+    
     <!-- needed for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="canonical" href="https://www.matomari.tk/docs/">
+    <meta name="theme-color" content="#2e51a2"/> <!-- Because fancy colours are nice on Android -->
     <style>
       html, body {
         margin: 0
