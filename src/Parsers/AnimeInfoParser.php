@@ -1033,6 +1033,10 @@ class AnimeInfoParser extends Parser
             $external_links['anidb'] = $source;
           } else if(strpos($source, 'animenewsnetwork') !== false) {
             $external_links['ann'] = $source;
+          } else if(strpos($source, 'anilist') !== false) {
+            $external_links['anilist'] = $source;
+          } else if(strpos($source, 'kitsu') !== false) {
+            $external_links['kitsu'] = $source;
           }
         }
         
