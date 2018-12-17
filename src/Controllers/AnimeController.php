@@ -187,7 +187,7 @@ class AnimeController
    *   @OA\Parameter(
    *     name="air_dates.from.year",
    *     in="query",
-   *     description="The air start year to filter out for",
+   *     description="The earliest air start year to filter out for",
    *     @OA\Schema(
    *       type="string",
    *       example="2014",
@@ -197,7 +197,7 @@ class AnimeController
    *   @OA\Parameter(
    *     name="air_dates.from.month",
    *     in="query",
-   *     description="The air start month to filter out for",
+   *     description="The earliest start month to filter out for",
    *     @OA\Schema(
    *       type="string",
    *       example="8",
@@ -207,7 +207,7 @@ class AnimeController
    *   @OA\Parameter(
    *     name="air_dates.from.day",
    *     in="query",
-   *     description="The air start day to filter out for",
+   *     description="The earliest start day to filter out for",
    *     @OA\Schema(
    *       type="string",
    *       example="31",
@@ -217,7 +217,7 @@ class AnimeController
    *   @OA\Parameter(
    *     name="air_dates.to.year",
    *     in="query",
-   *     description="The air end year to filter out for",
+   *     description="The latest air end year to filter out for",
    *     @OA\Schema(
    *       type="string",
    *       example="2014",
@@ -227,7 +227,7 @@ class AnimeController
    *   @OA\Parameter(
    *     name="air_dates.to.month",
    *     in="query",
-   *     description="The air end month to filter out for",
+   *     description="The latest air end month to filter out for",
    *     @OA\Schema(
    *       type="string",
    *       example="8",
@@ -237,7 +237,7 @@ class AnimeController
    *   @OA\Parameter(
    *     name="air_dates.to.day",
    *     in="query",
-   *     description="The air end day to filter out for",
+   *     description="The latest air end day to filter out for",
    *     @OA\Schema(
    *       type="string",
    *       example="31",

@@ -179,7 +179,7 @@ class MangaController
  *   @OA\Parameter(
  *     name="publish_dates.from.year",
  *     in="query",
- *     description="The publish start year to filter out for",
+ *     description="The earliest publish start year to filter out for",
  *     @OA\Schema(
  *       type="string",
  *       example="2014",
@@ -189,7 +189,7 @@ class MangaController
  *   @OA\Parameter(
  *     name="publish_dates.from.month",
  *     in="query",
- *     description="The publish start month to filter out for",
+ *     description="The earliest publish start month to filter out for",
  *     @OA\Schema(
  *       type="string",
  *       example="8",
@@ -199,7 +199,7 @@ class MangaController
  *   @OA\Parameter(
  *     name="publish_dates.from.day",
  *     in="query",
- *     description="The publish start day to filter out for",
+ *     description="The earliest publish start day to filter out for",
  *     @OA\Schema(
  *       type="string",
  *       example="31",
@@ -209,7 +209,7 @@ class MangaController
  *   @OA\Parameter(
  *     name="publish_dates.to.year",
  *     in="query",
- *     description="The publish end year to filter out for",
+ *     description="The latest publish end year to filter out for",
  *     @OA\Schema(
  *       type="string",
  *       example="2014",
@@ -219,7 +219,7 @@ class MangaController
  *   @OA\Parameter(
  *     name="publish_dates.to.month",
  *     in="query",
- *     description="The publish end month to filter out for",
+ *     description="The latest publish end month to filter out for",
  *     @OA\Schema(
  *       type="string",
  *       example="8",
@@ -229,7 +229,7 @@ class MangaController
  *   @OA\Parameter(
  *     name="publish_dates.to.day",
  *     in="query",
- *     description="The publish end day to filter out for",
+ *     description="The latest publish end day to filter out for",
  *     @OA\Schema(
  *       type="string",
  *       example="31",
