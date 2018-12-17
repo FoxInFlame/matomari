@@ -354,7 +354,7 @@ class MangaController
           ]
         ],
         'letter' => $get_variables['letter'] ?? '',
-        'genres' => explode(',', ($get_variables['genres'] ?? '')),
+        'genres' => array_filter(explode(',', ($get_variables['genres'] ?? ''))), // array_filter removes the empty one-item array that is the result of an empty string explode
         'exclude_genres' => $get_variables['exclude_genres'] ?? ''
       ]
     );

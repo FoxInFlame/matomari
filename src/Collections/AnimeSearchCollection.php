@@ -268,7 +268,7 @@ class AnimeSearchCollection extends Collection
     $filter_parameters = [];
     foreach($filters as $filter_name => $filter_value) {
 
-      if($filter_value === '') continue;
+      if($filter_value === '' || (is_array($filter_value) && empty($filter_value))) continue;
 
       switch($filter_name) {
         case 'type':
