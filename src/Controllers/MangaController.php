@@ -114,7 +114,7 @@ class MangaController
  *   path="/manga/search/{searchQuery}",
  *   tags={"Manga"},
  *   summary="Search for manga",
- *   description="Returns the top results for a general search for manga. It uses the manga.php page.",
+ *   description="Returns the top results for a general search for manga. It uses the manga.php page. While the top few results will most likely be consistent throughout various attempts, second pages onwards may have shuffling results depending on the occasion. This is due to MAL's algorithm, which seemingly looks completely random. Therefore, don't request each page assuming that you will have a consecutive list.",
  *   operationId="searchManga",
  *   @OA\Parameter(
  *     name="searchQuery",

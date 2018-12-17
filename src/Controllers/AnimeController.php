@@ -113,7 +113,7 @@ class AnimeController
    *   path="/anime/search/{searchQuery}",
    *   tags={"Anime"},
    *   summary="Search for anime",
-   *   description="Returns the top results for a general search for anime. It uses the anime.php page.",
+   *   description="Returns the top results for a general search for anime. It uses the anime.php page. While the top few results will most likely be consistent throughout various attempts, second pages onwards may have shuffling results depending on the occasion. This is due to MAL's algorithm, which seemingly looks completely random. Therefore, don't request each page assuming that you will have a consecutive list.",
    *   operationId="searchAnime",
    *   @OA\Parameter(
    *     name="searchQuery",
