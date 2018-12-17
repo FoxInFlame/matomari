@@ -62,7 +62,7 @@ class AnimeRankingCollection extends Collection
     // Retrieve the data from the cache (using $cache_key), or from MAL using the fallback.
     $data_builder->build($cache_key, function() use ($page, $sort) {
 
-      $parameters = $this->prepare_parameters($page, $sort);
+      $parameters = $this->prepareParameters($page, $sort);
 
       $guzzle_client = new Client();
       $response = $guzzle_client->request('GET', 'https://myanimelist.net/topanime.php', [
@@ -106,11 +106,11 @@ class AnimeRankingCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_parameters($page, $sort) {    
+  private function prepareParameters($page, $sort) {    
 
-    $page_parameter = $this->prepare_page_parameter($page);
+    $page_parameter = $this->preparePageParameter($page);
 
-    $sort_parameter = $this->prepare_sort_parameter($sort);
+    $sort_parameter = $this->prepareSortParameter($sort);
 
     return $page_parameter + $sort_parameter;
 
@@ -123,7 +123,7 @@ class AnimeRankingCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_page_parameter($page) {
+  private function preparePageParameter($page) {
     
     // The show parameter is a multiple of 50, and it is how much data is has shown before.
     // So, 0 for the first page, 50 for the second page.
@@ -142,7 +142,7 @@ class AnimeRankingCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_sort_parameter($sort) {
+  private function prepareSortParameter($sort) {
 
     $sort = $this->mapping['sort'][$sort] ?? 'all';
    

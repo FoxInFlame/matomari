@@ -130,10 +130,10 @@ class AnimeSearchCollection extends Collection
   public function __construct($query, $page, $sort, $filters) {
 
     // Create an array of URL parameters for sending the MAL request.
-    $parameters = $this->prepare_parameters($query, $page, $sort, $filters);
+    $parameters = $this->prepareParameters($query, $page, $sort, $filters);
 
     // Generate the cache key using the parameters sent into this function.
-    $cache_key = $this->generate_cache_key($query, $page, $sort, $filters);
+    $cache_key = $this->generateCacheKey($query, $page, $sort, $filters);
 
     // Initiate a DataBuilder.
     $data_builder = new DataBuilder();
@@ -186,15 +186,15 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_parameters($query, $page, $sort, $filters) {
+  private function prepareParameters($query, $page, $sort, $filters) {
 
-    $query_parameter = $this->prepare_query_parameter($query);
+    $query_parameter = $this->prepareQueryParameter($query);
 
-    $page_parameter = $this->prepare_page_parameter($page);
+    $page_parameter = $this->preparePageParameter($page);
 
-    $sort_parameter = $this->prepare_sort_parameter($sort);
+    $sort_parameter = $this->prepareSortParameter($sort);
 
-    $filter_parameters = $this->prepare_filter_parameters($filters);
+    $filter_parameters = $this->prepareFilterParameters($filters);
 
     return [
       'c'=> ['a', 'b', 'c', 'd', 'e', 'f', 'g']
@@ -210,7 +210,7 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_query_parameter($query) {
+  private function prepareQueryParameter($query) {
     
     // MAL does not accept search strings less than 3 bytes, but it somehow accepts spaces.
     if(strlen($query) < 3) {
@@ -230,7 +230,7 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_page_parameter($page) {
+  private function preparePageParameter($page) {
     
     // The show parameter is a multiple of 50, and it is how much data is has shown before.
     // So, 0 for the first page, 50 for the second page.
@@ -250,7 +250,7 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_sort_parameter($sort) {
+  private function prepareSortParameter($sort) {
 
     return [];
     
@@ -263,7 +263,7 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_filter_parameters($filters) {
+  private function prepareFilterParameters($filters) {
     
     $filter_parameters = [];
     foreach($filters as $filter_name => $filter_value) {
@@ -272,29 +272,29 @@ class AnimeSearchCollection extends Collection
 
       switch($filter_name) {
         case 'type':
-          $filter_parameter = $this->prepare_simple_filter_parameter('type', 'type', $filter_value);
+          $filter_parameter = $this->prepareSimpleFilterParameter('type', 'type', $filter_value);
           break;
         case 'score':
-          $filter_parameter = $this->prepare_score_filter_parameter('score', $filter_value);
+          $filter_parameter = $this->prepareScoreFilterParameter('score', $filter_value);
           break;
         case 'air_status':
-          $filter_parameter = $this->prepare_simple_filter_parameter('status',
+          $filter_parameter = $this->prepareSimpleFilterParameter('status',
             'air_status', $filter_value);
           break;
         case 'producer':
           throw new MatomariError('Not yet implemented.', 501);
         case 'classification':
-          $filter_parameter = $this->prepare_simple_filter_parameter('r',
+          $filter_parameter = $this->prepareSimpleFilterParameter('r',
             'classification', $filter_value);
           break;
         case 'air_dates':
-          $filter_parameter = $this->prepare_dates_filter_parameter($filter_value);
+          $filter_parameter = $this->prepareDatesFilterParameter($filter_value);
           break;
         case 'letter':
-          $filter_parameter = $this->prepare_letter_filter_parameter($filter_value);
+          $filter_parameter = $this->prepareLetterFilterParameter($filter_value);
           break;
         case 'genres':
-          $filter_parameter = $this->prepare_genre_filter_parameter($filter_value);
+          $filter_parameter = $this->prepareGenreFilterParameter($filter_value);
           break;
         case 'exclude_genres':
           if($filter_value) $filter_parameter = ['gx' => '1'];
@@ -319,7 +319,7 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_simple_filter_parameter($url_key, $mapping_key, $value, $array = false) {
+  private function prepareSimpleFilterParameter($url_key, $mapping_key, $value, $array = false) {
 
     // If the URL mapping for the segment key exists, use it, if not use the 'default' key.
     $mapping_value = 'default';
@@ -342,7 +342,7 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_score_filter_parameter($url_key, $value) {
+  private function prepareScoreFilterParameter($url_key, $value) {
 
     // If the value is numeric, and is between 1 and 10
     if(is_numeric($value) && (int)$value >= 1 && (int)$value <= 10) {
@@ -363,7 +363,7 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_dates_filter_parameter($value) {
+  private function prepareDatesFilterParameter($value) {
 
     // This is the array that will be returned at the end of this function
     $date_parameters = [];
@@ -407,7 +407,7 @@ class AnimeSearchCollection extends Collection
    * @return Array
    * @since 0.5
    */
-  private function prepare_letter_filter_parameter($value) {
+  private function prepareLetterFilterParameter($value) {
 
     $url_value = [];
     if(strlen($value) === 1) {
@@ -423,13 +423,13 @@ class AnimeSearchCollection extends Collection
   }
 
   /**
-   * Prepare the genre filters from an array of genres. Use prepare_simple_filter_parameter().
+   * Prepare the genre filters from an array of genres. Use prepareSimpleFilterParameter().
    * 
    * @param Array $value Genres to include or exclude
    * @return Array
    * @since 0.5
    */
-  private function prepare_genre_filter_parameter($value) {
+  private function prepareGenreFilterParameter($value) {
 
     $genre_parameters = [
       'genre' => [] // Initiate an empty genre array inside so that only one genre still makes it an
@@ -440,7 +440,7 @@ class AnimeSearchCollection extends Collection
     foreach($value as $genre) {
       $genre_parameters = array_merge_recursive(
         $genre_parameters,
-        $this->prepare_simple_filter_parameter('genre', 'genres', $genre)
+        $this->prepareSimpleFilterParameter('genre', 'genres', $genre)
       );
     }
 
@@ -458,7 +458,7 @@ class AnimeSearchCollection extends Collection
    * @return String
    * @since 0.5
    */
-  private function generate_cache_key($query, $page, $sort, $filters) {
+  private function generateCacheKey($query, $page, $sort, $filters) {
 
     // Hash and cut down the query to a 12 letter string so it doesn't trigger a Too Long Key error.
     $query = substr(base_convert(md5($query), 16, 32), 0, 12);

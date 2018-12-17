@@ -38,7 +38,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5 
    */
-  private static function convert_now_string() {
+  private static function convertNowString() {
 
     $date = new DateTime(null);
     return [$date, 'Y-m-d\TH:i:sO', []];
@@ -53,7 +53,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
-  private static function convert_today_string($string) {
+  private static function convertTodayString($string) {
     
     $date = DateTime::createFromFormat('g:i A', substr($string, 7), new DateTimeZone(self::$tz_mal));
 
@@ -69,7 +69,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5 
    */
-  private static function convert_yesterday_string($string) {
+  private static function convertYesterdayString($string) {
 
     $date = DateTime::createFromFormat('g:i A', substr($string, 11), new DateTimeZone(self::$tz_mal));
     $date->modify('-1 day');
@@ -87,7 +87,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
-  private static function convert_ago_string($string) {
+  private static function convertAgoString($string) {
 
     // Current time
     $date = new DateTime(null);
@@ -162,7 +162,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
-  private static function convert_exact_date_string($string) {
+  private static function convertExactDateString($string) {
 
     if(strlen($string) > 15) {
 
@@ -192,7 +192,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
-  private static function convert_date_no_time_string($string) {
+  private static function convertDateNoTimeString($string) {
 
     if(strlen(explode(', ', $string)[0]) > 3) {
 
@@ -218,7 +218,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
-  private static function convert_slash_date_string($string) {
+  private static function convertSlashDateString($string) {
 
     $date = DateTime::createFromFormat('!m/d/Y at H:i', $string, new DateTimeZone(self::$tz_mal));
     
@@ -235,7 +235,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
-  private static function convert_search_date_string($string) {
+  private static function convertSearchDateString($string) {
 
     if(preg_match('/(?:^|\s|$)\d{2}-\d{2}-\d{2}(?:^|\s|$)/', $string, $matches)) {
 
@@ -337,7 +337,7 @@ class Time
    * @return Array (DateTime Object, Format String, Array of Exceptions)
    * @since 0.5
    */
-  private static function convert_year_string($string) {
+  private static function convertYearString($string) {
 
     $date = DateTime::createFromFormat('!Y', $string);
 
@@ -357,40 +357,40 @@ class Time
     
     if(strpos($string, 'Now') !== false) {
 
-      list($date, $format, $exceptions) = self::convert_now_string($string);
+      list($date, $format, $exceptions) = self::convertNowString($string);
 
     } else if(strpos($string, 'Today') !== false) {
 
-      list($date, $format, $exceptions) = self::convert_today_string($string);
+      list($date, $format, $exceptions) = self::convertTodayString($string);
 
     } else if(strpos($string, 'Yesterday') !== false) {
 
-      list($date, $format, $exceptions) = self::convert_yesterday_string($string);
+      list($date, $format, $exceptions) = self::convertYesterdayString($string);
 
     } else if(strpos($string, 'ago') !== false) {
 
       // Note that these are returning approximate values.
-      list($date, $format, $exceptions) = self::convert_ago_string($string);
+      list($date, $format, $exceptions) = self::convertAgoString($string);
 
     } else if(strpos($string, 'AM') !== false ||strpos($string, 'PM') !== false) {
 
-      list($date, $format, $exceptions) = self::convert_exact_date_string($string);
+      list($date, $format, $exceptions) = self::convertExactDateString($string);
 
     } else if(strpos($string, ', ') !== false) {
 
-      list($date, $format, $exceptions) = self::convert_date_no_time_string($string);
+      list($date, $format, $exceptions) = self::convertDateNoTimeString($string);
 
     } else if(strpos($string, '/') !== false) {
 
-      list($date, $format, $exceptions) = self::convert_slash_date_string($string);
+      list($date, $format, $exceptions) = self::convertSlashDateString($string);
 
     } else if(strpos($string, '-') !== false && strlen($string) === 8) {
 
-      list($date, $format, $exceptions) = self::convert_search_date_string($string);
+      list($date, $format, $exceptions) = self::convertSearchDateString($string);
 
     } else {
       
-      list($date, $format, $exceptions) = self::convert_year_string($string);
+      list($date, $format, $exceptions) = self::convertYearString($string);
 
     }
 
@@ -400,7 +400,7 @@ class Time
 
     $date->setTimeZone(new DateTimeZone(self::$tz_final));
     
-    return self::convert_datetime_array($date, $format, $exceptions);
+    return self::convertDateTimeArray($date, $format, $exceptions);
     
   }
 
@@ -414,7 +414,7 @@ class Time
    * @return Array
    * @since 0.5
    */
-  private static function convert_datetime_array($date, $format, $exceptions) {
+  private static function convertDateTimeArray($date, $format, $exceptions) {
 
     $date_array = [];
 
