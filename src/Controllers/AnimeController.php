@@ -151,7 +151,7 @@ class AnimeController
    *   @OA\Parameter(
    *     name="score",
    *     in="query",
-   *     description="The base integer of the community score of anime to filter for",
+   *     description="The least base integer of the community score of anime to filter for",
    *     @OA\Schema(
    *       type="integer",
    *       minimum="1",

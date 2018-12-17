@@ -152,7 +152,7 @@ class MangaController
  *   @OA\Parameter(
  *     name="score",
  *     in="query",
- *     description="The base integer of the community score of manga to filter for",
+ *     description="The least base integer of the community score of manga to filter for",
  *     @OA\Schema(
  *       type="integer",
  *       minimum="1",
