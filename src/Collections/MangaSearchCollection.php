@@ -341,7 +341,7 @@ class MangaSearchCollection extends Collection
       $url_value = '0';
     }
     return [
-      $url_key = $url_value
+      $url_key => $url_value
     ];
 
   }
