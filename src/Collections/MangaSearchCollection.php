@@ -366,19 +366,19 @@ class MangaSearchCollection extends Collection
         $parameter_prefix = 'e';
       }
 
-      if(is_int($date_array['year'])) {
+      if(is_numeric($date_array['year'])) {
         $date_parameters[$parameter_prefix . 'y'] = $date_array['year'];
       } else {
         $date_parameters[$parameter_prefix . 'y'] = '0';
       }
 
-      if(is_int($date_array['month'])) {
+      if(is_numeric($date_array['month'])) {
         $date_parameters[$parameter_prefix . 'm'] = $date_array['month'];
       } else {
         $date_parameters[$parameter_prefix . 'm'] = '0';
       }
 
-      if(is_int($date_array['day'])) {
+      if(is_numeric($date_array['day'])) {
         $date_parameters[$parameter_prefix . 'd'] = $date_array['day'];
       } else {
         $date_parameters[$parameter_prefix . 'd'] = '0';
