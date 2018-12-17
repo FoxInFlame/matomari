@@ -1,0 +1,94 @@
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: -ms-linear-gradient(bottom left, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%);
+  /* ie10+ */
+  background: -moz-linear-gradient(bottom left, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%);
+  /* ff3.6+ */
+  background: -o-linear-gradient(bottom left, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%);
+  /* opera 11.10+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(78, 46, 161, 1)), color-stop(100%, rgba(46, 81, 162, 1)));
+  /* safari4+,chrome 10 */
+  background: -webkit-linear-gradient(bottom left, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%);
+  /* safari5.1+,chrome11+ */
+  background: linear-gradient(to top right, rgba(78, 46, 161, 1) 0%, rgba(46, 81, 162, 1) 100%);
+  /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e51a2', endColorstr='#4e2ea1', GradientType=1);
+  /* ie6-9 */
+}
+
+#main {
+  max-width: 80vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+h1 {
+  font-size: 50vh;
+  position: fixed;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.04);
+  margin: 0;
+}
+
+#cta_main {
+  bottom: 0;
+  position: relative;
+  padding: 1rem 1.5rem;
+  border-radius: 3rem;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  outline: none;
+  color: #2e51a2;
+  /* was 0 */
+  box-shadow: none;
+  transition: bottom 200ms ease-out, background 200ms ease-out, box-shadow 200ms ease-out, padding 200ms ease-out, opacity 0.3s ease-in;
+}
+
+#cta_main:hover {
+  bottom: 3px;
+}
+
+#cta_main:hover,
+#cta_main:focus {
+  background: rgba(255, 255, 255, 1);
+  -webkit-box-shadow: 0px 10px 80px -21px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 10px 80px -21px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 10px 80px -21px rgba(0, 0, 0, 0.75);
+}
+
+#cta_main:active {
+  bottom: 0;
+  -webkit-box-shadow: 0px 10px 20px -21px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 10px 20px -21px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 10px 20px -21px rgba(0, 0, 0, 0.75);
+}
+
+#notice {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+}
+
+#notice p {
+  margin: 0;
+}

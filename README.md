@@ -1,51 +1,16 @@
+![matomari API Banner](https://i.imgur.com/U2YWczv.png)
+
 # matomari
 
-A couple of MAL related scrapers and stuff like that, put together in a RESTful API.
+![Website Status](https://img.shields.io/website-up-down-brightgreen-red/https/www.matomari.tk.svg?label=website&style=flat-square)
+![OpenAPI Spec](https://img.shields.io/badge/dynamic/json.svg?url=https://www.matomari.tk/api/0.5/&label=OpenApi&query=$.openapi&style=flat-square&colorB=2e51a2)
+![Codacy branch grade](https://img.shields.io/codacy/grade/6808e77f0b0e4d7aa57c279b4815476c/master.svg?style=flat-square)
+![Codeship Build Status](https://img.shields.io/codeship/37843f40-b4da-0134-eaf7-7ed06962ae4b/master.svg?style=flat-square)
+![Production Version](https://img.shields.io/badge/dynamic/json.svg?url=https://www.matomari.tk/api/0.5/&label=production&query=$.info.version&style=flat-square)
 
-Please, always remember that these scrapers are often not 100% stable for production, because when the layout of MAL changes, it won't work anymore. 
+A couple of MAL related scrapers and stuff like that, put together in a RESTful API. Designed using PHP 7.
 
-**Not ready for use in production yet.**
 
----
+*Always keep in mind that third party scrapers such as this one are often not 100% stable for production, because when the layout of MAL changes, it won't work any more. It is however cached, and I try to fix any immediate problems as quick as I can, so it's usually fine.*
 
-You can test matomari live from the base URL of ```http://matomari.tk/api/0.3```
-
-View example kind of thing : [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/f9a68f114b10fc4f6ee0)
-
-Each file contains information and parameters required at the top of the file.
-
-Available Methods
-
-General
-
-- ```general/malappinfo.php``` 
-- ```general/wallpaper.php``` 
-  - Used in:
-    - [WallpaperCycler](https://github.com/FoxInFlame/WallpaperCycler)
-    
-Anime
-
-- ```anime/info/ANIMEID.(json|xml)```
-  - Used in:
-    - [QuickMyAnimeList](https://myanimelist.net/forum/?topicid=1552137)
-- ```anime/search/QUERY.(json|xml)```
-
-Club
-
-- ```club/info/CLUBID.(json|xml)``` 
-
-Forum
-
-- ```forum/topic/TOPICID.(json|xml)```
-
-User
-
-- ```user/info/USERNAME.(json|xml)```
-  - Used in:
-    - [AniChrome](https://github.com/FoxInFlame/AniChrome)
-- ```user/history/USERNAME.(json|xml)```
-  - Used in:
-    - [My profile page!](http://www.foxinflame.tk)
-- ```user/notifications/USERNAME.(json|xml)```
-- ```user/messages/USERNAME.(json|xml)```
-- ```user/message/send/.(json|xml)```
+Docs are available at [/docs](https://www.matomari.tk/docs).

@@ -1,6 +1,0 @@
-Header set Access-Control-Allow-Origin "*"
-
-RewriteEngine On
-
-RewriteCond %{REQUEST_URI} !^/dev/matomari/api/main.php$
-RewriteRule ^(.*).(xml|json)$ /dev/matomari/api/main.php?url=$1&type=$2 [L,QSA]
