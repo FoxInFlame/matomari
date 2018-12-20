@@ -1,4 +1,4 @@
-![matomari API Banner](https://i.imgur.com/U2YWczv.png)
+![matomari API Banner](https://i.imgur.com/04JB29y.png)
 
 # matomari
 
